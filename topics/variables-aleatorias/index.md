@@ -51,6 +51,10 @@ Para el código necesitas lo básico de Python. Si nunca has usado NumPy, pandas
 
 ## Material complementario
 
+El **cuaderno de la sesión** simula las ventas de una campaña de email para estimar una probabilidad de compra, calcular probabilidades de negocio con la binomial y ver en acción la ley de los grandes números y el teorema del límite central. Los datos se generan sin semilla: cada ejecución da resultados distintos.
+
+**Cuaderno de la sesión: ventas de una campaña de email** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/variables-aleatorias/notebook.ipynb) &nbsp; [descargar .ipynb](notebook.ipynb)
+
 La **[guía de referencia](../../reference/modelos-predictivos.md)** reúne las fórmulas de todo el curso en una página.
 
 Las **slides de clase** son el apoyo que usamos en el aula. Resumen el tema, pero no sustituyen a estas páginas.
