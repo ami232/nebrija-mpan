@@ -1,6 +1,6 @@
 # 3. Distribuciones con nombre propio
 
-> Versión web, con demos interactivas: <https://alberpro.com/temas/variables-aleatorias/distribuciones/>
+> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/variables-aleatorias/distribuciones/>
 
 > ℹ️ **Lo que necesitas antes**
 >
@@ -28,7 +28,7 @@ La pregunta clave es **qué estás contando o midiendo**. Esta guía cubre los c
 
 Hay muchas más (exponencial para tiempos de espera, geométrica, t de Student, beta…). Algunas aparecerán más adelante en el curso; la t de Student, por ejemplo, en [contraste de hipótesis](../contraste-hipotesis/index.md). El explorador de abajo te permite ver cómo cambia la forma de cada una al mover sus parámetros y calcular probabilidades de intervalos. Úsalo mientras lees cada sección.
 
-▶️ [Demo interactiva: distribuciones](https://alberpro.com/temas/variables-aleatorias/demo_distribuciones.html) (en alberpro.com)
+▶️ [Demo interactiva: distribuciones](https://nebrija-mpan.alberpro.com/temas/variables-aleatorias/demo_distribuciones.html) (en la web)
 
 ## Uniforme discreta: todos los resultados igual de probables
 

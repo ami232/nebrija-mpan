@@ -1,6 +1,6 @@
 # Feature engineering y transformaciones
 
-> Versión web, con demos interactivas: <https://alberpro.com/temas/feature-engineering/>
+> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/feature-engineering/>
 
 Variables dummy, interacciones, transformaciones logarítmicas y polinómicas y su interpretación, discretización, y cómo detectar overfitting con una división train/test.
 

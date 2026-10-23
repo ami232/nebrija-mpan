@@ -1,6 +1,6 @@
 # Regresión lineal simple
 
-> Versión web, con demos interactivas: <https://alberpro.com/temas/regresion-lineal-simple/>
+> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/regresion-lineal-simple/>
 
 Pasamos de describir variables aisladas a **modelar la relación entre dos variables**: cuánto cambia $Y$ cuando cambia $X$, y cómo usar esa relación para predecir.
 
@@ -74,7 +74,7 @@ Diez semanas de inversión en publicidad ($X$) y ventas ($Y$), en miles de €. 
 
 Prueba a cambiar los datos o el código: se ejecuta en tu navegador. Pulsa (abajo a la derecha) para ejecutar todas las celdas.
 
-▶️ [Laboratorio interactivo: publicidad](https://alberpro.com/temas/regresion-lineal-simple/lab_publicidad.html) (en alberpro.com)
+▶️ [Laboratorio interactivo: publicidad](https://nebrija-mpan.alberpro.com/temas/regresion-lineal-simple/lab_publicidad.html) (en la web)
 
 ## Notebooks
 

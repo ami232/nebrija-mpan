@@ -1,6 +1,6 @@
 # 6. Práctica guiada: aceptación de cookies
 
-> Versión web, con demos interactivas: <https://alberpro.com/temas/variables-aleatorias/practica/>
+> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/variables-aleatorias/practica/>
 
 Esta práctica recorre un análisis completo, de principio a fin, con las herramientas del tema. El objetivo no es solo obtener números, sino aprender **cómo se razona** ante un problema real: qué preguntas hacerse, qué suponer, cómo comprobarlo y cómo comunicar el resultado.
 

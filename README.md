@@ -1,6 +1,6 @@
 # Modelos predictivos en el análisis de negocios
 
-> La versión web de este curso, con demos interactivas y buscador, está en <https://alberpro.com/cursos/nebrija-mpan/>.
+> La versión web de este curso, con demos interactivas y buscador, está en <https://nebrija-mpan.alberpro.com/>.
 > Este repositorio se actualiza automáticamente desde ella.
 
 **Universidad Nebrija** · *Métodos estadísticos y aprendizaje automático con Python*

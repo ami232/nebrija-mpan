@@ -1,6 +1,6 @@
 # Árboles de decisión y ensembles
 
-> Versión web, con demos interactivas: <https://alberpro.com/temas/arboles-decision/>
+> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/arboles-decision/>
 
 Limitaciones de los modelos lineales, árboles de decisión para regresión y clasificación (Gini, entropía), hiperparámetros, overfitting, importancia de variables, Random Forest y boosting.
 

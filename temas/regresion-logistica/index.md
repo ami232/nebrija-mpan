@@ -1,6 +1,6 @@
 # Regresión logística
 
-> Versión web, con demos interactivas: <https://alberpro.com/temas/regresion-logistica/>
+> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/regresion-logistica/>
 
 Por qué la regresión lineal no sirve para variables binarias, función sigmoide, log-loss, de probabilidades a decisiones con un umbral, matriz de confusión, métricas (precision, recall…), curva ROC y AUC.
 
@@ -12,9 +12,9 @@ Por qué la regresión lineal no sirve para variables binarias, función sigmoid
 
 Se ejecutan en tu navegador (la primera carga tarda unos segundos).
 
-▶️ [Demo interactiva: ajuste](https://alberpro.com/temas/regresion-logistica/demo_ajuste.html) (en alberpro.com)
+▶️ [Demo interactiva: ajuste](https://nebrija-mpan.alberpro.com/temas/regresion-logistica/demo_ajuste.html) (en la web)
 
-▶️ [Demo interactiva: prediccion](https://alberpro.com/temas/regresion-logistica/demo_prediccion.html) (en alberpro.com)
+▶️ [Demo interactiva: prediccion](https://nebrija-mpan.alberpro.com/temas/regresion-logistica/demo_prediccion.html) (en la web)
 
 ## Notebooks
 

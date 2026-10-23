@@ -1,6 +1,6 @@
 # 1. Probabilidad
 
-> Versión web, con demos interactivas: <https://alberpro.com/temas/variables-aleatorias/probabilidad/>
+> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/variables-aleatorias/probabilidad/>
 
 Imagina que gestionas una tienda online. Ayer hubo 1000 visitas y 70 acabaron en compra. ¿Cuál es la probabilidad de que la próxima visita compre? ¿Cambia esa probabilidad si sabemos que el visitante entra desde el móvil? Si una compra acaba de entrar, ¿qué probabilidad hay de que viniera de un ordenador? Estas preguntas, que aparecen a diario en cualquier negocio, son preguntas de **probabilidad**. Esta página te da el lenguaje y las reglas para responderlas con rigor.
 
@@ -169,7 +169,7 @@ La ley tiene una consecuencia práctica importante: con pocas repeticiones, la f
 
 Experimenta con dos dados: con pocos lanzamientos, las frecuencias saltan mucho; con miles, se pegan a la probabilidad teórica.
 
-▶️ [Demo interactiva: dados](https://alberpro.com/temas/variables-aleatorias/demo_dados.html) (en alberpro.com)
+▶️ [Demo interactiva: dados](https://nebrija-mpan.alberpro.com/temas/variables-aleatorias/demo_dados.html) (en la web)
 
 ## En Python
 

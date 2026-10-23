@@ -1,6 +1,6 @@
 # Series temporales
 
-> Versión web, con demos interactivas: <https://alberpro.com/temas/series-temporales/>
+> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/series-temporales/>
 
 Datos ordenados en el tiempo con la demanda energética real de España: componentes y descomposición de una serie, train/test temporal, modelos de forecasting (naive, Prophet, SARIMA), comparación y validación temporal.
 

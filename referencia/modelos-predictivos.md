@@ -1,6 +1,6 @@
 # Guía de referencia: modelos predictivos
 
-> Versión web, con demos interactivas: <https://alberpro.com/referencia/modelos-predictivos/>
+> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/referencia/modelos-predictivos/>
 
 Resumen de fórmulas y conceptos del curso. También se puede [descargar en PDF](guia-modelos-predictivos.pdf).
 

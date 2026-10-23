@@ -1,6 +1,6 @@
 # Contraste de hipótesis
 
-> Versión web, con demos interactivas: <https://alberpro.com/temas/contraste-hipotesis/>
+> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/contraste-hipotesis/>
 
 Hipótesis nula y alternativa, nivel de significación, estadístico de contraste, test Z y t (una muestra, dos muestras, pareado), p-valor, errores de tipo I y II, contrastes uni y bilaterales e intervalos de confianza.
 

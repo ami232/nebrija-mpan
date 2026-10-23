@@ -1,6 +1,6 @@
 # Probabilidad y variables aleatorias
 
-> Versión web, con demos interactivas: <https://alberpro.com/temas/variables-aleatorias/>
+> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/variables-aleatorias/>
 
 Una empresa nunca sabe con certeza cuántos clientes entrarán mañana, cuáles abandonarán su suscripción o cuánto gastará el próximo pedido. Y sin embargo tiene que decidir hoy cuánto personal contratar, a quién ofrecer un descuento o cuánto stock pedir. Este tema trata de cómo **razonar y decidir con incertidumbre** usando datos: es la base sobre la que se construye todo lo que viene después en el curso.
 

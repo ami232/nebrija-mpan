@@ -1,6 +1,6 @@
 # Regresión lineal múltiple
 
-> Versión web, con demos interactivas: <https://alberpro.com/temas/regresion-lineal-multiple/>
+> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/regresion-lineal-multiple/>
 
 Del modelo simple al múltiple: supuestos, multicolinealidad, lectura del summary de statsmodels, selección de variables y diagnóstico de residuos.
 

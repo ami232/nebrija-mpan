@@ -1,6 +1,6 @@
 # Sesgos en los datos
 
-> Versión web, con demos interactivas: <https://alberpro.com/temas/sesgos/>
+> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/sesgos/>
 
 Situaciones en las que los datos nos llevan a conclusiones incorrectas: sesgo algorítmico, paradoja de Simpson, sesgo de supervivencia, sesgo de selección y data leakage, y cómo detectarlos antes de entrenar un modelo.
 

@@ -1,6 +1,6 @@
 # Clasificación multiclase
 
-> Versión web, con demos interactivas: <https://alberpro.com/temas/clasificacion-multiclase/>
+> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/clasificacion-multiclase/>
 
 Problemas con tres o más categorías: estrategias One-vs-Rest y One-vs-One, regresión logística multinomial (softmax), árboles y Random Forest, AUC-ROC multiclase y clases desbalanceadas.
 
