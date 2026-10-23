@@ -1,6 +1,6 @@
 # 5. Inferencia: de la muestra a la población
 
-> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/variables-aleatorias/inferencia/>
+> Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/inferencia/>
 
 > ℹ️ **Antes de empezar**
 >
@@ -73,7 +73,7 @@ Lo sorprendente es la última frase. Los tiempos de espera son exponenciales, mu
 
 Comprueba en la demo cómo la distribución de la media pasa de ser la población original ($n = 1$) a una campana al aumentar $n$:
 
-▶️ [Demo interactiva: tlc](https://nebrija-mpan.alberpro.com/temas/variables-aleatorias/demo_tlc.html) (en la web)
+▶️ [Demo interactiva: tlc](https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/demo_tlc.html) (en la web)
 
 **¿Qué es «$n$ suficientemente grande»?** Depende de lo asimétrica que sea la población. Con poblaciones aproximadamente simétricas, $n \approx 10$ ya basta. La regla práctica habitual es $n \ge 30$. Para proporciones se pide que haya bastantes éxitos y fracasos: $n\hat{p} \ge 5$ y $n(1 - \hat{p}) \ge 5$. Si la población tiene una cola muy larga, como los importes con unos pocos clientes enormes, puede hacer falta bastante más.
 
@@ -192,7 +192,7 @@ Hacen falta una estimación previa de $\sigma$ o de $p$, de un estudio piloto o 
 
 En la demo, cada línea es el intervalo de una muestra distinta. Las rojas no contienen el valor real. Cambia el nivel de confianza y el tamaño de muestra y observa qué pasa con la anchura y con el número de fallos:
 
-▶️ [Demo interactiva: intervalos](https://nebrija-mpan.alberpro.com/temas/variables-aleatorias/demo_intervalos.html) (en la web)
+▶️ [Demo interactiva: intervalos](https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/demo_intervalos.html) (en la web)
 
 ### Hacia los contrastes de hipótesis y la t de Student
 

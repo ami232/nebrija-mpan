@@ -1,6 +1,6 @@
 # 4. Estadísticos
 
-> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/variables-aleatorias/estadisticos/>
+> Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/estadisticos/>
 
 > ℹ️ **Antes de empezar**
 >
@@ -105,7 +105,7 @@ La mediana es **robusta**: un valor extremo solo cuenta como "un dato más por e
 
 Usa la demo para ver cómo reaccionan la media y la mediana a la asimetría y a un valor extremo:
 
-▶️ [Demo interactiva: estadisticos](https://nebrija-mpan.alberpro.com/temas/variables-aleatorias/demo_estadisticos.html) (en la web)
+▶️ [Demo interactiva: estadisticos](https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/demo_estadisticos.html) (en la web)
 
 ## Posición: cuantiles y percentiles
 

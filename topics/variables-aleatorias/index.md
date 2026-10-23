@@ -1,6 +1,6 @@
 # Probabilidad y variables aleatorias
 
-> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/variables-aleatorias/>
+> Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/>
 
 Una empresa nunca sabe con certeza cuántos clientes entrarán mañana, cuáles abandonarán su suscripción o cuánto gastará el próximo pedido. Y sin embargo tiene que decidir hoy cuánto personal contratar, a quién ofrecer un descuento o cuánto stock pedir. Este tema trata de cómo **razonar y decidir con incertidumbre** usando datos: es la base sobre la que se construye todo lo que viene después en el curso.
 
@@ -33,7 +33,7 @@ No necesitas conocimientos previos de estadística. Basta con las matemáticas d
 
 Para el código necesitas lo básico de Python. Si nunca has usado NumPy, pandas o Matplotlib, haz antes este tutorial (1–2 h):
 
-**Tutorial: Python para análisis estadístico** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/temas/variables-aleatorias/python.ipynb) &nbsp; [descargar .ipynb](python.ipynb)
+**Tutorial: Python para análisis estadístico** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/variables-aleatorias/python.ipynb) &nbsp; [descargar .ipynb](python.ipynb)
 
 ## Notación
 
@@ -51,7 +51,7 @@ Para el código necesitas lo básico de Python. Si nunca has usado NumPy, pandas
 
 ## Material complementario
 
-La **[guía de referencia](../../referencia/modelos-predictivos.md)** reúne las fórmulas de todo el curso en una página.
+La **[guía de referencia](../../reference/modelos-predictivos.md)** reúne las fórmulas de todo el curso en una página.
 
 Las **slides de clase** son el apoyo que usamos en el aula. Resumen el tema, pero no sustituyen a estas páginas.
 

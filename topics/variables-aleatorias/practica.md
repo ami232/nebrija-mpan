@@ -1,6 +1,6 @@
 # 6. Práctica guiada: aceptación de cookies
 
-> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/variables-aleatorias/practica/>
+> Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/practica/>
 
 Esta práctica recorre un análisis completo, de principio a fin, con las herramientas del tema. El objetivo no es solo obtener números, sino aprender **cómo se razona** ante un problema real: qué preguntas hacerse, qué suponer, cómo comprobarlo y cómo comunicar el resultado.
 
@@ -8,7 +8,7 @@ Esta práctica recorre un análisis completo, de principio a fin, con las herram
 
 **Cómo trabajar.** Abre el notebook y resuelve cada paso **antes** de desplegar el resultado. Leer las soluciones sin intentarlo da una falsa sensación de haber entendido.
 
-**Notebook de la práctica** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/temas/variables-aleatorias/ejercicios.ipynb) &nbsp; [descargar .ipynb](ejercicios.ipynb)
+**Notebook de la práctica** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/variables-aleatorias/exercises.ipynb) &nbsp; [descargar .ipynb](exercises.ipynb)
 
 > 💡 **Antes de empezar**
 >
@@ -160,7 +160,7 @@ Ahora te toca a ti hacer un análisis completo. Durante un día se registró, mi
 - **Marketing** quiere saber si los usuarios aceptan las cookies más a unas horas que a otras.
 - **Infraestructura** necesita saber con qué frecuencia se superarán los 40 usuarios por minuto, porque a partir de ahí hay que contratar un servidor más potente.
 
-**Entrega 1: conexiones por hora y aceptación de cookies** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/temas/variables-aleatorias/entrega.ipynb) &nbsp; [descargar .ipynb](entrega.ipynb)
+**Entrega 1: conexiones por hora y aceptación de cookies** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/variables-aleatorias/assignment.ipynb) &nbsp; [descargar .ipynb](assignment.ipynb)
 
 **Cómo abordarla.** Sigue la misma estructura que esta práctica:
 

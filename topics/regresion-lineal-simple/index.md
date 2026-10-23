@@ -1,6 +1,6 @@
 # Regresión lineal simple
 
-> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/regresion-lineal-simple/>
+> Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/regresion-lineal-simple/>
 
 Pasamos de describir variables aisladas a **modelar la relación entre dos variables**: cuánto cambia $Y$ cuando cambia $X$, y cómo usar esa relación para predecir.
 
@@ -74,8 +74,8 @@ Diez semanas de inversión en publicidad ($X$) y ventas ($Y$), en miles de €. 
 
 Prueba a cambiar los datos o el código: se ejecuta en tu navegador. Pulsa (abajo a la derecha) para ejecutar todas las celdas.
 
-▶️ [Laboratorio interactivo: publicidad](https://nebrija-mpan.alberpro.com/temas/regresion-lineal-simple/lab_publicidad.html) (en la web)
+▶️ [Laboratorio interactivo: publicidad](https://alberpro.com/nebrija-mpan/topics/regresion-lineal-simple/lab_publicidad.html) (en la web)
 
 ## Notebooks
 
-- **Ejercicios: covarianza, correlación y regresión simple** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/temas/regresion-lineal-simple/ejercicios.ipynb) &nbsp; [descargar .ipynb](ejercicios.ipynb)
+- **Ejercicios: covarianza, correlación y regresión simple** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/regresion-lineal-simple/exercises.ipynb) &nbsp; [descargar .ipynb](exercises.ipynb)

@@ -1,6 +1,6 @@
 # 2. Variables aleatorias
 
-> Versión web, con demos interactivas: <https://nebrija-mpan.alberpro.com/temas/variables-aleatorias/variables/>
+> Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/variables/>
 
 > ℹ️ **Lo que necesitas antes**
 >
@@ -134,7 +134,7 @@ La justificación de usar los datos como sustituto de la distribución real es u
 
 En términos prácticos: **con muchos datos, la forma que ves en ellos es la forma de la distribución real**, y puedes estimar con confianza sus características (media, cuantiles, probabilidades). Con pocos datos, en cambio, la forma observada puede engañar bastante. ¿Cuántos datos son "muchos"? No hay una cifra universal, pero la demo te da una idea: elige una distribución, sube $n$ y observa cómo el histograma y la ECDF se pegan a la curva teórica. Fíjate también en la máxima distancia ECDF–CDF, que es lo que el teorema dice que tiende a cero.
 
-▶️ [Demo interactiva: empirica](https://nebrija-mpan.alberpro.com/temas/variables-aleatorias/demo_empirica.html) (en la web)
+▶️ [Demo interactiva: empirica](https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/demo_empirica.html) (en la web)
 
 > ⚠️ **Errores frecuentes**
 >
