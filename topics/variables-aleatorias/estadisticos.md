@@ -1,14 +1,14 @@
-# 4. Estadísticos
+# 3. Estadísticos
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/estadisticos/>
 
 > ℹ️ **Antes de empezar**
 >
-> Esta página usa la idea de **variable aleatoria** y su **función de probabilidad** $f(x)$ ([página 2](variables.md)), y algunas distribuciones con nombre propio como la Poisson y la normal ([página 3](distribuciones.md)).
+> Esta página usa la idea de **variable aleatoria** y su **función de probabilidad** $f(x)$ ([página 1](variables.md)), y algunas distribuciones con nombre propio como la Poisson y la normal ([página 2](distribuciones.md)).
 
 Una distribución lo dice todo sobre una variable aleatoria, pero casi nunca necesitamos *todo*. Un director comercial no quiere ver una tabla con la probabilidad de cada importe posible de una factura. Quiere saber cuánto factura un cliente **en promedio**, si los clientes se parecen entre sí o son muy distintos, y a partir de qué importe un cliente está entre el 10 % que más gasta. Cada una de esas preguntas se responde con un número que resume una propiedad de la distribución: un **estadístico**.
 
-En esta página veremos los tres tipos de resumen que más se usan: el **centro** (media y mediana), la **dispersión** (varianza y desviación típica) y la **posición** (cuantiles). Después veremos cómo se comportan cuando combinamos variables. Por último distinguiremos entre los estadísticos de una distribución, que casi nunca conocemos, y los de una muestra, que sí podemos calcular.
+En esta página veremos los tres tipos de resumen que más se usan: el **centro** (media y mediana), la **dispersión** (varianza y desviación típica) y la **posición** (cuantiles). Después veremos cómo se comportan cuando combinamos variables.
 
 ## El centro: la esperanza
 
@@ -88,7 +88,7 @@ La idea natural sería promediar las distancias a la media, $X - \mu$, pero ese 
 >
 > $\sigma = \sqrt{200.16} \approx 14.15$ €. Con el atajo sale lo mismo: $\mathbb{E}[X^2] = 0.08 \cdot 100 + 0.02 \cdot 10\,000 = 208$ y $208 - 2.8^2 = 200.16$.
 >
-> La desviación típica es cinco veces la media. Casi toda la varianza la produce el premio de 100 €, que es raro pero enorme. Una tarjeta concreta es muy impredecible. En el [teorema del límite central](inferencia.md) veremos por qué, aun así, el coste **total** de 100 000 tarjetas es muy predecible.
+> La desviación típica es cinco veces la media. Casi toda la varianza la produce el premio de 100 €, que es raro pero enorme. Una tarjeta concreta es muy impredecible. En el [teorema del límite central](../inferencia/intervalos.md#el-teorema-del-límite-central) veremos por qué, aun así, el coste **total** de 100 000 tarjetas es muy predecible.
 
 ## Media o mediana: elegir el centro adecuado
 
@@ -204,64 +204,12 @@ La **covarianza** $\text{Cov}[X, Y] = \mathbb{E}\big[(X - \mu_X)(Y - \mu_Y)\big]
 >
 > Es la idea de la **diversificación**: combinar actividades que no se mueven juntas reduce el riesgo total. Observa también que sumar desviaciones típicas ($30 + 40 = 70$) es incorrecto incluso en el caso independiente: lo que se suma son las **varianzas**.
 
-## De la distribución a los datos: población y muestra
-
-Todo lo anterior describe la **distribución** de una variable aleatoria, que en la práctica **no conocemos**. Lo que tenemos son **datos**: una **muestra** $x_1, \ldots, x_n$ de una **población** mucho mayor (los clientes encuestados frente a todos los clientes, los pedidos de este mes frente a todos los pedidos posibles). Con la muestra calculamos los **estadísticos muestrales**, que imitan a los de la población:
-
-| | Población (desconocida) | Muestra (calculable) |
-|---|---|---|
-| Media | $\mu = \mathbb{E}[X]$ | $\bar{x} = \dfrac{1}{n}\displaystyle\sum_{i=1}^{n} x_i$ |
-| Varianza | $\sigma^2 = \mathbb{V}[X]$ | $s^2 = \dfrac{1}{n - 1}\displaystyle\sum_{i=1}^{n} (x_i - \bar{x})^2$ |
-| Desviación típica | $\sigma$ | $s = \sqrt{s^2}$ |
-| Proporción | $p$ | $\hat{p} = $ proporción de unos en la muestra |
-| Mediana, cuantiles | $q_p$ | los de la muestra ordenada |
-
-La convención de notación es útil: **letras griegas** ($\mu$, $\sigma$, $p$) para los parámetros de la población y **letras latinas o con acento circunflejo** ($\bar{x}$, $s$, $\hat{p}$) para lo que calculamos con datos.
-
-### ¿Por qué dividir entre n − 1?
-
-La fórmula "natural" de la varianza muestral dividiría entre $n$. Pero la media muestral $\bar{x}$ se calcula con los mismos datos, y es justo el punto que **minimiza** la suma de distancias al cuadrado a esos datos. Por eso los datos siempre están, en conjunto, más cerca de $\bar{x}$ que de la verdadera $\mu$, y dividir entre $n$ **subestima** sistemáticamente $\sigma^2$.
-
-Dividir entre $n - 1$ corrige exactamente ese sesgo. La idea intuitiva es que, una vez fijada $\bar{x}$, solo $n - 1$ desviaciones son libres: la última queda determinada, porque todas deben sumar cero. Por eso se habla de **$n - 1$ grados de libertad**.
-
-El efecto se puede medir: con muestras de solo 3 datos de una normal con $\sigma^2 = 1$, la fórmula con $n$ da de media unos 0.67, es decir, $(n-1)/n$ del valor real. La fórmula con $n - 1$ da de media 1.00. Con muestras grandes, $n$ y $n - 1$ apenas se distinguen.
-
-> ⚠️ **Cada herramienta usa una convención**
->
-> - **pandas:** `serie.var()` y `serie.std()` dividen entre **n − 1** (`ddof=1`).
-> - **NumPy:** `np.var(x)` y `np.std(x)` dividen entre **n** (`ddof=0`).
->
-> Si dos personas obtienen varianzas distintas con los mismos datos, casi siempre es esto.
-
-## Estimar parámetros: método de los momentos
-
-Muchas veces suponemos que los datos siguen una distribución concreta (Poisson, normal…) pero no conocemos sus parámetros. El **método de los momentos** es la forma más directa de estimarlos: igualar la media (y si hace falta la varianza) teórica de la distribución a la de la muestra, y despejar.
-
-$$\mathbb{E}[X] \approx \bar{x}, \qquad \mathbb{V}[X] \approx s^2$$
-
-Los parámetros estimados se marcan con un acento circunflejo ($\hat{\lambda}$, $\hat{\mu}$, $\hat{p}$) para recordar que son **estimaciones con incertidumbre**, no los valores reales.
-
-> ✏️ **Ejemplo resuelto: llamadas por hora (Poisson)**
->
-> En 10 horas, un call center recibió 3, 5, 2, 4, 6, 3, 4, 1, 5 y 7 llamadas. Si suponemos una Poisson, como $\mathbb{E}[X] = \lambda$, estimamos $\hat{\lambda} = \bar{x} = 40/10 = 4$ llamadas por hora.
->
-> **Comprobación de la suposición:** en una Poisson la media y la varianza coinciden. Aquí $s^2 = 3.33$, que es razonablemente cercano a 4 para solo 10 datos. Con el modelo estimado podemos responder preguntas nuevas: la probabilidad de recibir 8 o más llamadas en una hora es `stats.poisson(4).sf(7)` $\approx 0.051$, más o menos 1 hora de cada 20.
-
-> ✏️ **Ejemplo resuelto: tiempos de entrega (normal)**
->
-> Ocho entregas tardaron 46, 51, 49, 55, 44, 50, 47 y 53 horas. Si suponemos que son normales, estimamos $\hat{\mu} = \bar{x} = 49.4$ h y $\hat{\sigma} = s = 3.66$ h. La probabilidad estimada de que una entrega supere las 56 h es `stats.norm(49.4, 3.66).sf(56)` $\approx 0.035$.
->
-> Con solo 8 datos, estas estimaciones son bastante inseguras. En la [siguiente página](inferencia.md) veremos cómo cuantificar esa incertidumbre.
-
-Este método es exactamente lo que haremos en la [práctica guiada](practica.md): estimar la probabilidad $p$ de aceptar las cookies con la proporción observada $\hat{p}$.
-
 > ⛔ **Errores frecuentes**
 >
 > - **Sumar desviaciones típicas.** Se suman las varianzas (y solo directamente si hay independencia).
 > - **Usar la media para describir lo «típico»** en datos asimétricos, como salarios, importes o tiempos. Usa la mediana.
 > - **Leer la desviación típica en la escala de la varianza.** σ = 14 € no significa que «la varianza es 14».
 > - **Borrar outliers automáticamente.** Primero entiende de dónde vienen.
-> - **Mezclar $n$ y $n - 1$** entre herramientas sin darse cuenta.
 
 ## En Python
 
@@ -280,7 +228,7 @@ var = ((x - mu) ** 2 * f).sum()          # 200.16
 # Estadísticos de una muestra
 df = pd.read_csv("https://raw.githubusercontent.com/ami232/nebrija-mpan/main/data/telco_churn.csv")
 factura = df["factura_mensual"]          # factura mensual de 5000 clientes de una operadora
-factura.describe()                       # n, media, desv. típica (n−1), mín, Q1, mediana, Q3, máx
+factura.describe()                       # n, media, desv. típica, mín, Q1, mediana, Q3, máx
 ```
 
 ```text
@@ -315,25 +263,6 @@ plt.show()
 
 ![Figura generada por el código](img/resultados/estadisticos-1.svg)
 
-```python
-# Método de los momentos para una Poisson
-llamadas = pd.Series([3, 5, 2, 4, 6, 3, 4, 1, 5, 7])
-lam_hat = llamadas.mean()                # 4.0
-print(llamadas.var())                    # 3.33: ¿parecido a la media?
-```
-
-```text
-3.3333333333333335
-```
-
-```python
-print(stats.poisson(lam_hat).sf(7))      # P(X ≥ 8) ≈ 0.051
-```
-
-```text
-0.0511336157928473
-```
-
 > ✅ **Lo esencial**
 >
 > - La **esperanza** es el promedio a largo plazo, $\sum x f(x)$. Es la cifra para totales, presupuestos y decisiones repetidas, aunque no sea un valor posible.
@@ -341,7 +270,6 @@ print(stats.poisson(lam_hat).sf(7))      # P(X ≥ 8) ≈ 0.051
 > - Con datos asimétricos o con outliers, la **mediana** describe mejor lo típico que la media. Los **cuantiles** describen las colas (p95, p99), que es lo que suele importar en un SLA.
 > - El **z-score** $z = (x - \mu)/\sigma$ compara valores de escalas distintas.
 > - Las medias se suman siempre. Las **varianzas** se suman si hay independencia, y si no hay que añadir la covarianza.
-> - Con datos solo podemos calcular **estadísticos muestrales** ($\bar{x}$, $s$, $\hat{p}$). Estimar parámetros igualándolos a los teóricos es el **método de los momentos**.
 
 ## Ejercicios
 
@@ -389,16 +317,7 @@ Para los dos turnos independientes: $\mathbb{V}[C_1 + C_2] = 30^2 + 30^2 = 1800$
 
 </details>
 
-**5.** Con la muestra 4, 8, 6, 2, calcula la varianza dividiendo entre $n$ y entre $n - 1$. ¿Qué daría `np.var` y qué daría `pd.Series.var`?
-
-<details>
-<summary>✅ <b>Solución</b></summary>
-
-$\bar{x} = 5$. Las desviaciones son $-1, 3, 1, -3$, y sus cuadrados suman $1 + 9 + 1 + 9 = 20$. Dividiendo entre $n = 4$ sale **5**, que es lo que da `np.var(x)`. Dividiendo entre $n - 1 = 3$ sale **6.67**, que es lo que da `pd.Series(x).var()`. Con solo 4 datos la diferencia es notable.
-
-</details>
-
-**6.** *(Más difícil)* Una aseguradora vende un seguro de móvil. En un año, cada cliente tiene un 5 % de probabilidad de un siniestro de 300 € y un 95 % de no tener ninguno. (a) ¿Cuál es la prima "justa", es decir, el coste esperado por cliente? (b) ¿Cuál es la desviación típica del coste de un cliente? (c) Si la aseguradora tiene 10 000 clientes independientes, ¿cuál es la media y la desviación típica del coste total, y del coste **por cliente**?
+**5.** *(Más difícil)* Una aseguradora vende un seguro de móvil. En un año, cada cliente tiene un 5 % de probabilidad de un siniestro de 300 € y un 95 % de no tener ninguno. (a) ¿Cuál es la prima "justa", es decir, el coste esperado por cliente? (b) ¿Cuál es la desviación típica del coste de un cliente? (c) Si la aseguradora tiene 10 000 clientes independientes, ¿cuál es la media y la desviación típica del coste total, y del coste **por cliente**?
 
 <details>
 <summary>✅ <b>Solución</b></summary>
@@ -407,8 +326,8 @@ $\bar{x} = 5$. Las desviaciones son $-1, 3, 1, -3$, y sus cuadrados suman $1 + 9
 
 (b) $\mathbb{E}[X^2] = 0.05 \cdot 300^2 = 4500$, así que $\mathbb{V}[X] = 4500 - 15^2 = 4275$ y $\sigma \approx 65.4$ €. Un cliente concreto es muy impredecible.
 
-(c) Para el total $T = X_1 + \cdots + X_{10\,000}$: $\mathbb{E}[T] = 150\,000$ € y $\mathbb{V}[T] = 10\,000 \cdot 4275$, así que $\sigma_T \approx 6538$ €. Por cliente, $\bar{X} = T/10\,000$ tiene media 15 € y desviación típica $65.4/\sqrt{10\,000} = 0.65$ €. **El coste medio por cliente es muy predecible**, aunque cada cliente no lo sea. Es el principio de un seguro, y lo formaliza la [siguiente página](inferencia.md).
+(c) Para el total $T = X_1 + \cdots + X_{10\,000}$: $\mathbb{E}[T] = 150\,000$ € y $\mathbb{V}[T] = 10\,000 \cdot 4275$, así que $\sigma_T \approx 6538$ €. Por cliente, $\bar{X} = T/10\,000$ tiene media 15 € y desviación típica $65.4/\sqrt{10\,000} = 0.65$ €. **El coste medio por cliente es muy predecible**, aunque cada cliente no lo sea. Es el principio de un seguro, y lo formaliza el [teorema del límite central](../inferencia/intervalos.md#el-teorema-del-límite-central).
 
 </details>
 
-[← Distribuciones](distribuciones.md) [Siguiente: Inferencia →](inferencia.md)
+[← Distribuciones](distribuciones.md) [Siguiente tema: Estimación e inferencia →](../inferencia/index.md)

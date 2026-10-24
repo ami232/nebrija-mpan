@@ -1,10 +1,10 @@
-# 5. Inferencia: de la muestra a la población
+# 2. Intervalos de confianza: de la muestra a la población
 
-> Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/inferencia/>
+> Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/inferencia/intervalos/>
 
 > ℹ️ **Antes de empezar**
 >
-> Esta página usa la **distribución normal** y la tipificación $z = (x - \mu)/\sigma$ ([página 3](distribuciones.md)), y la distinción entre **población y muestra**, con la media $\bar{x}$, la desviación típica $s$ y la proporción $\hat{p}$ muestrales ([página 4](estadisticos.md#de-la-distribución-a-los-datos-población-y-muestra)).
+> Esta página usa la **distribución normal** y la tipificación $z = (x - \mu)/\sigma$ ([distribuciones](../variables-aleatorias/distribuciones.md)), y la distinción entre **población y muestra**, con la media $\bar{x}$, la desviación típica $s$ y la proporción $\hat{p}$ muestrales ([página 1](estimacion.md#de-la-distribución-a-los-datos-población-y-muestra)).
 
 ## El problema
 
@@ -26,7 +26,7 @@ Así que una encuesta concreta con un 23 % es perfectamente compatible con un 25
 
 ## Error estándar
 
-Las tres propiedades anteriores se pueden calcular sin simular. Recuerda las [propiedades de la media y la varianza](estadisticos.md#combinar-variables-propiedades-de-la-media-y-la-varianza). Si $X_1, \ldots, X_n$ son observaciones independientes con media $\mu$ y varianza $\sigma^2$, la media muestral $\bar{X} = \frac{1}{n}\sum X_i$ cumple:
+Las tres propiedades anteriores se pueden calcular sin simular. Recuerda las [propiedades de la media y la varianza](../variables-aleatorias/estadisticos.md#combinar-variables-propiedades-de-la-media-y-la-varianza). Si $X_1, \ldots, X_n$ son observaciones independientes con media $\mu$ y varianza $\sigma^2$, la media muestral $\bar{X} = \frac{1}{n}\sum X_i$ cumple:
 
 $$\mathbb{E}[\bar{X}] = \frac{1}{n} \cdot n\mu = \mu \qquad\qquad \mathbb{V}[\bar{X}] = \frac{1}{n^2} \cdot n\sigma^2 = \frac{\sigma^2}{n}$$
 
@@ -73,7 +73,7 @@ Lo sorprendente es la última frase. Los tiempos de espera son exponenciales, mu
 
 Comprueba en la demo cómo la distribución de la media pasa de ser la población original ($n = 1$) a una campana al aumentar $n$:
 
-▶️ [Demo interactiva: tlc](https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/demo_tlc.html) (en la web)
+▶️ [Demo interactiva: tlc](https://alberpro.com/nebrija-mpan/topics/inferencia/demo_tlc.html) (en la web)
 
 **¿Qué es «$n$ suficientemente grande»?** Depende de lo asimétrica que sea la población. Con poblaciones aproximadamente simétricas, $n \approx 10$ ya basta. La regla práctica habitual es $n \ge 30$. Para proporciones se pide que haya bastantes éxitos y fracasos: $n\hat{p} \ge 5$ y $n(1 - \hat{p}) \ge 5$. Si la población tiene una cola muy larga, como los importes con unos pocos clientes enormes, puede hacer falta bastante más.
 
@@ -192,7 +192,7 @@ Hacen falta una estimación previa de $\sigma$ o de $p$, de un estudio piloto o 
 
 En la demo, cada línea es el intervalo de una muestra distinta. Las rojas no contienen el valor real. Cambia el nivel de confianza y el tamaño de muestra y observa qué pasa con la anchura y con el número de fallos:
 
-▶️ [Demo interactiva: intervalos](https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/demo_intervalos.html) (en la web)
+▶️ [Demo interactiva: intervalos](https://alberpro.com/nebrija-mpan/topics/inferencia/demo_intervalos.html) (en la web)
 
 ### Hacia los contrastes de hipótesis y la t de Student
 
@@ -339,4 +339,4 @@ La afirmación correcta es sobre el procedimiento: "si repito el estudio muchas 
 
 </details>
 
-[← Estadísticos](estadisticos.md) [Siguiente: Práctica guiada →](practica.md)
+[← Muestras y estimación](estimacion.md) [Siguiente: Práctica guiada →](practica.md)

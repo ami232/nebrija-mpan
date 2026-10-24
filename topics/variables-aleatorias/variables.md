@@ -1,14 +1,14 @@
-# 2. Variables aleatorias
+# 1. Variables aleatorias
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/variables/>
 
 > ℹ️ **Lo que necesitas antes**
 >
-> Qué es un experimento aleatorio, un suceso y cómo se calcula su probabilidad. Lo tienes en [1. Probabilidad](probabilidad.md).
+> Qué es un experimento aleatorio, un suceso y cómo se calcula su probabilidad. Lo tienes en el [tema de probabilidad](../probabilidad/index.md).
 
 ## Por qué necesitamos números
 
-Imagina que gestionas una tienda online y quieres planificar el embalaje: cuántas cajas de cada tamaño pedir, cuánto tiempo de preparación reservar por pedido. Cada pedido es el resultado de un experimento aleatorio: no sabes de antemano qué comprará el próximo cliente. Con lo visto en la página anterior podrías describir sucesos como "el pedido tiene más de tres artículos" y calcular su probabilidad, pero en cuanto quieras responder preguntas como **"¿cuántos artículos tiene un pedido en promedio?"** o **"¿cuánto varía ese número?"** necesitas algo más: necesitas que el resultado del experimento sea un **número** con el que se pueda sumar, promediar y comparar.
+Imagina que gestionas una tienda online y quieres planificar el embalaje: cuántas cajas de cada tamaño pedir, cuánto tiempo de preparación reservar por pedido. Cada pedido es el resultado de un experimento aleatorio: no sabes de antemano qué comprará el próximo cliente. Con lo visto en el tema anterior podrías describir sucesos como "el pedido tiene más de tres artículos" y calcular su probabilidad, pero en cuanto quieras responder preguntas como **"¿cuántos artículos tiene un pedido en promedio?"** o **"¿cuánto varía ese número?"** necesitas algo más: necesitas que el resultado del experimento sea un **número** con el que se pueda sumar, promediar y comparar.
 
 Eso es exactamente una variable aleatoria: una regla que convierte cada resultado del experimento en un número. El pedido "dos camisetas y un pantalón" se convierte en el número 3; el cliente que deja cuatro estrellas, en un 4; el usuario que acepta las cookies, en un 1.
 
@@ -58,7 +58,7 @@ La PMF también responde a "¿cuántos artículos tiene un pedido en promedio?".
 
 $$\mathbb{E}[X] = 1 \cdot 0.40 + 2 \cdot 0.30 + 3 \cdot 0.18 + 4 \cdot 0.08 + 5 \cdot 0.04 = 2.06 \text{ artículos}.$$
 
-A este número se le llama **valor esperado** o **esperanza** de $X$. Observa que 2.06 no es un valor que un pedido concreto pueda tomar: es el centro de gravedad de la distribución, lo que esperas por pedido cuando promedias sobre muchos. Si mañana llegan 1000 pedidos, deberías preparar material para unos 2060 artículos. Estudiaremos la esperanza y la varianza con detalle en [4. Estadísticos](estadisticos.md).
+A este número se le llama **valor esperado** o **esperanza** de $X$. Observa que 2.06 no es un valor que un pedido concreto pueda tomar: es el centro de gravedad de la distribución, lo que esperas por pedido cuando promedias sobre muchos. Si mañana llegan 1000 pedidos, deberías preparar material para unos 2060 artículos. Estudiaremos la esperanza y la varianza con detalle en [3. Estadísticos](estadisticos.md).
 
 ## Variables continuas: la función de densidad
 
@@ -104,7 +104,7 @@ Toda función de distribución empieza en 0 (muy a la izquierda no hay probabili
 
 ### Leer la CDF al revés: los cuantiles
 
-La CDF responde a "¿qué probabilidad hay de quedar por debajo de $x$?". Muchas preguntas de negocio van en sentido contrario: "¿qué tiempo de espera no se supera el 90 % de las veces?". Eso es leer la CDF al revés: buscar el $x$ en el que $F(x)$ alcanza 0.9. En el metro, $x/10 = 0.9$ da $x = 9$ minutos. Ese valor se llama **cuantil** o **percentil 90**, y el que deja la mitad de la probabilidad a cada lado es la **mediana** (5 minutos en el metro; 2 artículos en los pedidos, el primer valor donde $F$ alcanza 0.5). Volveremos a los cuantiles en [4. Estadísticos](estadisticos.md).
+La CDF responde a "¿qué probabilidad hay de quedar por debajo de $x$?". Muchas preguntas de negocio van en sentido contrario: "¿qué tiempo de espera no se supera el 90 % de las veces?". Eso es leer la CDF al revés: buscar el $x$ en el que $F(x)$ alcanza 0.9. En el metro, $x/10 = 0.9$ da $x = 9$ minutos. Ese valor se llama **cuantil** o **percentil 90**, y el que deja la mitad de la probabilidad a cada lado es la **mediana** (5 minutos en el metro; 2 artículos en los pedidos, el primer valor donde $F$ alcanza 0.5). Volveremos a los cuantiles en [3. Estadísticos](estadisticos.md).
 
 ## Lo que vemos en los datos: distribuciones empíricas
 
@@ -284,4 +284,4 @@ No con tan pocos datos. El teorema de Glivenko–Cantelli garantiza que la forma
 
 </details>
 
-[← Probabilidad](probabilidad.md) [Siguiente: Distribuciones →](distribuciones.md)
+[← Volver al tema](index.md) [Siguiente: Distribuciones →](distribuciones.md)

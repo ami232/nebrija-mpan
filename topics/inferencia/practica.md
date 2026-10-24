@@ -1,20 +1,20 @@
-# 6. Práctica guiada: aceptación de cookies
+# 3. Práctica guiada: aceptación de cookies
 
-> Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/practica/>
+> Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/inferencia/practica/>
 
-Esta práctica recorre un análisis completo, de principio a fin, con las herramientas del tema. El objetivo no es solo obtener números, sino aprender **cómo se razona** ante un problema real: qué preguntas hacerse, qué suponer, cómo comprobarlo y cómo comunicar el resultado.
+Esta práctica recorre un análisis completo, de principio a fin, con las herramientas de los tres primeros temas del curso. El objetivo no es solo obtener números, sino aprender **cómo se razona** ante un problema real: qué preguntas hacerse, qué suponer, cómo comprobarlo y cómo comunicar el resultado.
 
 **El caso.** El equipo de marketing de una web necesita saber qué proporción de usuarios acepta las cookies, porque de ello depende cuántos datos tendrá para sus campañas personalizadas. El departamento de IT asegura que la tasa es del 80 %. Hemos registrado durante tres días lo que hicieron 1000 usuarios: si aceptaron o rechazaron el banner. ¿Qué tasa de aceptación podemos dar a marketing? ¿Es creíble la cifra de IT?
 
 **Cómo trabajar.** Abre el notebook y resuelve cada paso **antes** de desplegar el resultado. Leer las soluciones sin intentarlo da una falsa sensación de haber entendido.
 
-**Notebook de la práctica** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/variables-aleatorias/exercises.ipynb) &nbsp; [descargar .ipynb](exercises.ipynb)
+**Notebook de la práctica** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/inferencia/exercises.ipynb) &nbsp; [descargar .ipynb](exercises.ipynb)
 
 > 💡 **Antes de empezar**
 >
 > - En Colab, haz *Archivo → Guardar una copia en Drive* para no perder tus cambios.
-> - Si nunca has usado pandas o SciPy, haz antes el [tutorial de Python](index.md#antes-de-empezar).
-> - Ten a mano la tabla de funciones de `scipy.stats` de la página de [distribuciones](distribuciones.md#en-python-scipystats).
+> - Si nunca has usado pandas o SciPy, haz antes el [tutorial de Python](../probabilidad/index.md#antes-de-empezar).
+> - Ten a mano la tabla de funciones de `scipy.stats` de la página de [distribuciones](../variables-aleatorias/distribuciones.md#en-python-scipystats).
 
 ## Paso 1. Conocer los datos
 
@@ -44,7 +44,7 @@ La segunda suposición parece razonable: los usuarios no se ven entre sí. La te
 
 ## Paso 3. Estimar la tasa de aceptación
 
-El parámetro que interesa a marketing es $p$. ¿Cómo lo estimamos? En una Bernoulli, la media es $p$, así que el [método de los momentos](estadisticos.md#estimar-parámetros-método-de-los-momentos) propone usar la media muestral. Para datos de ceros y unos, eso es simplemente la proporción de unos.
+El parámetro que interesa a marketing es $p$. ¿Cómo lo estimamos? En una Bernoulli, la media es $p$, así que el [método de los momentos](estimacion.md#estimar-parámetros-método-de-los-momentos) propone usar la media muestral. Para datos de ceros y unos, eso es simplemente la proporción de unos.
 
 <details>
 <summary>✅ <b>Resultado</b></summary>
@@ -67,7 +67,7 @@ Un modelo sirve para responder preguntas que los datos por sí solos no contesta
 <summary>💡 <b>Pistas</b></summary>
 
 - $P(Y = k)$ es `stats.binom.pmf(k, n, p)` y $P(Y \le k)$ es `stats.binom.cdf(k, n, p)`.
-- La normal que aproxima a la binomial tiene $\mu = n\hat{p}$ y $\sigma = \sqrt{n\hat{p}\hat{q}}$. Repasa la [aproximación normal de la binomial](distribuciones.md#aproximación-normal-de-la-binomial).
+- La normal que aproxima a la binomial tiene $\mu = n\hat{p}$ y $\sigma = \sqrt{n\hat{p}\hat{q}}$. Repasa la [aproximación normal de la binomial](../variables-aleatorias/distribuciones.md#aproximación-normal-de-la-binomial).
 
 </details>
 
@@ -82,7 +82,7 @@ Un modelo sirve para responder preguntas que los datos por sí solos no contesta
 
 ## Paso 5. ¿Es creíble la cifra de IT?
 
-IT dice que $p = 0.8$, y nosotros hemos estimado 0.589. ¿Puede deberse la diferencia al azar del muestreo, o los datos contradicen a IT? Para responder hay que saber **cuánto puede variar** $\hat{p}$ de una muestra a otra, y esa es justo la pregunta que contesta un [intervalo de confianza](inferencia.md#intervalos-de-confianza).
+IT dice que $p = 0.8$, y nosotros hemos estimado 0.589. ¿Puede deberse la diferencia al azar del muestreo, o los datos contradicen a IT? Para responder hay que saber **cuánto puede variar** $\hat{p}$ de una muestra a otra, y esa es justo la pregunta que contesta un [intervalo de confianza](intervalos.md#intervalos-de-confianza).
 
 1. Calcula el error estándar de $\hat{p}$ y un intervalo de confianza al 95 %. Repite al 99.99 %.
 2. ¿Está 0.8 dentro de los intervalos? ¿Qué concluyes?
@@ -160,7 +160,7 @@ Ahora te toca a ti hacer un análisis completo. Durante un día se registró, mi
 - **Marketing** quiere saber si los usuarios aceptan las cookies más a unas horas que a otras.
 - **Infraestructura** necesita saber con qué frecuencia se superarán los 40 usuarios por minuto, porque a partir de ahí hay que contratar un servidor más potente.
 
-**Entrega 1: conexiones por hora y aceptación de cookies** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/variables-aleatorias/assignment.ipynb) &nbsp; [descargar .ipynb](assignment.ipynb)
+**Entrega 1: conexiones por hora y aceptación de cookies** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/inferencia/assignment.ipynb) &nbsp; [descargar .ipynb](assignment.ipynb)
 
 **Cómo abordarla.** Sigue la misma estructura que esta práctica:
 
@@ -171,4 +171,4 @@ Ahora te toca a ti hacer un análisis completo. Durante un día se registró, mi
 
 La entrega se sube en **Blackboard**: descarga tu notebook desde Colab (*Archivo → Descargar → Descargar .ipynb*) y súbelo a la tarea correspondiente.
 
-[← Inferencia](inferencia.md) [Volver al tema ↑](index.md)
+[← Intervalos de confianza](intervalos.md) [Volver al tema ↑](index.md)

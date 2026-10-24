@@ -11,16 +11,18 @@ De la estadística básica al machine learning, siempre desde preguntas de negoc
 
 | # | Tema | Material |
 |---|------|----------|
-| 1 | [Probabilidad y variables aleatorias](topics/variables-aleatorias/index.md) | apuntes · demos · slides · práctica guiada · entrega 1 |
-| 2 | [Contraste de hipótesis](topics/contraste-hipotesis/index.md) | slides · notebook · entrega 2 |
-| 3 | [Regresión lineal simple](topics/regresion-lineal-simple/index.md) | apuntes · slides · lab · notebook |
-| 4 | [Regresión lineal múltiple](topics/regresion-lineal-multiple/index.md) | slides · notebooks · entrega 3 |
-| 5 | [Regresión logística](topics/regresion-logistica/index.md) | slides · demos · notebook · entrega 4 |
-| 6 | [Feature engineering y transformaciones](topics/feature-engineering/index.md) | notebook · entrega 5 |
-| 7 | [Árboles de decisión y ensembles](topics/arboles-decision/index.md) | slides · notebooks |
-| 8 | [Clasificación multiclase](topics/clasificacion-multiclase/index.md) | notebook · entrega |
-| 9 | [Series temporales](topics/series-temporales/index.md) | notebook |
-| 10 | [Sesgos en los datos](topics/sesgos/index.md) | notebook |
+| 1 | [Probabilidad](topics/probabilidad/index.md) | apuntes · demo · slides |
+| 2 | [Variables aleatorias y distribuciones](topics/variables-aleatorias/index.md) | apuntes · demos · slides |
+| 3 | [Estimación e inferencia](topics/inferencia/index.md) | apuntes · demos · slides · notebook · práctica guiada · entrega 1 |
+| 4 | [Contraste de hipótesis](topics/contraste-hipotesis/index.md) | slides · notebook · entrega 2 |
+| 5 | [Regresión lineal simple](topics/regresion-lineal-simple/index.md) | apuntes · slides · lab · notebook |
+| 6 | [Regresión lineal múltiple](topics/regresion-lineal-multiple/index.md) | slides · notebooks · entrega 3 |
+| 7 | [Regresión logística](topics/regresion-logistica/index.md) | slides · demos · notebook · entrega 4 |
+| 8 | [Feature engineering y transformaciones](topics/feature-engineering/index.md) | notebook · entrega 5 |
+| 9 | [Árboles de decisión y ensembles](topics/arboles-decision/index.md) | slides · notebooks |
+| 10 | [Clasificación multiclase](topics/clasificacion-multiclase/index.md) | notebook · entrega |
+| 11 | [Series temporales](topics/series-temporales/index.md) | notebook |
+| 12 | [Sesgos en los datos](topics/sesgos/index.md) | notebook |
 
 ## Referencia
 

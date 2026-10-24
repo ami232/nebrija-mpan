@@ -1,10 +1,35 @@
-# 1. Probabilidad
+# Probabilidad
 
-> Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/probabilidad/>
+> Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/probabilidad/>
 
-Imagina que gestionas una tienda online. Ayer hubo 1000 visitas y 70 acabaron en compra. ¿Cuál es la probabilidad de que la próxima visita compre? ¿Cambia esa probabilidad si sabemos que el visitante entra desde el móvil? Si una compra acaba de entrar, ¿qué probabilidad hay de que viniera de un ordenador? Estas preguntas, que aparecen a diario en cualquier negocio, son preguntas de **probabilidad**. Esta página te da el lenguaje y las reglas para responderlas con rigor.
+Una empresa nunca sabe con certeza cuántos clientes entrarán mañana, cuáles abandonarán su suscripción o cuánto gastará el próximo pedido. Y sin embargo tiene que decidir hoy cuánto personal contratar, a quién ofrecer un descuento o cuánto stock pedir. Con este tema empieza el curso: es el lenguaje para **razonar con incertidumbre**, y todo lo que viene después se apoya en él.
 
-**Qué necesitas saber antes:** nada en particular. Usaremos algo de notación de conjuntos ($\cup$, $\cap$), que se explica sobre la marcha.
+Imagina que gestionas una tienda online. Ayer hubo 1000 visitas y 70 acabaron en compra. ¿Cuál es la probabilidad de que la próxima visita compre? ¿Cambia esa probabilidad si sabemos que el visitante entra desde el móvil? Si una compra acaba de entrar, ¿qué probabilidad hay de que viniera de un ordenador? Estas preguntas, que aparecen a diario en cualquier negocio, son preguntas de **probabilidad**. Este tema te da el lenguaje y las reglas para responderlas con rigor.
+
+## Objetivos
+
+Al terminar el tema deberías ser capaz de:
+
+- [ ] Describir una situación incierta con sucesos y combinarlos (unión, intersección, complementario).
+- [ ] Calcular probabilidades de sucesos a partir de una tabla de datos, incluidas las probabilidades condicionadas.
+- [ ] Decidir si dos sucesos son independientes y explicar qué significa para el negocio.
+- [ ] Aplicar la ley de la probabilidad total y el teorema de Bayes, y reconocer la falacia de la tasa base.
+
+## Antes de empezar
+
+No necesitas conocimientos previos de estadística: basta con las matemáticas de bachillerato. Usaremos algo de notación de conjuntos ($\cup$, $\cap$), que se explica sobre la marcha.
+
+Para el código necesitas lo básico de Python. Si nunca has usado NumPy, pandas o Matplotlib, haz antes este tutorial (1–2 h). Lo usarás en todo el curso:
+
+**Tutorial: Python para análisis estadístico** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/probabilidad/python.ipynb) &nbsp; [descargar .ipynb](python.ipynb)
+
+| Símbolo | Significado |
+|---|---|
+| $\Omega$, $A$, $B$ | espacio muestral (todos los resultados posibles) y sucesos |
+| $A \cup B$, $A \cap B$, $\bar{A}$ | unión ($A$ o $B$), intersección ($A$ y $B$), complementario (no $A$) |
+| $P(A)$, $P(A \mid B)$ | probabilidad de $A$; probabilidad de $A$ sabiendo que ha ocurrido $B$ |
+
+El tema siguiente, [variables aleatorias](../variables-aleatorias/index.md), traduce estos sucesos a números.
 
 ## Por qué necesitamos la probabilidad
 
@@ -61,7 +86,7 @@ Es lo que hacemos con dados, monedas o sorteos. Al lanzar dos dados hay 36 pares
 
 Con ella estimamos $P(C) = 70/1000 = 0.07$ y $P(M) = 600/1000 = 0.6$. Una tabla así, que cruza dos variables, se llama **tabla de contingencia**. Volverá a aparecer muchas veces en el curso.
 
-**3. Por un modelo.** A veces la probabilidad sale de un modelo matemático con unas suposiciones, como las distribuciones de la [página 3](distribuciones.md). Otras veces sale del juicio de un experto, cuando no hay datos.
+**3. Por un modelo.** A veces la probabilidad sale de un modelo matemático con unas suposiciones, como las [distribuciones con nombre propio](../variables-aleatorias/distribuciones.md) del próximo tema. Otras veces sale del juicio de un experto, cuando no hay datos.
 
 Sea cual sea el origen, toda asignación de probabilidades debe cumplir tres reglas básicas, los **axiomas de Kolmogórov**:
 
@@ -87,7 +112,7 @@ En la tienda, $P(M \cup C) = 0.6 + 0.07 - 0.03 = 0.64$. Compruébalo en la tabla
 
 ## Probabilidad condicionada
 
-Esta es probablemente la idea más importante de la página. Toda la estadística y el machine learning consisten, en el fondo, en calcular probabilidades **condicionadas a lo que sabemos**.
+Esta es probablemente la idea más importante del tema. Toda la estadística y el machine learning consisten, en el fondo, en calcular probabilidades **condicionadas a lo que sabemos**.
 
 Volvamos a la pregunta inicial: si sabemos que la visita llega desde el móvil, ¿cuál es la probabilidad de que compre? Ya no nos interesan las 1000 visitas, solo las 600 de móvil. De ellas, 30 compran:
 
@@ -165,11 +190,11 @@ En la tienda, si acaba de entrar una compra, la probabilidad de que venga de un 
 
 Hemos estimado probabilidades con frecuencias observadas, como el 70/1000. ¿Por qué es legítimo? Porque, cuando un experimento se repite muchas veces de forma independiente, la **frecuencia relativa** de un suceso se acerca cada vez más a su probabilidad. Es la **ley de los grandes números**.
 
-La ley tiene una consecuencia práctica importante: con pocas repeticiones, la frecuencia puede alejarse bastante de la probabilidad. Una estimación basada en 20 visitas es mucho menos fiable que una basada en 1000. En la [página 5](inferencia.md) aprenderemos a cuantificar exactamente cuánto.
+La ley tiene una consecuencia práctica importante: con pocas repeticiones, la frecuencia puede alejarse bastante de la probabilidad. Una estimación basada en 20 visitas es mucho menos fiable que una basada en 1000. En el tema de [inferencia](../inferencia/intervalos.md) aprenderemos a cuantificar exactamente cuánto.
 
 Experimenta con dos dados: con pocos lanzamientos, las frecuencias saltan mucho; con miles, se pegan a la probabilidad teórica.
 
-▶️ [Demo interactiva: dados](https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/demo_dados.html) (en la web)
+▶️ [Demo interactiva: dados](https://alberpro.com/nebrija-mpan/topics/probabilidad/demo_dados.html) (en la web)
 
 ## En Python
 
@@ -340,4 +365,12 @@ Combinar evidencias independientes cambia muchísimo la conclusión: del 16 % pa
 
 </details>
 
-[Siguiente: Variables aleatorias →](variables.md)
+## Slides
+
+Las **slides de clase** son el apoyo que usamos en el aula. Resumen el tema, pero no sustituyen a esta página.
+
+📄 [Slides (PDF)](slides.pdf)
+
+La **[guía de referencia](../../reference/modelos-predictivos.md)** reúne las fórmulas de todo el curso en una página.
+
+[Siguiente tema: Variables aleatorias →](../variables-aleatorias/index.md)
