@@ -1,0 +1,1438 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Material docente — estadística, machine learning y desarrollo de software">
+      
+      
+      
+        <link rel="canonical" href="https://alberpro.com/nebrija-mpan/topics/inferencia/estimacion/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../intervalos/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>1. Muestras y estimación - Nebrija · Modelos predictivos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-muestras-y-estimacion" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-header__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nebrija · Modelos predictivos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. Muestras y estimación
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-nav__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nebrija · Modelos predictivos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelos predictivos en el análisis de negocios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probabilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../variables-aleatorias/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Variables aleatorias y distribuciones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Variables aleatorias y distribuciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../variables-aleatorias/variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Variables aleatorias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../variables-aleatorias/distribuciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Distribuciones con nombre propio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../variables-aleatorias/estadisticos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Estadísticos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimación e inferencia
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estimación e inferencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Muestras y estimación
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Muestras y estimación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#de-la-distribucion-a-los-datos-poblacion-y-muestra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De la distribución a los datos: población y muestra
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="De la distribución a los datos: población y muestra">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#por-que-dividir-entre-n-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Por qué dividir entre n − 1?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estimar-parametros-metodo-de-los-momentos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estimar parámetros: método de los momentos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intervalos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Intervalos de confianza: de la muestra a la población
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Práctica guiada: aceptación de cookies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contraste-hipotesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contraste de hipótesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../regresion-lineal-simple/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regresión lineal simple
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../regresion-lineal-multiple/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regresión lineal múltiple
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../regresion-logistica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regresión logística
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feature-engineering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature engineering y transformaciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arboles-decision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Árboles de decisión y ensembles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../clasificacion-multiclase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Clasificación multiclase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../series-temporales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Series temporales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sesgos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sesgos en los datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Referencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/modelos-predictivos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía de referencia: modelos predictivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#de-la-distribucion-a-los-datos-poblacion-y-muestra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De la distribución a los datos: población y muestra
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="De la distribución a los datos: población y muestra">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#por-que-dividir-entre-n-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Por qué dividir entre n − 1?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estimar-parametros-metodo-de-los-momentos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estimar parámetros: método de los momentos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="1-muestras-y-estimacion">1. Muestras y estimación<a class="headerlink" href="#1-muestras-y-estimacion" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Antes de empezar</p>
+<p>Esta página usa la <strong>esperanza</strong> y la <strong>varianza</strong> de una variable aleatoria (<a href="../../variables-aleatorias/estadisticos/">estadísticos</a>) y las distribuciones Poisson y normal (<a href="../../variables-aleatorias/distribuciones/">distribuciones</a>).</p>
+</div>
+<p>En el tema anterior describimos variables aleatorias con su distribución y la resumimos con su media <span class="arithmatex">\(\mu\)</span> y su desviación típica <span class="arithmatex">\(\sigma\)</span>. Pero hicimos trampa: casi siempre <strong>dábamos</strong> la distribución. "Entran de media 4 clientes por hora", "el 2 % de las tarjetas tiene un premio de 100 €". En la vida real nadie nos dice esos números. El director comercial no sabe cuánto gasta de media un cliente: tiene las facturas de los clientes de este mes. El call center no sabe cuál es su <span class="arithmatex">\(\lambda\)</span>: tiene el registro de llamadas de unas cuantas horas.</p>
+<p>Esta página da el primer paso para pasar de los datos a la distribución: distinguir lo que <strong>queremos saber</strong> (la población) de lo que <strong>podemos calcular</strong> (la muestra), y usar lo segundo para estimar lo primero.</p>
+<h2 id="de-la-distribucion-a-los-datos-poblacion-y-muestra">De la distribución a los datos: población y muestra<a class="headerlink" href="#de-la-distribucion-a-los-datos-poblacion-y-muestra" title="Permanent link">&para;</a></h2>
+<p>Lo que tenemos son <strong>datos</strong>: una <strong>muestra</strong> <span class="arithmatex">\(x_1, \ldots, x_n\)</span> de una <strong>población</strong> mucho mayor (los clientes encuestados frente a todos los clientes, los pedidos de este mes frente a todos los pedidos posibles). La distribución de la población, con su media <span class="arithmatex">\(\mu\)</span> y su varianza <span class="arithmatex">\(\sigma^2\)</span>, existe pero <strong>no la conocemos</strong>. Con la muestra calculamos los <strong>estadísticos muestrales</strong>, que imitan a los de la población:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Población (desconocida)</th>
+<th>Muestra (calculable)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Media</td>
+<td><span class="arithmatex">\(\mu = \mathbb{E}[X]\)</span></td>
+<td><span class="arithmatex">\(\bar{x} = \dfrac{1}{n}\displaystyle\sum_{i=1}^{n} x_i\)</span></td>
+</tr>
+<tr>
+<td>Varianza</td>
+<td><span class="arithmatex">\(\sigma^2 = \mathbb{V}[X]\)</span></td>
+<td><span class="arithmatex">\(s^2 = \dfrac{1}{n - 1}\displaystyle\sum_{i=1}^{n} (x_i - \bar{x})^2\)</span></td>
+</tr>
+<tr>
+<td>Desviación típica</td>
+<td><span class="arithmatex">\(\sigma\)</span></td>
+<td><span class="arithmatex">\(s = \sqrt{s^2}\)</span></td>
+</tr>
+<tr>
+<td>Proporción</td>
+<td><span class="arithmatex">\(p\)</span></td>
+<td>$\hat{p} = $ proporción de unos en la muestra</td>
+</tr>
+<tr>
+<td>Mediana, cuantiles</td>
+<td><span class="arithmatex">\(q_p\)</span></td>
+<td>los de la muestra ordenada</td>
+</tr>
+</tbody>
+</table>
+<p>La convención de notación es útil: <strong>letras griegas</strong> (<span class="arithmatex">\(\mu\)</span>, <span class="arithmatex">\(\sigma\)</span>, <span class="arithmatex">\(p\)</span>) para los parámetros de la población y <strong>letras latinas o con acento circunflejo</strong> (<span class="arithmatex">\(\bar{x}\)</span>, <span class="arithmatex">\(s\)</span>, <span class="arithmatex">\(\hat{p}\)</span>) para lo que calculamos con datos.</p>
+<h3 id="por-que-dividir-entre-n-1">¿Por qué dividir entre n − 1?<a class="headerlink" href="#por-que-dividir-entre-n-1" title="Permanent link">&para;</a></h3>
+<p>La fórmula "natural" de la varianza muestral dividiría entre <span class="arithmatex">\(n\)</span>. Pero la media muestral <span class="arithmatex">\(\bar{x}\)</span> se calcula con los mismos datos, y es justo el punto que <strong>minimiza</strong> la suma de distancias al cuadrado a esos datos. Por eso los datos siempre están, en conjunto, más cerca de <span class="arithmatex">\(\bar{x}\)</span> que de la verdadera <span class="arithmatex">\(\mu\)</span>, y dividir entre <span class="arithmatex">\(n\)</span> <strong>subestima</strong> sistemáticamente <span class="arithmatex">\(\sigma^2\)</span>.</p>
+<p>Dividir entre <span class="arithmatex">\(n - 1\)</span> corrige exactamente ese sesgo. La idea intuitiva es que, una vez fijada <span class="arithmatex">\(\bar{x}\)</span>, solo <span class="arithmatex">\(n - 1\)</span> desviaciones son libres: la última queda determinada, porque todas deben sumar cero. Por eso se habla de <strong><span class="arithmatex">\(n - 1\)</span> grados de libertad</strong>.</p>
+<p>El efecto se puede medir: con muestras de solo 3 datos de una normal con <span class="arithmatex">\(\sigma^2 = 1\)</span>, la fórmula con <span class="arithmatex">\(n\)</span> da de media unos 0.67, es decir, <span class="arithmatex">\((n-1)/n\)</span> del valor real. La fórmula con <span class="arithmatex">\(n - 1\)</span> da de media 1.00. Con muestras grandes, <span class="arithmatex">\(n\)</span> y <span class="arithmatex">\(n - 1\)</span> apenas se distinguen.</p>
+<div class="admonition warning">
+<p class="admonition-title">Cada herramienta usa una convención</p>
+<ul>
+<li><strong>pandas:</strong> <code>serie.var()</code> y <code>serie.std()</code> dividen entre <strong>n − 1</strong> (<code>ddof=1</code>).</li>
+<li><strong>NumPy:</strong> <code>np.var(x)</code> y <code>np.std(x)</code> dividen entre <strong>n</strong> (<code>ddof=0</code>).</li>
+</ul>
+<p>Si dos personas obtienen varianzas distintas con los mismos datos, casi siempre es esto.</p>
+</div>
+<h2 id="estimar-parametros-metodo-de-los-momentos">Estimar parámetros: método de los momentos<a class="headerlink" href="#estimar-parametros-metodo-de-los-momentos" title="Permanent link">&para;</a></h2>
+<p>Muchas veces suponemos que los datos siguen una distribución concreta (Poisson, normal…) pero no conocemos sus parámetros. El <strong>método de los momentos</strong> es la forma más directa de estimarlos: igualar la media (y si hace falta la varianza) teórica de la distribución a la de la muestra, y despejar.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: método de los momentos</p>
+<p>Si la distribución supuesta tiene media <span class="arithmatex">\(\mathbb{E}[X]\)</span> y varianza <span class="arithmatex">\(\mathbb{V}[X]\)</span> que dependen de sus parámetros, se eligen los parámetros que cumplen</p>
+<div class="arithmatex">\[\mathbb{E}[X] = \bar{x}, \qquad \mathbb{V}[X] = s^2\]</div>
+<p>(la segunda ecuación solo si hay dos parámetros que estimar). Los parámetros estimados se marcan con un acento circunflejo (<span class="arithmatex">\(\hat{\lambda}\)</span>, <span class="arithmatex">\(\hat{\mu}\)</span>, <span class="arithmatex">\(\hat{p}\)</span>).</p>
+</div>
+<p>El acento circunflejo recuerda que son <strong>estimaciones con incertidumbre</strong>, no los valores reales: con otra muestra saldrían otros números.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: llamadas por hora (Poisson)</p>
+<p>En 10 horas, un call center recibió 3, 5, 2, 4, 6, 3, 4, 1, 5 y 7 llamadas. Si suponemos una Poisson, como <span class="arithmatex">\(\mathbb{E}[X] = \lambda\)</span>, estimamos <span class="arithmatex">\(\hat{\lambda} = \bar{x} = 40/10 = 4\)</span> llamadas por hora.</p>
+<p><strong>Comprobación de la suposición:</strong> en una Poisson la media y la varianza coinciden. Aquí <span class="arithmatex">\(s^2 = 3.33\)</span>, que es razonablemente cercano a 4 para solo 10 datos. Con el modelo estimado podemos responder preguntas nuevas: la probabilidad de recibir 8 o más llamadas en una hora es <code>stats.poisson(4).sf(7)</code> <span class="arithmatex">\(\approx 0.051\)</span>, más o menos 1 hora de cada 20.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: tiempos de entrega (normal)</p>
+<p>Ocho entregas tardaron 46, 51, 49, 55, 44, 50, 47 y 53 horas. Si suponemos que son normales, estimamos <span class="arithmatex">\(\hat{\mu} = \bar{x} = 49.4\)</span> h y <span class="arithmatex">\(\hat{\sigma} = s = 3.66\)</span> h. La probabilidad estimada de que una entrega supere las 56 h es <code>stats.norm(49.4, 3.66).sf(56)</code> <span class="arithmatex">\(\approx 0.035\)</span>.</p>
+<p>Con solo 8 datos, estas estimaciones son bastante inseguras. En la <a href="../intervalos/">siguiente página</a> veremos cómo cuantificar esa incertidumbre.</p>
+</div>
+<p>Este método es exactamente lo que haremos en la <a href="../practica/">práctica guiada</a>: estimar la probabilidad <span class="arithmatex">\(p\)</span> de aceptar las cookies con la proporción observada <span class="arithmatex">\(\hat{p}\)</span>, porque en una Bernoulli la media es <span class="arithmatex">\(p\)</span>.</p>
+<div class="admonition danger">
+<p class="admonition-title">Errores frecuentes</p>
+<ul>
+<li><strong>Confundir el estadístico con el parámetro.</strong> <span class="arithmatex">\(\bar{x} = 49.4\)</span> es una estimación de <span class="arithmatex">\(\mu\)</span>, no <span class="arithmatex">\(\mu\)</span>. Con otra muestra saldría otro número.</li>
+<li><strong>Mezclar <span class="arithmatex">\(n\)</span> y <span class="arithmatex">\(n - 1\)</span></strong> entre herramientas sin darse cuenta.</li>
+<li><strong>Estimar sin comprobar el modelo.</strong> El método de los momentos siempre da un número, aunque la distribución supuesta no encaje. Compara lo que puedas (media y varianza en una Poisson, el histograma frente a la curva).</li>
+</ul>
+</div>
+<h2 id="en-python">En Python<a class="headerlink" href="#en-python" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+
+<span class="c1"># n frente a n − 1</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>     <span class="c1"># 5.0 (entre n) y 6.67 (entre n − 1)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>5.0 6.666666666666667
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Estadísticos muestrales de datos reales</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/ami232/nebrija-mpan/main/data/telco_churn.csv"</span><span class="p">)</span>
+<span class="n">factura</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"factura_mensual"</span><span class="p">]</span>          <span class="c1"># factura mensual de 5000 clientes de una operadora</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">factura</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">factura</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">))</span>   <span class="c1"># x̄ y s (n − 1)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>66.08 24.41
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Método de los momentos para una Poisson</span>
+<span class="n">llamadas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="n">lam_hat</span> <span class="o">=</span> <span class="n">llamadas</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>                <span class="c1"># 4.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">llamadas</span><span class="o">.</span><span class="n">var</span><span class="p">(),</span> <span class="mi">2</span><span class="p">))</span>          <span class="c1"># 3.33: ¿parecido a la media?</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>3.33
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">lam_hat</span><span class="p">)</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>   <span class="c1"># P(X ≥ 8) ≈ 0.051</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>0.051
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Método de los momentos para una normal</span>
+<span class="n">entregas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">46</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">53</span><span class="p">])</span>
+<span class="n">mu_hat</span><span class="p">,</span> <span class="n">sigma_hat</span> <span class="o">=</span> <span class="n">entregas</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">entregas</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">mu_hat</span><span class="p">,</span> <span class="n">sigma_hat</span><span class="p">)</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="mi">56</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>   <span class="c1"># P(entrega &gt; 56 h) ≈ 0.035</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>0.035
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lo esencial</p>
+<ul>
+<li>Los parámetros de la <strong>población</strong> (<span class="arithmatex">\(\mu\)</span>, <span class="arithmatex">\(\sigma\)</span>, <span class="arithmatex">\(p\)</span>) son desconocidos. Con una <strong>muestra</strong> calculamos estadísticos (<span class="arithmatex">\(\bar{x}\)</span>, <span class="arithmatex">\(s\)</span>, <span class="arithmatex">\(\hat{p}\)</span>) que los imitan.</li>
+<li>La varianza muestral divide entre <span class="arithmatex">\(n - 1\)</span> para no subestimar <span class="arithmatex">\(\sigma^2\)</span>. pandas lo hace por defecto, NumPy no.</li>
+<li>El <strong>método de los momentos</strong> estima los parámetros de una distribución igualando su media (y su varianza) a las de la muestra.</li>
+<li>Una estimación lleva un acento circunflejo porque tiene <strong>incertidumbre</strong>: con otra muestra saldría otra. Medir esa incertidumbre es el objetivo de la <a href="../intervalos/">siguiente página</a>.</li>
+</ul>
+</div>
+<h2 id="ejercicios">Ejercicios<a class="headerlink" href="#ejercicios" title="Permanent link">&para;</a></h2>
+<p><strong>1.</strong> Con la muestra 4, 8, 6, 2, calcula la varianza dividiendo entre <span class="arithmatex">\(n\)</span> y entre <span class="arithmatex">\(n - 1\)</span>. ¿Qué daría <code>np.var</code> y qué daría <code>pd.Series.var</code>?</p>
+<details class="success">
+<summary>Solución</summary>
+<p><span class="arithmatex">\(\bar{x} = 5\)</span>. Las desviaciones son <span class="arithmatex">\(-1, 3, 1, -3\)</span>, y sus cuadrados suman <span class="arithmatex">\(1 + 9 + 1 + 9 = 20\)</span>. Dividiendo entre <span class="arithmatex">\(n = 4\)</span> sale <strong>5</strong>, que es lo que da <code>np.var(x)</code>. Dividiendo entre <span class="arithmatex">\(n - 1 = 3\)</span> sale <strong>6.67</strong>, que es lo que da <code>pd.Series(x).var()</code>. Con solo 4 datos la diferencia es notable.</p>
+</details>
+<p><strong>2.</strong> Un compañero calcula la varianza de 5 datos con <code>np.var</code> y obtiene 8. ¿Qué habría dado <code>pd.Series.var</code> con los mismos datos?</p>
+<details class="success">
+<summary>Solución</summary>
+<p><code>np.var</code> divide la suma de cuadrados entre <span class="arithmatex">\(n = 5\)</span>, así que esa suma vale <span class="arithmatex">\(8 \cdot 5 = 40\)</span>. pandas la divide entre <span class="arithmatex">\(n - 1 = 4\)</span>: $40 / 4 = $ <strong>10</strong>. En general, <span class="arithmatex">\(s^2_{n-1} = s^2_n \cdot n / (n - 1)\)</span>.</p>
+</details>
+<p><strong>3.</strong> Una tienda registra las devoluciones diarias durante 8 días: 2, 0, 3, 1, 2, 4, 1 y 3. Suponiendo una Poisson, estima <span class="arithmatex">\(\lambda\)</span> por el método de los momentos. ¿Es razonable la suposición? Con el modelo estimado, ¿qué probabilidad hay de un día con 5 o más devoluciones?</p>
+<details class="success">
+<summary>Solución</summary>
+<p><span class="arithmatex">\(\bar{x} = 16/8 = 2\)</span>, así que <span class="arithmatex">\(\hat{\lambda} = 2\)</span> devoluciones al día.</p>
+<p>En una Poisson la media y la varianza coinciden. Las desviaciones a la media son <span class="arithmatex">\(0, -2, 1, -1, 0, 2, -1, 1\)</span>, sus cuadrados suman 12, y <span class="arithmatex">\(s^2 = 12/7 \approx 1.71\)</span>: cercano a 2 para solo 8 días, así que la suposición es razonable.</p>
+<p>$P(X \ge 5) = $ <code>stats.poisson(2).sf(4)</code> <span class="arithmatex">\(\approx 0.053\)</span>: aproximadamente un día de cada 19.</p>
+</details>
+<p><strong>4.</strong> <em>(Más difícil)</em> Los tiempos entre llegadas de clientes a una ventanilla (minutos) fueron 2, 5, 1, 8, 3, 6, 4 y 3. Suponemos una distribución exponencial de tasa <span class="arithmatex">\(\lambda\)</span>, cuya media es <span class="arithmatex">\(1/\lambda\)</span> y cuya desviación típica también es <span class="arithmatex">\(1/\lambda\)</span>. (a) Estima <span class="arithmatex">\(\lambda\)</span> por el método de los momentos. (b) Estima la probabilidad de esperar más de 10 minutos, sabiendo que en una exponencial <span class="arithmatex">\(P(X &gt; t) = e^{-\lambda t}\)</span>. (c) ¿Qué dice la desviación típica muestral sobre la suposición?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>(a) Igualamos la media: <span class="arithmatex">\(1/\lambda = \bar{x} = 32/8 = 4\)</span>, así que <span class="arithmatex">\(\hat{\lambda} = 0.25\)</span> llegadas por minuto.</p>
+<p>(b) <span class="arithmatex">\(P(X &gt; 10) = e^{-0.25 \cdot 10} = e^{-2.5} \approx 0.082\)</span>. En Python, <code>stats.expon(scale=4).sf(10)</code>.</p>
+<p>(c) En una exponencial la desviación típica es igual a la media, 4 minutos. La muestral es <span class="arithmatex">\(s \approx 2.27\)</span>, bastante menor. Con 8 datos no es concluyente, pero es una señal para vigilar: si se confirma con más datos, la exponencial exageraría las esperas largas y la probabilidad del apartado (b) estaría sobrestimada.</p>
+</details>
+<p><a class="md-button" href="../"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> Volver al tema</a> <a class="md-button md-button--primary" href="../intervalos/">Siguiente: Intervalos de confianza <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg></span></a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Estimación e inferencia">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Estimación e inferencia
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../intervalos/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: 2. Intervalos de confianza: de la muestra a la población">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                2. Intervalos de confianza: de la muestra a la población
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/katex.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

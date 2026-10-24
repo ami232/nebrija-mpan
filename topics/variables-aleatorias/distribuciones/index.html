@@ -1,0 +1,1813 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Material docente — estadística, machine learning y desarrollo de software">
+      
+      
+      
+        <link rel="canonical" href="https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/distribuciones/">
+      
+      
+        <link rel="prev" href="../variables/">
+      
+      
+        <link rel="next" href="../estadisticos/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>2. Distribuciones con nombre propio - Nebrija · Modelos predictivos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2-distribuciones-con-nombre-propio" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-header__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nebrija · Modelos predictivos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. Distribuciones con nombre propio
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-nav__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nebrija · Modelos predictivos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelos predictivos en el análisis de negocios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probabilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Variables aleatorias y distribuciones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Variables aleatorias y distribuciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Variables aleatorias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Distribuciones con nombre propio
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Distribuciones con nombre propio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#por-que-unas-pocas-distribuciones-bastan-para-casi-todo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué unas pocas distribuciones bastan para casi todo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#que-distribucion-uso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué distribución uso?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uniforme-discreta-todos-los-resultados-igual-de-probables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uniforme discreta: todos los resultados igual de probables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bernoulli-un-si-o-un-no" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bernoulli: un sí o un no
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#binomial-contar-exitos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binomial: contar éxitos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Binomial: contar éxitos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#de-donde-sale-la-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De dónde sale la fórmula
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poisson-contar-eventos-en-el-tiempo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poisson: contar eventos en el tiempo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Poisson: contar eventos en el tiempo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#de-donde-sale-muchos-intentos-cada-uno-muy-improbable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De dónde sale: muchos intentos, cada uno muy improbable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-comprobar-con-datos-si-es-poisson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo comprobar con datos si es Poisson
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#normal-la-campana-de-gauss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normal: la campana de Gauss
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Normal: la campana de Gauss">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#normal-estandar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normal estándar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aproximacion-normal-de-la-binomial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aproximación normal de la binomial
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#en-python-scipystats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En Python: scipy.stats
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../estadisticos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Estadísticos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../inferencia/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimación e inferencia
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estimación e inferencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../inferencia/estimacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Muestras y estimación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../inferencia/intervalos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Intervalos de confianza: de la muestra a la población
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../inferencia/practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Práctica guiada: aceptación de cookies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contraste-hipotesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contraste de hipótesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../regresion-lineal-simple/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regresión lineal simple
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../regresion-lineal-multiple/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regresión lineal múltiple
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../regresion-logistica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regresión logística
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feature-engineering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature engineering y transformaciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arboles-decision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Árboles de decisión y ensembles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../clasificacion-multiclase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Clasificación multiclase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../series-temporales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Series temporales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sesgos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sesgos en los datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Referencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/modelos-predictivos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía de referencia: modelos predictivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#por-que-unas-pocas-distribuciones-bastan-para-casi-todo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué unas pocas distribuciones bastan para casi todo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#que-distribucion-uso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué distribución uso?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uniforme-discreta-todos-los-resultados-igual-de-probables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uniforme discreta: todos los resultados igual de probables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bernoulli-un-si-o-un-no" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bernoulli: un sí o un no
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#binomial-contar-exitos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binomial: contar éxitos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Binomial: contar éxitos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#de-donde-sale-la-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De dónde sale la fórmula
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poisson-contar-eventos-en-el-tiempo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poisson: contar eventos en el tiempo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Poisson: contar eventos en el tiempo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#de-donde-sale-muchos-intentos-cada-uno-muy-improbable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De dónde sale: muchos intentos, cada uno muy improbable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-comprobar-con-datos-si-es-poisson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo comprobar con datos si es Poisson
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#normal-la-campana-de-gauss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normal: la campana de Gauss
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Normal: la campana de Gauss">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#normal-estandar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normal estándar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aproximacion-normal-de-la-binomial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aproximación normal de la binomial
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#en-python-scipystats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En Python: scipy.stats
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="2-distribuciones-con-nombre-propio">2. Distribuciones con nombre propio<a class="headerlink" href="#2-distribuciones-con-nombre-propio" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Lo que necesitas antes</p>
+<p>Qué es una variable aleatoria, y cómo se usan la PMF, la PDF y la CDF para calcular probabilidades. Lo tienes en <a href="../variables/">1. Variables aleatorias</a>.</p>
+</div>
+<h2 id="por-que-unas-pocas-distribuciones-bastan-para-casi-todo">Por qué unas pocas distribuciones bastan para casi todo<a class="headerlink" href="#por-que-unas-pocas-distribuciones-bastan-para-casi-todo" title="Permanent link">&para;</a></h2>
+<p>En la página anterior construimos la distribución del número de artículos por pedido a partir de una tabla de datos. Funcionó, pero tiene dos limitaciones. La primera es que necesitamos una probabilidad para cada valor posible: con cinco valores es manejable, con cientos no. La segunda es que una tabla no explica <strong>por qué</strong> los datos tienen esa forma, así que no nos dice qué pasará si cambian las condiciones (más tráfico, otra campaña, otra hora del día).</p>
+<p>La buena noticia es que muchos fenómenos muy distintos comparten el mismo <strong>mecanismo</strong> de generación, y por tanto la misma forma de distribución. Contar cuántos clientes de 200 compran, cuántas piezas de un lote salen defectuosas o cuántos pacientes responden a un tratamiento son, en el fondo, el mismo problema: contar éxitos entre intentos independientes. Esos patrones recurrentes tienen nombre propio, una fórmula conocida y unos pocos <strong>parámetros</strong> que ajustan la forma a cada caso concreto. Escribimos <span class="arithmatex">\(X \sim \text{Binomial}(n, p)\)</span> para decir "<span class="arithmatex">\(X\)</span> sigue una distribución binomial con parámetros <span class="arithmatex">\(n\)</span> y <span class="arithmatex">\(p\)</span>".</p>
+<p>Modelar con una distribución con nombre propio significa hacer una <strong>suposición</strong> sobre cómo se generan los datos. Si la suposición es razonable, a cambio obtienes mucho: con uno o dos números describes todo el comportamiento de la variable, puedes calcular cualquier probabilidad y razonar sobre escenarios que todavía no has observado. Por eso, para cada distribución veremos tres cosas: la <strong>historia</strong> que la genera, de dónde sale su <strong>fórmula</strong> y cómo <strong>comprobar con datos</strong> si encaja.</p>
+<h2 id="que-distribucion-uso">¿Qué distribución uso?<a class="headerlink" href="#que-distribucion-uso" title="Permanent link">&para;</a></h2>
+<p>La pregunta clave es <strong>qué estás contando o midiendo</strong>. Esta guía cubre los casos de este tema:</p>
+<table>
+<thead>
+<tr>
+<th>Lo que observas</th>
+<th>Distribución</th>
+<th>Ejemplo de negocio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Un único sí/no</td>
+<td>Bernoulli<span class="arithmatex">\((p)\)</span></td>
+<td>¿este cliente renueva?</td>
+</tr>
+<tr>
+<td>Nº de éxitos en <span class="arithmatex">\(n\)</span> intentos independientes con la misma <span class="arithmatex">\(p\)</span></td>
+<td>Binomial<span class="arithmatex">\((n, p)\)</span></td>
+<td>compras entre 200 visitas</td>
+</tr>
+<tr>
+<td>Nº de eventos en un intervalo, a ritmo constante</td>
+<td>Poisson<span class="arithmatex">\((\lambda)\)</span></td>
+<td>clientes por hora, incidencias al día</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(k\)</span> resultados igual de probables</td>
+<td>Uniforme discreta<span class="arithmatex">\((a, b)\)</span></td>
+<td>un dado, un sorteo</td>
+</tr>
+<tr>
+<td>Una medida continua simétrica alrededor de un centro</td>
+<td>Normal<span class="arithmatex">\((\mu, \sigma^2)\)</span></td>
+<td>errores de medición, peso de un envase, medias de muchas observaciones</td>
+</tr>
+</tbody>
+</table>
+<p>Hay muchas más (exponencial para tiempos de espera, geométrica, t de Student, beta…). Algunas aparecerán más adelante en el curso; la t de Student, por ejemplo, en <a href="../../contraste-hipotesis/">contraste de hipótesis</a>. El explorador de abajo te permite ver cómo cambia la forma de cada una al mover sus parámetros y calcular probabilidades de intervalos. Úsalo mientras lees cada sección.</p>
+<iframe class="demo-embed" style="height:800px" src="../demo_distribuciones.html" title="Demo interactiva" loading="lazy"></iframe>
+
+<p><a href="../demo_distribuciones.html" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span> Abrir a pantalla completa</a></p>
+<h2 id="uniforme-discreta-todos-los-resultados-igual-de-probables">Uniforme discreta: todos los resultados igual de probables<a class="headerlink" href="#uniforme-discreta-todos-los-resultados-igual-de-probables" title="Permanent link">&para;</a></h2>
+<p><strong>La historia.</strong> Hay <span class="arithmatex">\(k\)</span> resultados posibles, los enteros de <span class="arithmatex">\(a\)</span> a <span class="arithmatex">\(b\)</span>, y ninguno tiene ventaja sobre los demás: un dado equilibrado, una persona elegida por sorteo, un número de lotería.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: uniforme discreta<span class="arithmatex">\((a, b)\)</span></p>
+<div class="arithmatex">\[P(X = x) = \frac{1}{b - a + 1}, \quad x = a, a+1, \ldots, b \qquad\qquad \mathbb{E}[X] = \frac{a + b}{2}, \qquad \mathbb{V}[X] = \frac{(b - a + 1)^2 - 1}{12}\]</div>
+</div>
+<p>Es la regla de Laplace del <a href="../../probabilidad/#asignar-probabilidades">tema de probabilidad</a> convertida en distribución. Para un dado, <span class="arithmatex">\(a = 1\)</span> y <span class="arithmatex">\(b = 6\)</span>, así que cada cara tiene probabilidad <span class="arithmatex">\(1/6\)</span>, la media es <span class="arithmatex">\(3.5\)</span> y la varianza <span class="arithmatex">\(35/12 \approx 2.92\)</span>. Que la media sea 3.5, un valor que el dado nunca muestra, recuerda que el valor esperado es un promedio a largo plazo, no el resultado "típico".</p>
+<p><strong>Cuándo no encaja.</strong> En negocio es rara: casi nunca todos los valores son igual de probables. Las ventas por día de la semana o la hora a la que llegan los pedidos casi nunca son uniformes, y suponerlo lleva a planificar mal.</p>
+<h2 id="bernoulli-un-si-o-un-no">Bernoulli: un sí o un no<a class="headerlink" href="#bernoulli-un-si-o-un-no" title="Permanent link">&para;</a></h2>
+<p><strong>La historia.</strong> Un único experimento con dos resultados posibles, que codificamos como <strong>éxito</strong> (<span class="arithmatex">\(X = 1\)</span>) con probabilidad <span class="arithmatex">\(p\)</span> y <strong>fracaso</strong> (<span class="arithmatex">\(X = 0\)</span>) con probabilidad <span class="arithmatex">\(1 - p\)</span>. Que un cliente renueve, que un préstamo se devuelva, que un usuario acepte las cookies. "Éxito" es solo una etiqueta: puede ser algo indeseable, como que un cliente se dé de baja.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: Bernoulli<span class="arithmatex">\((p)\)</span></p>
+<div class="arithmatex">\[P(X = x) = p^x (1 - p)^{1 - x}, \quad x \in \{0, 1\} \qquad\qquad \mathbb{E}[X] = p, \qquad \mathbb{V}[X] = p(1 - p)\]</div>
+</div>
+<p>La fórmula es una forma compacta de escribir <span class="arithmatex">\(P(X = 1) = p\)</span> y <span class="arithmatex">\(P(X = 0) = 1 - p\)</span>: sustituye <span class="arithmatex">\(x = 1\)</span> y <span class="arithmatex">\(x = 0\)</span> y lo verás. Codificar con 0 y 1 tiene una ventaja práctica enorme: <strong>la media de una columna de ceros y unos es la proporción de unos</strong>. Si 589 de 1000 usuarios aceptan las cookies, la media de la columna es 0.589, que es a la vez la proporción observada y la estimación natural de <span class="arithmatex">\(p\)</span>. Lo usaremos en la <a href="../../inferencia/practica/">práctica guiada</a>.</p>
+<p>La varianza <span class="arithmatex">\(p(1 - p)\)</span> es máxima cuando <span class="arithmatex">\(p = 0.5\)</span>, la situación de máxima incertidumbre, y vale 0 cuando <span class="arithmatex">\(p = 0\)</span> o <span class="arithmatex">\(p = 1\)</span>, porque entonces     el resultado es seguro.</p>
+<h2 id="binomial-contar-exitos">Binomial: contar éxitos<a class="headerlink" href="#binomial-contar-exitos" title="Permanent link">&para;</a></h2>
+<p><strong>La historia.</strong> Repetimos <span class="arithmatex">\(n\)</span> veces un experimento de Bernoulli y contamos cuántos éxitos hay. Para que el resultado sea binomial hacen falta tres condiciones:</p>
+<ol>
+<li>el número de intentos <span class="arithmatex">\(n\)</span> está <strong>fijado de antemano</strong>;</li>
+<li>los intentos son <strong>independientes</strong> entre sí;</li>
+<li>la probabilidad de éxito <span class="arithmatex">\(p\)</span> es <strong>la misma</strong> en todos.</li>
+</ol>
+<p>Dicho de otro modo, si <span class="arithmatex">\(X_1, \ldots, X_n\)</span> son Bernoulli<span class="arithmatex">\((p)\)</span> independientes, su suma <span class="arithmatex">\(X = X_1 + \cdots + X_n\)</span> es Binomial<span class="arithmatex">\((n, p)\)</span>.</p>
+<h3 id="de-donde-sale-la-formula">De dónde sale la fórmula<a class="headerlink" href="#de-donde-sale-la-formula" title="Permanent link">&para;</a></h3>
+<p>Construyámosla con un caso pequeño. Tres clientes reciben una oferta, cada uno la acepta con probabilidad <span class="arithmatex">\(p = 0.3\)</span>, independientemente. ¿Qué probabilidad hay de que <strong>exactamente dos</strong> acepten? Escribiendo A para "acepta" y R para "rechaza", hay tres formas de que ocurra: AAR, ARA y RAA. Por la independencia, cada una tiene probabilidad <span class="arithmatex">\(0.3 \cdot 0.3 \cdot 0.7 = p^2 (1 - p)\)</span>. Como son sucesos que no pueden ocurrir a la vez, se suman:</p>
+<div class="arithmatex">\[P(X = 2) = 3 \cdot p^2 (1 - p) = 3 \cdot 0.09 \cdot 0.7 = 0.189.\]</div>
+<p>El razonamiento general es idéntico: cada secuencia concreta con <span class="arithmatex">\(k\)</span> éxitos y <span class="arithmatex">\(n - k\)</span> fracasos tiene probabilidad <span class="arithmatex">\(p^k (1 - p)^{n - k}\)</span>, y el número de secuencias distintas es el <strong>número combinatorio</strong> <span class="arithmatex">\(\binom{n}{k}\)</span>, las formas de elegir qué <span class="arithmatex">\(k\)</span> de los <span class="arithmatex">\(n\)</span> intentos son éxitos. Con <span class="arithmatex">\(n = 3\)</span> y <span class="arithmatex">\(k = 2\)</span>, <span class="arithmatex">\(\binom{3}{2} = 3\)</span>.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: Binomial<span class="arithmatex">\((n, p)\)</span></p>
+<div class="arithmatex">\[P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}, \quad k = 0, 1, \ldots, n, \qquad \text{con } \binom{n}{k} = \frac{n!}{k!\,(n - k)!}\]</div>
+<div class="arithmatex">\[\mathbb{E}[X] = np, \qquad \mathbb{V}[X] = np(1 - p)\]</div>
+</div>
+<p>La media tiene una lectura inmediata: si cada intento acierta con probabilidad <span class="arithmatex">\(p\)</span>, en <span class="arithmatex">\(n\)</span> intentos esperas <span class="arithmatex">\(np\)</span> aciertos.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: conversión de una campaña</p>
+<p>El 5 % de las visitas a una página de producto acaba en compra. Mañana esperas 200 visitas. Si las visitas se comportan de forma independiente y con la misma probabilidad de compra, el número de compras es <span class="arithmatex">\(X \sim \text{Binomial}(200, 0.05)\)</span>.</p>
+<ol>
+<li><strong>Cuántas compras esperar.</strong> <span class="arithmatex">\(\mathbb{E}[X] = 200 \cdot 0.05 = 10\)</span>, con desviación típica <span class="arithmatex">\(\sqrt{200 \cdot 0.05 \cdot 0.95} = \sqrt{9.5} \approx 3.08\)</span>. Lo normal será ver entre 7 y 13 compras.</li>
+<li><strong>Probabilidad de exactamente 10.</strong> <span class="arithmatex">\(P(X = 10) = \binom{200}{10} 0.05^{10}\, 0.95^{190} \approx 0.128\)</span>. Aunque 10 es el valor más probable, solo ocurre una de cada ocho veces: con una distribución así, acertar un valor exacto es raro.</li>
+<li><strong>Probabilidad de 15 compras o más</strong>, por ejemplo para decidir si hay stock suficiente. "15 o más" es lo contrario de "14 o menos": <span class="arithmatex">\(P(X \ge 15) = 1 - F(14) \approx 0.078\)</span>. Un día de cada trece, aproximadamente.</li>
+</ol>
+</div>
+<p><strong>Cuándo no encaja.</strong> Si <span class="arithmatex">\(p\)</span> cambia entre intentos (visitas de campañas distintas, días distintos) o los intentos no son independientes (amigos que compran juntos, un fallo de máquina que afecta a varias piezas seguidas), la binomial subestima la variabilidad real. En la <a href="../../inferencia/practica/">práctica guiada</a> veremos un caso en que <span class="arithmatex">\(p\)</span> cambia de un día a otro.</p>
+<h2 id="poisson-contar-eventos-en-el-tiempo">Poisson: contar eventos en el tiempo<a class="headerlink" href="#poisson-contar-eventos-en-el-tiempo" title="Permanent link">&para;</a></h2>
+<p><strong>La historia.</strong> Contamos cuántas veces ocurre un evento en un intervalo de tiempo (o de espacio): clientes que entran en una hora, llamadas a un call center, incidencias técnicas al día, pedidos por minuto. A diferencia de la binomial, no hay un número fijo de intentos: el evento puede ocurrir 0, 1, 2… veces, sin límite superior. La Poisson describe este conteo cuando los eventos:</p>
+<ol>
+<li>ocurren <strong>independientemente</strong> unos de otros;</li>
+<li>a un <strong>ritmo medio constante</strong> <span class="arithmatex">\(\lambda\)</span> por intervalo;</li>
+<li>y nunca dos exactamente a la vez.</li>
+</ol>
+<h3 id="de-donde-sale-muchos-intentos-cada-uno-muy-improbable">De dónde sale: muchos intentos, cada uno muy improbable<a class="headerlink" href="#de-donde-sale-muchos-intentos-cada-uno-muy-improbable" title="Permanent link">&para;</a></h3>
+<p>Piensa en una hora como 3600 segundos. En cada segundo entra un cliente o no, con una probabilidad minúscula. Si de media entran 4 clientes por hora, esa probabilidad es <span class="arithmatex">\(4/3600\)</span>. El número de clientes por hora sería entonces Binomial<span class="arithmatex">\((3600, 4/3600)\)</span>: muchísimos intentos con probabilidad diminuta, pero con un número esperado de éxitos fijo, <span class="arithmatex">\(np = 4\)</span>. Si dividimos la hora en intervalos cada vez más finos, la binomial converge a una distribución que solo depende de <span class="arithmatex">\(\lambda = np\)</span>: la Poisson. Numéricamente, la probabilidad de 2 clientes sale <span class="arithmatex">\(0.14648\)</span> con la binomial de 3600 segundos y <span class="arithmatex">\(0.14653\)</span> con la Poisson.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: Poisson<span class="arithmatex">\((\lambda)\)</span></p>
+<div class="arithmatex">\[P(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k = 0, 1, 2, \ldots \qquad\qquad \mathbb{E}[X] = \mathbb{V}[X] = \lambda\]</div>
+</div>
+<p>El parámetro <span class="arithmatex">\(\lambda\)</span> es el número medio de eventos <strong>en el intervalo que estás considerando</strong>, y se escala con su longitud: 4 clientes por hora son 2 por media hora o 32 en una jornada de 8 horas. Este mismo argumento justifica usar la Poisson como <strong>aproximación de la binomial</strong> cuando <span class="arithmatex">\(n\)</span> es grande y <span class="arithmatex">\(p\)</span> pequeña: con 1000 clientes, cada uno con probabilidad 0.003 de reclamar, <span class="arithmatex">\(P(X = 5)\)</span> vale <span class="arithmatex">\(0.1009\)</span> con la binomial exacta y <span class="arithmatex">\(0.1008\)</span> con Poisson<span class="arithmatex">\((3)\)</span>.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: clientes por hora</p>
+<p>En una tienda entran de media 4 clientes por hora, así que <span class="arithmatex">\(X \sim \text{Poisson}(4)\)</span>.</p>
+<ol>
+<li><strong>Una hora sin clientes.</strong> <span class="arithmatex">\(P(X = 0) = e^{-4} \approx 0.018\)</span>. Ocurre menos de una vez cada 50 horas: si pasa a menudo, algo ha cambiado (la puerta cerrada, una obra en la calle…).</li>
+<li><strong>Una hora tranquila, con 2 clientes o menos.</strong> <span class="arithmatex">\(P(X \le 2) = e^{-4}\left(1 + 4 + \frac{4^2}{2}\right) = 13\,e^{-4} \approx 0.238\)</span>.</li>
+<li><strong>Necesidad de refuerzo.</strong> Si con más de 8 clientes en una hora hace falta un segundo dependiente, <span class="arithmatex">\(P(X &gt; 8) = 1 - F(8) \approx 0.021\)</span>. Sucederá en torno al 2 % de las horas, unas 2 veces en una semana de 100 horas de apertura.</li>
+</ol>
+</div>
+<h3 id="como-comprobar-con-datos-si-es-poisson">Cómo comprobar con datos si es Poisson<a class="headerlink" href="#como-comprobar-con-datos-si-es-poisson" title="Permanent link">&para;</a></h3>
+<p>Como en una Poisson <strong>la media y la varianza coinciden</strong>, la comprobación más rápida es calcular ambas en los conteos observados. Si la varianza es claramente mayor que la media (<strong>sobredispersión</strong>), suele indicar que el ritmo no es constante, por ejemplo porque se mezclan horas punta y horas valle, o días laborables y fines de semana. La solución habitual es separar los grupos y modelar cada uno con su propio <span class="arithmatex">\(\lambda\)</span>.</p>
+<h2 id="normal-la-campana-de-gauss">Normal: la campana de Gauss<a class="headerlink" href="#normal-la-campana-de-gauss" title="Permanent link">&para;</a></h2>
+<p><strong>La historia.</strong> Una magnitud continua que fluctúa simétricamente alrededor de un valor central, con valores cercanos al centro frecuentes y valores alejados cada vez más raros. Aparece cuando una medida es la <strong>suma de muchos efectos pequeños e independientes</strong>: el peso de un envase de 500 g resulta de pequeñas variaciones de la máquina, la temperatura, el material… Este hecho tiene una versión precisa, el <a href="../../inferencia/intervalos/#el-teorema-del-limite-central">teorema del límite central</a>, que explica por qué la normal es la distribución más importante de la estadística: las <strong>medias</strong> de muchas observaciones son aproximadamente normales, sea cual sea la distribución de partida.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: Normal<span class="arithmatex">\((\mu, \sigma^2)\)</span></p>
+<div class="arithmatex">\[f(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\, e^{-\frac{(x - \mu)^2}{2\sigma^2}} \qquad\qquad \mathbb{E}[X] = \mu, \qquad \mathbb{V}[X] = \sigma^2\]</div>
+</div>
+<p>Los dos parámetros tienen una lectura directa: <span class="arithmatex">\(\mu\)</span> coloca el centro de la campana (que es a la vez media, mediana y moda) y <span class="arithmatex">\(\sigma\)</span> fija su anchura. No hay una fórmula sencilla para el área bajo la curva, así que las probabilidades se calculan con la CDF en Python, o con la regla siguiente para estimar de cabeza:</p>
+<div class="admonition tip">
+<p class="admonition-title">Regla 68–95–99.7</p>
+<p>En cualquier normal, un 68.3 % de los valores está a menos de <span class="arithmatex">\(1\sigma\)</span> de la media, un 95.4 % a menos de <span class="arithmatex">\(2\sigma\)</span> y un 99.7 % a menos de <span class="arithmatex">\(3\sigma\)</span>. Un valor a más de 3 desviaciones típicas de la media es muy raro.</p>
+</div>
+<h3 id="normal-estandar">Normal estándar<a class="headerlink" href="#normal-estandar" title="Permanent link">&para;</a></h3>
+<p>Toda normal es la misma campana desplazada y estirada. Si restas la media y divides por la desviación típica, obtienes la <strong>normal estándar</strong> <span class="arithmatex">\(Z \sim N(0, 1)\)</span>:</p>
+<div class="arithmatex">\[Z = \frac{X - \mu}{\sigma} \sim N(0, 1), \qquad\qquad X = \mu + \sigma Z.\]</div>
+<p>El valor <span class="arithmatex">\(z\)</span> de una observación dice <strong>a cuántas desviaciones típicas de la media está</strong>, con signo. Eso permite comparar valores medidos en escalas distintas. Por ejemplo, un vendedor que factura 82 000 € en una región donde la media es 70 000 € con <span class="arithmatex">\(\sigma = 10\,000\)</span> € tiene <span class="arithmatex">\(z = 1.2\)</span>. Otro que factura 7 500 € en una región pequeña con media 6 000 € y <span class="arithmatex">\(\sigma = 1\,000\)</span> € tiene <span class="arithmatex">\(z = 1.5\)</span>. En relación con su entorno, el segundo destaca más, aunque facture mucho menos.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: alturas</p>
+<p>Las alturas de una población siguen <span class="arithmatex">\(X \sim N(170, 8^2)\)</span> en centímetros.</p>
+<ol>
+<li><strong>¿Es muy alta una persona de 185 cm?</strong> Su valor z es <span class="arithmatex">\((185 - 170)/8 = 1.875\)</span>, casi dos desviaciones típicas por encima. Por la regla 68–95–99.7, más allá de <span class="arithmatex">\(2\sigma\)</span> por arriba queda un 2.5 %, así que esperamos algo más que eso. El valor exacto es <span class="arithmatex">\(P(X &gt; 185) \approx 0.030\)</span>, un 3 %.</li>
+<li><strong>Proporción entre 160 y 180 cm.</strong> Es un intervalo de <span class="arithmatex">\(\pm 1.25\sigma\)</span> alrededor de la media: <span class="arithmatex">\(P(160 &lt; X &lt; 180) = F(180) - F(160) \approx 0.789\)</span>.</li>
+<li><strong>Altura de diseño.</strong> Para que un producto sirva al 95 % de la población, buscamos el percentil 95: <span class="arithmatex">\(q_{0.95} = 170 + 1.645 \cdot 8 \approx 183.2\)</span> cm.</li>
+</ol>
+</div>
+<p><strong>Cuándo no encaja.</strong> Muchos datos de negocio <strong>no</strong> son normales: los ingresos, los importes de compra o los tiempos de espera son asimétricos, con una cola larga a la derecha. Tampoco lo son las variables acotadas cerca de un extremo (una tasa de error cercana a 0). Antes de suponer normalidad, mira el histograma y compara la media con la mediana: si difieren mucho, la distribución es asimétrica.</p>
+<h2 id="aproximacion-normal-de-la-binomial">Aproximación normal de la binomial<a class="headerlink" href="#aproximacion-normal-de-la-binomial" title="Permanent link">&para;</a></h2>
+<p>Una binomial es una suma de <span class="arithmatex">\(n\)</span> Bernoullis independientes. Por el mismo motivo que hace normal la suma de muchos efectos pequeños, cuando <span class="arithmatex">\(n\)</span> es grande la binomial se parece a una normal con su misma media y varianza:</p>
+<div class="arithmatex">\[\text{Binomial}(n, p) \approx N\big(np,\ np(1 - p)\big) \qquad \text{si } np &gt; 5 \text{ y } n(1 - p) &gt; 5.\]</div>
+<p>La condición pide que haya suficientes éxitos y fracasos esperados para que la campana no quede "aplastada" contra el 0 o contra <span class="arithmatex">\(n\)</span>. La aproximación fue esencial antes de los ordenadores y sigue siendo la base de los intervalos de confianza para proporciones que veremos en el <a href="../../inferencia/intervalos/#intervalos-de-confianza">tema de inferencia</a>.</p>
+<p><strong>La corrección de continuidad.</strong> La binomial reparte la probabilidad en barras de anchura 1 centradas en los enteros; la normal la reparte de forma continua. La barra del valor 14 ocupa el intervalo de 13.5 a 14.5, así que "14 o menos" en la binomial corresponde a "hasta 14.5" en la normal:</p>
+<div class="arithmatex">\[P(X \le k) \approx P(Y \le k + 0.5), \qquad P(X \ge k) \approx P(Y \ge k - 0.5).\]</div>
+<p>En el ejemplo de la campaña, <span class="arithmatex">\(Y \sim N(10, 9.5)\)</span> y <span class="arithmatex">\(P(X \ge 15) \approx P(Y \ge 14.5) \approx 0.072\)</span>, frente a 0.078 exacto. La aproximación no es perfecta aquí porque <span class="arithmatex">\(np = 10\)</span> está cerca del límite y la binomial todavía es algo asimétrica. Activa la opción <em>Mostrar aproximación normal</em> del explorador para ver cuándo encaja bien y cuándo no.</p>
+<h2 id="en-python-scipystats">En Python: <code>scipy.stats</code><a class="headerlink" href="#en-python-scipystats" title="Permanent link">&para;</a></h2>
+<p>Todas las distribuciones de <code>scipy.stats</code> comparten la misma interfaz, así que basta con aprenderla una vez:</p>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Qué calcula</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.pmf(k)</code> / <code>.pdf(x)</code></td>
+<td>PMF (discretas) / PDF (continuas)</td>
+<td><code>stats.binom.pmf(10, 200, 0.05)</code></td>
+</tr>
+<tr>
+<td><code>.cdf(x)</code></td>
+<td><span class="arithmatex">\(P(X \le x)\)</span></td>
+<td><code>stats.poisson.cdf(2, 4)</code></td>
+</tr>
+<tr>
+<td><code>.sf(x)</code></td>
+<td><span class="arithmatex">\(P(X &gt; x) = 1 - F(x)\)</span></td>
+<td><code>stats.norm.sf(185, 170, 8)</code></td>
+</tr>
+<tr>
+<td><code>.ppf(q)</code></td>
+<td>cuantil: el <span class="arithmatex">\(x\)</span> tal que <span class="arithmatex">\(F(x) = q\)</span></td>
+<td><code>stats.norm.ppf(0.95, 170, 8)</code></td>
+</tr>
+<tr>
+<td><code>.rvs(size)</code></td>
+<td>simula una muestra aleatoria</td>
+<td><code>stats.poisson.rvs(4, size=1000)</code></td>
+</tr>
+<tr>
+<td><code>.mean()</code>, <code>.var()</code>, <code>.std()</code></td>
+<td>momentos teóricos</td>
+<td><code>stats.binom(200, 0.05).mean()</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">campaña</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>          <span class="c1"># "congelamos" la distribución con sus parámetros</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">campaña</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">campaña</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>          <span class="c1"># 10.0 y 3.08</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>10.0 3.082207001484488
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">campaña</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>                        <span class="c1"># P(X = 10)  ≈ 0.128</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>0.12835737340035233
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">campaña</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="mi">14</span><span class="p">))</span>                         <span class="c1"># P(X ≥ 15) = P(X &gt; 14) ≈ 0.078</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>0.07813441567325656
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">clientes</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>                <span class="c1"># en scipy, λ se llama mu</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">clientes</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">clientes</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>        <span class="c1"># ≈ 0.018 y ≈ 0.021</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>0.01831563888873418 0.021363434487984143
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">alturas</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">170</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>        <span class="c1"># ¡scale es σ, no σ²!</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">alturas</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span> <span class="o">-</span> <span class="n">alturas</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">160</span><span class="p">))</span>    <span class="c1"># ≈ 0.789</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>0.7887004526662893
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">alturas</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.95</span><span class="p">))</span>                      <span class="c1"># percentil 95 ≈ 183.2</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>183.1588290156118
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="c1"># ¿Encajan unos conteos con una Poisson? Compara media y varianza</span>
+<span class="n">conteos</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">poisson</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">conteos</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">conteos</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>    <span class="c1"># parecidas: compatible con Poisson</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>4.094 4.377919839679358
+</code></pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Errores frecuentes</p>
+<ul>
+<li><strong>Pasar la varianza en vez de la desviación típica a <code>stats.norm</code>.</strong> <code>stats.norm(170, 64)</code> es una normal con <span class="arithmatex">\(\sigma = 64\)</span>, no con <span class="arithmatex">\(\sigma^2 = 64\)</span>.</li>
+<li><strong>Usar <code>sf(k)</code> para "<span class="arithmatex">\(k\)</span> o más" en una discreta.</strong> <span class="arithmatex">\(P(X \ge k)\)</span> es <code>sf(k - 1)</code>.</li>
+<li><strong>Olvidar que <code>stats.randint(a, b)</code> excluye <span class="arithmatex">\(b\)</span>.</strong> Un dado es <code>stats.randint(1, 7)</code>.</li>
+<li><strong>No escalar <span class="arithmatex">\(\lambda\)</span> al intervalo.</strong> Si hay 12 llamadas por hora, en 15 minutos <span class="arithmatex">\(\lambda = 3\)</span>, no 12.</li>
+<li><strong>Suponer normalidad por costumbre</strong> en datos claramente asimétricos, como importes o tiempos.</li>
+<li><strong>Leer <code>pdf</code> como una probabilidad.</strong> <code>stats.norm.pdf(170, 170, 8)</code> <span class="arithmatex">\(\approx 0.0499\)</span> es una densidad, no la probabilidad de medir 170 cm.</li>
+</ul>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lo esencial</p>
+<ul>
+<li>Una distribución con nombre propio resume, con uno o dos parámetros, un <strong>mecanismo</strong> que genera datos; usarla es una <strong>suposición</strong> que conviene comprobar.</li>
+<li><strong>Bernoulli:</strong> un sí/no; la media de una columna 0/1 es la proporción de unos.</li>
+<li><strong>Binomial:</strong> éxitos en <span class="arithmatex">\(n\)</span> intentos independientes con la misma <span class="arithmatex">\(p\)</span>; media <span class="arithmatex">\(np\)</span>. Su fórmula cuenta secuencias por probabilidad de cada secuencia.</li>
+<li><strong>Poisson:</strong> eventos en un intervalo a ritmo constante; media igual a varianza, y <span class="arithmatex">\(\lambda\)</span> se escala con el intervalo.</li>
+<li><strong>Normal:</strong> simétrica alrededor de <span class="arithmatex">\(\mu\)</span>; con la escala <span class="arithmatex">\(z\)</span> y la regla 68–95–99.7 estimas probabilidades de cabeza. Aproxima a la binomial cuando <span class="arithmatex">\(np\)</span> y <span class="arithmatex">\(n(1 - p)\)</span> superan 5.</li>
+</ul>
+</div>
+<h2 id="ejercicios">Ejercicios<a class="headerlink" href="#ejercicios" title="Permanent link">&para;</a></h2>
+<p><strong>1.</strong> ¿Qué distribución usarías? (a) Nº de emails de spam entre los 50 que llegan hoy, si cada uno es spam con probabilidad 0.2. (b) Nº de pedidos por minuto en una web. (c) Peso de un paquete de café de 250 g. (d) Si un cliente concreto renueva o no su suscripción.</p>
+<details class="success">
+<summary>Solución</summary>
+<ul>
+<li>(a) <strong>Binomial<span class="arithmatex">\((50, 0.2)\)</span>:</strong> número fijo de intentos (50 emails), cada uno con la misma probabilidad, suponiendo independencia.</li>
+<li>(b) <strong>Poisson:</strong> eventos en un intervalo de tiempo, sin número máximo de intentos.</li>
+<li>(c) <strong>Normal</strong> centrada cerca de 250 g: una medida continua resultado de muchas pequeñas variaciones del proceso de envasado.</li>
+<li>(d) <strong>Bernoulli:</strong> un único sí/no.</li>
+</ul>
+</details>
+<p><strong>2.</strong> Un call center recibe de media 12 llamadas por hora. ¿Qué distribución sigue el número de llamadas en 15 minutos? Calcula la probabilidad de que en un cuarto de hora no llegue ninguna y la de que lleguen 5 o más.</p>
+<details class="success">
+<summary>Solución</summary>
+<p>El ritmo se escala con el intervalo: <span class="arithmatex">\(\lambda = 12 \cdot \frac{15}{60} = 3\)</span>, así que <span class="arithmatex">\(X \sim \text{Poisson}(3)\)</span>.</p>
+<ul>
+<li><strong>Ninguna llamada:</strong> <span class="arithmatex">\(P(X = 0) = e^{-3} \approx 0.050\)</span>, un 5 % de los cuartos de hora.</li>
+<li><strong>5 o más:</strong> es el complementario de "4 o menos", <span class="arithmatex">\(P(X \ge 5) = 1 - F(4) \approx 0.185\)</span>. En Python, <code>stats.poisson.sf(4, 3)</code>.</li>
+</ul>
+</details>
+<p><strong>3.</strong> Cinco clientes reciben una oferta de renovación, y cada uno la acepta con probabilidad 0.2, de forma independiente. Calcula a mano la probabilidad de que la acepten exactamente 2 y la de que la acepte al menos uno.</p>
+<details class="success">
+<summary>Solución</summary>
+<p><span class="arithmatex">\(X \sim \text{Binomial}(5, 0.2)\)</span>.</p>
+<ul>
+<li><strong>Exactamente 2:</strong> hay <span class="arithmatex">\(\binom{5}{2} = 10\)</span> formas de elegir qué dos clientes aceptan, y cada una tiene probabilidad <span class="arithmatex">\(0.2^2 \cdot 0.8^3 = 0.04 \cdot 0.512 = 0.02048\)</span>. En total, <span class="arithmatex">\(10 \cdot 0.02048 = 0.2048\)</span>.</li>
+<li><strong>Al menos uno:</strong> es más fácil por el complementario. La probabilidad de que nadie acepte es <span class="arithmatex">\(0.8^5 = 0.32768\)</span>, así que <span class="arithmatex">\(P(X \ge 1) = 1 - 0.32768 \approx 0.672\)</span>.</li>
+</ul>
+</details>
+<p><strong>4.</strong> Los tiempos de entrega siguen N(48, 6²) horas. (a) Estima con la regla 68–95–99.7 qué porcentaje de pedidos tarda más de 60 h y compruébalo con Python. (b) ¿Qué porcentaje llega entre 42 y 54 h? (c) ¿Qué plazo de entrega puedes prometer si quieres cumplirlo en el 95 % de los pedidos?</p>
+<details class="success">
+<summary>Solución</summary>
+<ul>
+<li>(a) 60 h está a <span class="arithmatex">\(z = (60 - 48)/6 = 2\)</span> desviaciones típicas por encima de la media. Fuera de <span class="arithmatex">\(\pm 2\sigma\)</span> queda aproximadamente un 5 %, la mitad por cada lado, así que esperamos un 2.5 %. El valor exacto es <code>stats.norm.sf(60, 48, 6)</code> <span class="arithmatex">\(\approx 0.023\)</span>.</li>
+<li>(b) Es el intervalo <span class="arithmatex">\(\mu \pm 1\sigma\)</span>: aproximadamente un <strong>68 %</strong> (exactamente 68.3 %).</li>
+<li>(c) Hay que buscar el percentil 95: <code>stats.norm.ppf(0.95, 48, 6)</code> <span class="arithmatex">\(= 48 + 1.645 \cdot 6 \approx 57.9\)</span> horas. Se puede prometer <strong>58 horas</strong>.</li>
+</ul>
+</details>
+<p><strong>5.</strong> Unos conteos diarios de devoluciones tienen media 20 y varianza 85. ¿Te parece razonable modelarlos con una Poisson? ¿Qué harías?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>Poco razonable. En una Poisson la varianza es igual a la media, y aquí es más de cuatro veces mayor: hay <strong>sobredispersión</strong>. Suele indicar que el ritmo de devoluciones no es constante, por ejemplo porque se mezclan días normales con días posteriores a campañas, o laborables con fines de semana. Lo indicado es separar los datos por esos grupos y comprobar si, dentro de cada grupo, media y varianza se parecen.</p>
+</details>
+<p><strong>6.</strong> Una landing recibe 400 visitas y cada una convierte con probabilidad 0.3. Calcula P(X ≤ 110) con la aproximación normal, con y sin corrección de continuidad, y compara con el valor exacto. ¿Se cumple la condición para aproximar?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>La condición se cumple con holgura: <span class="arithmatex">\(np = 120\)</span> y <span class="arithmatex">\(n(1 - p) = 280\)</span>, ambos muy por encima de 5. La normal aproximada es <span class="arithmatex">\(Y \sim N(120, 84)\)</span>, con <span class="arithmatex">\(\sigma = \sqrt{400 \cdot 0.3 \cdot 0.7} = \sqrt{84} \approx 9.17\)</span>.</p>
+<ul>
+<li><strong>Con corrección:</strong> <span class="arithmatex">\(P(Y \le 110.5) = P\left(Z \le \frac{110.5 - 120}{9.17}\right) = P(Z \le -1.04) \approx 0.150\)</span>.</li>
+<li><strong>Sin corrección:</strong> <span class="arithmatex">\(P(Y \le 110) \approx 0.138\)</span>.</li>
+<li><strong>Exacto:</strong> <code>stats.binom.cdf(110, 400, 0.3)</code> <span class="arithmatex">\(\approx 0.150\)</span>.</li>
+</ul>
+<p>Con corrección de continuidad la aproximación coincide con el valor exacto hasta la tercera cifra; sin ella, el error es de más de un punto porcentual.</p>
+</details>
+<p><a class="md-button" href="../variables/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> Variables aleatorias</a> <a class="md-button md-button--primary" href="../estadisticos/">Siguiente: Estadísticos <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg></span></a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../variables/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: 1. Variables aleatorias">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                1. Variables aleatorias
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../estadisticos/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: 3. Estadísticos">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                3. Estadísticos
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/katex.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
