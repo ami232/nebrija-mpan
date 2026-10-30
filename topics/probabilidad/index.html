@@ -1,0 +1,1837 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Material docente — estadística, machine learning y desarrollo de software">
+      
+      
+      
+        <link rel="canonical" href="https://alberpro.com/nebrija-mpan/topics/probabilidad/">
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../variables-aleatorias/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Probabilidad - Nebrija · Modelos predictivos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#probabilidad" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Nebrija · Modelos predictivos" class="md-header__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nebrija · Modelos predictivos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Probabilidad
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Nebrija · Modelos predictivos" class="md-nav__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nebrija · Modelos predictivos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelos predictivos en el análisis de negocios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probabilidad
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probabilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objetivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#antes-de-empezar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Antes de empezar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#por-que-necesitamos-la-probabilidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué necesitamos la probabilidad
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-lenguaje-experimentos-resultados-y-sucesos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El lenguaje: experimentos, resultados y sucesos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asignar-probabilidades" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asignar probabilidades
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Asignar probabilidades">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#probabilidad-de-la-union" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probabilidad de la unión
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probabilidad-condicionada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probabilidad condicionada
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#independencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Independencia
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probabilidad-total-y-teorema-de-bayes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probabilidad total y teorema de Bayes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frecuencias-y-probabilidades-la-ley-de-los-grandes-numeros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frecuencias y probabilidades: la ley de los grandes números
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errores-frecuentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errores frecuentes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slides
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../variables-aleatorias/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Variables aleatorias y distribuciones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Variables aleatorias y distribuciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../variables-aleatorias/variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Variables aleatorias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../variables-aleatorias/distribuciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Distribuciones con nombre propio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../inferencia/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimación e inferencia
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estimación e inferencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inferencia/estimacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Estimación: de los datos al modelo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inferencia/variabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Cuánto se equivoca una estimación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inferencia/intervalos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Intervalos de confianza: de la muestra a la población
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inferencia/practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Práctica guiada: aceptación de cookies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contraste-hipotesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contraste de hipótesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../regresion-lineal-simple/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regresión lineal simple
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../regresion-lineal-multiple/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regresión lineal múltiple
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../regresion-logistica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regresión logística
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../feature-engineering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature engineering y transformaciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arboles-decision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Árboles de decisión y ensembles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../clasificacion-multiclase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Clasificación multiclase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../series-temporales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Series temporales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sesgos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sesgos en los datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Referencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/modelos-predictivos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía de referencia: modelos predictivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objetivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#antes-de-empezar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Antes de empezar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#por-que-necesitamos-la-probabilidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué necesitamos la probabilidad
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-lenguaje-experimentos-resultados-y-sucesos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El lenguaje: experimentos, resultados y sucesos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asignar-probabilidades" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asignar probabilidades
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Asignar probabilidades">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#probabilidad-de-la-union" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probabilidad de la unión
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probabilidad-condicionada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probabilidad condicionada
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#independencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Independencia
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probabilidad-total-y-teorema-de-bayes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probabilidad total y teorema de Bayes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frecuencias-y-probabilidades-la-ley-de-los-grandes-numeros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frecuencias y probabilidades: la ley de los grandes números
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errores-frecuentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errores frecuentes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slides
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="probabilidad">Probabilidad<a class="headerlink" href="#probabilidad" title="Permanent link">&para;</a></h1>
+<p>Una empresa nunca sabe con certeza cuántos clientes entrarán mañana, cuáles abandonarán su suscripción o cuánto gastará el próximo pedido. Y sin embargo tiene que decidir hoy cuánto personal contratar, a quién ofrecer un descuento o cuánto stock pedir. Con este tema empieza el curso: es el lenguaje para <strong>razonar con incertidumbre</strong>, y todo lo que viene después se apoya en él.</p>
+<p>Imagina que gestionas una tienda online. Ayer hubo 1000 visitas y 70 acabaron en compra. ¿Cuál es la probabilidad de que la próxima visita compre? ¿Cambia esa probabilidad si sabemos que el visitante entra desde el móvil? Si una compra acaba de entrar, ¿qué probabilidad hay de que viniera de un ordenador? Estas preguntas, que aparecen a diario en cualquier negocio, son preguntas de <strong>probabilidad</strong>. Este tema te da el lenguaje y las reglas para responderlas con rigor.</p>
+<h2 id="objetivos">Objetivos<a class="headerlink" href="#objetivos" title="Permanent link">&para;</a></h2>
+<p>Al terminar el tema deberías ser capaz de:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Describir una situación incierta con sucesos y combinarlos (unión, intersección, complementario).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Calcular probabilidades de sucesos a partir de una tabla de datos, incluidas las probabilidades condicionadas.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Decidir si dos sucesos son independientes y explicar qué significa para el negocio.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Aplicar la ley de la probabilidad total y el teorema de Bayes, y reconocer la falacia de la tasa base.</li>
+</ul>
+<h2 id="antes-de-empezar">Antes de empezar<a class="headerlink" href="#antes-de-empezar" title="Permanent link">&para;</a></h2>
+<p>No necesitas conocimientos previos de estadística: basta con las matemáticas de bachillerato. Usaremos algo de notación de conjuntos (<span class="arithmatex">\(\cup\)</span>, <span class="arithmatex">\(\cap\)</span>), que se explica sobre la marcha.</p>
+<p>Para el código necesitas lo básico de Python. Si nunca has usado NumPy, pandas o Matplotlib, haz antes este tutorial (1–2 h). Lo usarás en todo el curso:</p>
+<p><strong>Tutorial: Python para análisis estadístico</strong> &nbsp; <a href="https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/probabilidad/python.ipynb" target="_blank"><img alt="Abrir en Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a> &nbsp; <a download="download" href="python.ipynb"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"/></svg></span> .ipynb</a></p>
+<table>
+<thead>
+<tr>
+<th>Símbolo</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(\Omega\)</span>, <span class="arithmatex">\(A\)</span>, <span class="arithmatex">\(B\)</span></td>
+<td>espacio muestral (todos los resultados posibles) y sucesos</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(A \cup B\)</span>, <span class="arithmatex">\(A \cap B\)</span>, <span class="arithmatex">\(\bar{A}\)</span></td>
+<td>unión (<span class="arithmatex">\(A\)</span> o <span class="arithmatex">\(B\)</span>), intersección (<span class="arithmatex">\(A\)</span> y <span class="arithmatex">\(B\)</span>), complementario (no <span class="arithmatex">\(A\)</span>)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P(A)\)</span>, <span class="arithmatex">\(P(A \mid B)\)</span></td>
+<td>probabilidad de <span class="arithmatex">\(A\)</span>; probabilidad de <span class="arithmatex">\(A\)</span> sabiendo que ha ocurrido <span class="arithmatex">\(B\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>El tema siguiente, <a href="../variables-aleatorias/">variables aleatorias</a>, traduce estos sucesos a números.</p>
+<h2 id="por-que-necesitamos-la-probabilidad">Por qué necesitamos la probabilidad<a class="headerlink" href="#por-que-necesitamos-la-probabilidad" title="Permanent link">&para;</a></h2>
+<p>La mayor parte de las cosas que interesan en un negocio no se pueden predecir con certeza. No sabemos si un cliente concreto comprará, cuántas llamadas entrarán mañana en el call center ni si un préstamo se devolverá. Lo que sí podemos saber, observando muchos casos, es <strong>con qué frecuencia</strong> ocurre cada cosa. Y eso basta para tomar buenas decisiones: dimensionar un equipo, fijar un precio o decidir a qué clientes llamar.</p>
+<p>La probabilidad es el lenguaje matemático para hablar de esa incertidumbre. Una probabilidad de 0.07 significa que, si repitiéramos la situación muchas veces, el suceso ocurriría aproximadamente en el 7 % de ellas. Esta lectura como <strong>frecuencia a largo plazo</strong> es la que usaremos en todo el curso y la que conecta la probabilidad con los datos.</p>
+<h2 id="el-lenguaje-experimentos-resultados-y-sucesos">El lenguaje: experimentos, resultados y sucesos<a class="headerlink" href="#el-lenguaje-experimentos-resultados-y-sucesos" title="Permanent link">&para;</a></h2>
+<p>Para razonar con probabilidades primero hay que describir con precisión <strong>qué</strong> es incierto.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición</p>
+<ul>
+<li>Un <strong>experimento aleatorio</strong> es cualquier proceso cuyo resultado no se puede predecir con certeza, aunque sepamos qué resultados son posibles. Por ejemplo, observar una visita a la web y ver si compra.</li>
+<li>El <strong>espacio muestral</strong> <span class="arithmatex">\(\Omega\)</span> (omega) es el conjunto de todos los resultados posibles del experimento.</li>
+<li>Un <strong>suceso</strong> es un conjunto de resultados: cualquier afirmación sobre el resultado de la que podamos decir si se cumple o no. Se nombran con letras mayúsculas: <span class="arithmatex">\(A\)</span>, <span class="arithmatex">\(B\)</span>, <span class="arithmatex">\(C\)</span>…</li>
+</ul>
+</div>
+<p>En la tienda, el experimento es "llega una visita". Si nos interesan el dispositivo y si compra, el espacio muestral tiene cuatro resultados:</p>
+<div class="arithmatex">\[\Omega = \{(\text{móvil}, \text{compra}),\ (\text{móvil}, \text{no compra}),\ (\text{ordenador}, \text{compra}),\ (\text{ordenador}, \text{no compra})\}\]</div>
+<p>"La visita compra" es un suceso, <span class="arithmatex">\(C\)</span>, formado por dos de esos resultados. "La visita llega desde el móvil" es otro suceso, <span class="arithmatex">\(M\)</span>.</p>
+<p>Elegir <span class="arithmatex">\(\Omega\)</span> es ya una <strong>decisión de modelización</strong>: podríamos haber incluido también el navegador, la hora o el importe. Conviene incluir lo que necesitamos para responder la pregunta y nada más.</p>
+<p>Los sucesos se combinan igual que los conjuntos, y cada operación tiene una traducción directa al lenguaje cotidiano:</p>
+<table>
+<thead>
+<tr>
+<th>Notación</th>
+<th>Se lee</th>
+<th>Ocurre cuando…</th>
+<th>En la tienda</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(A \cup B\)</span></td>
+<td><span class="arithmatex">\(A\)</span> o <span class="arithmatex">\(B\)</span> (unión)</td>
+<td>ocurre al menos uno de los dos</td>
+<td>entra desde el móvil <strong>o</strong> compra</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(A \cap B\)</span></td>
+<td><span class="arithmatex">\(A\)</span> y <span class="arithmatex">\(B\)</span> (intersección)</td>
+<td>ocurren los dos a la vez</td>
+<td>entra desde el móvil <strong>y</strong> compra</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\bar{A}\)</span></td>
+<td>no <span class="arithmatex">\(A\)</span> (complementario)</td>
+<td>no ocurre <span class="arithmatex">\(A\)</span></td>
+<td><strong>no</strong> compra</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(A - B\)</span></td>
+<td><span class="arithmatex">\(A\)</span> pero no <span class="arithmatex">\(B\)</span> (diferencia)</td>
+<td>ocurre <span class="arithmatex">\(A\)</span> y no ocurre <span class="arithmatex">\(B\)</span></td>
+<td>entra desde el móvil y <strong>no</strong> compra</td>
+</tr>
+</tbody>
+</table>
+<p>Dos sucesos son <strong>incompatibles</strong> (o disjuntos) si no pueden ocurrir a la vez, es decir, si <span class="arithmatex">\(A \cap B = \emptyset\)</span>. Por ejemplo, "entra desde el móvil" y "entra desde el ordenador" son incompatibles. El suceso <span class="arithmatex">\(\Omega\)</span> se llama <strong>suceso seguro</strong> y el conjunto vacío <span class="arithmatex">\(\emptyset\)</span>, <strong>suceso imposible</strong>.</p>
+<h2 id="asignar-probabilidades">Asignar probabilidades<a class="headerlink" href="#asignar-probabilidades" title="Permanent link">&para;</a></h2>
+<p>Una probabilidad es un número entre 0 y 1 asociado a cada suceso. Hay tres formas habituales de obtenerlo, y en la práctica las combinarás todas.</p>
+<p><strong>1. Por simetría (regla de Laplace).</strong> Si todos los resultados son igual de probables, basta con contar:</p>
+<div class="arithmatex">\[P(A) = \frac{\text{número de resultados en } A}{\text{número total de resultados}}\]</div>
+<p>Es lo que hacemos con dados, monedas o sorteos. Al lanzar dos dados hay 36 pares <span class="arithmatex">\((d_1, d_2)\)</span> igual de probables. Seis suman 7, así que <span class="arithmatex">\(P(\text{suma} = 7) = 6/36 = 1/6\)</span>. La regla <strong>solo</strong> vale con resultados equiprobables. Las once sumas posibles (de 2 a 12) no lo son, y por eso <span class="arithmatex">\(P(\text{suma} = 7)\)</span> no es <span class="arithmatex">\(1/11\)</span>.</p>
+<p><strong>2. Por frecuencias observadas.</strong> Casi siempre en los negocios, la probabilidad se estima con datos. Esta es la tabla de las 1000 visitas de ayer:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Compra</th>
+<th>No compra</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Móvil</strong></td>
+<td>30</td>
+<td>570</td>
+<td>600</td>
+</tr>
+<tr>
+<td><strong>Ordenador</strong></td>
+<td>40</td>
+<td>360</td>
+<td>400</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td>70</td>
+<td>930</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<p>Con ella estimamos <span class="arithmatex">\(P(C) = 70/1000 = 0.07\)</span> y <span class="arithmatex">\(P(M) = 600/1000 = 0.6\)</span>. Una tabla así, que cruza dos variables, se llama <strong>tabla de contingencia</strong>. Volverá a aparecer muchas veces en el curso.</p>
+<p><strong>3. Por un modelo.</strong> A veces la probabilidad sale de un modelo matemático con unas suposiciones, como las <a href="../variables-aleatorias/distribuciones/">distribuciones con nombre propio</a> del próximo tema. Otras veces sale del juicio de un experto, cuando no hay datos.</p>
+<p>Sea cual sea el origen, toda asignación de probabilidades debe cumplir tres reglas básicas, los <strong>axiomas de Kolmogórov</strong>:</p>
+<div class="admonition abstract">
+<p class="admonition-title">Axiomas de la probabilidad</p>
+<ol>
+<li><span class="arithmatex">\(P(A) \ge 0\)</span> para cualquier suceso <span class="arithmatex">\(A\)</span>.</li>
+<li><span class="arithmatex">\(P(\Omega) = 1\)</span>: algún resultado ocurre seguro.</li>
+<li>Si <span class="arithmatex">\(A\)</span> y <span class="arithmatex">\(B\)</span> son incompatibles, <span class="arithmatex">\(P(A \cup B) = P(A) + P(B)\)</span>.</li>
+</ol>
+</div>
+<p>De estas tres reglas se deduce todo lo demás. Por ejemplo, como <span class="arithmatex">\(A\)</span> y <span class="arithmatex">\(\bar{A}\)</span> son incompatibles y juntos forman <span class="arithmatex">\(\Omega\)</span>, se cumple <span class="arithmatex">\(P(A) + P(\bar{A}) = 1\)</span>. De ahí sale la <strong>regla del complementario</strong>, que usarás constantemente:</p>
+<div class="arithmatex">\[P(\bar{A}) = 1 - P(A)\]</div>
+<p>Esta regla es especialmente útil para sucesos del tipo "al menos uno". Calcular directamente "al menos una de tres visitas compra" obliga a sumar muchos casos. En cambio, su complementario, "ninguna compra", es un solo caso.</p>
+<h3 id="probabilidad-de-la-union">Probabilidad de la unión<a class="headerlink" href="#probabilidad-de-la-union" title="Permanent link">&para;</a></h3>
+<p>¿Qué proporción de visitas llega desde el móvil <strong>o</strong> compra? Si sumamos <span class="arithmatex">\(P(M) + P(C) = 0.6 + 0.07\)</span>, las 30 visitas que son de móvil <strong>y</strong> compran se cuentan dos veces. Hay que restarlas una vez:</p>
+<div class="arithmatex">\[P(A \cup B) = P(A) + P(B) - P(A \cap B)\]</div>
+<p>En la tienda, <span class="arithmatex">\(P(M \cup C) = 0.6 + 0.07 - 0.03 = 0.64\)</span>. Compruébalo en la tabla: 600 visitas de móvil más las 40 de ordenador que compran, 640 de 1000. Si los sucesos son incompatibles, <span class="arithmatex">\(P(A \cap B) = 0\)</span> y recuperamos el axioma 3.</p>
+<h2 id="probabilidad-condicionada">Probabilidad condicionada<a class="headerlink" href="#probabilidad-condicionada" title="Permanent link">&para;</a></h2>
+<p>Esta es probablemente la idea más importante del tema. Toda la estadística y el machine learning consisten, en el fondo, en calcular probabilidades <strong>condicionadas a lo que sabemos</strong>.</p>
+<p>Volvamos a la pregunta inicial: si sabemos que la visita llega desde el móvil, ¿cuál es la probabilidad de que compre? Ya no nos interesan las 1000 visitas, solo las 600 de móvil. De ellas, 30 compran:</p>
+<div class="arithmatex">\[P(C \mid M) = \frac{30}{600} = 0.05\]</div>
+<p>Saber el dispositivo <strong>cambia</strong> la probabilidad: del 7 % general pasamos al 5 % en móvil. En ordenador sube al 10 % (<span class="arithmatex">\(40/400\)</span>). Condicionar es <strong>restringir el universo</strong> a los casos en que se cumple lo que sabemos y recalcular las proporciones dentro de él.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición</p>
+<p>La <strong>probabilidad de <span class="arithmatex">\(A\)</span> condicionada a <span class="arithmatex">\(B\)</span></strong> (se lee "probabilidad de <span class="arithmatex">\(A\)</span> dado <span class="arithmatex">\(B\)</span>"), con <span class="arithmatex">\(P(B) &gt; 0\)</span>, es
+$<span class="arithmatex">\(P(A \mid B) = \frac{P(A \cap B)}{P(B)}\)</span>$</p>
+</div>
+<p>Comprueba que coincide con el recuento: <span class="arithmatex">\(P(C \cap M) / P(M) = 0.03 / 0.6 = 0.05\)</span>. Si despejamos, obtenemos la <strong>regla del producto</strong>, muy útil para calcular probabilidades de que ocurran varias cosas a la vez:</p>
+<div class="arithmatex">\[P(A \cap B) = P(A \mid B)\, P(B)\]</div>
+<div class="admonition warning">
+<p class="admonition-title"><span class="arithmatex">\(P(A \mid B)\)</span> no es <span class="arithmatex">\(P(B \mid A)\)</span></p>
+<p>La probabilidad de que una visita de móvil compre, <span class="arithmatex">\(P(C \mid M) = 0.05\)</span>, no tiene nada que ver con la probabilidad de que una compra venga del móvil, <span class="arithmatex">\(P(M \mid C) = 30/70 \approx 0.43\)</span>. Los denominadores son poblaciones distintas: visitas de móvil en un caso, compras en el otro. Confundirlas es uno de los errores más frecuentes, y tiene consecuencias serias en medicina, en justicia y en la evaluación de modelos.</p>
+</div>
+<h2 id="independencia">Independencia<a class="headerlink" href="#independencia" title="Permanent link">&para;</a></h2>
+<p>Dos sucesos son <strong>independientes</strong> cuando saber que ocurrió uno no cambia la probabilidad del otro.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición</p>
+<p><span class="arithmatex">\(A\)</span> y <span class="arithmatex">\(B\)</span> son <strong>independientes</strong> si <span class="arithmatex">\(P(A \mid B) = P(A)\)</span>, o lo que es equivalente,
+$<span class="arithmatex">\(P(A \cap B) = P(A)\, P(B)\)</span>$</p>
+</div>
+<p>En la tienda, comprar y el dispositivo <strong>no</strong> son independientes: <span class="arithmatex">\(P(C \mid M) = 0.05\)</span> es distinto de <span class="arithmatex">\(P(C) = 0.07\)</span>. También se ve con la segunda forma de la definición: <span class="arithmatex">\(P(C)\,P(M) = 0.07 \cdot 0.6 = 0.042\)</span>, distinto de <span class="arithmatex">\(P(C \cap M) = 0.03\)</span>. Esto ya es información de negocio: la experiencia de compra en móvil convierte peor, y quizá merece una revisión.</p>
+<p>Con datos reales, las proporciones casi nunca coinciden exactamente aunque haya independencia, porque los datos tienen ruido. ¿Cuánta diferencia es "suficiente" para afirmar que no hay independencia? Responder a esa pregunta es el objetivo del <a href="../contraste-hipotesis/">contraste de hipótesis</a>.</p>
+<p>La independencia también es una <strong>suposición</strong> que hacemos al modelizar. Cuando digamos que las visitas son independientes entre sí, estaremos suponiendo, por ejemplo, que un usuario no influye en la compra de otro. Siempre conviene preguntarse si es razonable: durante una campaña viral, por ejemplo, podría no serlo.</p>
+<div class="admonition warning">
+<p class="admonition-title">Independientes no es lo mismo que incompatibles</p>
+<p>Son conceptos casi opuestos. Si <span class="arithmatex">\(A\)</span> y <span class="arithmatex">\(B\)</span> son incompatibles y ocurre <span class="arithmatex">\(A\)</span>, sabemos con certeza que <strong>no</strong> ocurre <span class="arithmatex">\(B\)</span>, así que saber uno cambia muchísimo la probabilidad del otro. Dos sucesos incompatibles (con probabilidad positiva) nunca son independientes.</p>
+</div>
+<h2 id="probabilidad-total-y-teorema-de-bayes">Probabilidad total y teorema de Bayes<a class="headerlink" href="#probabilidad-total-y-teorema-de-bayes" title="Permanent link">&para;</a></h2>
+<p>A menudo conocemos la probabilidad de un suceso <strong>dentro de cada grupo</strong> y queremos la probabilidad global. Si los grupos <span class="arithmatex">\(B_1, \ldots, B_k\)</span> no se solapan y cubren todos los casos, la probabilidad global es la media de las probabilidades de cada grupo, ponderada por el tamaño del grupo:</p>
+<div class="arithmatex">\[P(A) = P(A \mid B_1)\,P(B_1) + \cdots + P(A \mid B_k)\,P(B_k)\]</div>
+<p>Es la <strong>ley de la probabilidad total</strong>. En la tienda: <span class="arithmatex">\(P(C) = 0.05 \cdot 0.6 + 0.10 \cdot 0.4 = 0.07\)</span>.</p>
+<p>El <strong>teorema de Bayes</strong> responde a la pregunta inversa: sabiendo que ha ocurrido <span class="arithmatex">\(A\)</span>, ¿qué probabilidad hay de que viniera del grupo <span class="arithmatex">\(B\)</span>? Basta con escribir la regla del producto de las dos formas posibles, <span class="arithmatex">\(P(A \cap B) = P(A \mid B)P(B) = P(B \mid A)P(A)\)</span>, y despejar:</p>
+<div class="admonition abstract">
+<p class="admonition-title">Teorema de Bayes</p>
+<div class="arithmatex">\[P(B \mid A) = \frac{P(A \mid B)\, P(B)}{P(A)}\]</div>
+<p><span class="arithmatex">\(P(B)\)</span> es la probabilidad <strong>a priori</strong>, antes de saber nada. <span class="arithmatex">\(P(B \mid A)\)</span> es la probabilidad <strong>a posteriori</strong>, una vez sabemos que ocurrió <span class="arithmatex">\(A\)</span>. El denominador <span class="arithmatex">\(P(A)\)</span> se calcula casi siempre con la ley de la probabilidad total.</p>
+</div>
+<p>En la tienda, si acaba de entrar una compra, la probabilidad de que venga de un ordenador es <span class="arithmatex">\(P(O \mid C) = 0.10 \cdot 0.4 / 0.07 \approx 0.57\)</span>. Aunque solo el 40 % de las visitas son de ordenador, el 57 % de las compras lo son.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: ¿cuánto vale una alerta de fraude?</p>
+<p>El 1 % de las transacciones de un banco son fraudulentas. El sistema de alertas detecta el 95 % de los fraudes, pero también salta, por error, en el 5 % de las transacciones legítimas. Salta una alerta: ¿qué probabilidad hay de que sea un fraude?</p>
+<p>La intuición suele decir "alrededor del 95 %". Hagamos las cuentas con <strong>frecuencias naturales</strong>: imagina 10 000 transacciones.</p>
+<ul>
+<li>Son fraude el 1 %, es decir, 100. El sistema detecta el 95 % de ellas: <strong>95 alertas verdaderas</strong>.</li>
+<li>Son legítimas 9 900. El sistema salta en el 5 % de ellas: <strong>495 alertas falsas</strong>.</li>
+<li>En total hay <span class="arithmatex">\(95 + 495 = 590\)</span> alertas, y solo 95 son fraude: <span class="arithmatex">\(95/590 \approx 0.16\)</span>.</li>
+</ul>
+<p>Con la fórmula se llega a lo mismo. Con <span class="arithmatex">\(F\)</span> = fraude y <span class="arithmatex">\(A\)</span> = alerta:</p>
+<div class="arithmatex">\[P(F \mid A) = \frac{P(A \mid F)\,P(F)}{P(A \mid F)\,P(F) + P(A \mid \bar F)\,P(\bar F)} = \frac{0.95 \cdot 0.01}{0.95 \cdot 0.01 + 0.05 \cdot 0.99} \approx 0.16\]</div>
+<p><strong>Solo el 16 % de las alertas son fraudes.</strong> El sistema no es malo: el problema es que el fraude es tan raro que hasta un 5 % de falsas alarmas sobre una población enorme de transacciones legítimas genera muchas más alertas que fraudes. Ignorar la probabilidad a priori es la <strong>falacia de la tasa base</strong>. Cuando evalúes modelos de clasificación, esta cantidad se llamará <em>precision</em> (<a href="../regresion-logistica/">regresión logística</a>).</p>
+</div>
+<h2 id="frecuencias-y-probabilidades-la-ley-de-los-grandes-numeros">Frecuencias y probabilidades: la ley de los grandes números<a class="headerlink" href="#frecuencias-y-probabilidades-la-ley-de-los-grandes-numeros" title="Permanent link">&para;</a></h2>
+<p>Hemos estimado probabilidades con frecuencias observadas, como el 70/1000. ¿Por qué es legítimo? Porque, cuando un experimento se repite muchas veces de forma independiente, la <strong>frecuencia relativa</strong> de un suceso se acerca cada vez más a su probabilidad. Es la <strong>ley de los grandes números</strong>.</p>
+<p>La ley tiene una consecuencia práctica importante: con pocas repeticiones, la frecuencia puede alejarse bastante de la probabilidad. Una estimación basada en 20 visitas es mucho menos fiable que una basada en 1000. En el tema de <a href="../inferencia/intervalos/">inferencia</a> aprenderemos a cuantificar exactamente cuánto.</p>
+<p>Experimenta con dos dados: con pocos lanzamientos, las frecuencias saltan mucho; con miles, se pegan a la probabilidad teórica.</p>
+<iframe class="demo-embed" style="height:760px" src="demo_dados.html" title="Demo interactiva" loading="lazy"></iframe>
+
+<p><a href="demo_dados.html" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span> Abrir a pantalla completa</a></p>
+<h2 id="en-python">En Python<a class="headerlink" href="#en-python" title="Permanent link">&para;</a></h2>
+<p>Con pandas, una tabla de contingencia y sus probabilidades condicionadas salen en una línea:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Reconstruimos las 1000 visitas de la tabla</span>
+<span class="n">visitas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"dispositivo"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"móvil"</span><span class="p">]</span> <span class="o">*</span> <span class="mi">600</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"ordenador"</span><span class="p">]</span> <span class="o">*</span> <span class="mi">400</span><span class="p">,</span>
+    <span class="s2">"compra"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"sí"</span><span class="p">]</span> <span class="o">*</span> <span class="mi">30</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"no"</span><span class="p">]</span> <span class="o">*</span> <span class="mi">570</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"sí"</span><span class="p">]</span> <span class="o">*</span> <span class="mi">40</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"no"</span><span class="p">]</span> <span class="o">*</span> <span class="mi">360</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">visitas</span><span class="o">.</span><span class="n">dispositivo</span><span class="p">,</span> <span class="n">visitas</span><span class="o">.</span><span class="n">compra</span><span class="p">,</span> <span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>        <span class="c1"># recuentos</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>compra        no  sí   All
+dispositivo               
+móvil        570  30   600
+ordenador    360  40   400
+All          930  70  1000
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">visitas</span><span class="o">.</span><span class="n">dispositivo</span><span class="p">,</span> <span class="n">visitas</span><span class="o">.</span><span class="n">compra</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="s2">"all"</span><span class="p">)</span>     <span class="c1"># P(A ∩ B)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>compra         no    sí
+dispositivo            
+móvil        0.57  0.03
+ordenador    0.36  0.04
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">visitas</span><span class="o">.</span><span class="n">dispositivo</span><span class="p">,</span> <span class="n">visitas</span><span class="o">.</span><span class="n">compra</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="s2">"index"</span><span class="p">)</span>   <span class="c1"># P(compra | dispositivo)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>compra         no    sí
+dispositivo            
+móvil        0.95  0.05
+ordenador    0.90  0.10
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">visitas</span><span class="o">.</span><span class="n">dispositivo</span><span class="p">,</span> <span class="n">visitas</span><span class="o">.</span><span class="n">compra</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="s2">"columns"</span><span class="p">)</span> <span class="c1"># P(dispositivo | compra)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>compra           no      sí
+dispositivo                
+móvil        0.6129  0.4286
+ordenador    0.3871  0.5714
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">visitas</span><span class="o">.</span><span class="n">compra</span> <span class="o">==</span> <span class="s2">"sí"</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>                                       <span class="c1"># P(compra) = 0.07</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>0.07
+</code></pre></div>
+</div>
+<p>Y para comprobar un cálculo por simulación (útil cuando dudes de una fórmula):</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">100_000</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>     <span class="c1"># 100 000 lanzamientos de dos dados</span>
+<span class="nb">print</span><span class="p">((</span><span class="n">dados</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>            <span class="c1"># ≈ 1/6 ≈ 0.167</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>0.16827
+</code></pre></div>
+</div>
+<h2 id="errores-frecuentes">Errores frecuentes<a class="headerlink" href="#errores-frecuentes" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Aplicar Laplace sin resultados equiprobables.</strong> Antes de "contar casos", pregúntate si todos son igual de probables.</li>
+<li><strong>Confundir <span class="arithmatex">\(P(A \mid B)\)</span> con <span class="arithmatex">\(P(B \mid A)\)</span>.</strong> Identifica siempre cuál es el denominador: ¿proporción <strong>de qué</strong>?</li>
+<li><strong>Sumar probabilidades de sucesos que se solapan.</strong> La unión solo es una suma si los sucesos son incompatibles.</li>
+<li><strong>Confundir independientes con incompatibles.</strong> Ver la advertencia de la sección de independencia.</li>
+<li><strong>Ignorar la tasa base.</strong> Ante un suceso raro, incluso un indicador bastante bueno da muchos falsos positivos.</li>
+</ul>
+<div class="admonition success">
+<p class="admonition-title">Lo esencial</p>
+<ul>
+<li>La probabilidad mide la frecuencia con la que esperamos que ocurra un suceso si repetimos la situación muchas veces. Con datos, se estima con frecuencias observadas, y la estimación mejora con más datos.</li>
+<li>Las reglas básicas son tres: complementario, <span class="arithmatex">\(P(\bar{A}) = 1 - P(A)\)</span>; unión, <span class="arithmatex">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</span>; y producto, <span class="arithmatex">\(P(A \cap B) = P(A \mid B)\,P(B)\)</span>.</li>
+<li>Condicionar es restringir el universo a lo que sabemos. <span class="arithmatex">\(P(A \mid B)\)</span> y <span class="arithmatex">\(P(B \mid A)\)</span> son cosas distintas.</li>
+<li><span class="arithmatex">\(A\)</span> y <span class="arithmatex">\(B\)</span> son independientes si saber uno no cambia la probabilidad del otro: <span class="arithmatex">\(P(A \cap B) = P(A)\,P(B)\)</span>.</li>
+<li>Bayes permite invertir condicionadas, pero el resultado depende mucho de la probabilidad a priori.</li>
+</ul>
+</div>
+<h2 id="ejercicios">Ejercicios<a class="headerlink" href="#ejercicios" title="Permanent link">&para;</a></h2>
+<p><strong>1.</strong> Una encuesta a 500 clientes recoge si están satisfechos y si han vuelto a comprar: 300 están satisfechos y, de ellos, 240 volvieron a comprar. De los 200 insatisfechos, 40 volvieron. Calcula P(volver), P(volver | satisfecho) y P(satisfecho | volvió). ¿Son independientes la satisfacción y volver a comprar?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>Organiza los datos en una tabla de contingencia:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Vuelve</th>
+<th>No vuelve</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Satisfecho</td>
+<td>240</td>
+<td>60</td>
+<td>300</td>
+</tr>
+<tr>
+<td>Insatisfecho</td>
+<td>40</td>
+<td>160</td>
+<td>200</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>280</td>
+<td>220</td>
+<td>500</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><span class="arithmatex">\(P(\text{volver}) = 280/500 = 0.56\)</span>.</li>
+<li><span class="arithmatex">\(P(\text{volver} \mid \text{satisfecho}) = 240/300 = 0.8\)</span>: restringimos a los 300 satisfechos.</li>
+<li><span class="arithmatex">\(P(\text{satisfecho} \mid \text{volvió}) = 240/280 \approx 0.86\)</span>: restringimos a los 280 que volvieron. Es una pregunta distinta y da otro número.</li>
+<li>No son independientes: <span class="arithmatex">\(P(\text{volver} \mid \text{satisfecho}) = 0.8 \ne P(\text{volver}) = 0.56\)</span>. La satisfacción está asociada a la recompra.</li>
+</ul>
+</details>
+<p><strong>2.</strong> La tasa de conversión de una web es 0.07 por visita. Si las visitas son independientes, ¿cuál es la probabilidad de que de 3 visitas al menos una compre?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>"Al menos una" es más fácil por el complementario: "ninguna compra". Cada visita no compra con probabilidad <span class="arithmatex">\(1 - 0.07 = 0.93\)</span> y, por independencia, multiplicamos: <span class="arithmatex">\(P(\text{ninguna}) = 0.93^3 \approx 0.804\)</span>. Por tanto, <span class="arithmatex">\(P(\text{al menos una}) = 1 - 0.804 \approx 0.196\)</span>.</p>
+<p>Un error típico es sumar <span class="arithmatex">\(0.07 + 0.07 + 0.07 = 0.21\)</span>. Los sucesos "compra la visita <span class="arithmatex">\(i\)</span>" no son incompatibles (pueden comprar varias), así que la unión no es una suma.</p>
+</details>
+<p><strong>3.</strong> El 30 % de los usuarios de una app son premium y el 40 % la usa a diario. Si ambas cosas fueran independientes, ¿qué porcentaje sería premium y de uso diario? En los datos observas un 25 %. ¿Qué sugiere?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>Con independencia, <span class="arithmatex">\(P(\text{premium} \cap \text{diario}) = 0.3 \cdot 0.4 = 0.12\)</span>, un 12 %. Observar un 25 %, más del doble, sugiere una asociación positiva: los premium usan la app a diario mucho más que el resto. En concreto, <span class="arithmatex">\(P(\text{diario} \mid \text{premium}) = 0.25/0.3 \approx 0.83\)</span>, frente al 40 % general.</p>
+</details>
+<p><strong>4.</strong> Una prueba de detección de una enfermedad que afecta al 2 % de la población tiene una sensibilidad del 90 % (da positivo en el 90 % de los enfermos) y una especificidad del 95 % (da negativo en el 95 % de los sanos). Si una persona da positivo, ¿qué probabilidad hay de que esté enferma? Hazlo con frecuencias naturales y con la fórmula.</p>
+<details class="success">
+<summary>Solución</summary>
+<p><strong>Frecuencias naturales</strong> sobre 10 000 personas:</p>
+<ul>
+<li>200 están enfermas y el 90 % da positivo: <strong>180 positivos verdaderos</strong>.</li>
+<li>9 800 están sanas y el 5 % da positivo: <strong>490 positivos falsos</strong>.</li>
+<li><span class="arithmatex">\(P(\text{enfermo} \mid +) = 180 / (180 + 490) \approx 0.27\)</span>.</li>
+</ul>
+<p><strong>Fórmula:</strong></p>
+<div class="arithmatex">\[\frac{0.9 \cdot 0.02}{0.9 \cdot 0.02 + 0.05 \cdot 0.98} \approx 0.27\]</div>
+<p>Tres de cada cuatro positivos son falsos, porque la enfermedad es poco frecuente. Por eso los positivos de un cribado se confirman con una segunda prueba.</p>
+</details>
+<p><strong>5.</strong> En el ejercicio del fraude, el banco añade un segundo sistema de alertas independiente del primero y con las mismas tasas. Si saltan las dos alertas, ¿cuál es ahora la probabilidad de fraude?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>Por independencia (dentro de cada grupo), <span class="arithmatex">\(P(\text{dos alertas} \mid F) = 0.95^2 = 0.9025\)</span> y <span class="arithmatex">\(P(\text{dos alertas} \mid \bar F) = 0.05^2 = 0.0025\)</span>. Aplicando Bayes:</p>
+<div class="arithmatex">\[P(F \mid \text{dos alertas}) = \frac{0.9025 \cdot 0.01}{0.9025 \cdot 0.01 + 0.0025 \cdot 0.99} \approx 0.78\]</div>
+<p>Combinar evidencias independientes cambia muchísimo la conclusión: del 16 % pasamos al 78 %. Muchos modelos de clasificación funcionan precisamente combinando señales.</p>
+</details>
+<h2 id="slides">Slides<a class="headerlink" href="#slides" title="Permanent link">&para;</a></h2>
+<p>Las <strong>slides de clase</strong> son el apoyo que usamos en el aula. Resumen el tema, pero no sustituyen a esta página.</p>
+<iframe class="slides-embed" src="slides.pdf#navpanes=0&view=FitH" title="Slides"></iframe>
+
+<p><a download="download" href="slides.pdf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-9.5 8.5c0 .8-.7 1.5-1.5 1.5H7v2H5.5V9H8c.8 0 1.5.7 1.5 1.5zm5 2c0 .8-.7 1.5-1.5 1.5h-2.5V9H13c.8 0 1.5.7 1.5 1.5zm4-3H17v1h1.5V13H17v2h-1.5V9h3zm-6.5 0h1v3h-1zm-5 0h1v1H7z"/></svg></span> Descargar slides (PDF)</a></p>
+<p>La <strong><a href="../../reference/modelos-predictivos/">guía de referencia</a></strong> reúne las fórmulas de todo el curso en una página.</p>
+<p><a class="md-button md-button--primary" href="../variables-aleatorias/">Siguiente tema: Variables aleatorias <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg></span></a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../.." class="md-footer__link md-footer__link--prev" aria-label="Anterior: Modelos predictivos en el análisis de negocios">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Modelos predictivos en el análisis de negocios
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../variables-aleatorias/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: Variables aleatorias y distribuciones">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                Variables aleatorias y distribuciones
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/katex.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

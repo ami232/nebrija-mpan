@@ -1,0 +1,1828 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Material docente — estadística, machine learning y desarrollo de software">
+      
+      
+      
+        <link rel="canonical" href="https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/variables/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../distribuciones/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>1. Variables aleatorias - Nebrija · Modelos predictivos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-variables-aleatorias" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-header__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nebrija · Modelos predictivos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. Variables aleatorias
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-nav__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nebrija · Modelos predictivos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelos predictivos en el análisis de negocios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probabilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Variables aleatorias y distribuciones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Variables aleatorias y distribuciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Variables aleatorias
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Variables aleatorias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#por-que-necesitamos-numeros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué necesitamos números
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Por qué necesitamos números">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#discretas-y-continuas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discretas y continuas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variables-discretas-la-funcion-de-masa-de-probabilidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variables discretas: la función de masa de probabilidad
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Variables discretas: la función de masa de probabilidad">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#un-adelanto-el-valor-esperado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Un adelanto: el valor esperado
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variables-continuas-la-funcion-de-densidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variables continuas: la función de densidad
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-funcion-de-distribucion-una-herramienta-para-todo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La función de distribución: una herramienta para todo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="La función de distribución: una herramienta para todo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#leer-la-cdf-al-reves-los-cuantiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leer la CDF al revés: los cuantiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#media-y-varianza-de-una-distribucion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Media y varianza de una distribución
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lo-que-vemos-en-los-datos-distribuciones-empiricas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lo que vemos en los datos: distribuciones empíricas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lo que vemos en los datos: distribuciones empíricas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-leer-una-ecdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo leer una ECDF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#el-histograma-depende-de-como-lo-dibujes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El histograma depende de cómo lo dibujes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mas-datos-mas-confianza-el-teorema-fundamental" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Más datos, más confianza: el teorema fundamental
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../distribuciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Distribuciones con nombre propio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../inferencia/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimación e inferencia
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estimación e inferencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../inferencia/estimacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Estimación: de los datos al modelo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../inferencia/variabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Cuánto se equivoca una estimación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../inferencia/intervalos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Intervalos de confianza: de la muestra a la población
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../inferencia/practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Práctica guiada: aceptación de cookies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contraste-hipotesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contraste de hipótesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../regresion-lineal-simple/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regresión lineal simple
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../regresion-lineal-multiple/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regresión lineal múltiple
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../regresion-logistica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regresión logística
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feature-engineering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature engineering y transformaciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arboles-decision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Árboles de decisión y ensembles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../clasificacion-multiclase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Clasificación multiclase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../series-temporales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Series temporales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sesgos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sesgos en los datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Referencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/modelos-predictivos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía de referencia: modelos predictivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#por-que-necesitamos-numeros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué necesitamos números
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Por qué necesitamos números">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#discretas-y-continuas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discretas y continuas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variables-discretas-la-funcion-de-masa-de-probabilidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variables discretas: la función de masa de probabilidad
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Variables discretas: la función de masa de probabilidad">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#un-adelanto-el-valor-esperado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Un adelanto: el valor esperado
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variables-continuas-la-funcion-de-densidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variables continuas: la función de densidad
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-funcion-de-distribucion-una-herramienta-para-todo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La función de distribución: una herramienta para todo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="La función de distribución: una herramienta para todo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#leer-la-cdf-al-reves-los-cuantiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leer la CDF al revés: los cuantiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#media-y-varianza-de-una-distribucion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Media y varianza de una distribución
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lo-que-vemos-en-los-datos-distribuciones-empiricas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lo que vemos en los datos: distribuciones empíricas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lo que vemos en los datos: distribuciones empíricas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-leer-una-ecdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo leer una ECDF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#el-histograma-depende-de-como-lo-dibujes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El histograma depende de cómo lo dibujes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mas-datos-mas-confianza-el-teorema-fundamental" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Más datos, más confianza: el teorema fundamental
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="1-variables-aleatorias">1. Variables aleatorias<a class="headerlink" href="#1-variables-aleatorias" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Lo que necesitas antes</p>
+<p>Qué es un experimento aleatorio, un suceso y cómo se calcula su probabilidad. Lo tienes en el <a href="../../probabilidad/">tema de probabilidad</a>.</p>
+</div>
+<h2 id="por-que-necesitamos-numeros">Por qué necesitamos números<a class="headerlink" href="#por-que-necesitamos-numeros" title="Permanent link">&para;</a></h2>
+<p>Imagina que gestionas una tienda online y quieres planificar el embalaje: cuántas cajas de cada tamaño pedir, cuánto tiempo de preparación reservar por pedido. Cada pedido es el resultado de un experimento aleatorio: no sabes de antemano qué comprará el próximo cliente. Con lo visto en el tema anterior podrías describir sucesos como "el pedido tiene más de tres artículos" y calcular su probabilidad, pero en cuanto quieras responder preguntas como <strong>"¿cuántos artículos tiene un pedido en promedio?"</strong> o <strong>"¿cuánto varía ese número?"</strong> necesitas algo más: necesitas que el resultado del experimento sea un <strong>número</strong> con el que se pueda sumar, promediar y comparar.</p>
+<p>Eso es exactamente una variable aleatoria: una regla que convierte cada resultado del experimento en un número. El pedido "dos camisetas y un pantalón" se convierte en el número 3; el cliente que deja cuatro estrellas, en un 4; el usuario que acepta las cookies, en un 1.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: variable aleatoria</p>
+<p>Una <strong>variable aleatoria</strong> <span class="arithmatex">\(X\)</span> es una función que asigna un número real a cada resultado de un experimento aleatorio.</p>
+<p>Se escribe con <strong>mayúscula</strong> (<span class="arithmatex">\(X\)</span>, <span class="arithmatex">\(Y\)</span>, <span class="arithmatex">\(Z\)</span>) cuando hablamos de la variable en abstracto —"el número de artículos del próximo pedido", que aún no conocemos— y con <strong>minúscula</strong> (<span class="arithmatex">\(x\)</span>, <span class="arithmatex">\(y\)</span>, <span class="arithmatex">\(z\)</span>) para un valor concreto ya observado. La expresión <span class="arithmatex">\(P(X = 3)\)</span> se lee "probabilidad de que el próximo pedido tenga 3 artículos".</p>
+</div>
+<p>La misma situación admite varias variables aleatorias según lo que nos interese medir. De un pedido podemos extraer el número de artículos, el importe total en euros o el tiempo que tarda en llegar. Elegir la variable es la primera decisión de modelado: debe responder a la pregunta de negocio.</p>
+<h3 id="discretas-y-continuas">Discretas y continuas<a class="headerlink" href="#discretas-y-continuas" title="Permanent link">&para;</a></h3>
+<p>Las variables aleatorias se dividen en dos grandes familias, y la distinción importa porque cambia la forma de calcular probabilidades:</p>
+<ul>
+<li>Una variable es <strong>discreta</strong> si sus valores posibles se pueden enumerar uno a uno: <span class="arithmatex">\(0, 1, 2, \ldots\)</span> Son discretos los <strong>conteos</strong> (artículos, clientes, reclamaciones) y las categorías codificadas con números (acepta = 1, rechaza = 0).</li>
+<li>Una variable es <strong>continua</strong> si puede tomar cualquier valor dentro de un intervalo: el tiempo de entrega, la altura, un importe. Entre 2.5 y 2.6 días caben infinitos valores posibles.</li>
+</ul>
+<p>Una regla práctica: si la pregunta natural es "¿cuántos?", la variable es discreta; si es "¿cuánto mide?" o "¿cuánto tarda?", continua. Los importes en euros se redondean a céntimos y técnicamente son discretos, pero hay tantos valores posibles que se modelan como continuos.</p>
+<h2 id="variables-discretas-la-funcion-de-masa-de-probabilidad">Variables discretas: la función de masa de probabilidad<a class="headerlink" href="#variables-discretas-la-funcion-de-masa-de-probabilidad" title="Permanent link">&para;</a></h2>
+<p>Volvamos a los pedidos. Para describir completamente el comportamiento de "número de artículos por pedido" basta con decir qué probabilidad tiene cada valor posible. Supongamos que revisamos 200 pedidos recientes y contamos:</p>
+<table>
+<thead>
+<tr>
+<th>Artículos por pedido <span class="arithmatex">\(x\)</span></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nº de pedidos</td>
+<td>80</td>
+<td>60</td>
+<td>36</td>
+<td>16</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Proporción <span class="arithmatex">\(f(x)\)</span></td>
+<td>0.40</td>
+<td>0.30</td>
+<td>0.18</td>
+<td>0.08</td>
+<td>0.04</td>
+</tr>
+</tbody>
+</table>
+<p>Si suponemos que estas proporciones reflejan bien el comportamiento de los clientes, la última fila es la <strong>función de masa de probabilidad</strong> (PMF, del inglés <em>probability mass function</em>) de <span class="arithmatex">\(X\)</span>: a cada valor le asigna su probabilidad.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: función de masa de probabilidad (PMF)</p>
+<p>Para una variable discreta <span class="arithmatex">\(X\)</span>, la función de masa de probabilidad es
+$<span class="arithmatex">\(f(x) = P(X = x)\)</span>$
+y cumple dos condiciones: <span class="arithmatex">\(f(x) \ge 0\)</span> para todo <span class="arithmatex">\(x\)</span>, y la suma sobre todos los valores posibles es <span class="arithmatex">\(\sum_x f(x) = 1\)</span>.</p>
+</div>
+<p>Con la PMF se calcula la probabilidad de cualquier suceso <strong>sumando</strong> las probabilidades de los valores que lo forman. Por ejemplo, la probabilidad de que un pedido necesite una caja grande (3 artículos o más) es</p>
+<div class="arithmatex">\[P(X \ge 3) = f(3) + f(4) + f(5) = 0.18 + 0.08 + 0.04 = 0.30.\]</div>
+<p>Un valor que la variable no puede tomar tiene probabilidad cero: <span class="arithmatex">\(P(X = 2.5) = 0\)</span>, porque ningún pedido tiene dos artículos y medio.</p>
+<h3 id="un-adelanto-el-valor-esperado">Un adelanto: el valor esperado<a class="headerlink" href="#un-adelanto-el-valor-esperado" title="Permanent link">&para;</a></h3>
+<p>La PMF también responde a "¿cuántos artículos tiene un pedido en promedio?". Si recibiéramos muchísimos pedidos, el 40 % tendría 1 artículo, el 30 % tendría 2, etc. El promedio a largo plazo es, por tanto, la media de los valores <strong>ponderada por su probabilidad</strong>:</p>
+<div class="arithmatex">\[\mathbb{E}[X] = 1 \cdot 0.40 + 2 \cdot 0.30 + 3 \cdot 0.18 + 4 \cdot 0.08 + 5 \cdot 0.04 = 2.06 \text{ artículos}.\]</div>
+<p>A este número se le llama <strong>valor esperado</strong> o <strong>esperanza</strong> de <span class="arithmatex">\(X\)</span>. Observa que 2.06 no es un valor que un pedido concreto pueda tomar: es el centro de gravedad de la distribución, lo que esperas por pedido cuando promedias sobre muchos. Si mañana llegan 1000 pedidos, deberías preparar material para unos 2060 artículos. Volveremos a la esperanza, junto con la varianza, en <a href="#media-y-varianza-de-una-distribucion">Media y varianza de una distribución</a>.</p>
+<h2 id="variables-continuas-la-funcion-de-densidad">Variables continuas: la función de densidad<a class="headerlink" href="#variables-continuas-la-funcion-de-densidad" title="Permanent link">&para;</a></h2>
+<p>Con una variable continua el enfoque anterior no funciona. Piensa en el tiempo de entrega de los pedidos medido con precisión de segundos: la probabilidad de que un pedido tarde <strong>exactamente</strong> 2.500000… días es cero, porque hay infinitos valores posibles y ninguno concreto puede acumular probabilidad positiva. Por eso en las variables continuas nunca preguntamos por un valor exacto, sino por <strong>intervalos</strong>: "¿qué probabilidad hay de que tarde entre 2 y 3 días?".</p>
+<p>Para entender cómo se describe una variable continua, imagina el histograma de miles de tiempos de entrega, dibujado de forma que el <strong>área</strong> de cada barra sea la proporción de pedidos en ese intervalo (lo que en Python se consigue con <code>density=True</code>). Si las barras miden un día de ancho, el histograma es tosco. Si las estrechas a medio día, a una hora, a un minuto —y tienes datos suficientes para llenarlas—, el contorno de las barras se va suavizando hasta convertirse en una curva. Esa curva límite es la <strong>función de densidad</strong>.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: función de densidad de probabilidad (PDF)</p>
+<p>Una variable continua <span class="arithmatex">\(X\)</span> se describe con una función de densidad <span class="arithmatex">\(f(x) \ge 0\)</span> tal que la probabilidad de cualquier intervalo <span class="arithmatex">\(P(a &lt; X \le b)\)</span> es el <strong>área bajo la curva</strong> entre <span class="arithmatex">\(a\)</span> y <span class="arithmatex">\(b\)</span>. El área total bajo la curva vale 1.</p>
+</div>
+<p>No hace falta saber calcular esas áreas: en los ejemplos sencillos son rectángulos, y en el resto las calcula Python.</p>
+<details class="info">
+<summary>Para saber más: el área es una integral</summary>
+<p>Si has estudiado cálculo, el área bajo la curva es una integral:</p>
+<div class="arithmatex">\[P(a &lt; X \le b) = \int_a^b f(x)\, dx, \qquad \text{con} \qquad \int_{-\infty}^{\infty} f(x)\, dx = 1.\]</div>
+<p>Es la versión continua de sumar la PMF: la integral "suma" la densidad sobre infinitos valores, cada uno con un peso infinitesimal <span class="arithmatex">\(dx\)</span>.</p>
+</details>
+<p>Como la probabilidad es un área, <span class="arithmatex">\(f(x)\)</span> en sí misma <strong>no es una probabilidad</strong>: es una densidad, "probabilidad por unidad de <span class="arithmatex">\(x\)</span>". Sus unidades lo delatan: si <span class="arithmatex">\(x\)</span> se mide en días, <span class="arithmatex">\(f(x)\)</span> se mide en "probabilidad por día". Por eso una densidad puede valer más que 1 sin ningún problema, siempre que el área total sea 1. Y por eso, en una variable continua, da igual escribir <span class="arithmatex">\(&lt;\)</span> o <span class="arithmatex">\(\le\)</span>: el área sobre un único punto es cero.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: esperar al metro</p>
+<p>Un metro pasa cada 10 minutos exactos y llegas al andén sin mirar el horario. Tu tiempo de espera <span class="arithmatex">\(X\)</span> puede ser cualquier valor entre 0 y 10 minutos, y ninguno es más probable que otro. La densidad es constante en ese intervalo: un rectángulo de base 10 y área 1, así que su altura es <span class="arithmatex">\(f(x) = 1/10\)</span> para <span class="arithmatex">\(0 \le x \le 10\)</span> (y 0 fuera).</p>
+<ul>
+<li><strong>Probabilidad de esperar más de 7 minutos:</strong> es el área del rectángulo entre 7 y 10, es decir, <span class="arithmatex">\((10 - 7) \cdot \frac{1}{10} = 0.3\)</span>.</li>
+<li><strong>Probabilidad de esperar exactamente 5 minutos:</strong> el área sobre un punto es cero, <span class="arithmatex">\(P(X = 5) = 0\)</span>.</li>
+<li><strong>¿Y si el metro pasara cada 30 segundos?</strong> La espera iría de 0 a 0.5 minutos y la altura del rectángulo sería <span class="arithmatex">\(f(x) = 2\)</span>: mayor que 1, y perfectamente válida.</li>
+</ul>
+</div>
+<h2 id="la-funcion-de-distribucion-una-herramienta-para-todo">La función de distribución: una herramienta para todo<a class="headerlink" href="#la-funcion-de-distribucion-una-herramienta-para-todo" title="Permanent link">&para;</a></h2>
+<p>Hasta ahora tenemos dos herramientas distintas: sumar la PMF en el caso discreto, calcular áreas bajo la PDF en el continuo. La <strong>función de distribución</strong> unifica ambos casos y es, en la práctica, la herramienta que más usarás (también es lo que calculan las funciones <code>cdf</code> de Python).</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: función de distribución (CDF)</p>
+<p>La función de distribución o función de distribución acumulada de <span class="arithmatex">\(X\)</span> da, para cada valor <span class="arithmatex">\(x\)</span>, la probabilidad de observar un valor <strong>menor o igual</strong>:
+$<span class="arithmatex">\(F(x) = P(X \le x)\)</span>$</p>
+<p>En una variable discreta se obtiene sumando la PMF hasta <span class="arithmatex">\(x\)</span>, <span class="arithmatex">\(F(x) = \sum_{k \le x} f(k)\)</span>. En una continua es el área bajo la densidad a la izquierda de <span class="arithmatex">\(x\)</span>.</p>
+</div>
+<details class="info">
+<summary>Para saber más: la CDF continua como integral</summary>
+<p>En una variable continua, el área a la izquierda de <span class="arithmatex">\(x\)</span> es la integral <span class="arithmatex">\(F(x) = \int_{-\infty}^{x} f(t)\, dt\)</span>. Recíprocamente, la densidad es la derivada de la función de distribución, <span class="arithmatex">\(f(x) = F'(x)\)</span>: la densidad mide lo rápido que se acumula la probabilidad en cada punto.</p>
+</details>
+<p>Su gran ventaja es que, conocida <span class="arithmatex">\(F\)</span>, cualquier probabilidad de un intervalo sale con una resta:</p>
+<div class="arithmatex">\[P(a &lt; X \le b) = F(b) - F(a), \qquad P(X &gt; a) = 1 - F(a).\]</div>
+<p>En los pedidos, acumulando la tabla de la PMF se obtiene <span class="arithmatex">\(F(1) = 0.40\)</span>, <span class="arithmatex">\(F(2) = 0.70\)</span>, <span class="arithmatex">\(F(3) = 0.88\)</span>, <span class="arithmatex">\(F(4) = 0.96\)</span> y <span class="arithmatex">\(F(5) = 1\)</span>. En el metro, el área desde 0 hasta <span class="arithmatex">\(x\)</span> es <span class="arithmatex">\(F(x) = x/10\)</span>.</p>
+<p>Toda función de distribución empieza en 0 (muy a la izquierda no hay probabilidad acumulada), nunca baja y termina en 1. En una variable <strong>discreta</strong> tiene forma de <strong>escalera</strong>: es plana entre valores posibles y salta en cada uno, con un salto igual a su probabilidad. En una <strong>continua</strong> es una curva que sube sin saltos.</p>
+<div class="admonition warning">
+<p class="admonition-title">Cuidado con los extremos en variables discretas</p>
+<p>En una variable discreta, <span class="arithmatex">\(&lt;\)</span> y <span class="arithmatex">\(\le\)</span> <strong>no</strong> son lo mismo. Para la probabilidad de 3 artículos o más en los pedidos, "3 o más" es lo contrario de "2 o menos": <span class="arithmatex">\(P(X \ge 3) = 1 - F(2) = 1 - 0.70 = 0.30\)</span>. Usar <span class="arithmatex">\(1 - F(3)\)</span> daría <span class="arithmatex">\(0.12\)</span>, que es la probabilidad de <strong>más de</strong> 3. En variables continuas este problema no existe.</p>
+</div>
+<h3 id="leer-la-cdf-al-reves-los-cuantiles">Leer la CDF al revés: los cuantiles<a class="headerlink" href="#leer-la-cdf-al-reves-los-cuantiles" title="Permanent link">&para;</a></h3>
+<p>La CDF responde a "¿qué probabilidad hay de quedar por debajo de <span class="arithmatex">\(x\)</span>?". Muchas preguntas de negocio van en sentido contrario: "¿qué tiempo de espera no se supera el 90 % de las veces?". Eso es leer la CDF al revés: buscar el <span class="arithmatex">\(x\)</span> en el que <span class="arithmatex">\(F(x)\)</span> alcanza 0.9. En el metro, <span class="arithmatex">\(x/10 = 0.9\)</span> da <span class="arithmatex">\(x = 9\)</span> minutos. Ese valor se llama <strong>cuantil</strong> o <strong>percentil 90</strong>, y el que deja la mitad de la probabilidad a cada lado es la <strong>mediana</strong> (5 minutos en el metro; 2 artículos en los pedidos, el primer valor donde <span class="arithmatex">\(F\)</span> alcanza 0.5). En <code>scipy.stats</code>, leer la CDF al revés es el método <code>.ppf(q)</code>.</p>
+<p>La mediana es otra forma de decir dónde está el <strong>centro</strong> de una distribución, distinta del valor esperado. En una distribución simétrica coinciden, pero en una asimétrica, que es lo habitual con importes, salarios o tiempos de espera, la media se desplaza hacia la cola larga. Si nueve empleados cobran entre 25 000 y 35 000 € al año y el décimo es el CEO, con 400 000 €, la media es 67 000 €, una cifra que no describe a nadie de la empresa, mientras que la mediana es 30 500 €. La mediana es <strong>robusta</strong>: un valor extremo cuenta solo como "un dato más por encima". Por eso conviene para describir al <strong>individuo típico</strong>, y la media para <strong>totales y presupuestos</strong>, porque total = media × número de casos.</p>
+<p>Los <strong>cuartiles</strong> son los percentiles 25 y 75 (<span class="arithmatex">\(Q_1\)</span> y <span class="arithmatex">\(Q_3\)</span>), y entre ellos queda el 50 % central de la distribución. Su distancia, el <strong>rango intercuartílico</strong> <span class="arithmatex">\(\text{IQR} = Q_3 - Q_1\)</span>, mide la dispersión de forma tan robusta como la mediana mide el centro. Es también la base de la regla con que los diagramas de caja marcan los <strong>valores atípicos</strong>: los que quedan por debajo de <span class="arithmatex">\(Q_1 - 1.5\,\text{IQR}\)</span> o por encima de <span class="arithmatex">\(Q_3 + 1.5\,\text{IQR}\)</span>. En los salarios, <span class="arithmatex">\(Q_1 = 28\,250\)</span> €, <span class="arithmatex">\(Q_3 = 32\,750\)</span> € e <span class="arithmatex">\(\text{IQR} = 4\,500\)</span> €, así que todo salario por encima de 39 500 € se marca: solo el del CEO. Un atípico no es automáticamente un error. Es un valor que hay que revisar antes de decidir qué hacer con él.</p>
+<h2 id="media-y-varianza-de-una-distribucion">Media y varianza de una distribución<a class="headerlink" href="#media-y-varianza-de-una-distribucion" title="Permanent link">&para;</a></h2>
+<p>Dos proveedores tardan <strong>de media 5 días</strong> en entregar. Con el proveedor A, la entrega llega en 4, 5 o 6 días, con la misma probabilidad. Con el proveedor B, en 1, 5 o 9 días, también con la misma probabilidad. Si solo miras la media, son iguales. Si tienes que planificar un almacén, B es mucho peor: a veces te deja una semana sin material. Para resumir una distribución hacen falta al menos dos números: dónde está su <strong>centro</strong> y cuánto se <strong>dispersa</strong> alrededor de él.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: esperanza, varianza y desviación típica</p>
+<p>La <strong>esperanza</strong> o <strong>media</strong> de <span class="arithmatex">\(X\)</span>, <span class="arithmatex">\(\mu = \mathbb{E}[X]\)</span>, es la suma de los valores posibles ponderados por su probabilidad:</p>
+<div class="arithmatex">\[\mathbb{E}[X] = \sum_x x\, f(x)\]</div>
+<p>En una variable continua la idea es la misma, con la densidad en lugar de la PMF: la media es el centro de gravedad del área bajo la curva.</p>
+<p>La <strong>varianza</strong> <span class="arithmatex">\(\sigma^2 = \mathbb{V}[X]\)</span> es la esperanza de la distancia al cuadrado a la media, y la <strong>desviación típica</strong> <span class="arithmatex">\(\sigma\)</span> es su raíz cuadrada:</p>
+<div class="arithmatex">\[\mathbb{V}[X] = \mathbb{E}\big[(X - \mu)^2\big] = \sum_x (x - \mu)^2 f(x) \quad \text{(discreta)}, \qquad\qquad \sigma = \sqrt{\mathbb{V}[X]}\]</div>
+<p>Para calcular a mano suele ser más rápida la fórmula equivalente <span class="arithmatex">\(\mathbb{V}[X] = \mathbb{E}[X^2] - \mathbb{E}[X]^2\)</span>.</p>
+</div>
+<details class="info">
+<summary>Para saber más: media y varianza de una variable continua</summary>
+<p>En una variable continua, las sumas ponderadas se convierten en integrales:</p>
+<div class="arithmatex">\[\mathbb{E}[X] = \int_{-\infty}^{\infty} x\, f(x)\, dx, \qquad\qquad \mathbb{V}[X] = \int_{-\infty}^{\infty} (x - \mu)^2 f(x)\, dx\]</div>
+<p>Para la espera al metro, con <span class="arithmatex">\(f(x) = 1/10\)</span> entre 0 y 10, <span class="arithmatex">\(\mathbb{E}[X] = \int_0^{10} \frac{x}{10}\, dx = \frac{10^2}{20} = 5\)</span> minutos. En la práctica, <code>scipy.stats</code> las calcula con <code>.mean()</code> y <code>.var()</code>.</p>
+</details>
+<p>La esperanza es el <strong>promedio a largo plazo</strong>, el centro de gravedad de la distribución: 2.06 artículos por pedido, o 5 minutos de espera media en el metro (el centro del rectángulo). La varianza promedia distancias <strong>al cuadrado</strong> porque las distancias con signo, <span class="arithmatex">\(X - \mu\)</span>, siempre promedian cero: las positivas y las negativas se compensan. El cuadrado deja la varianza en unidades al cuadrado (días², €²), que no tienen lectura intuitiva, y por eso para comunicar la dispersión se usa la desviación típica, que está en las unidades de la variable.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: los dos proveedores</p>
+<p>Con <span class="arithmatex">\(\mu = 5\)</span>, las desviaciones de A son <span class="arithmatex">\(-1, 0, 1\)</span>, cada una con probabilidad <span class="arithmatex">\(1/3\)</span>, y las de B, <span class="arithmatex">\(-4, 0, 4\)</span>:</p>
+<div class="arithmatex">\[\mathbb{V}[A] = \tfrac{1}{3}(1 + 0 + 1) = 0.67 \text{ días}^2, \qquad \mathbb{V}[B] = \tfrac{1}{3}(16 + 0 + 16) = 10.67 \text{ días}^2\]</div>
+<p>Las desviaciones típicas son <span class="arithmatex">\(\sigma_A = 0.82\)</span> y <span class="arithmatex">\(\sigma_B = 3.27\)</span> días: B tiene la misma media que A y cuatro veces su dispersión. Para el almacén, eso significa más stock de seguridad.</p>
+<p>En los pedidos, <span class="arithmatex">\(\mathbb{E}[X^2] = 1 \cdot 0.40 + 4 \cdot 0.30 + 9 \cdot 0.18 + 16 \cdot 0.08 + 25 \cdot 0.04 = 5.5\)</span>, así que <span class="arithmatex">\(\mathbb{V}[X] = 5.5 - 2.06^2 \approx 1.26\)</span> y <span class="arithmatex">\(\sigma \approx 1.12\)</span> artículos.</p>
+</div>
+<p>Cada distribución con nombre propio de la <a href="../distribuciones/">página siguiente</a> viene con su media y su varianza escritas en función de sus parámetros. En el <a href="../../inferencia/">tema de estimación</a> veremos cómo se calculan con datos y por qué la media de muchas observaciones varía mucho menos que cada observación por separado.</p>
+<h2 id="lo-que-vemos-en-los-datos-distribuciones-empiricas">Lo que vemos en los datos: distribuciones empíricas<a class="headerlink" href="#lo-que-vemos-en-los-datos-distribuciones-empiricas" title="Permanent link">&para;</a></h2>
+<p>Todo lo anterior describe la distribución <strong>real</strong> de una variable, la que generaría los datos si repitiéramos el experimento infinitas veces. En la práctica nunca la vemos: lo que tenemos es una <strong>muestra</strong>, una lista finita de valores observados <span class="arithmatex">\(x_1, x_2, \ldots, x_n\)</span>. La tabla de 200 pedidos del principio era justo eso, y la usamos como si fuera la distribución real. ¿Hasta qué punto es legítimo?</p>
+<p>Con una muestra construimos las versiones empíricas de las funciones anteriores:</p>
+<ul>
+<li>El <strong>histograma</strong> es la versión empírica de la PMF o la PDF. Divide el rango de valores en intervalos y muestra cuántas observaciones caen en cada uno (o qué proporción, o qué densidad).</li>
+<li>La <strong>función de distribución empírica</strong> (ECDF) es la versión empírica de la CDF: para cada valor <span class="arithmatex">\(x\)</span>, la proporción de observaciones que son menores o iguales que <span class="arithmatex">\(x\)</span>,
+  $<span class="arithmatex">\(\hat{F}_n(x) = \frac{\text{nº de observaciones} \le x}{n}.\)</span>$</li>
+</ul>
+<h3 id="como-leer-una-ecdf">Cómo leer una ECDF<a class="headerlink" href="#como-leer-una-ecdf" title="Permanent link">&para;</a></h3>
+<p>La ECDF es una escalera que sube <span class="arithmatex">\(1/n\)</span> en cada observación. Se lee igual que una CDF y responde directamente a preguntas de porcentajes. Si la ECDF de los tiempos de entrega vale 0.85 en los 3 días, el 85 % de los pedidos llegó en 3 días o menos, y el 15 % tardó más. Buscando dónde la escalera cruza la altura 0.5 obtienes la mediana, y en 0.9 el percentil 90. Donde la escalera sube con pendiente fuerte hay muchos datos concentrados; donde es casi plana, pocos.</p>
+<h3 id="el-histograma-depende-de-como-lo-dibujes">El histograma depende de cómo lo dibujes<a class="headerlink" href="#el-histograma-depende-de-como-lo-dibujes" title="Permanent link">&para;</a></h3>
+<p>El histograma es más intuitivo pero tiene una trampa: su forma depende del <strong>número y la posición de los intervalos</strong> (<em>bins</em>). Con pocos intervalos anchos esconde detalles, como una distribución con dos picos. Con muchos intervalos estrechos y pocos datos parece una sucesión de barras al azar. Ante la duda, prueba varios valores de <code>bins</code> antes de sacar conclusiones, o mira la ECDF, que no depende de ninguna elección.</p>
+<h3 id="mas-datos-mas-confianza-el-teorema-fundamental">Más datos, más confianza: el teorema fundamental<a class="headerlink" href="#mas-datos-mas-confianza-el-teorema-fundamental" title="Permanent link">&para;</a></h3>
+<p>La justificación de usar los datos como sustituto de la distribución real es un resultado clásico:</p>
+<div class="admonition abstract">
+<p class="admonition-title">Teorema fundamental de la estadística (Glivenko–Cantelli)</p>
+<p>A medida que el tamaño de la muestra <span class="arithmatex">\(n\)</span> crece, la función de distribución empírica <span class="arithmatex">\(\hat{F}_n\)</span> se acerca a la función de distribución real <span class="arithmatex">\(F\)</span> en <strong>todos</strong> los puntos a la vez: la máxima distancia entre ambas tiende a cero.</p>
+</div>
+<p>En términos prácticos: <strong>con muchos datos, la forma que ves en ellos es la forma de la distribución real</strong>, y puedes estimar con confianza sus características (media, cuantiles, probabilidades). Con pocos datos, en cambio, la forma observada puede engañar bastante. ¿Cuántos datos son "muchos"? No hay una cifra universal, pero la demo te da una idea: elige una distribución, sube <span class="arithmatex">\(n\)</span> y observa cómo el histograma y la ECDF se pegan a la curva teórica. Fíjate también en la máxima distancia ECDF–CDF, que es lo que el teorema dice que tiende a cero.</p>
+<iframe class="demo-embed" style="height:780px" src="../demo_empirica.html" title="Demo interactiva" loading="lazy"></iframe>
+
+<p><a href="../demo_empirica.html" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span> Abrir a pantalla completa</a></p>
+<div class="admonition warning">
+<p class="admonition-title">Errores frecuentes</p>
+<ul>
+<li><strong>Tratar la densidad como probabilidad.</strong> <span class="arithmatex">\(f(x) = 1.4\)</span> no significa "probabilidad 1.4". Las probabilidades de una variable continua son áreas.</li>
+<li><strong>Preguntar por un valor exacto en una variable continua.</strong> <span class="arithmatex">\(P(X = 2.5) = 0\)</span> siempre. Pregunta por intervalos.</li>
+<li><strong>Confundir <span class="arithmatex">\(\ge\)</span> con <span class="arithmatex">\(&gt;\)</span> en variables discretas</strong> al usar la CDF: <span class="arithmatex">\(P(X \ge k) = 1 - F(k - 1)\)</span>.</li>
+<li><strong>Sacar conclusiones de un histograma con pocos datos</strong> o con una elección de intervalos poco afortunada.</li>
+</ul>
+</div>
+<h2 id="en-python">En Python<a class="headerlink" href="#en-python" title="Permanent link">&para;</a></h2>
+<p>Construir la PMF y la CDF empíricas a partir de datos con pandas, y comparar una muestra con una distribución teórica:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+
+<span class="c1"># PMF y CDF empíricas de los artículos por pedido</span>
+<span class="n">pedidos</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">80</span> <span class="o">+</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="mi">36</span> <span class="o">+</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="mi">16</span> <span class="o">+</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">pmf</span> <span class="o">=</span> <span class="n">pedidos</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>   <span class="c1"># proporción de cada valor</span>
+<span class="n">cdf</span> <span class="o">=</span> <span class="n">pmf</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>                                          <span class="c1"># acumulada: F(1), F(2), ...</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pmf</span><span class="p">,</span> <span class="n">cdf</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>1    0.40
+2    0.30
+3    0.18
+4    0.08
+5    0.04
+Name: proportion, dtype: float64
+1    0.40
+2    0.70
+3    0.88
+4    0.96
+5    1.00
+Name: proportion, dtype: float64
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"P(X &gt;= 3) ="</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">cdf</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">2</span><span class="p">))</span>                            <span class="c1"># 0.30</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>P(X &gt;= 3) = 0.3
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">media</span> <span class="o">=</span> <span class="p">(</span><span class="n">pmf</span><span class="o">.</span><span class="n">index</span> <span class="o">*</span> <span class="n">pmf</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Valor esperado ="</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">media</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>                  <span class="c1"># 2.06</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>Valor esperado = 2.06
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">varianza</span> <span class="o">=</span> <span class="p">(</span><span class="n">pmf</span><span class="o">.</span><span class="n">index</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pmf</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="n">media</span><span class="o">**</span><span class="mi">2</span>            <span class="c1"># E[X²] − E[X]²</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Varianza ="</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">varianza</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s2">" σ ="</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">varianza</span><span class="o">**</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>   <span class="c1"># 1.26 y 1.12</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>Varianza = 1.26  σ = 1.12
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Media, mediana, cuartiles e IQR de unos datos</span>
+<span class="n">salarios</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">25</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">400</span><span class="p">])</span>   <span class="c1"># miles de €</span>
+<span class="n">q1</span><span class="p">,</span> <span class="n">q3</span> <span class="o">=</span> <span class="n">salarios</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">])</span>
+<span class="n">iqr</span> <span class="o">=</span> <span class="n">q3</span> <span class="o">-</span> <span class="n">q1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">salarios</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">salarios</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">q1</span><span class="p">,</span> <span class="n">q3</span><span class="p">)</span>          <span class="c1"># 67.0, 30.5, 28.25, 32.75</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>67.0 30.5 28.25 32.75
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">salarios</span><span class="p">[(</span><span class="n">salarios</span> <span class="o">&lt;</span> <span class="n">q1</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">iqr</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">salarios</span> <span class="o">&gt;</span> <span class="n">q3</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">iqr</span><span class="p">)])</span>   <span class="c1"># atípicos</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>9    400
+dtype: int64
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Histograma (densidad) y ECDF de una muestra continua frente a la teoría</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">espera</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>                       <span class="c1"># 500 esperas al metro</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">espera</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>                     <span class="c1"># density=True: área total = 1</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"C1"</span><span class="p">)</span>                             <span class="c1"># densidad teórica f(x) = 1/10</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">ecdf</span><span class="p">(</span><span class="n">espera</span><span class="p">)</span>                                            <span class="c1"># ECDF (matplotlib &gt;= 3.8)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"C1"</span><span class="p">)</span>                       <span class="c1"># CDF teórica F(x) = x/10</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="resultado resultado-figura"><img alt="Figura generada por el código" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIKICAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjYwMS42NjU2MjVwdCIgaGVpZ2h0PSIyNTYuOTU4ODI4cHQiIHZpZXdCb3g9IjAgMCA2MDEuNjY1NjI1IDI1Ni45NTg4MjgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIj4KIDxtZXRhZGF0YT4KICA8cmRmOlJERiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgIDxjYzpXb3JrPgogICAgPGRjOnR5cGUgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIvPgogICAgPGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+CiAgICA8ZGM6Y3JlYXRvcj4KICAgICA8Y2M6QWdlbnQ+CiAgICAgIDxkYzp0aXRsZT5NYXRwbG90bGliIHYzLjExLjIsIGh0dHBzOi8vbWF0cGxvdGxpYi5vcmcvPC9kYzp0aXRsZT4KICAgICA8L2NjOkFnZW50PgogICAgPC9kYzpjcmVhdG9yPgogICA8L2NjOldvcms+CiAgPC9yZGY6UkRGPgogPC9tZXRhZGF0YT4KIDxkZWZzPgogIDxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+KntzdHJva2UtbGluZWpvaW46IHJvdW5kOyBzdHJva2UtbGluZWNhcDogYnV0dH08L3N0eWxlPgogPC9kZWZzPgogPGcgaWQ9ImZpZ3VyZV8xIj4KICA8ZyBpZD0icGF0Y2hfMSI+CiAgIDxwYXRoIGQ9Ik0gMCAyNTYuOTU4ODI4IApMIDYwMS42NjU2MjUgMjU2Ljk1ODgyOCAKTCA2MDEuNjY1NjI1IDAgCkwgMCAwIAp6CiIgc3R5bGU9ImZpbGw6ICNmZmZmZmYiLz4KICA8L2c+CiAgPGcgaWQ9ImF4ZXNfMSI+CiAgIDxnIGlkPSJwYXRjaF8yIj4KICAgIDxwYXRoIGQ9Ik0gMzYuNDY1NjI1IDIzMi43NTg4MjggCkwgMjkwLjEwMTk4OSAyMzIuNzU4ODI4IApMIDI5MC4xMDE5ODkgMTAuOTk4ODI4IApMIDM2LjQ2NTYyNSAxMC45OTg4MjggCnoKIiBzdHlsZT0iZmlsbDogI2ZmZmZmZiIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8zIj4KICAgIDxwYXRoIGQ9Ik0gNDcuOTk0NTUxIDIzMi43NTg4MjggCkwgNTkuNTIzNDc2IDIzMi43NTg4MjggCkwgNTkuNTIzNDc2IDEyMS42MDA5MzMgCkwgNDcuOTk0NTUxIDEyMS42MDA5MzMgCnoKIiBjbGlwLXBhdGg9InVybCgjcDY2NjYzMGVhNmUpIiBzdHlsZT0iZmlsbDogIzFmNzdiNCIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF80Ij4KICAgIDxwYXRoIGQ9Ik0gNTkuNTIzNDc2IDIzMi43NTg4MjggCkwgNzEuMDUyNDAyIDIzMi43NTg4MjggCkwgNzEuMDUyNDAyIDgyLjY5NTY3IApMIDU5LjUyMzQ3NiA4Mi42OTU2NyAKegoiIGNsaXAtcGF0aD0idXJsKCNwNjY2NjMwZWE2ZSkiIHN0eWxlPSJmaWxsOiAjMWY3N2I0Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzUiPgogICAgPHBhdGggZD0iTSA3MS4wNTI0MDIgMjMyLjc1ODgyOCAKTCA4Mi41ODEzMjcgMjMyLjc1ODgyOCAKTCA4Mi41ODEzMjcgMTMyLjcxNjcyMyAKTCA3MS4wNTI0MDIgMTMyLjcxNjcyMyAKegoiIGNsaXAtcGF0aD0idXJsKCNwNjY2NjMwZWE2ZSkiIHN0eWxlPSJmaWxsOiAjMWY3N2I0Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzYiPgogICAgPHBhdGggZD0iTSA4Mi41ODEzMjcgMjMyLjc1ODgyOCAKTCA5NC4xMTAyNTMgMjMyLjc1ODgyOCAKTCA5NC4xMTAyNTMgNjAuNDY0MDkxIApMIDgyLjU4MTMyNyA2MC40NjQwOTEgCnoKIiBjbGlwLXBhdGg9InVybCgjcDY2NjYzMGVhNmUpIiBzdHlsZT0iZmlsbDogIzFmNzdiNCIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF83Ij4KICAgIDxwYXRoIGQ9Ik0gOTQuMTEwMjUzIDIzMi43NTg4MjggCkwgMTA1LjYzOTE3OSAyMzIuNzU4ODI4IApMIDEwNS42MzkxNzkgMTQzLjgzMjUxMiAKTCA5NC4xMTAyNTMgMTQzLjgzMjUxMiAKegoiIGNsaXAtcGF0aD0idXJsKCNwNjY2NjMwZWE2ZSkiIHN0eWxlPSJmaWxsOiAjMWY3N2I0Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzgiPgogICAgPHBhdGggZD0iTSAxMDUuNjM5MTc5IDIzMi43NTg4MjggCkwgMTE3LjE2ODEwNCAyMzIuNzU4ODI4IApMIDExNy4xNjgxMDQgMTQzLjgzMjUxMiAKTCAxMDUuNjM5MTc5IDE0My44MzI1MTIgCnoKIiBjbGlwLXBhdGg9InVybCgjcDY2NjYzMGVhNmUpIiBzdHlsZT0iZmlsbDogIzFmNzdiNCIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF85Ij4KICAgIDxwYXRoIGQ9Ik0gMTE3LjE2ODEwNCAyMzIuNzU4ODI4IApMIDEyOC42OTcwMyAyMzIuNzU4ODI4IApMIDEyOC42OTcwMyAxMjEuNjAwOTMzIApMIDExNy4xNjgxMDQgMTIxLjYwMDkzMyAKegoiIGNsaXAtcGF0aD0idXJsKCNwNjY2NjMwZWE2ZSkiIHN0eWxlPSJmaWxsOiAjMWY3N2I0Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzEwIj4KICAgIDxwYXRoIGQ9Ik0gMTI4LjY5NzAzIDIzMi43NTg4MjggCkwgMTQwLjIyNTk1NiAyMzIuNzU4ODI4IApMIDE0MC4yMjU5NTYgNjYuMDIxOTg2IApMIDEyOC42OTcwMyA2Ni4wMjE5ODYgCnoKIiBjbGlwLXBhdGg9InVybCgjcDY2NjYzMGVhNmUpIiBzdHlsZT0iZmlsbDogIzFmNzdiNCIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8xMSI+CiAgICA8cGF0aCBkPSJNIDE0MC4yMjU5NTYgMjMyLjc1ODgyOCAKTCAxNTEuNzU0ODgxIDIzMi43NTg4MjggCkwgMTUxLjc1NDg4MSAxMTAuNDg1MTQ0IApMIDE0MC4yMjU5NTYgMTEwLjQ4NTE0NCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNjY2NjMwZWE2ZSkiIHN0eWxlPSJmaWxsOiAjMWY3N2I0Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzEyIj4KICAgIDxwYXRoIGQ9Ik0gMTUxLjc1NDg4MSAyMzIuNzU4ODI4IApMIDE2My4yODM4MDcgMjMyLjc1ODgyOCAKTCAxNjMuMjgzODA3IDExNi4wNDMwMzkgCkwgMTUxLjc1NDg4MSAxMTYuMDQzMDM5IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A2NjY2MzBlYTZlKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMTMiPgogICAgPHBhdGggZD0iTSAxNjMuMjgzODA3IDIzMi43NTg4MjggCkwgMTc0LjgxMjczMiAyMzIuNzU4ODI4IApMIDE3NC44MTI3MzIgOTkuMzY5MzU0IApMIDE2My4yODM4MDcgOTkuMzY5MzU0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A2NjY2MzBlYTZlKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMTQiPgogICAgPHBhdGggZD0iTSAxNzQuODEyNzMyIDIzMi43NTg4MjggCkwgMTg2LjM0MTY1OCAyMzIuNzU4ODI4IApMIDE4Ni4zNDE2NTggMjEuNTU4ODI4IApMIDE3NC44MTI3MzIgMjEuNTU4ODI4IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A2NjY2MzBlYTZlKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMTUiPgogICAgPHBhdGggZD0iTSAxODYuMzQxNjU4IDIzMi43NTg4MjggCkwgMTk3Ljg3MDU4NCAyMzIuNzU4ODI4IApMIDE5Ny44NzA1ODQgOTkuMzY5MzU0IApMIDE4Ni4zNDE2NTggOTkuMzY5MzU0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A2NjY2MzBlYTZlKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMTYiPgogICAgPHBhdGggZD0iTSAxOTcuODcwNTg0IDIzMi43NTg4MjggCkwgMjA5LjM5OTUwOSAyMzIuNzU4ODI4IApMIDIwOS4zOTk1MDkgOTkuMzY5MzU0IApMIDE5Ny44NzA1ODQgOTkuMzY5MzU0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A2NjY2MzBlYTZlKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMTciPgogICAgPHBhdGggZD0iTSAyMDkuMzk5NTA5IDIzMi43NTg4MjggCkwgMjIwLjkyODQzNSAyMzIuNzU4ODI4IApMIDIyMC45Mjg0MzUgODguMjUzNTY1IApMIDIwOS4zOTk1MDkgODguMjUzNTY1IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A2NjY2MzBlYTZlKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMTgiPgogICAgPHBhdGggZD0iTSAyMjAuOTI4NDM1IDIzMi43NTg4MjggCkwgMjMyLjQ1NzM2MSAyMzIuNzU4ODI4IApMIDIzMi40NTczNjEgOTMuODExNDYgCkwgMjIwLjkyODQzNSA5My44MTE0NiAKegoiIGNsaXAtcGF0aD0idXJsKCNwNjY2NjMwZWE2ZSkiIHN0eWxlPSJmaWxsOiAjMWY3N2I0Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzE5Ij4KICAgIDxwYXRoIGQ9Ik0gMjMyLjQ1NzM2MSAyMzIuNzU4ODI4IApMIDI0My45ODYyODYgMjMyLjc1ODgyOCAKTCAyNDMuOTg2Mjg2IDQ5LjM0ODMwMiAKTCAyMzIuNDU3MzYxIDQ5LjM0ODMwMiAKegoiIGNsaXAtcGF0aD0idXJsKCNwNjY2NjMwZWE2ZSkiIHN0eWxlPSJmaWxsOiAjMWY3N2I0Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzIwIj4KICAgIDxwYXRoIGQ9Ik0gMjQzLjk4NjI4NiAyMzIuNzU4ODI4IApMIDI1NS41MTUyMTIgMjMyLjc1ODgyOCAKTCAyNTUuNTE1MjEyIDg4LjI1MzU2NSAKTCAyNDMuOTg2Mjg2IDg4LjI1MzU2NSAKegoiIGNsaXAtcGF0aD0idXJsKCNwNjY2NjMwZWE2ZSkiIHN0eWxlPSJmaWxsOiAjMWY3N2I0Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzIxIj4KICAgIDxwYXRoIGQ9Ik0gMjU1LjUxNTIxMiAyMzIuNzU4ODI4IApMIDI2Ny4wNDQxMzcgMjMyLjc1ODgyOCAKTCAyNjcuMDQ0MTM3IDgyLjY5NTY3IApMIDI1NS41MTUyMTIgODIuNjk1NjcgCnoKIiBjbGlwLXBhdGg9InVybCgjcDY2NjYzMGVhNmUpIiBzdHlsZT0iZmlsbDogIzFmNzdiNCIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8yMiI+CiAgICA8cGF0aCBkPSJNIDI2Ny4wNDQxMzcgMjMyLjc1ODgyOCAKTCAyNzguNTczMDYzIDIzMi43NTg4MjggCkwgMjc4LjU3MzA2MyA1NC45MDYxOTcgCkwgMjY3LjA0NDEzNyA1NC45MDYxOTcgCnoKIiBjbGlwLXBhdGg9InVybCgjcDY2NjYzMGVhNmUpIiBzdHlsZT0iZmlsbDogIzFmNzdiNCIvPgogICA8L2c+CiAgIDxnIGlkPSJtYXRwbG90bGliLmF4aXNfMSI+CiAgICA8ZyBpZD0ieHRpY2tfMSI+CiAgICAgPGcgaWQ9ImxpbmUyZF8xIj4KICAgICAgPGRlZnM+CiAgICAgICA8cGF0aCBpZD0ibWJjOTQyOGQ2NjUiIGQ9Ik0gMCAwIApMIDAgMy41IAoiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZGVmcz4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYmM5NDI4ZDY2NSIgeD0iNDcuOTI1MDAzIiB5PSIyMzIuNzU4ODI4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzEiPgogICAgICA8IS0tIDAgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQ0Ljc0Mzc1MyAyNDcuMzU2NDg0KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPGRlZnM+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtMTMiIGQ9Ik0gMjAzNCA0MjUwIApRIDE1NDcgNDI1MCAxMzAxIDM3NzAgClEgMTA1NiAzMjkxIDEwNTYgMjMyOCAKUSAxMDU2IDEzNjkgMTMwMSA4ODkgClEgMTU0NyA0MDkgMjAzNCA0MDkgClEgMjUyNSA0MDkgMjc3MCA4ODkgClEgMzAxNiAxMzY5IDMwMTYgMjMyOCAKUSAzMDE2IDMyOTEgMjc3MCAzNzcwIApRIDI1MjUgNDI1MCAyMDM0IDQyNTAgCnoKTSAyMDM0IDQ3NTAgClEgMjgxOSA0NzUwIDMyMzMgNDEyOSAKUSAzNjQ3IDM1MDkgMzY0NyAyMzI4IApRIDM2NDcgMTE1MCAzMjMzIDUyOSAKUSAyODE5IC05MSAyMDM0IC05MSAKUSAxMjUwIC05MSA4MzYgNTI5IApRIDQyMiAxMTUwIDQyMiAyMzI4IApRIDQyMiAzNTA5IDgzNiA0MTI5IApRIDEyNTAgNDc1MCAyMDM0IDQ3NTAgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPC9kZWZzPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inh0aWNrXzIiPgogICAgIDxnIGlkPSJsaW5lMmRfMiI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWJjOTQyOGQ2NjUiIHg9Ijk0LjE4MzY4IiB5PSIyMzIuNzU4ODI4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzIiPgogICAgICA8IS0tIDIgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDkxLjAwMjQzIDI0Ny4zNTY0ODQpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8ZGVmcz4KICAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy0xNSIgZD0iTSAxMjI4IDUzMSAKTCAzNDMxIDUzMSAKTCAzNDMxIDAgCkwgNDY5IDAgCkwgNDY5IDUzMSAKUSA4MjggOTAzIDE0NDggMTUyOSAKUSAyMDY5IDIxNTYgMjIyOCAyMzM4IApRIDI1MzEgMjY3OCAyNjUxIDI5MTQgClEgMjc3MiAzMTUwIDI3NzIgMzM3OCAKUSAyNzcyIDM3NTAgMjUxMSAzOTg0IApRIDIyNTAgNDIxOSAxODMxIDQyMTkgClEgMTUzNCA0MjE5IDEyMDQgNDExNiAKUSA4NzUgNDAxMyA1MDAgMzgwMyAKTCA1MDAgNDQ0MSAKUSA4ODEgNDU5NCAxMjEyIDQ2NzIgClEgMTU0NCA0NzUwIDE4MTkgNDc1MCAKUSAyNTQ0IDQ3NTAgMjk3NSA0Mzg3IApRIDM0MDYgNDAyNSAzNDA2IDM0MTkgClEgMzQwNiAzMTMxIDMyOTggMjg3MyAKUSAzMTkxIDI2MTYgMjkwNiAyMjY2IApRIDI4MjggMjE3NSAyNDA5IDE3NDIgClEgMTk5MSAxMzA5IDEyMjggNTMxIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDwvZGVmcz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTUiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja18zIj4KICAgICA8ZyBpZD0ibGluZTJkXzMiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21iYzk0MjhkNjY1IiB4PSIxNDAuNDQyMzU2IiB5PSIyMzIuNzU4ODI4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzMiPgogICAgICA8IS0tIDQgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEzNy4yNjExMDYgMjQ3LjM1NjQ4NCkgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDxkZWZzPgogICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTE3IiBkPSJNIDI0MTkgNDExNiAKTCA4MjUgMTYyNSAKTCAyNDE5IDE2MjUgCkwgMjQxOSA0MTE2IAp6Ck0gMjI1MyA0NjY2IApMIDMwNDcgNDY2NiAKTCAzMDQ3IDE2MjUgCkwgMzcxMyAxNjI1IApMIDM3MTMgMTEwMCAKTCAzMDQ3IDExMDAgCkwgMzA0NyAwIApMIDI0MTkgMCAKTCAyNDE5IDExMDAgCkwgMzEzIDExMDAgCkwgMzEzIDE3MDkgCkwgMjI1MyA0NjY2IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDwvZGVmcz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTciLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja180Ij4KICAgICA8ZyBpZD0ibGluZTJkXzQiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21iYzk0MjhkNjY1IiB4PSIxODYuNzAxMDMzIiB5PSIyMzIuNzU4ODI4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzQiPgogICAgICA8IS0tIDYgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE4My41MTk3ODMgMjQ3LjM1NjQ4NCkgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDxkZWZzPgogICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTE5IiBkPSJNIDIxMTMgMjU4NCAKUSAxNjg4IDI1ODQgMTQzOSAyMjkzIApRIDExOTEgMjAwMyAxMTkxIDE0OTcgClEgMTE5MSA5OTQgMTQzOSA3MDEgClEgMTY4OCA0MDkgMjExMyA0MDkgClEgMjUzOCA0MDkgMjc4NiA3MDEgClEgMzAzNCA5OTQgMzAzNCAxNDk3IApRIDMwMzQgMjAwMyAyNzg2IDIyOTMgClEgMjUzOCAyNTg0IDIxMTMgMjU4NCAKegpNIDMzNjYgNDU2MyAKTCAzMzY2IDM5ODggClEgMzEyOCA0MTAwIDI4ODYgNDE1OSAKUSAyNjQ0IDQyMTkgMjQwNiA0MjE5IApRIDE3ODEgNDIxOSAxNDUxIDM3OTcgClEgMTEyMiAzMzc1IDEwNzUgMjUyMiAKUSAxMjU5IDI3OTQgMTUzNyAyOTM5IApRIDE4MTYgMzA4NCAyMTUwIDMwODQgClEgMjg1MyAzMDg0IDMyNjEgMjY1NyAKUSAzNjY5IDIyMzEgMzY2OSAxNDk3IApRIDM2NjkgNzc4IDMyNDQgMzQzIApRIDI4MTkgLTkxIDIxMTMgLTkxIApRIDEzMDMgLTkxIDg3NSA1MjkgClEgNDQ3IDExNTAgNDQ3IDIzMjggClEgNDQ3IDM0MzQgOTcyIDQwOTIgClEgMTQ5NyA0NzUwIDIzODEgNDc1MCAKUSAyNjE5IDQ3NTAgMjg2MSA0NzAzIApRIDMxMDMgNDY1NiAzMzY2IDQ1NjMgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPC9kZWZzPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xOSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inh0aWNrXzUiPgogICAgIDxnIGlkPSJsaW5lMmRfNSI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWJjOTQyOGQ2NjUiIHg9IjIzMi45NTk3MSIgeT0iMjMyLjc1ODgyOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF81Ij4KICAgICAgPCEtLSA4IC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMjkuNzc4NDYgMjQ3LjM1NjQ4NCkgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDxkZWZzPgogICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTFiIiBkPSJNIDIwMzQgMjIxNiAKUSAxNTg0IDIyMTYgMTMyNiAxOTc1IApRIDEwNjkgMTczNCAxMDY5IDEzMTMgClEgMTA2OSA4OTEgMTMyNiA2NTAgClEgMTU4NCA0MDkgMjAzNCA0MDkgClEgMjQ4NCA0MDkgMjc0MyA2NTEgClEgMzAwMyA4OTQgMzAwMyAxMzEzIApRIDMwMDMgMTczNCAyNzQ1IDE5NzUgClEgMjQ4OCAyMjE2IDIwMzQgMjIxNiAKegpNIDE0MDMgMjQ4NCAKUSA5OTcgMjU4NCA3NzAgMjg2MiAKUSA1NDQgMzE0MSA1NDQgMzU0MSAKUSA1NDQgNDEwMCA5NDIgNDQyNSAKUSAxMzQxIDQ3NTAgMjAzNCA0NzUwIApRIDI3MzEgNDc1MCAzMTI4IDQ0MjUgClEgMzUyNSA0MTAwIDM1MjUgMzU0MSAKUSAzNTI1IDMxNDEgMzI5OCAyODYyIApRIDMwNzIgMjU4NCAyNjY5IDI0ODQgClEgMzEyNSAyMzc4IDMzNzkgMjA2OCAKUSAzNjM0IDE3NTkgMzYzNCAxMzEzIApRIDM2MzQgNjM0IDMyMjAgMjcxIApRIDI4MDYgLTkxIDIwMzQgLTkxIApRIDEyNjMgLTkxIDg0OCAyNzEgClEgNDM0IDYzNCA0MzQgMTMxMyAKUSA0MzQgMTc1OSA2OTAgMjA2OCAKUSA5NDcgMjM3OCAxNDAzIDI0ODQgCnoKTSAxMTcyIDM0ODEgClEgMTE3MiAzMTE5IDEzOTggMjkxNiAKUSAxNjI1IDI3MTMgMjAzNCAyNzEzIApRIDI0NDEgMjcxMyAyNjcwIDI5MTYgClEgMjkwMCAzMTE5IDI5MDAgMzQ4MSAKUSAyOTAwIDM4NDQgMjY3MCA0MDQ3IApRIDI0NDEgNDI1MCAyMDM0IDQyNTAgClEgMTYyNSA0MjUwIDEzOTggNDA0NyAKUSAxMTcyIDM4NDQgMTE3MiAzNDgxIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDwvZGVmcz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMWIiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja182Ij4KICAgICA8ZyBpZD0ibGluZTJkXzYiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21iYzk0MjhkNjY1IiB4PSIyNzkuMjE4Mzg2IiB5PSIyMzIuNzU4ODI4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzYiPgogICAgICA8IS0tIDEwIC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNzIuODU1ODg2IDI0Ny4zNTY0ODQpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8ZGVmcz4KICAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy0xNCIgZD0iTSA3OTQgNTMxIApMIDE4MjUgNTMxIApMIDE4MjUgNDA5MSAKTCA3MDMgMzg2NiAKTCA3MDMgNDQ0MSAKTCAxODE5IDQ2NjYgCkwgMjQ1MCA0NjY2IApMIDI0NTAgNTMxIApMIDM0ODEgNTMxIApMIDM0ODEgMCAKTCA3OTQgMCAKTCA3OTQgNTMxIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDwvZGVmcz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTQiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzLjYyNSAwKSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICA8L2c+CiAgIDxnIGlkPSJtYXRwbG90bGliLmF4aXNfMiI+CiAgICA8ZyBpZD0ieXRpY2tfMSI+CiAgICAgPGcgaWQ9ImxpbmUyZF83Ij4KICAgICAgPGRlZnM+CiAgICAgICA8cGF0aCBpZD0ibWM1MjU5MGY2ZjMiIGQ9Ik0gMCAwIApMIC0zLjUgMCAKIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2RlZnM+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWM1MjU5MGY2ZjMiIHg9IjM2LjQ2NTYyNSIgeT0iMjMyLjc1ODgyOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF83Ij4KICAgICAgPCEtLSAwLjAwIC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3LjIgMjM2LjU1NzY1Nikgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDxkZWZzPgogICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTExIiBkPSJNIDY4NCA3OTQgCkwgMTM0NCA3OTQgCkwgMTM0NCAwIApMIDY4NCAwIApMIDY4NCA3OTQgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPC9kZWZzPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjMuNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5NS40MDYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTU5LjAzMTI1IDApIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfMiI+CiAgICAgPGcgaWQ9ImxpbmUyZF84Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iMzYuNDY1NjI1IiB5PSIyMDUuMDU1MjQ1IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzgiPgogICAgICA8IS0tIDAuMDIgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcuMiAyMDguODU0MDczKSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjMuNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5NS40MDYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xNSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTU5LjAzMTI1IDApIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfMyI+CiAgICAgPGcgaWQ9ImxpbmUyZF85Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iMzYuNDY1NjI1IiB5PSIxNzcuMzUxNjYyIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzkiPgogICAgICA8IS0tIDAuMDQgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcuMiAxODEuMTUwNDkpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQwNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE3IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja180Ij4KICAgICA8ZyBpZD0ibGluZTJkXzEwIj4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iMzYuNDY1NjI1IiB5PSIxNDkuNjQ4MDc4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzEwIj4KICAgICAgPCEtLSAwLjA2IC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3LjIgMTUzLjQ0NjkwNykgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzLjYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTUuNDA2MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1OS4wMzEyNSAwKSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inl0aWNrXzUiPgogICAgIDxnIGlkPSJsaW5lMmRfMTEiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21jNTI1OTBmNmYzIiB4PSIzNi40NjU2MjUiIHk9IjEyMS45NDQ0OTUiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTEiPgogICAgICA8IS0tIDAuMDggLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcuMiAxMjUuNzQzMzIzKSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjMuNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5NS40MDYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xYiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTU5LjAzMTI1IDApIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfNiI+CiAgICAgPGcgaWQ9ImxpbmUyZF8xMiI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWM1MjU5MGY2ZjMiIHg9IjM2LjQ2NTYyNSIgeT0iOTQuMjQwOTEyIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzEyIj4KICAgICAgPCEtLSAwLjEwIC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3LjIgOTguMDM5NzQpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQwNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja183Ij4KICAgICA8ZyBpZD0ibGluZTJkXzEzIj4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iMzYuNDY1NjI1IiB5PSI2Ni41MzczMjkiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTMiPgogICAgICA8IS0tIDAuMTIgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcuMiA3MC4zMzYxNTcpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQwNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja184Ij4KICAgICA8ZyBpZD0ibGluZTJkXzE0Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iMzYuNDY1NjI1IiB5PSIzOC44MzM3NDUiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTQiPgogICAgICA8IS0tIDAuMTQgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcuMiA0Mi42MzI1NzQpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQwNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE3IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja185Ij4KICAgICA8ZyBpZD0ibGluZTJkXzE1Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iMzYuNDY1NjI1IiB5PSIxMS4xMzAxNjIiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTUiPgogICAgICA8IS0tIDAuMTYgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcuMiAxNC45Mjg5OSkgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzLjYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xNCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTUuNDA2MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1OS4wMzEyNSAwKSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICA8L2c+CiAgIDxnIGlkPSJsaW5lMmRfMTYiPgogICAgPHBhdGggZD0iTSAzNi40NjU2MjUgOTQuMjQwOTEyIApMIDI5MC4xMDE5ODkgOTQuMjQwOTEyIAoiIGNsaXAtcGF0aD0idXJsKCNwNjY2NjMwZWE2ZSkiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICNmZjdmMGU7IHN0cm9rZS13aWR0aDogMS41OyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzIzIj4KICAgIDxwYXRoIGQ9Ik0gMzYuNDY1NjI1IDIzMi43NTg4MjggCkwgMzYuNDY1NjI1IDEwLjk5ODgyOCAKIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuODsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlcjsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8yNCI+CiAgICA8cGF0aCBkPSJNIDM2LjQ2NTYyNSAyMzIuNzU4ODI4IApMIDI5MC4xMDE5ODkgMjMyLjc1ODgyOCAKIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuODsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlcjsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICA8L2c+CiAgPC9nPgogIDxnIGlkPSJheGVzXzIiPgogICA8ZyBpZD0icGF0Y2hfMjUiPgogICAgPHBhdGggZD0iTSAzNDAuODI5MjYxIDIzMi43NTg4MjggCkwgNTk0LjQ2NTYyNSAyMzIuNzU4ODI4IApMIDU5NC40NjU2MjUgMTAuOTk4ODI4IApMIDM0MC44MjkyNjEgMTAuOTk4ODI4IAp6CiIgc3R5bGU9ImZpbGw6ICNmZmZmZmYiLz4KICAgPC9nPgogICA8ZyBpZD0ibWF0cGxvdGxpYi5heGlzXzMiPgogICAgPGcgaWQ9Inh0aWNrXzciPgogICAgIDxnIGlkPSJsaW5lMmRfMTciPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21iYzk0MjhkNjY1IiB4PSIzNTIuMzU4MTg3IiB5PSIyMzIuNzU4ODI4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzE2Ij4KICAgICAgPCEtLSAwIC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzNDkuMTc2OTM3IDI0Ny4zNTY0ODQpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieHRpY2tfOCI+CiAgICAgPGcgaWQ9ImxpbmUyZF8xOCI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWJjOTQyOGQ2NjUiIHg9IjM5OC40NzM4ODkiIHk9IjIzMi43NTg4MjgiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTciPgogICAgICA8IS0tIDIgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM5NS4yOTI2MzkgMjQ3LjM1NjQ4NCkgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTUiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja185Ij4KICAgICA8ZyBpZD0ibGluZTJkXzE5Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYmM5NDI4ZDY2NSIgeD0iNDQ0LjU4OTU5MiIgeT0iMjMyLjc1ODgyOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF8xOCI+CiAgICAgIDwhLS0gNCAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQxLjQwODM0MiAyNDcuMzU2NDg0KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xNyIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inh0aWNrXzEwIj4KICAgICA8ZyBpZD0ibGluZTJkXzIwIj4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYmM5NDI4ZDY2NSIgeD0iNDkwLjcwNTI5NCIgeT0iMjMyLjc1ODgyOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF8xOSI+CiAgICAgIDwhLS0gNiAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDg3LjUyNDA0NCAyNDcuMzU2NDg0KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xOSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inh0aWNrXzExIj4KICAgICA8ZyBpZD0ibGluZTJkXzIxIj4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYmM5NDI4ZDY2NSIgeD0iNTM2LjgyMDk5NyIgeT0iMjMyLjc1ODgyOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF8yMCI+CiAgICAgIDwhLS0gOCAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTMzLjYzOTc0NyAyNDcuMzU2NDg0KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xYiIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inh0aWNrXzEyIj4KICAgICA8ZyBpZD0ibGluZTJkXzIyIj4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYmM5NDI4ZDY2NSIgeD0iNTgyLjkzNjY5OSIgeT0iMjMyLjc1ODgyOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF8yMSI+CiAgICAgIDwhLS0gMTAgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDU3Ni41NzQxOTkgMjQ3LjM1NjQ4NCkgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTQiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzLjYyNSAwKSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICA8L2c+CiAgIDxnIGlkPSJtYXRwbG90bGliLmF4aXNfNCI+CiAgICA8ZyBpZD0ieXRpY2tfMTAiPgogICAgIDxnIGlkPSJsaW5lMmRfMjMiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21jNTI1OTBmNmYzIiB4PSIzNDAuODI5MjYxIiB5PSIyMzIuNzU4ODI4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzIyIj4KICAgICAgPCEtLSAwLjAgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMxNy45MjYxMzYgMjM2LjU1NzY1Nikgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzLjYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTUuNDA2MjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja18xMSI+CiAgICAgPGcgaWQ9ImxpbmUyZF8yNCI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWM1MjU5MGY2ZjMiIHg9IjM0MC44MjkyNjEiIHk9IjE4OC40MDY4MjgiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMjMiPgogICAgICA8IS0tIDAuMiAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzE3LjkyNjEzNiAxOTIuMjA1NjU2KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjMuNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5NS40MDYyNSAwKSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inl0aWNrXzEyIj4KICAgICA8ZyBpZD0ibGluZTJkXzI1Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iMzQwLjgyOTI2MSIgeT0iMTQ0LjA1NDgyOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF8yNCI+CiAgICAgIDwhLS0gMC40IC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMTcuOTI2MTM2IDE0Ny44NTM2NTYpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQwNjI1IDApIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfMTMiPgogICAgIDxnIGlkPSJsaW5lMmRfMjYiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21jNTI1OTBmNmYzIiB4PSIzNDAuODI5MjYxIiB5PSI5OS43MDI4MjgiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMjUiPgogICAgICA8IS0tIDAuNiAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzE3LjkyNjEzNiAxMDMuNTAxNjU2KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjMuNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE5IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5NS40MDYyNSAwKSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inl0aWNrXzE0Ij4KICAgICA8ZyBpZD0ibGluZTJkXzI3Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iMzQwLjgyOTI2MSIgeT0iNTUuMzUwODI4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzI2Ij4KICAgICAgPCEtLSAwLjggLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMxNy45MjYxMzYgNTkuMTQ5NjU2KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjMuNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTFiIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5NS40MDYyNSAwKSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inl0aWNrXzE1Ij4KICAgICA8ZyBpZD0ibGluZTJkXzI4Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iMzQwLjgyOTI2MSIgeT0iMTAuOTk4ODI4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzI3Ij4KICAgICAgPCEtLSAxLjAgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMxNy45MjYxMzYgMTQuNzk3NjU2KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xNCIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjMuNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5NS40MDYyNSAwKSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICA8L2c+CiAgIDxnIGlkPSJsaW5lMmRfMjkiPgogICAgPHBhdGggZD0iTSAzNTIuNDI3NTIgMjMyLjc1ODgyOCAKTCAzNTIuNDI3NTIgMjMyLjMxNTMwOCAKTCAzNTIuOTg5NjI2IDIzMi4zMTUzMDggCkwgMzUyLjk4OTYyNiAyMzEuODcxNzg4IApMIDM1My40ODc4ODcgMjMxLjg3MTc4OCAKTCAzNTMuNDg3ODg3IDIzMS40MjgyNjggCkwgMzUzLjgzNTkzOCAyMzEuNDI4MjY4IApMIDM1My44MzU5MzggMjMwLjk4NDc0OCAKTCAzNTQuNjUzNDk1IDIzMC45ODQ3NDggCkwgMzU0LjY1MzQ5NSAyMzAuNTQxMjI4IApMIDM1NS4xNTg5MTUgMjMwLjU0MTIyOCAKTCAzNTUuMTU4OTE1IDIzMC4wOTc3MDggCkwgMzU1Ljc0OTE0NSAyMzAuMDk3NzA4IApMIDM1NS43NDkxNDUgMjI5LjY1NDE4OCAKTCAzNTYuMDQ1NTM2IDIyOS42NTQxODggCkwgMzU2LjA0NTUzNiAyMjkuMjEwNjY4IApMIDM1Ni4xNjkxMDUgMjI5LjIxMDY2OCAKTCAzNTYuMTY5MTA1IDIyOC43NjcxNDggCkwgMzU2LjQ4MzU2NCAyMjguNzY3MTQ4IApMIDM1Ni40ODM1NjQgMjI4LjMyMzYyOCAKTCAzNTcuODk1MTE1IDIyOC4zMjM2MjggCkwgMzU3Ljg5NTExNSAyMjcuODgwMTA4IApMIDM1OC44ODgwOTUgMjI3Ljg4MDEwOCAKTCAzNTguODk4NjMxIDIyNi45OTMwNjggCkwgMzYwLjEwMjI5OSAyMjYuOTkzMDY4IApMIDM2MC4xMDIyOTkgMjI2LjU0OTU0OCAKTCAzNjEuNjMxNjQ1IDIyNi41NDk1NDggCkwgMzYxLjcyMzcyNCAyMjUuMjE4OTg4IApMIDM2MS44MDU4MDEgMjI1LjIxODk4OCAKTCAzNjEuODA1ODAxIDIyNC43NzU0NjggCkwgMzYyLjI4ODQ4NiAyMjQuNzc1NDY4IApMIDM2Mi4yODg0ODYgMjI0LjMzMTk0OCAKTCAzNjMuNDg3MTk2IDIyNC4zMzE5NDggCkwgMzYzLjQ4NzE5NiAyMjMuODg4NDI4IApMIDM2NC4zNTMxODEgMjIzLjg4ODQyOCAKTCAzNjQuMzUzMTgxIDIyMy40NDQ5MDggCkwgMzY1Ljg2MjcxNyAyMjMuNDQ0OTA4IApMIDM2NS44NjI3MTcgMjIzLjAwMTM4OCAKTCAzNjYuMDY5MzQzIDIyMy4wMDEzODggCkwgMzY2LjA2OTM0MyAyMjIuNTU3ODY4IApMIDM2Ni44NjA1MzcgMjIyLjU1Nzg2OCAKTCAzNjYuODYwNTM3IDIyMi4xMTQzNDggCkwgMzY3LjQwODE0MyAyMjIuMTE0MzQ4IApMIDM2Ny40MDgxNDMgMjIxLjY3MDgyOCAKTCAzNjcuNTk1MzkxIDIyMS42NzA4MjggCkwgMzY3LjU5NTM5MSAyMjEuMjI3MzA4IApMIDM2Ny43MzU0NyAyMjEuMjI3MzA4IApMIDM2Ny43MzU0NyAyMjAuNzgzNzg4IApMIDM2Ny45MDQ2NDggMjIwLjc4Mzc4OCAKTCAzNjcuOTA0NjQ4IDIyMC4zNDAyNjggCkwgMzY4LjU3MzkxIDIyMC4zNDAyNjggCkwgMzY4LjU3MzkxIDIxOS44OTY3NDggCkwgMzY5LjAyMTAwNCAyMTkuODk2NzQ4IApMIDM2OS4xMTE2NDEgMjE5LjAwOTcwOCAKTCAzNjkuMzIwMjEyIDIxOS4wMDk3MDggCkwgMzY5LjM2MTI4IDIxNy42NzkxNDggCkwgMzY5LjY4MjE3MiAyMTcuNjc5MTQ4IApMIDM2OS42ODIxNzIgMjE3LjIzNTYyOCAKTCAzNzAuNDg4NTg0IDIxNy4yMzU2MjggCkwgMzcwLjQ4ODU4NCAyMTYuNzkyMTA4IApMIDM3MS40NTIwNjUgMjE2Ljc5MjEwOCAKTCAzNzEuNDUyMDY1IDIxNi4zNDg1ODggCkwgMzcxLjczMDMyIDIxNi4zNDg1ODggCkwgMzcxLjczMDMyIDIxNS45MDUwNjggCkwgMzcyLjE5MDgwNyAyMTUuOTA1MDY4IApMIDM3Mi4xOTA4MDcgMjE1LjQ2MTU0OCAKTCAzNzIuMzQ1MDM4IDIxNS40NjE1NDggCkwgMzcyLjM3NTgzMSAyMTQuNTc0NTA4IApMIDM3Mi41OTU1NzYgMjE0LjU3NDUwOCAKTCAzNzIuNTk1NTc2IDIxNC4xMzA5ODggCkwgMzcyLjg2NDgzNSAyMTQuMTMwOTg4IApMIDM3Mi44NjQ4MzUgMjEzLjY4NzQ2OCAKTCAzNzMuMjgzODg5IDIxMy42ODc0NjggCkwgMzczLjI4Mzg4OSAyMTMuMjQzOTQ4IApMIDM3My43NDMzMDEgMjEzLjI0Mzk0OCAKTCAzNzMuNzQzMzAxIDIxMi44MDA0MjggCkwgMzczLjk5Njg2MyAyMTIuODAwNDI4IApMIDM3My45OTY4NjMgMjEyLjM1NjkwOCAKTCAzNzQuMjExNjUyIDIxMi4zNTY5MDggCkwgMzc0LjIxMTY1MiAyMTEuOTEzMzg4IApMIDM3Ni42ODMxMzIgMjExLjkxMzM4OCAKTCAzNzYuNjgzMTMyIDIxMS40Njk4NjggCkwgMzc3LjE0MDEyNiAyMTEuNDY5ODY4IApMIDM3Ny4xNDAxMjYgMjExLjAyNjM0OCAKTCAzNzcuNjgyMTM4IDIxMS4wMjYzNDggCkwgMzc3LjY4MjEzOCAyMTAuNTgyODI4IApMIDM3OC4zMjQ0NzggMjEwLjU4MjgyOCAKTCAzNzguMzI0NDc4IDIxMC4xMzkzMDggCkwgMzc4Ljg1OTE4MyAyMTAuMTM5MzA4IApMIDM3OC44NTkxODMgMjA5LjY5NTc4OCAKTCAzNzkuNDgzODA2IDIwOS42OTU3ODggCkwgMzc5LjQ4MzgwNiAyMDkuMjUyMjY4IApMIDM4MC42NDgwMTcgMjA5LjI1MjI2OCAKTCAzODAuNjQ4MDE3IDIwOC44MDg3NDggCkwgMzgxLjAxNTI0IDIwOC44MDg3NDggCkwgMzgxLjA3NzgyNiAyMDcuOTIxNzA4IApMIDM4MS41OTk0ODYgMjA3LjkyMTcwOCAKTCAzODEuNTk5NDg2IDIwNy40NzgxODggCkwgMzgxLjcyNDMxNCAyMDcuNDc4MTg4IApMIDM4MS43MzQ1ODMgMjA2LjU5MTE0OCAKTCAzODMuNTA4NTM4IDIwNi41OTExNDggCkwgMzgzLjUwODUzOCAyMDYuMTQ3NjI4IApMIDM4My44NDIxNjQgMjA2LjE0NzYyOCAKTCAzODMuODQyMTY0IDIwNS43MDQxMDggCkwgMzg0LjM5Mjg0NyAyMDUuNzA0MTA4IApMIDM4NC4zOTI4NDcgMjA1LjI2MDU4OCAKTCAzODQuOTI2NjA4IDIwNS4yNjA1ODggCkwgMzg0LjkyNjYwOCAyMDQuODE3MDY4IApMIDM4NS45MDEyNTkgMjA0LjgxNzA2OCAKTCAzODUuOTAxMjU5IDIwNC4zNzM1NDggCkwgMzg2LjY1OTk3MiAyMDQuMzczNTQ4IApMIDM4Ni42NTk5NzIgMjAzLjkzMDAyOCAKTCAzODcuMDA5NDAzIDIwMy45MzAwMjggCkwgMzg3LjAwOTQwMyAyMDMuNDg2NTA4IApMIDM4Ny40MDc5NDMgMjAzLjQ4NjUwOCAKTCAzODcuNDA3OTQzIDIwMy4wNDI5ODggCkwgMzg4LjM1OTY3NCAyMDMuMDQyOTg4IApMIDM4OC4zNTk2NzQgMjAyLjU5OTQ2OCAKTCAzODkuODQzMjcyIDIwMi41OTk0NjggCkwgMzg5Ljg0MzI3MiAyMDIuMTU1OTQ4IApMIDM5MC4wMjczNTggMjAyLjE1NTk0OCAKTCAzOTAuMDY3Nzg1IDIwMS4yNjg5MDggCkwgMzkwLjM1MzUyNiAyMDEuMjY4OTA4IApMIDM5MC4zNTM1MjYgMjAwLjgyNTM4OCAKTCAzOTAuODc3MDAzIDIwMC44MjUzODggCkwgMzkwLjg3NzAwMyAyMDAuMzgxODY4IApMIDM5MS41NzQ2MzUgMjAwLjM4MTg2OCAKTCAzOTEuNTc0NjM1IDE5OS45MzgzNDggCkwgMzkxLjc5MjA1NiAxOTkuOTM4MzQ4IApMIDM5MS43OTIwNTYgMTk5LjQ5NDgyOCAKTCAzOTIuMjc0NDcyIDE5OS40OTQ4MjggCkwgMzkyLjI3NDQ3MiAxOTkuMDUxMzA4IApMIDM5Mi44MDM5MDYgMTk5LjA1MTMwOCAKTCAzOTIuODYwNTk5IDE5OC4xNjQyNjggCkwgMzkzLjIyMjg2NSAxOTguMTY0MjY4IApMIDM5My4yMjI4NjUgMTk3LjcyMDc0OCAKTCAzOTMuNjQ2MTk1IDE5Ny43MjA3NDggCkwgMzkzLjY0NjE5NSAxOTcuMjc3MjI4IApMIDM5NC40ODc3MzYgMTk3LjI3NzIyOCAKTCAzOTQuNTQwOTg3IDE5Ni4zOTAxODggCkwgMzk1LjU5MzQzNyAxOTYuMzkwMTg4IApMIDM5NS41OTM0MzcgMTk1Ljk0NjY2OCAKTCAzOTYuMzEwNSAxOTUuOTQ2NjY4IApMIDM5Ni4zMTA1IDE5NS41MDMxNDggCkwgMzk2LjQyNDExIDE5NS41MDMxNDggCkwgMzk2LjUzNDUzOSAxOTQuNjE2MTA4IApMIDM5Ni41ODcxIDE5NC42MTYxMDggCkwgMzk2LjU4NzEgMTk0LjE3MjU4OCAKTCAzOTcuMDk2NzQ5IDE5NC4xNzI1ODggCkwgMzk3LjEyMDM0MSAxOTMuMjg1NTQ4IApMIDM5Ny4zNDU3NjEgMTkzLjI4NTU0OCAKTCAzOTcuNDMyMjU0IDE5Mi4zOTg1MDggCkwgMzk3LjgzNjMyOCAxOTIuMzk4NTA4IApMIDM5Ny44MzYzMjggMTkxLjk1NDk4OCAKTCAzOTguMDY0Mzg5IDE5MS45NTQ5ODggCkwgMzk4LjEzMTAyOSAxOTEuMDY3OTQ4IApMIDM5OC4zMTIxMDIgMTkxLjA2Nzk0OCAKTCAzOTguMzYyMTYxIDE5MC4xODA5MDggCkwgMzk4Ljk3MzgwNSAxOTAuMTgwOTA4IApMIDM5OC45NzM4MDUgMTg5LjczNzM4OCAKTCA0MDIuNDA5MjE1IDE4OS43MzczODggCkwgNDAyLjQwOTIxNSAxODkuMjkzODY4IApMIDQwMy42NTExNiAxODkuMjkzODY4IApMIDQwMy42NTExNiAxODguODUwMzQ4IApMIDQwNC4zMTQwODQgMTg4Ljg1MDM0OCAKTCA0MDQuMzE0MDg0IDE4OC40MDY4MjggCkwgNDA0LjQzODgyNCAxODguNDA2ODI4IApMIDQwNC40Mzg4MjQgMTg3Ljk2MzMwOCAKTCA0MDQuNTg0MzExIDE4Ny45NjMzMDggCkwgNDA0LjU4NDMxMSAxODcuNTE5Nzg4IApMIDQwNC43MzU4NDcgMTg3LjUxOTc4OCAKTCA0MDQuNzM1ODQ3IDE4Ny4wNzYyNjggCkwgNDA1LjE5NTYzOCAxODcuMDc2MjY4IApMIDQwNS4xOTU2MzggMTg2LjYzMjc0OCAKTCA0MDUuNTM5MzI0IDE4Ni42MzI3NDggCkwgNDA1LjUzOTMyNCAxODYuMTg5MjI4IApMIDQwNS45MjQyMjEgMTg2LjE4OTIyOCAKTCA0MDUuOTM4Mzg5IDE4NS4zMDIxODggCkwgNDA3LjQ1MzQ3MyAxODUuMzAyMTg4IApMIDQwNy41NTE2MzcgMTg0LjQxNTE0OCAKTCA0MDguMDgzNDE0IDE4NC40MTUxNDggCkwgNDA4LjA4MzQxNCAxODMuOTcxNjI4IApMIDQwOS4xNzQxMDkgMTgzLjk3MTYyOCAKTCA0MDkuMTc0MTA5IDE4My41MjgxMDggCkwgNDA5LjM0NDkxNSAxODMuNTI4MTA4IApMIDQwOS4zNDQ5MTUgMTgzLjA4NDU4OCAKTCA0MTEuNDIwODc4IDE4My4wODQ1ODggCkwgNDExLjQyMDg3OCAxODIuNjQxMDY4IApMIDQxMS45MTA3MTQgMTgyLjY0MTA2OCAKTCA0MTEuOTEwNzE0IDE4Mi4xOTc1NDggCkwgNDEyLjA0NjggMTgyLjE5NzU0OCAKTCA0MTIuMDQ2OCAxODEuNzU0MDI4IApMIDQxMy4zOTExOTYgMTgxLjc1NDAyOCAKTCA0MTMuMzkxMTk2IDE4MS4zMTA1MDggCkwgNDEzLjcyMjEwOSAxODEuMzEwNTA4IApMIDQxMy43MjIxMDkgMTgwLjg2Njk4OCAKTCA0MTQuNTY1MjA2IDE4MC44NjY5ODggCkwgNDE0LjU3Njc1MiAxNzkuOTc5OTQ4IApMIDQxNS41MDE5MDUgMTc5Ljk3OTk0OCAKTCA0MTUuNTAxOTA1IDE3OS41MzY0MjggCkwgNDE2LjI1NjMwOSAxNzkuNTM2NDI4IApMIDQxNi4yNTYzMDkgMTc5LjA5MjkwOCAKTCA0MTYuOTM5MTcxIDE3OS4wOTI5MDggCkwgNDE2LjkzOTE3MSAxNzguNjQ5Mzg4IApMIDQxOC40ODA5MjUgMTc4LjY0OTM4OCAKTCA0MTguNDgwOTI1IDE3OC4yMDU4NjggCkwgNDE4Ljg0MTA2NCAxNzguMjA1ODY4IApMIDQxOC44NjE5MjIgMTc3LjMxODgyOCAKTCA0MjAuMTMwODA1IDE3Ny4zMTg4MjggCkwgNDIwLjE2NTg3NyAxNzYuNDMxNzg4IApMIDQyMS4yMzEwOTcgMTc2LjQzMTc4OCAKTCA0MjEuMjMxMDk3IDE3NS45ODgyNjggCkwgNDIxLjQ2NTMwOSAxNzUuOTg4MjY4IApMIDQyMS40NjUzMDkgMTc1LjU0NDc0OCAKTCA0MjIuMjY5ODI1IDE3NS41NDQ3NDggCkwgNDIyLjI2OTgyNSAxNzUuMTAxMjI4IApMIDQyMy41NzQwNTggMTc1LjEwMTIyOCAKTCA0MjMuNTc0MDU4IDE3NC42NTc3MDggCkwgNDIzLjg5MzI5NyAxNzQuNjU3NzA4IApMIDQyMy44OTMyOTcgMTc0LjIxNDE4OCAKTCA0MjQuNDM2MDI2IDE3NC4yMTQxODggCkwgNDI0LjQzNjAyNiAxNzMuNzcwNjY4IApMIDQyNS4yMDc5OCAxNzMuNzcwNjY4IApMIDQyNS4yMDc5OCAxNzMuMzI3MTQ4IApMIDQyNS42ODYxNjMgMTczLjMyNzE0OCAKTCA0MjUuNjg2MTYzIDE3Mi44ODM2MjggCkwgNDI2LjA2OTkwMyAxNzIuODgzNjI4IApMIDQyNi4wNjk5MDMgMTcyLjQ0MDEwOCAKTCA0MjYuNTc0MzUyIDE3Mi40NDAxMDggCkwgNDI2LjY3MDU4MSAxNzEuNTUzMDY4IApMIDQyNi44MTY3ODYgMTcxLjU1MzA2OCAKTCA0MjYuODE2Nzg2IDE3MS4xMDk1NDggCkwgNDI3LjQyMjAxMSAxNzEuMTA5NTQ4IApMIDQyNy40MjIwMTEgMTcwLjY2NjAyOCAKTCA0MjcuOTgzODU1IDE3MC42NjYwMjggCkwgNDI3Ljk4Mzg1NSAxNzAuMjIyNTA4IApMIDQyOC40MjUwNzcgMTcwLjIyMjUwOCAKTCA0MjguNDI1MDc3IDE2OS43Nzg5ODggCkwgNDI5Ljg1OTU1OSAxNjkuNzc4OTg4IApMIDQyOS44NTk1NTkgMTY5LjMzNTQ2OCAKTCA0MzAuMjczMjU1IDE2OS4zMzU0NjggCkwgNDMwLjI3MzI1NSAxNjguODkxOTQ4IApMIDQzMC44Mjk1NTYgMTY4Ljg5MTk0OCAKTCA0MzAuODI5NTU2IDE2OC40NDg0MjggCkwgNDMxLjE1NjY5OSAxNjguNDQ4NDI4IApMIDQzMS4xNTY2OTkgMTY4LjAwNDkwOCAKTCA0MzEuNzQ1Mzg0IDE2OC4wMDQ5MDggCkwgNDMxLjc0ODY3IDE2Ny4xMTc4NjggCkwgNDMzLjE4ODU5NCAxNjcuMTE3ODY4IApMIDQzMy4xODg1OTQgMTY2LjY3NDM0OCAKTCA0MzMuNjkzMjM5IDE2Ni42NzQzNDggCkwgNDMzLjY5MzIzOSAxNjYuMjMwODI4IApMIDQzNC4yOTQwNzMgMTY2LjIzMDgyOCAKTCA0MzQuMjk0MDczIDE2NS43ODczMDggCkwgNDM0LjUyODE5NCAxNjUuNzg3MzA4IApMIDQzNC41MjgxOTQgMTY1LjM0Mzc4OCAKTCA0MzQuODU4MDcxIDE2NS4zNDM3ODggCkwgNDM0Ljg1ODA3MSAxNjQuOTAwMjY4IApMIDQzNS41OTA0NDEgMTY0LjkwMDI2OCAKTCA0MzUuNTkwNDQxIDE2NC40NTY3NDggCkwgNDM1Ljg5ODYxNSAxNjQuNDU2NzQ4IApMIDQzNS44OTg2MTUgMTY0LjAxMzIyOCAKTCA0MzYuMDE3MTMzIDE2NC4wMTMyMjggCkwgNDM2LjAxNzEzMyAxNjMuNTY5NzA4IApMIDQzNi41Mjk5ODcgMTYzLjU2OTcwOCAKTCA0MzYuNTQ0NzQ2IDE2Mi42ODI2NjggCkwgNDM3LjQwMDUwNCAxNjIuNjgyNjY4IApMIDQzNy40MDA1MDQgMTYyLjIzOTE0OCAKTCA0MzcuNTM0OTA3IDE2Mi4yMzkxNDggCkwgNDM3LjUzNDkwNyAxNjEuNzk1NjI4IApMIDQ0MC4xNTU2ODQgMTYxLjc5NTYyOCAKTCA0NDAuMTU1Njg0IDE2MS4zNTIxMDggCkwgNDQwLjM5NjQ3MSAxNjEuMzUyMTA4IApMIDQ0MC4zOTY0NzEgMTYwLjkwODU4OCAKTCA0NDAuNjMyNDA2IDE2MC45MDg1ODggCkwgNDQwLjYzMjQwNiAxNjAuNDY1MDY4IApMIDQ0MC44MjU5ODcgMTYwLjQ2NTA2OCAKTCA0NDAuODI1OTg3IDE2MC4wMjE1NDggCkwgNDQxLjY2MDA3MiAxNjAuMDIxNTQ4IApMIDQ0MS43NDc1MyAxNTkuMTM0NTA4IApMIDQ0MS44MzgwMzcgMTU5LjEzNDUwOCAKTCA0NDEuODM4MDM3IDE1OC42OTA5ODggCkwgNDQyLjAzNTExIDE1OC42OTA5ODggCkwgNDQyLjAzNTExIDE1OC4yNDc0NjggCkwgNDQyLjU4MjExOSAxNTguMjQ3NDY4IApMIDQ0Mi42Njk5OCAxNTYuNDczMzg4IApMIDQ0My4yNDkxODUgMTU2LjQ3MzM4OCAKTCA0NDMuMzU4MjU2IDE1NS41ODYzNDggCkwgNDQzLjQ1Nzg0NSAxNTUuNTg2MzQ4IApMIDQ0My41NjUxOTUgMTU0LjY5OTMwOCAKTCA0NDMuODQwNjQ3IDE1NC42OTkzMDggCkwgNDQzLjg0MDY0NyAxNTQuMjU1Nzg4IApMIDQ0NC4yMDU4MDYgMTU0LjI1NTc4OCAKTCA0NDQuMjA1ODA2IDE1My44MTIyNjggCkwgNDQ1LjYzOTE0OCAxNTMuODEyMjY4IApMIDQ0NS42MzkxNDggMTUzLjM2ODc0OCAKTCA0NDYuMDkwNzM2IDE1My4zNjg3NDggCkwgNDQ2LjE5MTYwNSAxNTIuNDgxNzA4IApMIDQ0Ny41NjMyMTEgMTUyLjQ4MTcwOCAKTCA0NDcuNTYzMjExIDE1Mi4wMzgxODggCkwgNDQ3LjgwNzUxOSAxNTIuMDM4MTg4IApMIDQ0Ny44MDc1MTkgMTUxLjU5NDY2OCAKTCA0NDcuOTY4OTE2IDE1MS41OTQ2NjggCkwgNDQ3Ljk2ODkxNiAxNTEuMTUxMTQ4IApMIDQ0OC4xMzY4MiAxNTEuMTUxMTQ4IApMIDQ0OC4xMzY4MiAxNTAuNzA3NjI4IApMIDQ0OC42MTI3NTIgMTUwLjcwNzYyOCAKTCA0NDguNjEyNzUyIDE1MC4yNjQxMDggCkwgNDQ5LjgwNzIxNCAxNTAuMjY0MTA4IApMIDQ0OS44MjA3NzggMTQ5LjM3NzA2OCAKTCA0NTAuMDYyOTM2IDE0OS4zNzcwNjggCkwgNDUwLjE0ODAyOSAxNDguNDkwMDI4IApMIDQ1MC40MDY3NzEgMTQ4LjQ5MDAyOCAKTCA0NTAuNDA2NzcxIDE0OC4wNDY1MDggCkwgNDUwLjU1MTQ4NSAxNDguMDQ2NTA4IApMIDQ1MC41NTE0ODUgMTQ3LjYwMjk4OCAKTCA0NTAuNzUwOTE0IDE0Ny42MDI5ODggCkwgNDUwLjc1MDkxNCAxNDcuMTU5NDY4IApMIDQ1MS4wNTE0NDQgMTQ3LjE1OTQ2OCAKTCA0NTEuMDUxNDQ0IDE0Ni43MTU5NDggCkwgNDUxLjE3MDIxMiAxNDYuNzE1OTQ4IApMIDQ1MS4xNzAyMTIgMTQ2LjI3MjQyOCAKTCA0NTEuNDU0ODUxIDE0Ni4yNzI0MjggCkwgNDUxLjQ1NDg1MSAxNDUuODI4OTA4IApMIDQ1MS41NzU4MjggMTQ1LjgyODkwOCAKTCA0NTEuNTc1ODI4IDE0NS4zODUzODggCkwgNDUzLjYzNDk0MSAxNDUuMzg1Mzg4IApMIDQ1My42MzQ5NDEgMTQ0Ljk0MTg2OCAKTCA0NTMuODk5Njk2IDE0NC45NDE4NjggCkwgNDUzLjg5OTY5NiAxNDQuNDk4MzQ4IApMIDQ1NC40NDc0NzYgMTQ0LjQ5ODM0OCAKTCA0NTQuNDQ3NDc2IDE0NC4wNTQ4MjggCkwgNDU2LjE5Njc2OCAxNDQuMDU0ODI4IApMIDQ1Ni4xOTY3NjggMTQzLjYxMTMwOCAKTCA0NTYuNjAwMTQ3IDE0My42MTEzMDggCkwgNDU2LjYwMDE0NyAxNDMuMTY3Nzg4IApMIDQ1OC40MzQ3MTEgMTQzLjE2Nzc4OCAKTCA0NTguNTA2MjM0IDE0Mi4yODA3NDggCkwgNDU5LjA4NTU1OCAxNDIuMjgwNzQ4IApMIDQ1OS4wODU1NTggMTQxLjgzNzIyOCAKTCA0NTkuOTg4NDM3IDE0MS44MzcyMjggCkwgNDU5Ljk4ODQzNyAxNDEuMzkzNzA4IApMIDQ2MS4yNjA0OTYgMTQxLjM5MzcwOCAKTCA0NjEuMjYwNDk2IDE0MC45NTAxODggCkwgNDYyLjEwMDg0NyAxNDAuOTUwMTg4IApMIDQ2Mi4xNTIwNTcgMTM5LjYxOTYyOCAKTCA0NjIuMjQ5MjM2IDEzOS42MTk2MjggCkwgNDYyLjI0OTIzNiAxMzkuMTc2MTA4IApMIDQ2My4wMzMwODggMTM5LjE3NjEwOCAKTCA0NjMuMDMzMDg4IDEzOC43MzI1ODggCkwgNDYzLjMyNjUxNiAxMzguNzMyNTg4IApMIDQ2My4zMjY1MTYgMTM4LjI4OTA2OCAKTCA0NjQuMDczMjMyIDEzOC4yODkwNjggCkwgNDY0LjA3MzIzMiAxMzcuODQ1NTQ4IApMIDQ2NC4zMTIxNTcgMTM3Ljg0NTU0OCAKTCA0NjQuMzgxMzgxIDEzNi45NTg1MDggCkwgNDY0LjUzOTM0NSAxMzYuOTU4NTA4IApMIDQ2NC41MzkzNDUgMTM2LjUxNDk4OCAKTCA0NjUuMDc1NTc5IDEzNi41MTQ5ODggCkwgNDY1LjA3NjM4OCAxMzUuNjI3OTQ4IApMIDQ2Ni44NTY5NDkgMTM1LjYyNzk0OCAKTCA0NjYuODU2OTQ5IDEzNS4xODQ0MjggCkwgNDY3LjA1MzE3MiAxMzUuMTg0NDI4IApMIDQ2Ny4wNTMxNzIgMTM0Ljc0MDkwOCAKTCA0NjcuNjIzNDIgMTM0Ljc0MDkwOCAKTCA0NjcuNjQxMTc3IDEzMy44NTM4NjggCkwgNDY4LjQ5NTI3NiAxMzMuODUzODY4IApMIDQ2OC40OTUyNzYgMTMzLjQxMDM0OCAKTCA0NjkuMDI0NjA0IDEzMy40MTAzNDggCkwgNDY5LjAyNDYwNCAxMzIuOTY2ODI4IApMIDQ2OS4zNjk4MzMgMTMyLjk2NjgyOCAKTCA0NjkuMzY5ODMzIDEzMi41MjMzMDggCkwgNDcwLjExNjEzMyAxMzIuNTIzMzA4IApMIDQ3MC4xMTYxMzMgMTMyLjA3OTc4OCAKTCA0NzAuNDU0NDI3IDEzMi4wNzk3ODggCkwgNDcwLjQ1NDQyNyAxMzEuNjM2MjY4IApMIDQ3MC41ODkzMzEgMTMxLjYzNjI2OCAKTCA0NzAuNTg5MzMxIDEzMS4xOTI3NDggCkwgNDcyLjIyMDUyNCAxMzEuMTkyNzQ4IApMIDQ3Mi4yNjQ4MzcgMTMwLjMwNTcwOCAKTCA0NzMuMDUwOTg4IDEzMC4zMDU3MDggCkwgNDczLjA1MDk4OCAxMjkuODYyMTg4IApMIDQ3My40OTM2MDUgMTI5Ljg2MjE4OCAKTCA0NzMuNDkzNjA1IDEyOS40MTg2NjggCkwgNDczLjY0NzYxNSAxMjkuNDE4NjY4IApMIDQ3My42NDc2MTUgMTI4Ljk3NTE0OCAKTCA0NzQuMDYyMTU1IDEyOC45NzUxNDggCkwgNDc0LjE2ODc2NiAxMjguMDg4MTA4IApMIDQ3NC40MDYxOTcgMTI4LjA4ODEwOCAKTCA0NzQuNDA2MTk3IDEyNy42NDQ1ODggCkwgNDc0Ljg0NTIxIDEyNy42NDQ1ODggCkwgNDc0Ljg0NTIxIDEyNy4yMDEwNjggCkwgNDc1LjA2Mjk1NyAxMjcuMjAxMDY4IApMIDQ3NS4wNjI5NTcgMTI2Ljc1NzU0OCAKTCA0NzUuOTI0OTY1IDEyNi43NTc1NDggCkwgNDc1LjkyNDk2NSAxMjYuMzE0MDI4IApMIDQ3Ni42MjQ4ODEgMTI2LjMxNDAyOCAKTCA0NzYuNjI0ODgxIDEyNS44NzA1MDggCkwgNDc3LjE5NTY5NiAxMjUuODcwNTA4IApMIDQ3Ny4yMDc1MSAxMjQuOTgzNDY4IApMIDQ3Ny43MDY0MjkgMTI0Ljk4MzQ2OCAKTCA0NzcuNzA2NDI5IDEyNC41Mzk5NDggCkwgNDc4LjE5NjE1MiAxMjQuNTM5OTQ4IApMIDQ3OC4xOTYxNTIgMTI0LjA5NjQyOCAKTCA0NzkuNDE3MzIyIDEyNC4wOTY0MjggCkwgNDc5LjQxNzMyMiAxMjMuNjUyOTA4IApMIDQ3OS43Nzg1MjcgMTIzLjY1MjkwOCAKTCA0NzkuNzc4NTI3IDEyMy4yMDkzODggCkwgNDgwLjExOTU1MSAxMjMuMjA5Mzg4IApMIDQ4MC4xMTk1NTEgMTIyLjc2NTg2OCAKTCA0ODAuNzUyNDg2IDEyMi43NjU4NjggCkwgNDgwLjc1MjQ4NiAxMjIuMzIyMzQ4IApMIDQ4MC45NjI3OTUgMTIyLjMyMjM0OCAKTCA0ODAuOTYyNzk1IDEyMS44Nzg4MjggCkwgNDgxLjA4NTMxNiAxMjEuODc4ODI4IApMIDQ4MS4wODUzMTYgMTIxLjQzNTMwOCAKTCA0ODEuNTkxODk4IDEyMS40MzUzMDggCkwgNDgxLjU5MTg5OCAxMjAuOTkxNzg4IApMIDQ4MS44MDUxNDEgMTIwLjk5MTc4OCAKTCA0ODEuODA1MTQxIDEyMC41NDgyNjggCkwgNDgxLjk5Njc2OSAxMjAuNTQ4MjY4IApMIDQ4MS45OTY3NjkgMTIwLjEwNDc0OCAKTCA0ODIuMjY4OTk3IDEyMC4xMDQ3NDggCkwgNDgyLjI2ODk5NyAxMTkuNjYxMjI4IApMIDQ4Mi40OTk2NTYgMTE5LjY2MTIyOCAKTCA0ODIuNDk5NjU2IDExOS4yMTc3MDggCkwgNDgyLjgxMzQ5MyAxMTkuMjE3NzA4IApMIDQ4Mi44MTM0OTMgMTE4Ljc3NDE4OCAKTCA0ODMuNTYzMzIyIDExOC43NzQxODggCkwgNDgzLjU2MzMyMiAxMTguMzMwNjY4IApMIDQ4My45NDU4MzYgMTE4LjMzMDY2OCAKTCA0ODMuOTQ1ODM2IDExNy44ODcxNDggCkwgNDg0LjEwOTczNSAxMTcuODg3MTQ4IApMIDQ4NC4xNDA2ODUgMTE3LjAwMDEwOCAKTCA0ODQuNzk3NDIzIDExNy4wMDAxMDggCkwgNDg0LjgzODYwNCAxMTYuMTEzMDY4IApMIDQ4NS4xMDczMyAxMTYuMTEzMDY4IApMIDQ4NS4xMDczMyAxMTUuNjY5NTQ4IApMIDQ4NS4zODA2OTMgMTE1LjY2OTU0OCAKTCA0ODUuNDQ3NjMxIDExNC43ODI1MDggCkwgNDg1LjU2MDYwMiAxMTQuNzgyNTA4IApMIDQ4NS41NjA2MDIgMTE0LjMzODk4OCAKTCA0ODUuNzEwMDIyIDExNC4zMzg5ODggCkwgNDg1LjgwNzQ2MiAxMTMuNDUxOTQ4IApMIDQ4Ni4wODY4NDggMTEzLjQ1MTk0OCAKTCA0ODYuMTcwMzY1IDExMi41NjQ5MDggCkwgNDg2Ljg1OTI1NiAxMTIuNTY0OTA4IApMIDQ4Ni44NTkyNTYgMTEyLjEyMTM4OCAKTCA0ODcuMjQyNjIzIDExMi4xMjEzODggCkwgNDg3LjI0MjYyMyAxMTEuNjc3ODY4IApMIDQ4Ny4zNTcxOTkgMTExLjY3Nzg2OCAKTCA0ODcuMzU3MTk5IDExMS4yMzQzNDggCkwgNDg3LjUwNTU3MSAxMTEuMjM0MzQ4IApMIDQ4Ny41NjQ0MzYgMTA5LjkwMzc4OCAKTCA0ODguMDI1OTk3IDEwOS45MDM3ODggCkwgNDg4LjAyNTk5NyAxMDkuNDYwMjY4IApMIDQ4OC4zNjk1NDEgMTA5LjQ2MDI2OCAKTCA0ODguMzkwNDIzIDEwOC41NzMyMjggCkwgNDg4LjgzODI1IDEwOC41NzMyMjggCkwgNDg4LjgzODI1IDEwOC4xMjk3MDggCkwgNDg5LjMwNDM0NiAxMDguMTI5NzA4IApMIDQ4OS4zOTEwMDQgMTA3LjI0MjY2OCAKTCA0OTEuMjIxNiAxMDcuMjQyNjY4IApMIDQ5MS4yMjE2IDEwNi43OTkxNDggCkwgNDkxLjM2MjE5MSAxMDYuNzk5MTQ4IApMIDQ5MS4zNjIxOTEgMTA2LjM1NTYyOCAKTCA0OTIuMjM1MzYyIDEwNi4zNTU2MjggCkwgNDkyLjI0ODQ0MyAxMDUuNDY4NTg4IApMIDQ5My4xOTUxODIgMTA1LjQ2ODU4OCAKTCA0OTMuMTk1MTgyIDEwNS4wMjUwNjggCkwgNDkzLjMxOTc1MSAxMDUuMDI1MDY4IApMIDQ5My4zMTk3NTEgMTA0LjU4MTU0OCAKTCA0OTMuNTUxMDM0IDEwNC41ODE1NDggCkwgNDkzLjU1MTAzNCAxMDQuMTM4MDI4IApMIDQ5My45Nzk4NCAxMDQuMTM4MDI4IApMIDQ5NC4wMTk0NTYgMTAzLjI1MDk4OCAKTCA0OTQuMjUyNzcxIDEwMy4yNTA5ODggCkwgNDk0LjI1Mjc3MSAxMDIuODA3NDY4IApMIDQ5NS4zNjYwODIgMTAyLjgwNzQ2OCAKTCA0OTUuMzY2MDgyIDEwMi4zNjM5NDggCkwgNDk2LjA1MTc1MiAxMDIuMzYzOTQ4IApMIDQ5Ni4wNTE3NTIgMTAxLjkyMDQyOCAKTCA0OTYuMjE2NzYyIDEwMS45MjA0MjggCkwgNDk2LjIxNjc2MiAxMDEuNDc2OTA4IApMIDQ5Ni40NTYxNDQgMTAxLjQ3NjkwOCAKTCA0OTYuNDU2MTQ0IDEwMS4wMzMzODggCkwgNDk2LjgxNzExNSAxMDEuMDMzMzg4IApMIDQ5Ni44MTcxMTUgMTAwLjU4OTg2OCAKTCA0OTcuNDE3MDA5IDEwMC41ODk4NjggCkwgNDk3LjQxNzAwOSAxMDAuMTQ2MzQ4IApMIDQ5Ny45NjY1NjIgMTAwLjE0NjM0OCAKTCA0OTcuOTY2NTYyIDk5LjcwMjgyOCAKTCA0OTguNTYxMSA5OS43MDI4MjggCkwgNDk4LjU2MTEgOTkuMjU5MzA4IApMIDQ5OS4wNzE1MjUgOTkuMjU5MzA4IApMIDQ5OS4wNzE1MjUgOTguODE1Nzg4IApMIDQ5OS4yMjc4NjUgOTguODE1Nzg4IApMIDQ5OS4zMzM3NjggOTcuOTI4NzQ4IApMIDUwMC43ODI2NzMgOTcuOTI4NzQ4IApMIDUwMC43ODI2NzMgOTcuNDg1MjI4IApMIDUwMS4zMjIyODcgOTcuNDg1MjI4IApMIDUwMS4zMjIyODcgOTcuMDQxNzA4IApMIDUwMS41ODYxODIgOTcuMDQxNzA4IApMIDUwMS41ODYxODIgOTYuNTk4MTg4IApMIDUwMi4zNDAxMTkgOTYuNTk4MTg4IApMIDUwMi4zNDAxMTkgOTYuMTU0NjY4IApMIDUwMi44MzcwODUgOTYuMTU0NjY4IApMIDUwMi44MzcwODUgOTUuNzExMTQ4IApMIDUwMy40MTUwMjcgOTUuNzExMTQ4IApMIDUwMy40MTUwMjcgOTUuMjY3NjI4IApMIDUwNi4zNTkxMzMgOTUuMjY3NjI4IApMIDUwNi4zNTkxMzMgOTQuODI0MTA4IApMIDUwNi44NjAwNTEgOTQuODI0MTA4IApMIDUwNi44NjAwNTEgOTQuMzgwNTg4IApMIDUwNi45ODk3NjcgOTQuMzgwNTg4IApMIDUwNi45ODk3NjcgOTMuOTM3MDY4IApMIDUwNy4xMTExMzUgOTMuOTM3MDY4IApMIDUwNy4xMTExMzUgOTMuNDkzNTQ4IApMIDUwNy4yODQ1MzYgOTMuNDkzNTQ4IApMIDUwNy4zMDU3NjYgOTIuNjA2NTA4IApMIDUwNy40MjgzNzggOTIuNjA2NTA4IApMIDUwNy40MjgzNzggOTIuMTYyOTg4IApMIDUwNy43MDY2NDEgOTIuMTYyOTg4IApMIDUwNy43MDY2NDEgOTEuNzE5NDY4IApMIDUwNy45NTIyNTYgOTEuNzE5NDY4IApMIDUwNy45NTIyNTYgOTEuMjc1OTQ4IApMIDUwOC4xNzU2MzggOTEuMjc1OTQ4IApMIDUwOC4xNzU2MzggOTAuODMyNDI4IApMIDUwOC42NDQwMjEgOTAuODMyNDI4IApMIDUwOC42NDQwMjEgOTAuMzg4OTA4IApMIDUwOS4zMDk4MjcgOTAuMzg4OTA4IApMIDUwOS4zMDk4MjcgODkuOTQ1Mzg4IApMIDUxMC4wODU1MjIgODkuOTQ1Mzg4IApMIDUxMC4wODU1MjIgODkuNTAxODY4IApMIDUxMC40Mjk0MzggODkuNTAxODY4IApMIDUxMC40Mjk0MzggODkuMDU4MzQ4IApMIDUxMS4wOTkyMSA4OS4wNTgzNDggCkwgNTExLjA5OTIxIDg4LjYxNDgyOCAKTCA1MTEuNzUwNTM2IDg4LjYxNDgyOCAKTCA1MTEuNzUwNTM2IDg4LjE3MTMwOCAKTCA1MTIuMzc2MTExIDg4LjE3MTMwOCAKTCA1MTIuMzc2MTExIDg3LjcyNzc4OCAKTCA1MTIuNjc5OTEyIDg3LjcyNzc4OCAKTCA1MTIuNzc0Mjc2IDg2Ljg0MDc0OCAKTCA1MTIuODc2NDQ1IDg2Ljg0MDc0OCAKTCA1MTIuODkwNDMgODUuOTUzNzA4IApMIDUxNC4xMjQ4MjMgODUuOTUzNzA4IApMIDUxNC4xMjQ4MjMgODUuNTEwMTg4IApMIDUxNC4zNzQ2NTYgODUuNTEwMTg4IApMIDUxNC4zNzQ2NTYgODUuMDY2NjY4IApMIDUxNC42MzYwNjMgODUuMDY2NjY4IApMIDUxNC42MzYwNjMgODQuNjIzMTQ4IApMIDUxNS43MDQzMyA4NC42MjMxNDggCkwgNTE1LjcwNDMzIDg0LjE3OTYyOCAKTCA1MTYuMjcxODA4IDg0LjE3OTYyOCAKTCA1MTYuMzMyNDU0IDgzLjI5MjU4OCAKTCA1MTYuNDExNzYgODMuMjkyNTg4IApMIDUxNi40NDI2MDEgODIuNDA1NTQ4IApMIDUxNi43NTkxOTggODIuNDA1NTQ4IApMIDUxNi43NTkxOTggODEuOTYyMDI4IApMIDUxNy4xMzM4NjYgODEuOTYyMDI4IApMIDUxNy4xMzM4NjYgODEuNTE4NTA4IApMIDUxNy40MzM0NTkgODEuNTE4NTA4IApMIDUxNy40MzM0NTkgODEuMDc0OTg4IApMIDUxNy41NzA3NDMgODEuMDc0OTg4IApMIDUxNy42MjU0OTMgODAuMTg3OTQ4IApMIDUxOC4xOTQ4MTIgODAuMTg3OTQ4IApMIDUxOC4xOTQ4MTIgNzkuNzQ0NDI4IApMIDUxOC43MTc4OTUgNzkuNzQ0NDI4IApMIDUxOC43MTc4OTUgNzkuMzAwOTA4IApMIDUxOS43MDIzMTQgNzkuMzAwOTA4IApMIDUxOS43ODY2NjYgNzcuOTcwMzQ4IApMIDUyMC40NTM0MDggNzcuOTcwMzQ4IApMIDUyMC41NjQ0MTkgNzcuMDgzMzA4IApMIDUyMC42MDEwNTQgNzcuMDgzMzA4IApMIDUyMC42MDEwNTQgNzYuNjM5Nzg4IApMIDUyMS4xNDMwODcgNzYuNjM5Nzg4IApMIDUyMS4xNDMwODcgNzYuMTk2MjY4IApMIDUyMS4zNDU5NjggNzYuMTk2MjY4IApMIDUyMS4zNDU5NjggNzUuNzUyNzQ4IApMIDUyMS43MTQzMTYgNzUuNzUyNzQ4IApMIDUyMS43MTQzMTYgNzUuMzA5MjI4IApMIDUyMy45MzEwNzcgNzUuMzA5MjI4IApMIDUyMy45OTYzODggNzQuNDIyMTg4IApMIDUyNC44ODI2MjcgNzQuNDIyMTg4IApMIDUyNC44ODgyMTQgNzMuNTM1MTQ4IApMIDUyNS4wMDUxNjggNzMuNTM1MTQ4IApMIDUyNS4wMDUxNjggNzMuMDkxNjI4IApMIDUyNS45OTUzMzMgNzMuMDkxNjI4IApMIDUyNi4wODY3NjkgNzIuMjA0NTg4IApMIDUyNy4wNDM2ODEgNzIuMjA0NTg4IApMIDUyNy4xMjU0MDIgNzAuODc0MDI4IApMIDUyNy43MTAwNTYgNzAuODc0MDI4IApMIDUyNy43MTAwNTYgNzAuNDMwNTA4IApMIDUyOC45NjIyMTcgNzAuNDMwNTA4IApMIDUyOC45NjIyMTcgNjkuOTg2OTg4IApMIDUyOS4zNjIzMDUgNjkuOTg2OTg4IApMIDUyOS4zNjIzMDUgNjkuNTQzNDY4IApMIDUzMC41MTQ0OSA2OS41NDM0NjggCkwgNTMwLjUxNDQ5IDY5LjA5OTk0OCAKTCA1MzAuNjU2Mzg4IDY5LjA5OTk0OCAKTCA1MzAuNjU2Mzg4IDY4LjY1NjQyOCAKTCA1MzEuMjE1OTA3IDY4LjY1NjQyOCAKTCA1MzEuMjE1OTA3IDY4LjIxMjkwOCAKTCA1MzEuNjQzMTU0IDY4LjIxMjkwOCAKTCA1MzEuNjQzMTU0IDY3Ljc2OTM4OCAKTCA1MzEuODA1NTA1IDY3Ljc2OTM4OCAKTCA1MzEuODA1NTA1IDY3LjMyNTg2OCAKTCA1MzIuNDgzOTMxIDY3LjMyNTg2OCAKTCA1MzIuNDgzOTMxIDY2Ljg4MjM0OCAKTCA1MzMuNTQzNDg1IDY2Ljg4MjM0OCAKTCA1MzMuNTQzNDg1IDY2LjQzODgyOCAKTCA1MzMuODQ2MTQ0IDY2LjQzODgyOCAKTCA1MzMuODQ2MTQ0IDY1Ljk5NTMwOCAKTCA1MzQuMjQ4OTI5IDY1Ljk5NTMwOCAKTCA1MzQuMzQxNzEzIDY0LjY2NDc0OCAKTCA1MzQuNDM4MTM3IDY0LjY2NDc0OCAKTCA1MzQuNDM4MTM3IDY0LjIyMTIyOCAKTCA1MzUuOTczNDUzIDY0LjIyMTIyOCAKTCA1MzYuMDQ2MDY1IDYzLjMzNDE4OCAKTCA1MzYuNjM1Njk5IDYzLjMzNDE4OCAKTCA1MzYuNjM1Njk5IDYyLjg5MDY2OCAKTCA1MzcuMDMyNDQ2IDYyLjg5MDY2OCAKTCA1MzcuMDMyNDQ2IDYyLjQ0NzE0OCAKTCA1MzcuMjU0NjE4IDYyLjQ0NzE0OCAKTCA1MzcuMjU0NjE4IDYyLjAwMzYyOCAKTCA1MzguNjk3MTU3IDYyLjAwMzYyOCAKTCA1MzguNjk3MTU3IDYxLjU2MDEwOCAKTCA1MzkuMDYwMDkzIDYxLjU2MDEwOCAKTCA1MzkuMDYwMDkzIDYxLjExNjU4OCAKTCA1MzkuNjY1Mjc1IDYxLjExNjU4OCAKTCA1MzkuNjY1Mjc1IDYwLjY3MzA2OCAKTCA1MzkuODc0ODAxIDYwLjY3MzA2OCAKTCA1MzkuOTQxNjYxIDU5LjM0MjUwOCAKTCA1NDAuMzk3MzYzIDU5LjM0MjUwOCAKTCA1NDAuNDc2NDg2IDU4LjQ1NTQ2OCAKTCA1NDAuOTk5MzAzIDU4LjQ1NTQ2OCAKTCA1NDAuOTk5MzAzIDU4LjAxMTk0OCAKTCA1NDEuNjg2OTE2IDU4LjAxMTk0OCAKTCA1NDEuNzE1Mzk2IDU3LjEyNDkwOCAKTCA1NDEuODQ1NzY0IDU3LjEyNDkwOCAKTCA1NDEuOTI1MzUgNTYuMjM3ODY4IApMIDU0MS45Nzk5MjEgNTYuMjM3ODY4IApMIDU0Mi4wNzk4MzIgNTQuOTA3MzA4IApMIDU0Mi4zMDQ0NjcgNTQuOTA3MzA4IApMIDU0Mi4zNTUyOTggNTQuMDIwMjY4IApMIDU0Mi44MDYxNzUgNTQuMDIwMjY4IApMIDU0Mi44MDYxNzUgNTMuNTc2NzQ4IApMIDU0My42OTMxNTUgNTMuNTc2NzQ4IApMIDU0My42OTMxNTUgNTMuMTMzMjI4IApMIDU0My44OTg0MzUgNTMuMTMzMjI4IApMIDU0My44OTg0MzUgNTIuNjg5NzA4IApMIDU0NC4zNDgwMzYgNTIuNjg5NzA4IApMIDU0NC4zNDgwMzYgNTIuMjQ2MTg4IApMIDU0NC44ODg1MjUgNTIuMjQ2MTg4IApMIDU0NC44ODg1MjUgNTEuODAyNjY4IApMIDU0NS4zMzk0MjkgNTEuODAyNjY4IApMIDU0NS4zNjMyNDYgNTAuOTE1NjI4IApMIDU0Ni4zMTUxNDggNTAuOTE1NjI4IApMIDU0Ni4zNDc4NzQgNTAuMDI4NTg4IApMIDU0Ni43MzkyNjYgNTAuMDI4NTg4IApMIDU0Ni43MzkyNjYgNDkuNTg1MDY4IApMIDU0Ni45MTgxNiA0OS41ODUwNjggCkwgNTQ2Ljk5MjAzOCA0OC42OTgwMjggCkwgNTQ3Ljk1NTkxMiA0OC42OTgwMjggCkwgNTQ3Ljk1NTkxMiA0OC4yNTQ1MDggCkwgNTQ4Ljc4MjQ2OCA0OC4yNTQ1MDggCkwgNTQ4LjgyMzE0NiA0Ny4zNjc0NjggCkwgNTUwLjA1NzE5IDQ3LjM2NzQ2OCAKTCA1NTAuMDU3MTkgNDYuOTIzOTQ4IApMIDU1MC44MTc0MzggNDYuOTIzOTQ4IApMIDU1MC44MTc0MzggNDYuNDgwNDI4IApMIDU1MS4zMzU5MTQgNDYuNDgwNDI4IApMIDU1MS4zODg2OTkgNDUuMTQ5ODY4IApMIDU1MS40OTUwMzQgNDUuMTQ5ODY4IApMIDU1MS41Mjg3MzMgNDQuMjYyODI4IApMIDU1MS43NTc0OCA0NC4yNjI4MjggCkwgNTUxLjc1NzQ4IDQzLjgxOTMwOCAKTCA1NTIuNjk3MzE4IDQzLjgxOTMwOCAKTCA1NTIuNjk3MzE4IDQzLjM3NTc4OCAKTCA1NTMuNzczNzM2IDQzLjM3NTc4OCAKTCA1NTMuNzczNzM2IDQyLjkzMjI2OCAKTCA1NTQuNDU2NjE3IDQyLjkzMjI2OCAKTCA1NTQuNTYwMDY5IDQyLjA0NTIyOCAKTCA1NTQuNjk3NDk3IDQyLjA0NTIyOCAKTCA1NTQuNjk3NDk3IDQxLjYwMTcwOCAKTCA1NTUuMjg5OTAzIDQxLjYwMTcwOCAKTCA1NTUuMjg5OTAzIDQxLjE1ODE4OCAKTCA1NTUuNTY4Njg0IDQxLjE1ODE4OCAKTCA1NTUuNTY4Njg0IDQwLjcxNDY2OCAKTCA1NTYuMDU1NTY0IDQwLjcxNDY2OCAKTCA1NTYuMDU1NTY0IDQwLjI3MTE0OCAKTCA1NTcuMTM5MTg4IDQwLjI3MTE0OCAKTCA1NTcuMjI0ODYzIDM5LjM4NDEwOCAKTCA1NTcuNDU0OTY5IDM5LjM4NDEwOCAKTCA1NTcuNTU4MjA0IDM4LjQ5NzA2OCAKTCA1NTcuNjM2MzIzIDM4LjQ5NzA2OCAKTCA1NTcuNjM2MzIzIDM4LjA1MzU0OCAKTCA1NTguNjYzMzUzIDM4LjA1MzU0OCAKTCA1NTguNjYzMzUzIDM3LjYxMDAyOCAKTCA1NTkuMTQxMjgxIDM3LjYxMDAyOCAKTCA1NTkuMTQxMjgxIDM3LjE2NjUwOCAKTCA1NTkuNjA3NjM0IDM3LjE2NjUwOCAKTCA1NTkuNjA3NjM0IDM2LjcyMjk4OCAKTCA1NjAuMTM0MzUxIDM2LjcyMjk4OCAKTCA1NjAuMTM0MzUxIDM2LjI3OTQ2OCAKTCA1NjIuMTc1MTcxIDM2LjI3OTQ2OCAKTCA1NjIuMjQzNjA3IDM1LjM5MjQyOCAKTCA1NjIuNzg5MTk1IDM1LjM5MjQyOCAKTCA1NjIuODcwMzk4IDM0LjA2MTg2OCAKTCA1NjMuMDM1NjQ0IDM0LjA2MTg2OCAKTCA1NjMuMDY5NTE3IDMzLjE3NDgyOCAKTCA1NjMuNDEyMjI0IDMzLjE3NDgyOCAKTCA1NjMuNDEyMjI0IDMyLjczMTMwOCAKTCA1NjUuMzA0Mzk3IDMyLjczMTMwOCAKTCA1NjUuMzU0MDE3IDMxLjg0NDI2OCAKTCA1NjUuODA4MDc3IDMxLjg0NDI2OCAKTCA1NjUuODA4MDc3IDMxLjQwMDc0OCAKTCA1NjYuMTQwMTA1IDMxLjQwMDc0OCAKTCA1NjYuMjAyMjE3IDMwLjUxMzcwOCAKTCA1NjYuNTg5NjU2IDMwLjUxMzcwOCAKTCA1NjYuNTg5NjU2IDMwLjA3MDE4OCAKTCA1NjcuMDMwNzc1IDMwLjA3MDE4OCAKTCA1NjcuMDMwNzc1IDI5LjYyNjY2OCAKTCA1NjcuMjcxMTIzIDI5LjYyNjY2OCAKTCA1NjcuMjcxMTIzIDI5LjE4MzE0OCAKTCA1NjcuNjY1MjMzIDI5LjE4MzE0OCAKTCA1NjcuNzI4NTUxIDI4LjI5NjEwOCAKTCA1NjcuOTY1Nzk1IDI4LjI5NjEwOCAKTCA1NjcuOTY1Nzk1IDI3Ljg1MjU4OCAKTCA1NjguMzEwMjAxIDI3Ljg1MjU4OCAKTCA1NjguMzEwMjAxIDI3LjQwOTA2OCAKTCA1NjguNjE4OTUyIDI3LjQwOTA2OCAKTCA1NjguNjE4OTUyIDI2Ljk2NTU0OCAKTCA1NjkuNTg5MjI3IDI2Ljk2NTU0OCAKTCA1NjkuNTg5MjI3IDI2LjUyMjAyOCAKTCA1NjkuOTUwMDAyIDI2LjUyMjAyOCAKTCA1NjkuOTc4NTE2IDI1LjYzNDk4OCAKTCA1NzAuMjYwNTY1IDI1LjYzNDk4OCAKTCA1NzAuMjYwNTY1IDI1LjE5MTQ2OCAKTCA1NzEuMTY0MjA4IDI1LjE5MTQ2OCAKTCA1NzEuMTY0MjA4IDI0Ljc0Nzk0OCAKTCA1NzIuNDY2MjQzIDI0Ljc0Nzk0OCAKTCA1NzIuNDY2MjQzIDI0LjMwNDQyOCAKTCA1NzMuMDcwMjg2IDI0LjMwNDQyOCAKTCA1NzMuMDcwMjg2IDIzLjg2MDkwOCAKTCA1NzMuMzQ2Nzg2IDIzLjg2MDkwOCAKTCA1NzMuMzQ3Nzc2IDIyLjk3Mzg2OCAKTCA1NzMuNTAwODgzIDIyLjk3Mzg2OCAKTCA1NzMuNTAwODgzIDIyLjUzMDM0OCAKTCA1NzQuMjcyMjcyIDIyLjUzMDM0OCAKTCA1NzQuMjcyMjcyIDIyLjA4NjgyOCAKTCA1NzQuNDA5NzA4IDIyLjA4NjgyOCAKTCA1NzQuNDA5NzA4IDIxLjY0MzMwOCAKTCA1NzUuMTExMzQ0IDIxLjY0MzMwOCAKTCA1NzUuMTExMzQ0IDIxLjE5OTc4OCAKTCA1NzUuNTQxMTY4IDIxLjE5OTc4OCAKTCA1NzUuNTQxMTY4IDIwLjc1NjI2OCAKTCA1NzYuNDQzMDEzIDIwLjc1NjI2OCAKTCA1NzYuNDQzMDEzIDIwLjMxMjc0OCAKTCA1NzYuNjI1NDkyIDIwLjMxMjc0OCAKTCA1NzYuNjI1NDkyIDE5Ljg2OTIyOCAKTCA1NzYuOTM4MDYyIDE5Ljg2OTIyOCAKTCA1NzYuOTM4MDYyIDE5LjQyNTcwOCAKTCA1NzcuMjk1MTMgMTkuNDI1NzA4IApMIDU3Ny4yOTUxMyAxOC45ODIxODggCkwgNTc3LjUwOTQxNyAxOC45ODIxODggCkwgNTc3LjUwOTQxNyAxOC41Mzg2NjggCkwgNTc3LjkyNTI0IDE4LjUzODY2OCAKTCA1NzcuOTI1MjQgMTguMDk1MTQ4IApMIDU3OC4yNTMzNTIgMTguMDk1MTQ4IApMIDU3OC4yNTMzNTIgMTcuNjUxNjI4IApMIDU3OC40NDIyNTcgMTcuNjUxNjI4IApMIDU3OC41MTc3NCAxNi43NjQ1ODggCkwgNTc4LjYwMDY4IDE2Ljc2NDU4OCAKTCA1NzguNjAwNjggMTYuMzIxMDY4IApMIDU3OC43NDY3MDEgMTYuMzIxMDY4IApMIDU3OC43NzMwNzIgMTUuNDM0MDI4IApMIDU3OS4wOTQwNDEgMTUuNDM0MDI4IApMIDU3OS4wOTQwNDEgMTQuOTkwNTA4IApMIDU3OS42NTU0ODMgMTQuOTkwNTA4IApMIDU3OS42NTU0ODMgMTQuNTQ2OTg4IApMIDU4MC4zMzAwODYgMTQuNTQ2OTg4IApMIDU4MC4zMzAwODYgMTQuMTAzNDY4IApMIDU4MC44MDI2MyAxNC4xMDM0NjggCkwgNTgwLjgwMjYzIDEzLjY1OTk0OCAKTCA1ODEuMDk3NDI3IDEzLjY1OTk0OCAKTCA1ODEuMDk3NDI3IDEzLjIxNjQyOCAKTCA1ODEuNTU5NDAxIDEzLjIxNjQyOCAKTCA1ODEuNTU5NDAxIDEyLjc3MjkwOCAKTCA1ODEuNzY0NzQ5IDEyLjc3MjkwOCAKTCA1ODEuODA2MDU5IDExLjg4NTg2OCAKTCA1ODIuMjQ3MzM3IDExLjg4NTg2OCAKTCA1ODIuMjkzMzcxIDEwLjk5ODgyOCAKTCA1ODIuMjkzMzcxIDEwLjk5ODgyOCAKIiBjbGlwLXBhdGg9InVybCgjcDNhMjM1MDBjMDQpIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjMWY3N2I0OyBzdHJva2Utd2lkdGg6IDEuNTsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICA8L2c+CiAgIDxnIGlkPSJsaW5lMmRfMzAiPgogICAgPHBhdGggZD0iTSAzNTIuMzU4MTg3IDIzMi43NTg4MjggCkwgNTgyLjkzNjY5OSAxMC45OTg4MjggCiIgY2xpcC1wYXRoPSJ1cmwoI3AzYTIzNTAwYzA0KSIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogI2ZmN2YwZTsgc3Ryb2tlLXdpZHRoOiAxLjU7IHN0cm9rZS1saW5lY2FwOiBzcXVhcmUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMjYiPgogICAgPHBhdGggZD0iTSAzNDAuODI5MjYxIDIzMi43NTg4MjggCkwgMzQwLjgyOTI2MSAxMC45OTg4MjggCiIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjg7IHN0cm9rZS1saW5lam9pbjogbWl0ZXI7IHN0cm9rZS1saW5lY2FwOiBzcXVhcmUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMjciPgogICAgPHBhdGggZD0iTSAzNDAuODI5MjYxIDIzMi43NTg4MjggCkwgNTk0LjQ2NTYyNSAyMzIuNzU4ODI4IAoiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44OyBzdHJva2UtbGluZWpvaW46IG1pdGVyOyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgIDwvZz4KICA8L2c+CiA8L2c+CiA8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9InA2NjY2MzBlYTZlIj4KICAgPHJlY3QgeD0iMzYuNDY1NjI1IiB5PSIxMC45OTg4MjgiIHdpZHRoPSIyNTMuNjM2MzY0IiBoZWlnaHQ9IjIyMS43NiIvPgogIDwvY2xpcFBhdGg+CiAgPGNsaXBQYXRoIGlkPSJwM2EyMzUwMGMwNCI+CiAgIDxyZWN0IHg9IjM0MC44MjkyNjEiIHk9IjEwLjk5ODgyOCIgd2lkdGg9IjI1My42MzYzNjQiIGhlaWdodD0iMjIxLjc2Ii8+CiAgPC9jbGlwUGF0aD4KIDwvZGVmcz4KPC9zdmc+Cg=="></div>
+
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"Proporción de esperas &gt; 7 min:"</span><span class="p">,</span> <span class="p">(</span><span class="n">espera</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>   <span class="c1"># cerca de 0.3</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>Proporción de esperas &gt; 7 min: 0.338
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lo esencial</p>
+<ul>
+<li>Una <strong>variable aleatoria</strong> convierte los resultados de un experimento en números; puede ser <strong>discreta</strong> (conteos) o <strong>continua</strong> (medidas).</li>
+<li>En una discreta, la <strong>PMF</strong> da la probabilidad de cada valor y las probabilidades de sucesos se obtienen <strong>sumando</strong>.</li>
+<li>En una continua, la <strong>PDF</strong> es una densidad: las probabilidades son <strong>áreas</strong> bajo la curva y la de un valor exacto es cero.</li>
+<li>La <strong>CDF</strong> <span class="arithmatex">\(F(x) = P(X \le x)\)</span> sirve para ambos casos: <span class="arithmatex">\(P(a &lt; X \le b) = F(b) - F(a)\)</span>. Leída al revés da los <strong>cuantiles</strong>: la mediana, los cuartiles y el IQR, que son robustos frente a valores extremos.</li>
+<li>La <strong>esperanza</strong> resume el centro de una distribución y la <strong>varianza</strong> (o la <strong>desviación típica</strong>, en las unidades de la variable) su dispersión.</li>
+<li>El <strong>histograma</strong> y la <strong>ECDF</strong> son las versiones empíricas; con muestras grandes se parecen a la distribución real (Glivenko–Cantelli).</li>
+</ul>
+</div>
+<h2 id="ejercicios">Ejercicios<a class="headerlink" href="#ejercicios" title="Permanent link">&para;</a></h2>
+<p><strong>1.</strong> Clasifica como discreta o continua: número de reclamaciones al mes, importe de una compra, valoración de 1 a 5 estrellas, tiempo de carga de una web.</p>
+<details class="success">
+<summary>Solución</summary>
+<ul>
+<li>Reclamaciones al mes: <strong>discreta</strong>, porque es un conteo.</li>
+<li>Importe de una compra: <strong>continua</strong> a efectos de modelado; aunque se redondee a céntimos, hay tantísimos valores posibles que se trata como continua.</li>
+<li>Valoración en estrellas: <strong>discreta</strong>, con cinco valores posibles.</li>
+<li>Tiempo de carga: <strong>continua</strong>, es una medida de tiempo.</li>
+</ul>
+</details>
+<p><strong>2.</strong> El número de reclamaciones diarias en una tienda tiene esta PMF: f(0) = 0.50, f(1) = 0.30, f(2) = 0.15, f(3) = 0.05. Calcula la probabilidad de recibir al menos una reclamación, F(1) y el número esperado de reclamaciones por día.</p>
+<details class="success">
+<summary>Solución</summary>
+<ul>
+<li><strong>Al menos una:</strong> es el complementario de ninguna, <span class="arithmatex">\(P(X \ge 1) = 1 - f(0) = 0.50\)</span>.</li>
+<li><strong><span class="arithmatex">\(F(1)\)</span>:</strong> se acumula hasta el 1, <span class="arithmatex">\(F(1) = f(0) + f(1) = 0.80\)</span>. El 80 % de los días hay como mucho una reclamación.</li>
+<li><strong>Valor esperado:</strong> <span class="arithmatex">\(\mathbb{E}[X] = 0 \cdot 0.50 + 1 \cdot 0.30 + 2 \cdot 0.15 + 3 \cdot 0.05 = 0.75\)</span> reclamaciones por día. En un mes de 30 días esperamos unas 22 o 23.</li>
+</ul>
+</details>
+<p><strong>3.</strong> Un compañero propone esta PMF para el número de productos devueltos por pedido: f(0) = 0.6, f(1) = 0.3, f(2) = 0.2. ¿Es válida? Si no lo es, ¿qué valor debería tener f(2) para que lo fuera?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>No es válida: las probabilidades suman <span class="arithmatex">\(0.6 + 0.3 + 0.2 = 1.1\)</span>, y una PMF debe sumar exactamente 1. Manteniendo <span class="arithmatex">\(f(0)\)</span> y <span class="arithmatex">\(f(1)\)</span>, tendría que ser <span class="arithmatex">\(f(2) = 1 - 0.6 - 0.3 = 0.1\)</span>.</p>
+</details>
+<p><strong>4.</strong> En el ejemplo del metro (espera uniforme entre 0 y 10 minutos), calcula P(3 &lt; X ≤ 8) usando la CDF y el tiempo de espera que no se supera el 90 % de las veces. ¿Qué significa que f(5) = 0.1?</p>
+<details class="success">
+<summary>Solución</summary>
+<ul>
+<li>Con <span class="arithmatex">\(F(x) = x/10\)</span>: <span class="arithmatex">\(P(3 &lt; X \le 8) = F(8) - F(3) = 0.8 - 0.3 = 0.5\)</span>.</li>
+<li>El percentil 90 es el <span class="arithmatex">\(x\)</span> con <span class="arithmatex">\(F(x) = 0.9\)</span>: <span class="arithmatex">\(x = 9\)</span> minutos.</li>
+<li><span class="arithmatex">\(f(5) = 0.1\)</span> <strong>no</strong> es la probabilidad de esperar 5 minutos (que es 0), sino la densidad: alrededor de los 5 minutos hay "0.1 de probabilidad por minuto". Por ejemplo, <span class="arithmatex">\(P(4.5 &lt; X \le 5.5) \approx 0.1 \times 1 = 0.1\)</span>.</li>
+</ul>
+</details>
+<p><strong>5.</strong> En la ECDF de los tiempos de respuesta del servicio de atención al cliente, la escalera vale 0.85 a la altura de 30 minutos y cruza 0.5 en 12 minutos. Interprétalo para un informe.</p>
+<details class="success">
+<summary>Solución</summary>
+<p>El 85 % de las consultas se respondieron en 30 minutos o menos, de modo que un 15 % tardó más de media hora. La mitad de las consultas se respondió en 12 minutos o menos: la <strong>mediana</strong> del tiempo de respuesta es 12 minutos.</p>
+</details>
+<p><strong>6.</strong> Calcula la varianza y la desviación típica del número de reclamaciones diarias del ejercicio 2. ¿Qué tienda es más previsible: esta, o una con la misma media y <span class="arithmatex">\(\sigma = 0.3\)</span>?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>Con el atajo: <span class="arithmatex">\(\mathbb{E}[X^2] = 0 \cdot 0.50 + 1 \cdot 0.30 + 4 \cdot 0.15 + 9 \cdot 0.05 = 1.35\)</span>, así que <span class="arithmatex">\(\mathbb{V}[X] = 1.35 - 0.75^2 = 0.7875\)</span> reclamaciones² y <span class="arithmatex">\(\sigma = \sqrt{0.7875} \approx 0.89\)</span> reclamaciones.</p>
+<p>La otra tienda, con la misma media y <span class="arithmatex">\(\sigma = 0.3\)</span>, es más previsible: sus días se parecen mucho más entre sí.</p>
+</details>
+<p><strong>7.</strong> Los importes de las compras de una tienda online tienen una media de 85 € y una mediana de 42 €. ¿Qué te dice eso de la forma de la distribución? Si quieres describir la "compra típica" en un informe, ¿qué cifra usas? ¿Y para prever la facturación de 10 000 compras?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>La media es el doble de la mediana: la distribución es <strong>asimétrica a la derecha</strong>, con unas pocas compras muy grandes que tiran de la media hacia arriba. La mitad de las compras no llega a 42 €.</p>
+<p>Para la compra típica, la <strong>mediana</strong>: 42 €. Para la facturación, la <strong>media</strong>, porque el total es la media por el número de compras: unos <span class="arithmatex">\(85 \cdot 10\,000 = 850\,000\)</span> €. Usar la mediana daría 420 000 € y subestimaría la facturación a la mitad.</p>
+</details>
+<p><strong>8.</strong> Con una muestra de 20 datos, el histograma no se parece en nada a una campana. ¿Puedes concluir que los datos no siguen una distribución normal?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>No con tan pocos datos. El teorema de Glivenko–Cantelli garantiza que la forma empírica se parece a la real cuando <span class="arithmatex">\(n\)</span> es <strong>grande</strong>. Con <span class="arithmatex">\(n = 20\)</span> el histograma de una normal auténtica suele verse irregular, y además cambia mucho según el número de intervalos (compruébalo en la demo con <span class="arithmatex">\(n = 20\)</span> y pulsando "Otra muestra" varias veces). Con muestras pequeñas es más fiable mirar la ECDF o comparar estadísticos como la media y la mediana.</p>
+</details>
+<p><a class="md-button" href="../"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> Volver al tema</a> <a class="md-button md-button--primary" href="../distribuciones/">Siguiente: Distribuciones <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg></span></a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Variables aleatorias y distribuciones">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Variables aleatorias y distribuciones
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../distribuciones/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: 2. Distribuciones con nombre propio">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                2. Distribuciones con nombre propio
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/katex.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

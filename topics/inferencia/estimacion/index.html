@@ -1,0 +1,1645 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Material docente — estadística, machine learning y desarrollo de software">
+      
+      
+      
+        <link rel="canonical" href="https://alberpro.com/nebrija-mpan/topics/inferencia/estimacion/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../variabilidad/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>1. Estimación: de los datos al modelo - Nebrija · Modelos predictivos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-estimacion-de-los-datos-al-modelo" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-header__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nebrija · Modelos predictivos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. Estimación: de los datos al modelo
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-nav__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nebrija · Modelos predictivos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelos predictivos en el análisis de negocios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probabilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../variables-aleatorias/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Variables aleatorias y distribuciones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Variables aleatorias y distribuciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../variables-aleatorias/variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Variables aleatorias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../variables-aleatorias/distribuciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Distribuciones con nombre propio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimación e inferencia
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estimación e inferencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Estimación: de los datos al modelo
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Estimación: de los datos al modelo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#poblacion-y-muestra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Población y muestra
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-modelo-de-la-campana" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El modelo de la campaña
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estimar-los-parametros-maxima-verosimilitud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estimar los parámetros: máxima verosimilitud
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-campana-estimar-p" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La campaña: estimar p
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usar-el-modelo-estimado-para-decidir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usar el modelo estimado para decidir
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usar el modelo estimado para decidir">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#se-parece-el-modelo-a-los-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Se parece el modelo a los datos?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../variabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Cuánto se equivoca una estimación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intervalos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Intervalos de confianza: de la muestra a la población
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Práctica guiada: aceptación de cookies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contraste-hipotesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contraste de hipótesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../regresion-lineal-simple/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regresión lineal simple
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../regresion-lineal-multiple/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regresión lineal múltiple
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../regresion-logistica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regresión logística
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feature-engineering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature engineering y transformaciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arboles-decision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Árboles de decisión y ensembles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../clasificacion-multiclase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Clasificación multiclase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../series-temporales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Series temporales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sesgos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sesgos en los datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Referencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/modelos-predictivos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía de referencia: modelos predictivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#poblacion-y-muestra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Población y muestra
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-modelo-de-la-campana" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El modelo de la campaña
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estimar-los-parametros-maxima-verosimilitud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estimar los parámetros: máxima verosimilitud
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-campana-estimar-p" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La campaña: estimar p
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usar-el-modelo-estimado-para-decidir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usar el modelo estimado para decidir
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usar el modelo estimado para decidir">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#se-parece-el-modelo-a-los-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Se parece el modelo a los datos?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="1-estimacion-de-los-datos-al-modelo">1. Estimación: de los datos al modelo<a class="headerlink" href="#1-estimacion-de-los-datos-al-modelo" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Antes de empezar</p>
+<p>Esta página usa la <strong>media</strong> y la <strong>varianza</strong> de una distribución (<a href="../../variables-aleatorias/variables/#media-y-varianza-de-una-distribucion">variables aleatorias</a>), la <strong>función de distribución</strong> para calcular probabilidades de rangos, y las distribuciones <strong>Bernoulli</strong> y <strong>binomial</strong> (<a href="../../variables-aleatorias/distribuciones/">distribuciones</a>).</p>
+</div>
+<p>En el tema anterior describimos variables aleatorias con su distribución, pero hicimos trampa: casi siempre <strong>dábamos</strong> los parámetros. "Entran de media 4 clientes por hora", "el 5 % de las visitas acaba en compra". En la vida real nadie nos dice esos números. El director comercial no sabe qué probabilidad tiene un cliente de comprar: tiene el registro de ventas de las últimas semanas. Esta página da el paso de los datos al modelo: distinguir lo que <strong>queremos saber</strong> (la población) de lo que <strong>podemos calcular</strong> (la muestra), estimar los parámetros con los datos y usar el modelo estimado para tomar decisiones.</p>
+<p><strong>El caso que recorre el tema.</strong> Una tienda online envía cada día un email promocional a <strong>500 clientes</strong>, y cada cliente que lo recibe compra o no compra. Cada venta deja un margen de <strong>15 €</strong>, y la campaña cuesta <strong>450 € al día</strong>, así que hacen falta al menos <span class="arithmatex">\(450/15 = 30\)</span> ventas para cubrir costes. El almacén puede preparar <strong>como máximo 45 pedidos al día</strong>. Marketing quiere saber qué proporción de clientes compra, cuántas ventas esperar y con qué probabilidad un día perderemos dinero o saturaremos el almacén.</p>
+<p>Esta página y la <a href="../variabilidad/">siguiente</a> siguen el cuaderno de la sesión, que puedes ejecutar en Colab. Allí los datos se simulan sin semilla, así que cada ejecución da resultados distintos de los de esta página:</p>
+<p><strong>Cuaderno de la sesión: ventas de una campaña de email</strong> &nbsp; <a href="https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/inferencia/notebook.ipynb" target="_blank"><img alt="Abrir en Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a> &nbsp; <a download="download" href="../notebook.ipynb"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"/></svg></span> .ipynb</a></p>
+<h2 id="poblacion-y-muestra">Población y muestra<a class="headerlink" href="#poblacion-y-muestra" title="Permanent link">&para;</a></h2>
+<p>Lo que tenemos son <strong>datos</strong>: una <strong>muestra</strong> <span class="arithmatex">\(x_1, \ldots, x_n\)</span> de una <strong>población</strong> mucho mayor (los clientes de este mes frente a todos los clientes, presentes y futuros). La distribución de la población existe, con su media <span class="arithmatex">\(\mu\)</span> y su varianza <span class="arithmatex">\(\sigma^2\)</span>, pero <strong>no la conocemos</strong>. Con la muestra calculamos cantidades que la imitan:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Población (desconocida)</th>
+<th>Muestra (calculable)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Media</td>
+<td><span class="arithmatex">\(\mu = \mathbb{E}[X]\)</span></td>
+<td><span class="arithmatex">\(\bar{x} = \dfrac{1}{n}\displaystyle\sum_{i=1}^{n} x_i\)</span></td>
+</tr>
+<tr>
+<td>Desviación típica</td>
+<td><span class="arithmatex">\(\sigma\)</span></td>
+<td><span class="arithmatex">\(s = \sqrt{\dfrac{1}{n - 1}\displaystyle\sum_{i=1}^{n} (x_i - \bar{x})^2}\)</span></td>
+</tr>
+<tr>
+<td>Proporción</td>
+<td><span class="arithmatex">\(p\)</span></td>
+<td>$\hat{p} = $ proporción de unos en la muestra</td>
+</tr>
+</tbody>
+</table>
+<p>La convención de notación es útil: <strong>letras griegas</strong> (<span class="arithmatex">\(\mu\)</span>, <span class="arithmatex">\(\sigma\)</span>, <span class="arithmatex">\(p\)</span>) para los parámetros de la población y <strong>letras latinas o con acento circunflejo</strong> (<span class="arithmatex">\(\bar{x}\)</span>, <span class="arithmatex">\(s\)</span>, <span class="arithmatex">\(\hat{p}\)</span>) para lo que calculamos con datos. El acento circunflejo recuerda que son <strong>estimaciones</strong>: con otra muestra saldrían otros números.</p>
+<p>La desviación típica de la muestra se suele calcular dividiendo entre <span class="arithmatex">\(n - 1\)</span> y no entre <span class="arithmatex">\(n\)</span>. El motivo es que los datos siempre están, en conjunto, algo más cerca de su propia media <span class="arithmatex">\(\bar{x}\)</span> que de la verdadera <span class="arithmatex">\(\mu\)</span>, y dividir entre <span class="arithmatex">\(n\)</span> subestimaría ligeramente la dispersión. Con muestras grandes, la diferencia es despreciable.</p>
+<div class="admonition warning">
+<p class="admonition-title">Cada herramienta usa una convención</p>
+<ul>
+<li><strong>pandas:</strong> <code>serie.var()</code> y <code>serie.std()</code> dividen entre <strong>n − 1</strong> (<code>ddof=1</code>).</li>
+<li><strong>NumPy:</strong> <code>np.var(x)</code> y <code>np.std(x)</code> dividen entre <strong>n</strong> (<code>ddof=0</code>).</li>
+</ul>
+<p>Si dos personas obtienen desviaciones típicas distintas con los mismos datos, casi siempre es esto.</p>
+</div>
+<h2 id="el-modelo-de-la-campana">El modelo de la campaña<a class="headerlink" href="#el-modelo-de-la-campana" title="Permanent link">&para;</a></h2>
+<p>Antes de estimar nada hay que decidir <strong>qué distribución</strong> describe los datos. Cada cliente compra o no compra, así que lo modelamos con una <a href="../../variables-aleatorias/distribuciones/#bernoulli-un-si-o-un-no">Bernoulli</a>: <span class="arithmatex">\(Y_i = 1\)</span> si el cliente <span class="arithmatex">\(i\)</span> compra, con probabilidad <span class="arithmatex">\(p\)</span>. Las ventas de un día son la suma de los 500 resultados y, si los clientes son independientes y todos tienen la misma <span class="arithmatex">\(p\)</span>, siguen una <a href="../../variables-aleatorias/distribuciones/#binomial-contar-exitos">binomial</a>:</p>
+<div class="arithmatex">\[X = Y_1 + Y_2 + \cdots + Y_{500} \sim \text{Binomial}(500,\ p)\]</div>
+<p>Conviene escribir las <strong>suposiciones</strong> explícitamente, porque si fallan, fallan todos los cálculos que vienen después:</p>
+<ul>
+<li><strong>Independencia:</strong> la decisión de un cliente no influye en la de otro.</li>
+<li><strong>Misma distribución:</strong> todos los clientes, todos los días, tienen la misma probabilidad de compra <span class="arithmatex">\(p\)</span>.</li>
+</ul>
+<p>El modelo tiene un único parámetro desconocido, <span class="arithmatex">\(p\)</span>. Si lo conociéramos, la binomial respondería a todas las preguntas de marketing. El problema es estimarlo.</p>
+<h2 id="estimar-los-parametros-maxima-verosimilitud">Estimar los parámetros: máxima verosimilitud<a class="headerlink" href="#estimar-los-parametros-maxima-verosimilitud" title="Permanent link">&para;</a></h2>
+<p>¿Qué valor de <span class="arithmatex">\(p\)</span> elegimos? La idea de la <strong>máxima verosimilitud</strong> es elegir el valor que hace <strong>más probables los datos que hemos observado</strong>. Un ejemplo pequeño lo muestra. Supón que de 10 clientes compran 2. Si la probabilidad de compra fuera <span class="arithmatex">\(p\)</span>, la probabilidad de observar esa secuencia concreta sería <span class="arithmatex">\(p^2 (1 - p)^8\)</span>. Probemos varios valores:</p>
+<table>
+<thead>
+<tr>
+<th><span class="arithmatex">\(p\)</span></th>
+<th>0.1</th>
+<th>0.2</th>
+<th>0.3</th>
+<th>0.5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(p^2(1 - p)^8\)</span></td>
+<td>0.00430</td>
+<td><strong>0.00671</strong></td>
+<td>0.00519</td>
+<td>0.00098</td>
+</tr>
+</tbody>
+</table>
+<p>Con <span class="arithmatex">\(p = 0.5\)</span>, ver solo 2 compras de 10 sería muy raro. Con <span class="arithmatex">\(p = 0.1\)</span> también es poco probable, porque esperaríamos solo una. El valor que mejor explica los datos es <span class="arithmatex">\(p = 0.2\)</span>, que es justo la proporción observada, <span class="arithmatex">\(2/10\)</span>.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: estimador de máxima verosimilitud</p>
+<p>La <strong>verosimilitud</strong> <span class="arithmatex">\(L(\theta)\)</span> de un valor del parámetro <span class="arithmatex">\(\theta\)</span> es la probabilidad (o la densidad) de los datos observados si el parámetro valiera <span class="arithmatex">\(\theta\)</span>. El <strong>estimador de máxima verosimilitud</strong> (EMV) <span class="arithmatex">\(\hat{\theta}\)</span> es el valor de <span class="arithmatex">\(\theta\)</span> que hace máxima <span class="arithmatex">\(L(\theta)\)</span>.</p>
+</div>
+<p>Encontrar ese máximo es un problema de cálculo que no vamos a hacer: para los modelos del curso, el resultado es conocido y lo damos hecho.</p>
+<table>
+<thead>
+<tr>
+<th>Modelo</th>
+<th>Parámetro</th>
+<th>Estimador de máxima verosimilitud</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bernoulli<span class="arithmatex">\((p)\)</span></td>
+<td><span class="arithmatex">\(p\)</span></td>
+<td><span class="arithmatex">\(\hat{p} = \bar{x}\)</span>, la proporción de unos</td>
+</tr>
+<tr>
+<td>Binomial<span class="arithmatex">\((n, p)\)</span>, con <span class="arithmatex">\(n\)</span> conocido</td>
+<td><span class="arithmatex">\(p\)</span></td>
+<td><span class="arithmatex">\(\hat{p} = \bar{x}/n\)</span>: éxitos totales entre intentos totales</td>
+</tr>
+<tr>
+<td>Poisson<span class="arithmatex">\((\lambda)\)</span></td>
+<td><span class="arithmatex">\(\lambda\)</span></td>
+<td><span class="arithmatex">\(\hat{\lambda} = \bar{x}\)</span></td>
+</tr>
+<tr>
+<td>Normal<span class="arithmatex">\((\mu, \sigma^2)\)</span></td>
+<td><span class="arithmatex">\(\mu\)</span>, <span class="arithmatex">\(\sigma\)</span></td>
+<td><span class="arithmatex">\(\hat{\mu} = \bar{x}\)</span>, <span class="arithmatex">\(\quad \hat{\sigma} = \sqrt{\frac{1}{n}\sum (x_i - \bar{x})^2}\)</span></td>
+</tr>
+<tr>
+<td>Uniforme<span class="arithmatex">\((a, b)\)</span>, discreta o continua</td>
+<td><span class="arithmatex">\(a\)</span>, <span class="arithmatex">\(b\)</span></td>
+<td><span class="arithmatex">\(\hat{a} = \min x_i\)</span>, <span class="arithmatex">\(\quad \hat{b} = \max x_i\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Casi todos los estimadores son la <strong>media muestral</strong>, y tiene sentido: en esas distribuciones, el parámetro es la media o se obtiene directamente de ella. La excepción es la uniforme, porque lo único que sabemos de sus extremos es que ningún dato puede quedar fuera de ellos. El estimador de <span class="arithmatex">\(\sigma\)</span> divide entre <span class="arithmatex">\(n\)</span>; en la práctica se usa casi siempre <span class="arithmatex">\(s\)</span>, que divide entre <span class="arithmatex">\(n - 1\)</span>, y con muestras de cierto tamaño ambos coinciden en la práctica.</p>
+<h2 id="la-campana-estimar-p">La campaña: estimar p<a class="headerlink" href="#la-campana-estimar-p" title="Permanent link">&para;</a></h2>
+<p>Simulamos 30 días de campaña. Para simular hay que elegir un valor "real" de <span class="arithmatex">\(p\)</span>, que en la vida real no conocemos: imagina que está escrito en un sobre cerrado. Lo usamos para generar los datos y, al final, para ver cuánto nos hemos equivocado.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">clientes_dia</span> <span class="o">=</span> <span class="mi">500</span>    <span class="c1"># emails al día: la n de la binomial</span>
+<span class="n">margen_venta</span> <span class="o">=</span> <span class="mi">15</span>     <span class="c1"># € por venta</span>
+<span class="n">coste_dia</span> <span class="o">=</span> <span class="mi">450</span>       <span class="c1"># € por día de campaña</span>
+<span class="n">capacidad</span> <span class="o">=</span> <span class="mi">45</span>        <span class="c1"># pedidos que el almacén prepara al día</span>
+<span class="n">equilibrio</span> <span class="o">=</span> <span class="mi">30</span>       <span class="c1"># ventas necesarias para cubrir costes: 450 / 15</span>
+
+<span class="n">p_real</span> <span class="o">=</span> <span class="mf">0.07</span>         <span class="c1"># el sobre cerrado: en la práctica no lo conocemos</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">compras</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p_real</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">clientes_dia</span><span class="p">))</span>   <span class="c1"># una Bernoulli por cliente y día</span>
+<span class="n">ventas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">compras</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">31</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"ventas"</span><span class="p">)</span>
+<span class="n">ventas</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>1    32
+2    41
+3    47
+4    27
+5    38
+Name: ventas, dtype: int64
+</code></pre></div>
+</div>
+<p>Cada fila de <code>compras</code> es un día y cada columna un cliente. Lo que suele llegar a marketing es el resumen diario, la serie <code>ventas</code>. Según la tabla, el estimador de <span class="arithmatex">\(p\)</span> es la proporción de compras: el total de ventas entre el total de emails, que es lo mismo que la media de los ceros y unos.</p>
+<div class="highlight"><pre><span></span><code><span class="n">p_hat</span> <span class="o">=</span> <span class="n">compras</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>                   <span class="c1"># = ventas.sum() / (30 * 500)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"ventas totales: </span><span class="si">{</span><span class="n">ventas</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> de </span><span class="si">{</span><span class="n">compras</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> emails"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>ventas totales: 1094 de 15000 emails
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"p estimada: </span><span class="si">{</span><span class="n">p_hat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">   p real: </span><span class="si">{</span><span class="n">p_real</span><span class="si">}</span><span class="s2">   error: </span><span class="si">{</span><span class="n">p_hat</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p_real</span><span class="si">:</span><span class="s2">+.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>p estimada: 0.0729   p real: 0.07   error: +0.0029
+</code></pre></div>
+</div>
+<p>La estimación, <span class="arithmatex">\(\hat{p} \approx 0.0729\)</span>, se queda cerca del valor real, pero no lo clava. En la vida real no podríamos abrir el sobre, así que no sabríamos cuánto nos hemos equivocado. Cuantificar ese error, sin conocer <span class="arithmatex">\(p\)</span>, es el objetivo de la <a href="../variabilidad/">siguiente página</a>.</p>
+<h2 id="usar-el-modelo-estimado-para-decidir">Usar el modelo estimado para decidir<a class="headerlink" href="#usar-el-modelo-estimado-para-decidir" title="Permanent link">&para;</a></h2>
+<p>Con <span class="arithmatex">\(\hat{p}\)</span> tenemos un modelo para las ventas de un día cualquiera, <span class="arithmatex">\(X \sim \text{Binomial}(500,\ \hat{p})\)</span>, y con la <a href="../../variables-aleatorias/variables/#la-funcion-de-distribucion-una-herramienta-para-todo">función de distribución</a> respondemos a cualquier pregunta sobre rangos. En una variable discreta hay que cuidar los extremos: "menos de 30" es "29 o menos".</p>
+<table>
+<thead>
+<tr>
+<th>Pregunta</th>
+<th>Fórmula</th>
+<th>En Python</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>exactamente 35 ventas</td>
+<td><span class="arithmatex">\(f(35)\)</span></td>
+<td><code>pmf(35)</code></td>
+</tr>
+<tr>
+<td>perder dinero: menos de 30 ventas</td>
+<td><span class="arithmatex">\(P(X \le 29) = F(29)\)</span></td>
+<td><code>cdf(29)</code></td>
+</tr>
+<tr>
+<td>saturar el almacén: más de 45</td>
+<td><span class="arithmatex">\(P(X &gt; 45) = 1 - F(45)\)</span></td>
+<td><code>sf(45)</code></td>
+</tr>
+<tr>
+<td>día normal: entre 30 y 45</td>
+<td><span class="arithmatex">\(F(45) - F(29)\)</span></td>
+<td><code>cdf(45) - cdf(29)</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="n">modelo</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">clientes_dia</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p_hat</span><span class="p">)</span>
+
+<span class="n">p_perdidas</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">equilibrio</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">p_saturacion</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">capacidad</span><span class="p">)</span>
+<span class="n">p_normal</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">capacidad</span><span class="p">)</span> <span class="o">-</span> <span class="n">modelo</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">equilibrio</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"ventas esperadas: </span><span class="si">{</span><span class="n">modelo</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">, desviación típica: </span><span class="si">{</span><span class="n">modelo</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>ventas esperadas: 36.5, desviación típica: 5.8
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"P(X = 35)       = </span><span class="si">{</span><span class="n">modelo</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="mi">35</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>P(X = 35)       = 0.0675
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"P(pérdidas)     = </span><span class="si">{</span><span class="n">p_perdidas</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>P(pérdidas)     = 0.1130
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"P(saturación)   = </span><span class="si">{</span><span class="n">p_saturacion</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>P(saturación)   = 0.0638
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"P(día normal)   = </span><span class="si">{</span><span class="n">p_normal</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>P(día normal)   = 0.8232
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"días con pérdidas al mes: </span><span class="si">{</span><span class="mi">30</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">p_perdidas</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>días con pérdidas al mes: 3.4
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"beneficio medio al día:   </span><span class="si">{</span><span class="n">margen_venta</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">modelo</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">coste_dia</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> €"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>beneficio medio al día:   97 €
+</code></pre></div>
+</div>
+<p>El modelo espera unas 36.5 ventas al día. Aun así, tener exactamente 35 solo ocurre un 7 % de los días: con tantos valores posibles, cada uno por separado es poco probable, y por eso en negocio se pregunta casi siempre por rangos. Un día de cada nueve, aproximadamente, la campaña pierde dinero (unos 3.4 días al mes), y un 6 % de los días se satura el almacén. En promedio, la campaña deja unos 97 € al día.</p>
+<h3 id="se-parece-el-modelo-a-los-datos">¿Se parece el modelo a los datos?<a class="headerlink" href="#se-parece-el-modelo-a-los-datos" title="Permanent link">&para;</a></h3>
+<p>Un modelo estimado siempre da números, aunque las suposiciones no se cumplan. Por eso hay que compararlo con los datos:</p>
+<div class="highlight"><pre><span></span><code><span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">ventas</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">14.5</span><span class="p">,</span> <span class="mf">60.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"30 días observados"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">modelo</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="s2">"o-"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Binomial(500, p̂)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">equilibrio</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:red"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">capacidad</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:orange"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"ventas en un día"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="resultado resultado-figura"><img alt="Figura generada por el código" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIKICAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjQ5MC4wNjU2MjVwdCIgaGVpZ2h0PSIyMzkuODQwNzgxcHQiIHZpZXdCb3g9IjAgMCA0OTAuMDY1NjI1IDIzOS44NDA3ODEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIj4KIDxtZXRhZGF0YT4KICA8cmRmOlJERiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgIDxjYzpXb3JrPgogICAgPGRjOnR5cGUgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIvPgogICAgPGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+CiAgICA8ZGM6Y3JlYXRvcj4KICAgICA8Y2M6QWdlbnQ+CiAgICAgIDxkYzp0aXRsZT5NYXRwbG90bGliIHYzLjExLjIsIGh0dHBzOi8vbWF0cGxvdGxpYi5vcmcvPC9kYzp0aXRsZT4KICAgICA8L2NjOkFnZW50PgogICAgPC9kYzpjcmVhdG9yPgogICA8L2NjOldvcms+CiAgPC9yZGY6UkRGPgogPC9tZXRhZGF0YT4KIDxkZWZzPgogIDxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+KntzdHJva2UtbGluZWpvaW46IHJvdW5kOyBzdHJva2UtbGluZWNhcDogYnV0dH08L3N0eWxlPgogPC9kZWZzPgogPGcgaWQ9ImZpZ3VyZV8xIj4KICA8ZyBpZD0icGF0Y2hfMSI+CiAgIDxwYXRoIGQ9Ik0gMCAyMzkuODQwNzgxIApMIDQ5MC4wNjU2MjUgMjM5Ljg0MDc4MSAKTCA0OTAuMDY1NjI1IDAgCkwgMCAwIAp6CiIgc3R5bGU9ImZpbGw6ICNmZmZmZmYiLz4KICA8L2c+CiAgPGcgaWQ9ImF4ZXNfMSI+CiAgIDxnIGlkPSJwYXRjaF8yIj4KICAgIDxwYXRoIGQ9Ik0gMzYuNDY1NjI1IDIwMS4yNCAKTCA0ODIuODY1NjI1IDIwMS4yNCAKTCA0ODIuODY1NjI1IDcuMiAKTCAzNi40NjU2MjUgNy4yIAp6CiIgc3R5bGU9ImZpbGw6ICNmZmZmZmYiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMyI+CiAgICA8cGF0aCBkPSJNIDU2Ljc1NjUzNCAyMDEuMjQgCkwgNjUuNzc0NzE2IDIwMS4yNCAKTCA2NS43NzQ3MTYgMjAxLjI0IApMIDU2Ljc1NjUzNCAyMDEuMjQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDQ0ODVmZmIyYzMpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgb3BhY2l0eTogMC41Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzQiPgogICAgPHBhdGggZD0iTSA2NS43NzQ3MTYgMjAxLjI0IApMIDc0Ljc5Mjg5OCAyMDEuMjQgCkwgNzQuNzkyODk4IDIwMS4yNCAKTCA2NS43NzQ3MTYgMjAxLjI0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A0NDg1ZmZiMmMzKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQ7IG9wYWNpdHk6IDAuNSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF81Ij4KICAgIDxwYXRoIGQ9Ik0gNzQuNzkyODk4IDIwMS4yNCAKTCA4My44MTEwOCAyMDEuMjQgCkwgODMuODExMDggMjAxLjI0IApMIDc0Ljc5Mjg5OCAyMDEuMjQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDQ0ODVmZmIyYzMpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgb3BhY2l0eTogMC41Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzYiPgogICAgPHBhdGggZD0iTSA4My44MTEwOCAyMDEuMjQgCkwgOTIuODI5MjYxIDIwMS4yNCAKTCA5Mi44MjkyNjEgMjAxLjI0IApMIDgzLjgxMTA4IDIwMS4yNCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBvcGFjaXR5OiAwLjUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfNyI+CiAgICA8cGF0aCBkPSJNIDkyLjgyOTI2MSAyMDEuMjQgCkwgMTAxLjg0NzQ0MyAyMDEuMjQgCkwgMTAxLjg0NzQ0MyAyMDEuMjQgCkwgOTIuODI5MjYxIDIwMS4yNCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBvcGFjaXR5OiAwLjUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfOCI+CiAgICA8cGF0aCBkPSJNIDEwMS44NDc0NDMgMjAxLjI0IApMIDExMC44NjU2MjUgMjAxLjI0IApMIDExMC44NjU2MjUgMjAxLjI0IApMIDEwMS44NDc0NDMgMjAxLjI0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A0NDg1ZmZiMmMzKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQ7IG9wYWNpdHk6IDAuNSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF85Ij4KICAgIDxwYXRoIGQ9Ik0gMTEwLjg2NTYyNSAyMDEuMjQgCkwgMTE5Ljg4MzgwNyAyMDEuMjQgCkwgMTE5Ljg4MzgwNyAyMDEuMjQgCkwgMTEwLjg2NTYyNSAyMDEuMjQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDQ0ODVmZmIyYzMpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgb3BhY2l0eTogMC41Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzEwIj4KICAgIDxwYXRoIGQ9Ik0gMTE5Ljg4MzgwNyAyMDEuMjQgCkwgMTI4LjkwMTk4OSAyMDEuMjQgCkwgMTI4LjkwMTk4OSAyMDEuMjQgCkwgMTE5Ljg4MzgwNyAyMDEuMjQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDQ0ODVmZmIyYzMpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgb3BhY2l0eTogMC41Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzExIj4KICAgIDxwYXRoIGQ9Ik0gMTI4LjkwMTk4OSAyMDEuMjQgCkwgMTM3LjkyMDE3IDIwMS4yNCAKTCAxMzcuOTIwMTcgMjAxLjI0IApMIDEyOC45MDE5ODkgMjAxLjI0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A0NDg1ZmZiMmMzKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQ7IG9wYWNpdHk6IDAuNSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8xMiI+CiAgICA8cGF0aCBkPSJNIDEzNy45MjAxNyAyMDEuMjQgCkwgMTQ2LjkzODM1MiAyMDEuMjQgCkwgMTQ2LjkzODM1MiAyMDEuMjQgCkwgMTM3LjkyMDE3IDIwMS4yNCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBvcGFjaXR5OiAwLjUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMTMiPgogICAgPHBhdGggZD0iTSAxNDYuOTM4MzUyIDIwMS4yNCAKTCAxNTUuOTU2NTM0IDIwMS4yNCAKTCAxNTUuOTU2NTM0IDIwMS4yNCAKTCAxNDYuOTM4MzUyIDIwMS4yNCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBvcGFjaXR5OiAwLjUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMTQiPgogICAgPHBhdGggZD0iTSAxNTUuOTU2NTM0IDIwMS4yNCAKTCAxNjQuOTc0NzE2IDIwMS4yNCAKTCAxNjQuOTc0NzE2IDIwMS4yNCAKTCAxNTUuOTU2NTM0IDIwMS4yNCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBvcGFjaXR5OiAwLjUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMTUiPgogICAgPHBhdGggZD0iTSAxNjQuOTc0NzE2IDIwMS4yNCAKTCAxNzMuOTkyODk4IDIwMS4yNCAKTCAxNzMuOTkyODk4IDc4LjA0IApMIDE2NC45NzQ3MTYgNzguMDQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDQ0ODVmZmIyYzMpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgb3BhY2l0eTogMC41Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzE2Ij4KICAgIDxwYXRoIGQ9Ik0gMTczLjk5Mjg5OCAyMDEuMjQgCkwgMTgzLjAxMTA4IDIwMS4yNCAKTCAxODMuMDExMDggMTM5LjY0IApMIDE3My45OTI4OTggMTM5LjY0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A0NDg1ZmZiMmMzKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQ7IG9wYWNpdHk6IDAuNSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8xNyI+CiAgICA8cGF0aCBkPSJNIDE4My4wMTEwOCAyMDEuMjQgCkwgMTkyLjAyOTI2MSAyMDEuMjQgCkwgMTkyLjAyOTI2MSAxMzkuNjQgCkwgMTgzLjAxMTA4IDEzOS42NCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBvcGFjaXR5OiAwLjUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMTgiPgogICAgPHBhdGggZD0iTSAxOTIuMDI5MjYxIDIwMS4yNCAKTCAyMDEuMDQ3NDQzIDIwMS4yNCAKTCAyMDEuMDQ3NDQzIDIwMS4yNCAKTCAxOTIuMDI5MjYxIDIwMS4yNCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBvcGFjaXR5OiAwLjUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMTkiPgogICAgPHBhdGggZD0iTSAyMDEuMDQ3NDQzIDIwMS4yNCAKTCAyMTAuMDY1NjI1IDIwMS4yNCAKTCAyMTAuMDY1NjI1IDc4LjA0IApMIDIwMS4wNDc0NDMgNzguMDQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDQ0ODVmZmIyYzMpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgb3BhY2l0eTogMC41Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzIwIj4KICAgIDxwYXRoIGQ9Ik0gMjEwLjA2NTYyNSAyMDEuMjQgCkwgMjE5LjA4MzgwNyAyMDEuMjQgCkwgMjE5LjA4MzgwNyAxMzkuNjQgCkwgMjEwLjA2NTYyNSAxMzkuNjQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDQ0ODVmZmIyYzMpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgb3BhY2l0eTogMC41Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzIxIj4KICAgIDxwYXRoIGQ9Ik0gMjE5LjA4MzgwNyAyMDEuMjQgCkwgMjI4LjEwMTk4OSAyMDEuMjQgCkwgMjI4LjEwMTk4OSA3OC4wNCAKTCAyMTkuMDgzODA3IDc4LjA0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A0NDg1ZmZiMmMzKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQ7IG9wYWNpdHk6IDAuNSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8yMiI+CiAgICA8cGF0aCBkPSJNIDIyOC4xMDE5ODkgMjAxLjI0IApMIDIzNy4xMjAxNyAyMDEuMjQgCkwgMjM3LjEyMDE3IDEzOS42NCAKTCAyMjguMTAxOTg5IDEzOS42NCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBvcGFjaXR5OiAwLjUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMjMiPgogICAgPHBhdGggZD0iTSAyMzcuMTIwMTcgMjAxLjI0IApMIDI0Ni4xMzgzNTIgMjAxLjI0IApMIDI0Ni4xMzgzNTIgMTYuNDQgCkwgMjM3LjEyMDE3IDE2LjQ0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A0NDg1ZmZiMmMzKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQ7IG9wYWNpdHk6IDAuNSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8yNCI+CiAgICA8cGF0aCBkPSJNIDI0Ni4xMzgzNTIgMjAxLjI0IApMIDI1NS4xNTY1MzQgMjAxLjI0IApMIDI1NS4xNTY1MzQgMTYuNDQgCkwgMjQ2LjEzODM1MiAxNi40NCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBvcGFjaXR5OiAwLjUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMjUiPgogICAgPHBhdGggZD0iTSAyNTUuMTU2NTM0IDIwMS4yNCAKTCAyNjQuMTc0NzE2IDIwMS4yNCAKTCAyNjQuMTc0NzE2IDc4LjA0IApMIDI1NS4xNTY1MzQgNzguMDQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDQ0ODVmZmIyYzMpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgb3BhY2l0eTogMC41Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzI2Ij4KICAgIDxwYXRoIGQ9Ik0gMjY0LjE3NDcxNiAyMDEuMjQgCkwgMjczLjE5Mjg5OCAyMDEuMjQgCkwgMjczLjE5Mjg5OCAxNi40NCAKTCAyNjQuMTc0NzE2IDE2LjQ0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A0NDg1ZmZiMmMzKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQ7IG9wYWNpdHk6IDAuNSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8yNyI+CiAgICA8cGF0aCBkPSJNIDI3My4xOTI4OTggMjAxLjI0IApMIDI4Mi4yMTEwOCAyMDEuMjQgCkwgMjgyLjIxMTA4IDEzOS42NCAKTCAyNzMuMTkyODk4IDEzOS42NCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBvcGFjaXR5OiAwLjUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMjgiPgogICAgPHBhdGggZD0iTSAyODIuMjExMDggMjAxLjI0IApMIDI5MS4yMjkyNjEgMjAxLjI0IApMIDI5MS4yMjkyNjEgMTM5LjY0IApMIDI4Mi4yMTEwOCAxMzkuNjQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDQ0ODVmZmIyYzMpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgb3BhY2l0eTogMC41Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzI5Ij4KICAgIDxwYXRoIGQ9Ik0gMjkxLjIyOTI2MSAyMDEuMjQgCkwgMzAwLjI0NzQ0MyAyMDEuMjQgCkwgMzAwLjI0NzQ0MyAxMzkuNjQgCkwgMjkxLjIyOTI2MSAxMzkuNjQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDQ0ODVmZmIyYzMpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgb3BhY2l0eTogMC41Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzMwIj4KICAgIDxwYXRoIGQ9Ik0gMzAwLjI0NzQ0MyAyMDEuMjQgCkwgMzA5LjI2NTYyNSAyMDEuMjQgCkwgMzA5LjI2NTYyNSAyMDEuMjQgCkwgMzAwLjI0NzQ0MyAyMDEuMjQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDQ0ODVmZmIyYzMpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgb3BhY2l0eTogMC41Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzMxIj4KICAgIDxwYXRoIGQ9Ik0gMzA5LjI2NTYyNSAyMDEuMjQgCkwgMzE4LjI4MzgwNyAyMDEuMjQgCkwgMzE4LjI4MzgwNyAxNi40NCAKTCAzMDkuMjY1NjI1IDE2LjQ0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A0NDg1ZmZiMmMzKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQ7IG9wYWNpdHk6IDAuNSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8zMiI+CiAgICA8cGF0aCBkPSJNIDMxOC4yODM4MDcgMjAxLjI0IApMIDMyNy4zMDE5ODkgMjAxLjI0IApMIDMyNy4zMDE5ODkgMjAxLjI0IApMIDMxOC4yODM4MDcgMjAxLjI0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A0NDg1ZmZiMmMzKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQ7IG9wYWNpdHk6IDAuNSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8zMyI+CiAgICA8cGF0aCBkPSJNIDMyNy4zMDE5ODkgMjAxLjI0IApMIDMzNi4zMjAxNyAyMDEuMjQgCkwgMzM2LjMyMDE3IDIwMS4yNCAKTCAzMjcuMzAxOTg5IDIwMS4yNCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBvcGFjaXR5OiAwLjUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMzQiPgogICAgPHBhdGggZD0iTSAzMzYuMzIwMTcgMjAxLjI0IApMIDM0NS4zMzgzNTIgMjAxLjI0IApMIDM0NS4zMzgzNTIgNzguMDQgCkwgMzM2LjMyMDE3IDc4LjA0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A0NDg1ZmZiMmMzKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQ7IG9wYWNpdHk6IDAuNSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8zNSI+CiAgICA8cGF0aCBkPSJNIDM0NS4zMzgzNTIgMjAxLjI0IApMIDM1NC4zNTY1MzQgMjAxLjI0IApMIDM1NC4zNTY1MzQgMTM5LjY0IApMIDM0NS4zMzgzNTIgMTM5LjY0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A0NDg1ZmZiMmMzKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQ7IG9wYWNpdHk6IDAuNSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8zNiI+CiAgICA8cGF0aCBkPSJNIDM1NC4zNTY1MzQgMjAxLjI0IApMIDM2My4zNzQ3MTYgMjAxLjI0IApMIDM2My4zNzQ3MTYgMjAxLjI0IApMIDM1NC4zNTY1MzQgMjAxLjI0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A0NDg1ZmZiMmMzKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQ7IG9wYWNpdHk6IDAuNSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8zNyI+CiAgICA8cGF0aCBkPSJNIDM2My4zNzQ3MTYgMjAxLjI0IApMIDM3Mi4zOTI4OTggMjAxLjI0IApMIDM3Mi4zOTI4OTggMjAxLjI0IApMIDM2My4zNzQ3MTYgMjAxLjI0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A0NDg1ZmZiMmMzKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQ7IG9wYWNpdHk6IDAuNSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8zOCI+CiAgICA8cGF0aCBkPSJNIDM3Mi4zOTI4OTggMjAxLjI0IApMIDM4MS40MTEwOCAyMDEuMjQgCkwgMzgxLjQxMTA4IDIwMS4yNCAKTCAzNzIuMzkyODk4IDIwMS4yNCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBvcGFjaXR5OiAwLjUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMzkiPgogICAgPHBhdGggZD0iTSAzODEuNDExMDggMjAxLjI0IApMIDM5MC40MjkyNjEgMjAxLjI0IApMIDM5MC40MjkyNjEgMjAxLjI0IApMIDM4MS40MTEwOCAyMDEuMjQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDQ0ODVmZmIyYzMpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgb3BhY2l0eTogMC41Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzQwIj4KICAgIDxwYXRoIGQ9Ik0gMzkwLjQyOTI2MSAyMDEuMjQgCkwgMzk5LjQ0NzQ0MyAyMDEuMjQgCkwgMzk5LjQ0NzQ0MyAyMDEuMjQgCkwgMzkwLjQyOTI2MSAyMDEuMjQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDQ0ODVmZmIyYzMpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgb3BhY2l0eTogMC41Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzQxIj4KICAgIDxwYXRoIGQ9Ik0gMzk5LjQ0NzQ0MyAyMDEuMjQgCkwgNDA4LjQ2NTYyNSAyMDEuMjQgCkwgNDA4LjQ2NTYyNSAyMDEuMjQgCkwgMzk5LjQ0NzQ0MyAyMDEuMjQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDQ0ODVmZmIyYzMpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgb3BhY2l0eTogMC41Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzQyIj4KICAgIDxwYXRoIGQ9Ik0gNDA4LjQ2NTYyNSAyMDEuMjQgCkwgNDE3LjQ4MzgwNyAyMDEuMjQgCkwgNDE3LjQ4MzgwNyAyMDEuMjQgCkwgNDA4LjQ2NTYyNSAyMDEuMjQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDQ0ODVmZmIyYzMpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgb3BhY2l0eTogMC41Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzQzIj4KICAgIDxwYXRoIGQ9Ik0gNDE3LjQ4MzgwNyAyMDEuMjQgCkwgNDI2LjUwMTk4OSAyMDEuMjQgCkwgNDI2LjUwMTk4OSAyMDEuMjQgCkwgNDE3LjQ4MzgwNyAyMDEuMjQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDQ0ODVmZmIyYzMpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgb3BhY2l0eTogMC41Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzQ0Ij4KICAgIDxwYXRoIGQ9Ik0gNDI2LjUwMTk4OSAyMDEuMjQgCkwgNDM1LjUyMDE3IDIwMS4yNCAKTCA0MzUuNTIwMTcgMjAxLjI0IApMIDQyNi41MDE5ODkgMjAxLjI0IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A0NDg1ZmZiMmMzKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQ7IG9wYWNpdHk6IDAuNSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF80NSI+CiAgICA8cGF0aCBkPSJNIDQzNS41MjAxNyAyMDEuMjQgCkwgNDQ0LjUzODM1MiAyMDEuMjQgCkwgNDQ0LjUzODM1MiAyMDEuMjQgCkwgNDM1LjUyMDE3IDIwMS4yNCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBvcGFjaXR5OiAwLjUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfNDYiPgogICAgPHBhdGggZD0iTSA0NDQuNTM4MzUyIDIwMS4yNCAKTCA0NTMuNTU2NTM0IDIwMS4yNCAKTCA0NTMuNTU2NTM0IDIwMS4yNCAKTCA0NDQuNTM4MzUyIDIwMS4yNCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBvcGFjaXR5OiAwLjUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfNDciPgogICAgPHBhdGggZD0iTSA0NTMuNTU2NTM0IDIwMS4yNCAKTCA0NjIuNTc0NzE2IDIwMS4yNCAKTCA0NjIuNTc0NzE2IDIwMS4yNCAKTCA0NTMuNTU2NTM0IDIwMS4yNCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBvcGFjaXR5OiAwLjUiLz4KICAgPC9nPgogICA8ZyBpZD0ibWF0cGxvdGxpYi5heGlzXzEiPgogICAgPGcgaWQ9Inh0aWNrXzEiPgogICAgIDxnIGlkPSJsaW5lMmRfMSI+CiAgICAgIDxkZWZzPgogICAgICAgPHBhdGggaWQ9Im1iYzk0MjhkNjY1IiBkPSJNIDAgMCAKTCAwIDMuNSAKIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2RlZnM+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWJjOTQyOGQ2NjUiIHg9IjEwNi4zNTY1MzQiIHk9IjIwMS4yNCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF8xIj4KICAgICAgPCEtLSAyMCAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTkuOTk0MDM0IDIxNS44Mzc2NTYpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8ZGVmcz4KICAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy0xNSIgZD0iTSAxMjI4IDUzMSAKTCAzNDMxIDUzMSAKTCAzNDMxIDAgCkwgNDY5IDAgCkwgNDY5IDUzMSAKUSA4MjggOTAzIDE0NDggMTUyOSAKUSAyMDY5IDIxNTYgMjIyOCAyMzM4IApRIDI1MzEgMjY3OCAyNjUxIDI5MTQgClEgMjc3MiAzMTUwIDI3NzIgMzM3OCAKUSAyNzcyIDM3NTAgMjUxMSAzOTg0IApRIDIyNTAgNDIxOSAxODMxIDQyMTkgClEgMTUzNCA0MjE5IDEyMDQgNDExNiAKUSA4NzUgNDAxMyA1MDAgMzgwMyAKTCA1MDAgNDQ0MSAKUSA4ODEgNDU5NCAxMjEyIDQ2NzIgClEgMTU0NCA0NzUwIDE4MTkgNDc1MCAKUSAyNTQ0IDQ3NTAgMjk3NSA0Mzg3IApRIDM0MDYgNDAyNSAzNDA2IDM0MTkgClEgMzQwNiAzMTMxIDMyOTggMjg3MyAKUSAzMTkxIDI2MTYgMjkwNiAyMjY2IApRIDI4MjggMjE3NSAyNDA5IDE3NDIgClEgMTk5MSAxMzA5IDEyMjggNTMxIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy0xMyIgZD0iTSAyMDM0IDQyNTAgClEgMTU0NyA0MjUwIDEzMDEgMzc3MCAKUSAxMDU2IDMyOTEgMTA1NiAyMzI4IApRIDEwNTYgMTM2OSAxMzAxIDg4OSAKUSAxNTQ3IDQwOSAyMDM0IDQwOSAKUSAyNTI1IDQwOSAyNzcwIDg4OSAKUSAzMDE2IDEzNjkgMzAxNiAyMzI4IApRIDMwMTYgMzI5MSAyNzcwIDM3NzAgClEgMjUyNSA0MjUwIDIwMzQgNDI1MCAKegpNIDIwMzQgNDc1MCAKUSAyODE5IDQ3NTAgMzIzMyA0MTI5IApRIDM2NDcgMzUwOSAzNjQ3IDIzMjggClEgMzY0NyAxMTUwIDMyMzMgNTI5IApRIDI4MTkgLTkxIDIwMzQgLTkxIApRIDEyNTAgLTkxIDgzNiA1MjkgClEgNDIyIDExNTAgNDIyIDIzMjggClEgNDIyIDM1MDkgODM2IDQxMjkgClEgMTI1MCA0NzUwIDIwMzQgNDc1MCAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8L2RlZnM+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE1Ii8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja18yIj4KICAgICA8ZyBpZD0ibGluZTJkXzIiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21iYzk0MjhkNjY1IiB4PSIxOTYuNTM4MzUyIiB5PSIyMDEuMjQiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMiI+CiAgICAgIDwhLS0gMzAgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE5MC4xNzU4NTIgMjE1LjgzNzY1Nikgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDxkZWZzPgogICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTE2IiBkPSJNIDI1OTcgMjUxNiAKUSAzMDUwIDI0MTkgMzMwNCAyMTEyIApRIDM1NTkgMTgwNiAzNTU5IDEzNTYgClEgMzU1OSA2NjYgMzA4NCAyODcgClEgMjYwOSAtOTEgMTczNCAtOTEgClEgMTQ0MSAtOTEgMTEzMCAtMzMgClEgODE5IDI1IDQ4OCAxNDEgCkwgNDg4IDc1MCAKUSA3NTAgNTk3IDEwNjIgNTE5IApRIDEzNzUgNDQxIDE3MTYgNDQxIApRIDIzMDkgNDQxIDI2MjAgNjc1IApRIDI5MzEgOTA5IDI5MzEgMTM1NiAKUSAyOTMxIDE3NjkgMjY0MiAyMDAxIApRIDIzNTMgMjIzNCAxODM4IDIyMzQgCkwgMTI5NCAyMjM0IApMIDEyOTQgMjc1MyAKTCAxODYzIDI3NTMgClEgMjMyOCAyNzUzIDI1NzUgMjkzOSAKUSAyODIyIDMxMjUgMjgyMiAzNDc1IApRIDI4MjIgMzgzNCAyNTY3IDQwMjYgClEgMjMxMyA0MjE5IDE4MzggNDIxOSAKUSAxNTc4IDQyMTkgMTI4MSA0MTYyIApRIDk4NCA0MTA2IDYyOCAzOTg4IApMIDYyOCA0NTUwIApRIDk4OCA0NjUwIDEzMDIgNDcwMCAKUSAxNjE2IDQ3NTAgMTg5NCA0NzUwIApRIDI2MTMgNDc1MCAzMDMxIDQ0MjMgClEgMzQ1MCA0MDk3IDM0NTAgMzU0MSAKUSAzNDUwIDMxNTMgMzIyOCAyODg2IApRIDMwMDYgMjYxOSAyNTk3IDI1MTYgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPC9kZWZzPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xNiIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjMuNjI1IDApIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieHRpY2tfMyI+CiAgICAgPGcgaWQ9ImxpbmUyZF8zIj4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYmM5NDI4ZDY2NSIgeD0iMjg2LjcyMDE3IiB5PSIyMDEuMjQiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMyI+CiAgICAgIDwhLS0gNDAgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI4MC4zNTc2NyAyMTUuODM3NjU2KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPGRlZnM+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtMTciIGQ9Ik0gMjQxOSA0MTE2IApMIDgyNSAxNjI1IApMIDI0MTkgMTYyNSAKTCAyNDE5IDQxMTYgCnoKTSAyMjUzIDQ2NjYgCkwgMzA0NyA0NjY2IApMIDMwNDcgMTYyNSAKTCAzNzEzIDE2MjUgCkwgMzcxMyAxMTAwIApMIDMwNDcgMTEwMCAKTCAzMDQ3IDAgCkwgMjQxOSAwIApMIDI0MTkgMTEwMCAKTCAzMTMgMTEwMCAKTCAzMTMgMTcwOSAKTCAyMjUzIDQ2NjYgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPC9kZWZzPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xNyIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjMuNjI1IDApIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieHRpY2tfNCI+CiAgICAgPGcgaWQ9ImxpbmUyZF80Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYmM5NDI4ZDY2NSIgeD0iMzc2LjkwMTk4OSIgeT0iMjAxLjI0IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzQiPgogICAgICA8IS0tIDUwIC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzNzAuNTM5NDg5IDIxNS44Mzc2NTYpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8ZGVmcz4KICAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy0xOCIgZD0iTSA2OTEgNDY2NiAKTCAzMTY5IDQ2NjYgCkwgMzE2OSA0MTM0IApMIDEyNjkgNDEzNCAKTCAxMjY5IDI5OTEgClEgMTQwNiAzMDM4IDE1NDMgMzA2MSAKUSAxNjgxIDMwODQgMTgxOSAzMDg0IApRIDI2MDAgMzA4NCAzMDU2IDI2NTYgClEgMzUxMyAyMjI4IDM1MTMgMTQ5NyAKUSAzNTEzIDc0NCAzMDQ0IDMyNiAKUSAyNTc1IC05MSAxNzIyIC05MSAKUSAxNDI4IC05MSAxMTIzIC00MSAKUSA4MTkgOSA0OTQgMTA5IApMIDQ5NCA3NDQgClEgNzc1IDU5MSAxMDc1IDUxNiAKUSAxMzc1IDQ0MSAxNzA5IDQ0MSAKUSAyMjUwIDQ0MSAyNTY1IDcyNSAKUSAyODgxIDEwMDkgMjg4MSAxNDk3IApRIDI4ODEgMTk4NCAyNTY1IDIyNjggClEgMjI1MCAyNTUzIDE3MDkgMjU1MyAKUSAxNDU2IDI1NTMgMTIwNCAyNDk3IApRIDk1MyAyNDQxIDY5MSAyMzIyIApMIDY5MSA0NjY2IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDwvZGVmcz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTgiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzLjYyNSAwKSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inh0aWNrXzUiPgogICAgIDxnIGlkPSJsaW5lMmRfNSI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWJjOTQyOGQ2NjUiIHg9IjQ2Ny4wODM4MDciIHk9IjIwMS4yNCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF81Ij4KICAgICAgPCEtLSA2MCAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDYwLjcyMTMwNyAyMTUuODM3NjU2KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPGRlZnM+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtMTkiIGQ9Ik0gMjExMyAyNTg0IApRIDE2ODggMjU4NCAxNDM5IDIyOTMgClEgMTE5MSAyMDAzIDExOTEgMTQ5NyAKUSAxMTkxIDk5NCAxNDM5IDcwMSAKUSAxNjg4IDQwOSAyMTEzIDQwOSAKUSAyNTM4IDQwOSAyNzg2IDcwMSAKUSAzMDM0IDk5NCAzMDM0IDE0OTcgClEgMzAzNCAyMDAzIDI3ODYgMjI5MyAKUSAyNTM4IDI1ODQgMjExMyAyNTg0IAp6Ck0gMzM2NiA0NTYzIApMIDMzNjYgMzk4OCAKUSAzMTI4IDQxMDAgMjg4NiA0MTU5IApRIDI2NDQgNDIxOSAyNDA2IDQyMTkgClEgMTc4MSA0MjE5IDE0NTEgMzc5NyAKUSAxMTIyIDMzNzUgMTA3NSAyNTIyIApRIDEyNTkgMjc5NCAxNTM3IDI5MzkgClEgMTgxNiAzMDg0IDIxNTAgMzA4NCAKUSAyODUzIDMwODQgMzI2MSAyNjU3IApRIDM2NjkgMjIzMSAzNjY5IDE0OTcgClEgMzY2OSA3NzggMzI0NCAzNDMgClEgMjgxOSAtOTEgMjExMyAtOTEgClEgMTMwMyAtOTEgODc1IDUyOSAKUSA0NDcgMTE1MCA0NDcgMjMyOCAKUSA0NDcgMzQzNCA5NzIgNDA5MiAKUSAxNDk3IDQ3NTAgMjM4MSA0NzUwIApRIDI2MTkgNDc1MCAyODYxIDQ3MDMgClEgMzEwMyA0NjU2IDMzNjYgNDU2MyAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8L2RlZnM+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE5Ii8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ0ZXh0XzYiPgogICAgIDwhLS0gdmVudGFzIGVuIHVuIGTDrWEgLS0+CiAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3Ljg1NDY4NyAyMzAuMjM4NDM4KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICA8ZGVmcz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTU5IiBkPSJNIDE5MSAzNTAwIApMIDgwMCAzNTAwIApMIDE4OTQgNTYzIApMIDI5ODggMzUwMCAKTCAzNTk3IDM1MDAgCkwgMjI4NCAwIApMIDE1MDMgMCAKTCAxOTEgMzUwMCAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy00OCIgZD0iTSAzNTk3IDE4OTQgCkwgMzU5NyAxNjEzIApMIDk1MyAxNjEzIApRIDk5MSAxMDE5IDEzMTEgNzA4IApRIDE2MzEgMzk3IDIyMDMgMzk3IApRIDI1MzQgMzk3IDI4NDUgNDc4IApRIDMxNTYgNTU5IDM0NjMgNzIyIApMIDM0NjMgMTc4IApRIDMxNTMgNDcgMjgyOCAtMjIgClEgMjUwMyAtOTEgMjE2OSAtOTEgClEgMTMzMSAtOTEgODQyIDM5NiAKUSAzNTMgODg0IDM1MyAxNzE2IApRIDM1MyAyNTc1IDgxNyAzMDc5IApRIDEyODEgMzU4NCAyMDY5IDM1ODQgClEgMjc3NSAzNTg0IDMxODYgMzEyOSAKUSAzNTk3IDI2NzUgMzU5NyAxODk0IAp6Ck0gMzAyMiAyMDYzIApRIDMwMTYgMjUzNCAyNzU4IDI4MTUgClEgMjUwMCAzMDk3IDIwNzUgMzA5NyAKUSAxNTk0IDMwOTcgMTMwNSAyODI1IApRIDEwMTYgMjU1MyA5NzIgMjA1OSAKTCAzMDIyIDIwNjMgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtNTEiIGQ9Ik0gMzUxMyAyMTEzIApMIDM1MTMgMCAKTCAyOTM4IDAgCkwgMjkzOCAyMDk0IApRIDI5MzggMjU5MSAyNzQ0IDI4MzcgClEgMjU1MCAzMDg0IDIxNjMgMzA4NCAKUSAxNjk3IDMwODQgMTQyOCAyNzg3IApRIDExNTkgMjQ5MSAxMTU5IDE5NzggCkwgMTE1OSAwIApMIDU4MSAwIApMIDU4MSAzNTAwIApMIDExNTkgMzUwMCAKTCAxMTU5IDI5NTYgClEgMTM2NiAzMjcyIDE2NDUgMzQyOCAKUSAxOTI1IDM1ODQgMjI5MSAzNTg0IApRIDI4OTQgMzU4NCAzMjAzIDMyMTEgClEgMzUxMyAyODM4IDM1MTMgMjExMyAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy01NyIgZD0iTSAxMTcyIDQ0OTQgCkwgMTE3MiAzNTAwIApMIDIzNTYgMzUwMCAKTCAyMzU2IDMwNTMgCkwgMTE3MiAzMDUzIApMIDExNzIgMTE1MyAKUSAxMTcyIDcyNSAxMjg5IDYwMyAKUSAxNDA2IDQ4MSAxNzY2IDQ4MSAKTCAyMzU2IDQ4MSAKTCAyMzU2IDAgCkwgMTc2NiAwIApRIDExMDAgMCA4NDcgMjQ4IApRIDU5NCA0OTcgNTk0IDExNTMgCkwgNTk0IDMwNTMgCkwgMTcyIDMwNTMgCkwgMTcyIDM1MDAgCkwgNTk0IDM1MDAgCkwgNTk0IDQ0OTQgCkwgMTE3MiA0NDk0IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTQ0IiBkPSJNIDIxOTQgMTc1OSAKUSAxNDk3IDE3NTkgMTIyOCAxNjAwIApRIDk1OSAxNDQxIDk1OSAxMDU2IApRIDk1OSA3NTAgMTE2MSA1NzAgClEgMTM2MyAzOTEgMTcwOSAzOTEgClEgMjE4OCAzOTEgMjQ3NyA3MzAgClEgMjc2NiAxMDY5IDI3NjYgMTYzMSAKTCAyNzY2IDE3NTkgCkwgMjE5NCAxNzU5IAp6Ck0gMzM0MSAxOTk3IApMIDMzNDEgMCAKTCAyNzY2IDAgCkwgMjc2NiA1MzEgClEgMjU2OSAyMTMgMjI3NSA2MSAKUSAxOTgxIC05MSAxNTU2IC05MSAKUSAxMDE5IC05MSA3MDEgMjExIApRIDM4NCA1MTMgMzg0IDEwMTkgClEgMzg0IDE2MDkgNzc5IDE5MDkgClEgMTE3NSAyMjA5IDE5NTkgMjIwOSAKTCAyNzY2IDIyMDkgCkwgMjc2NiAyMjY2IApRIDI3NjYgMjY2MyAyNTA1IDI4ODAgClEgMjI0NCAzMDk3IDE3NzIgMzA5NyAKUSAxNDcyIDMwOTcgMTE4NyAzMDI1IApRIDkwMyAyOTUzIDY0MSAyODA5IApMIDY0MSAzMzQxIApRIDk1NiAzNDYzIDEyNTMgMzUyMyAKUSAxNTUwIDM1ODQgMTgzMSAzNTg0IApRIDI1OTEgMzU4NCAyOTY2IDMxOTAgClEgMzM0MSAyNzk3IDMzNDEgMTk5NyAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy01NiIgZD0iTSAyODM0IDMzOTcgCkwgMjgzNCAyODUzIApRIDI1OTEgMjk3OCAyMzI4IDMwNDAgClEgMjA2NiAzMTAzIDE3ODQgMzEwMyAKUSAxMzU2IDMxMDMgMTE0MiAyOTcyIApRIDkyOCAyODQxIDkyOCAyNTc4IApRIDkyOCAyMzc4IDEwODEgMjI2NCAKUSAxMjM0IDIxNTAgMTY5NyAyMDQ3IApMIDE4OTQgMjAwMyAKUSAyNTA2IDE4NzIgMjc2NCAxNjMzIApRIDMwMjIgMTM5NCAzMDIyIDk2NiAKUSAzMDIyIDQ3OCAyNjM2IDE5MyAKUSAyMjUwIC05MSAxNTc1IC05MSAKUSAxMjk0IC05MSA5ODkgLTM2IApRIDY4NCAxOSAzNDcgMTI4IApMIDM0NyA3MjIgClEgNjY2IDU1NiA5NzUgNDczIApRIDEyODQgMzkxIDE1ODggMzkxIApRIDE5OTQgMzkxIDIyMTIgNTMwIApRIDI0MzEgNjY5IDI0MzEgOTIyIApRIDI0MzEgMTE1NiAyMjczIDEyODEgClEgMjExNiAxNDA2IDE1ODEgMTUyMiAKTCAxMzgxIDE1NjkgClEgODQ3IDE2ODEgNjA5IDE5MTQgClEgMzcyIDIxNDcgMzcyIDI1NTMgClEgMzcyIDMwNDcgNzIyIDMzMTUgClEgMTA3MiAzNTg0IDE3MTYgMzU4NCAKUSAyMDM0IDM1ODQgMjMxNSAzNTM3IApRIDI1OTcgMzQ5MSAyODM0IDMzOTcgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtMyIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTU4IiBkPSJNIDU0NCAxMzgxIApMIDU0NCAzNTAwIApMIDExMTkgMzUwMCAKTCAxMTE5IDE0MDMgClEgMTExOSA5MDYgMTMxMiA2NTcgClEgMTUwNiA0MDkgMTg5NCA0MDkgClEgMjM1OSA0MDkgMjYyOSA3MDYgClEgMjkwMCAxMDAzIDI5MDAgMTUxNiAKTCAyOTAwIDM1MDAgCkwgMzQ3NSAzNTAwIApMIDM0NzUgMCAKTCAyOTAwIDAgCkwgMjkwMCA1MzggClEgMjY5MSAyMTkgMjQxNCA2NCAKUSAyMTM4IC05MSAxNzcyIC05MSAKUSAxMTY5IC05MSA4NTYgMjg0IApRIDU0NCA2NTkgNTQ0IDEzODEgCnoKTSAxOTkxIDM1ODQgCkwgMTk5MSAzNTg0IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTQ3IiBkPSJNIDI5MDYgMjk2OSAKTCAyOTA2IDQ4NjMgCkwgMzQ4MSA0ODYzIApMIDM0ODEgMCAKTCAyOTA2IDAgCkwgMjkwNiA1MjUgClEgMjcyNSAyMTMgMjQ0OCA2MSAKUSAyMTcyIC05MSAxNzg0IC05MSAKUSAxMTUwIC05MSA3NTEgNDE1IApRIDM1MyA5MjIgMzUzIDE3NDcgClEgMzUzIDI1NzIgNzUxIDMwNzggClEgMTE1MCAzNTg0IDE3ODQgMzU4NCAKUSAyMTcyIDM1ODQgMjQ0OCAzNDMyIApRIDI3MjUgMzI4MSAyOTA2IDI5NjkgCnoKTSA5NDcgMTc0NyAKUSA5NDcgMTExMyAxMjA4IDc1MiAKUSAxNDY5IDM5MSAxOTI1IDM5MSAKUSAyMzgxIDM5MSAyNjQzIDc1MiAKUSAyOTA2IDExMTMgMjkwNiAxNzQ3IApRIDI5MDYgMjM4MSAyNjQzIDI3NDIgClEgMjM4MSAzMTAzIDE5MjUgMzEwMyAKUSAxNDY5IDMxMDMgMTIwOCAyNzQyIApRIDk0NyAyMzgxIDk0NyAxNzQ3IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLWFmIiBkPSJNIDEzMjUgNTExOSAKTCAxOTQ3IDUxMTkgCkwgOTI5IDM5NDQgCkwgNDUwIDM5NDQgCkwgMTMyNSA1MTE5IAp6Ck0gNjAzIDM1MDAgCkwgMTE3OCAzNTAwIApMIDExNzggMCAKTCA2MDMgMCAKTCA2MDMgMzUwMCAKegpNIDg5MSAzNTg0IApMIDg5MSAzNTg0IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgPC9kZWZzPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU5Ii8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDU5LjE4NzUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTIwLjcxODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE4NC4wOTM3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ0IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMjMuMjk2ODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI4NC41NzgxMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMzYuNjcxODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM2OC40NTMxMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDI5Ljk4NDM3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQ5My4zNTkzNzUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTI1LjE0MDYyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTUxIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1ODguNTE1NjI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjUxLjg5MDYyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ3IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2ODMuNjcxODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtYWYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDc0Ny4xNTYyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ0IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3NzQuOTM3NSAwKSIvPgogICAgIDwvZz4KICAgIDwvZz4KICAgPC9nPgogICA8ZyBpZD0ibWF0cGxvdGxpYi5heGlzXzIiPgogICAgPGcgaWQ9Inl0aWNrXzEiPgogICAgIDxnIGlkPSJsaW5lMmRfNiI+CiAgICAgIDxkZWZzPgogICAgICAgPHBhdGggaWQ9Im1jNTI1OTBmNmYzIiBkPSJNIDAgMCAKTCAtMy41IDAgCiIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9kZWZzPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21jNTI1OTBmNmYzIiB4PSIzNi40NjU2MjUiIHk9IjIwMS4yNCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF83Ij4KICAgICAgPCEtLSAwLjAwIC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3LjIgMjA1LjAzODgyOCkgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDxkZWZzPgogICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTExIiBkPSJNIDY4NCA3OTQgCkwgMTM0NCA3OTQgCkwgMTM0NCAwIApMIDY4NCAwIApMIDY4NCA3OTQgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPC9kZWZzPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjMuNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5NS40MDYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTU5LjAzMTI1IDApIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfMiI+CiAgICAgPGcgaWQ9ImxpbmUyZF83Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iMzYuNDY1NjI1IiB5PSIxNjQuMjgiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfOCI+CiAgICAgIDwhLS0gMC4wMiAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNy4yIDE2OC4wNzg4MjgpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQwNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja18zIj4KICAgICA8ZyBpZD0ibGluZTJkXzgiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21jNTI1OTBmNmYzIiB4PSIzNi40NjU2MjUiIHk9IjEyNy4zMiIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF85Ij4KICAgICAgPCEtLSAwLjA0IC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3LjIgMTMxLjExODgyOCkgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzLjYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTUuNDA2MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1OS4wMzEyNSAwKSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inl0aWNrXzQiPgogICAgIDxnIGlkPSJsaW5lMmRfOSI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWM1MjU5MGY2ZjMiIHg9IjM2LjQ2NTYyNSIgeT0iOTAuMzYiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTAiPgogICAgICA8IS0tIDAuMDYgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcuMiA5NC4xNTg4MjgpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQwNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE5IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja181Ij4KICAgICA8ZyBpZD0ibGluZTJkXzEwIj4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iMzYuNDY1NjI1IiB5PSI1My40IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzExIj4KICAgICAgPCEtLSAwLjA4IC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3LjIgNTcuMTk4ODI4KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPGRlZnM+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtMWIiIGQ9Ik0gMjAzNCAyMjE2IApRIDE1ODQgMjIxNiAxMzI2IDE5NzUgClEgMTA2OSAxNzM0IDEwNjkgMTMxMyAKUSAxMDY5IDg5MSAxMzI2IDY1MCAKUSAxNTg0IDQwOSAyMDM0IDQwOSAKUSAyNDg0IDQwOSAyNzQzIDY1MSAKUSAzMDAzIDg5NCAzMDAzIDEzMTMgClEgMzAwMyAxNzM0IDI3NDUgMTk3NSAKUSAyNDg4IDIyMTYgMjAzNCAyMjE2IAp6Ck0gMTQwMyAyNDg0IApRIDk5NyAyNTg0IDc3MCAyODYyIApRIDU0NCAzMTQxIDU0NCAzNTQxIApRIDU0NCA0MTAwIDk0MiA0NDI1IApRIDEzNDEgNDc1MCAyMDM0IDQ3NTAgClEgMjczMSA0NzUwIDMxMjggNDQyNSAKUSAzNTI1IDQxMDAgMzUyNSAzNTQxIApRIDM1MjUgMzE0MSAzMjk4IDI4NjIgClEgMzA3MiAyNTg0IDI2NjkgMjQ4NCAKUSAzMTI1IDIzNzggMzM3OSAyMDY4IApRIDM2MzQgMTc1OSAzNjM0IDEzMTMgClEgMzYzNCA2MzQgMzIyMCAyNzEgClEgMjgwNiAtOTEgMjAzNCAtOTEgClEgMTI2MyAtOTEgODQ4IDI3MSAKUSA0MzQgNjM0IDQzNCAxMzEzIApRIDQzNCAxNzU5IDY5MCAyMDY4IApRIDk0NyAyMzc4IDE0MDMgMjQ4NCAKegpNIDExNzIgMzQ4MSAKUSAxMTcyIDMxMTkgMTM5OCAyOTE2IApRIDE2MjUgMjcxMyAyMDM0IDI3MTMgClEgMjQ0MSAyNzEzIDI2NzAgMjkxNiAKUSAyOTAwIDMxMTkgMjkwMCAzNDgxIApRIDI5MDAgMzg0NCAyNjcwIDQwNDcgClEgMjQ0MSA0MjUwIDIwMzQgNDI1MCAKUSAxNjI1IDQyNTAgMTM5OCA0MDQ3IApRIDExNzIgMzg0NCAxMTcyIDM0ODEgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPC9kZWZzPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjMuNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5NS40MDYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xYiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTU5LjAzMTI1IDApIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfNiI+CiAgICAgPGcgaWQ9ImxpbmUyZF8xMSI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWM1MjU5MGY2ZjMiIHg9IjM2LjQ2NTYyNSIgeT0iMTYuNDQiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTIiPgogICAgICA8IS0tIDAuMTAgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcuMiAyMC4yMzg4MjgpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8ZGVmcz4KICAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy0xNCIgZD0iTSA3OTQgNTMxIApMIDE4MjUgNTMxIApMIDE4MjUgNDA5MSAKTCA3MDMgMzg2NiAKTCA3MDMgNDQ0MSAKTCAxODE5IDQ2NjYgCkwgMjQ1MCA0NjY2IApMIDI0NTAgNTMxIApMIDM0ODEgNTMxIApMIDM0ODEgMCAKTCA3OTQgMCAKTCA3OTQgNTMxIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDwvZGVmcz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzLjYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xNCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTUuNDA2MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1OS4wMzEyNSAwKSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICA8L2c+CiAgIDxnIGlkPSJsaW5lMmRfMTIiPgogICAgPHBhdGggZD0iTSA2MS4yNjU2MjUgMjAxLjIwNTY5NCAKTCA3MC4yODM4MDcgMjAxLjE1ODE5MSAKTCA3OS4zMDE5ODkgMjAxLjA1Njc2MyAKTCA4OC4zMjAxNyAyMDAuODUzMTg1IApMIDk3LjMzODM1MiAyMDAuNDY4MDA5IApMIDEwNi4zNTY1MzQgMTk5Ljc3OTM2MyAKTCAxMTUuMzc0NzE2IDE5OC42MTM0ODkgCkwgMTI0LjM5Mjg5OCAxOTYuNzQxMDkxIApMIDEzMy40MTEwOCAxOTMuODg0MzI4IApMIDE0Mi40MjkyNjEgMTg5LjczODc2MiAKTCAxNTEuNDQ3NDQzIDE4NC4wMTIzMjYgCkwgMTYwLjQ2NTYyNSAxNzYuNDc5MzUyIApMIDE2OS40ODM4MDcgMTY3LjA0MjcxMSAKTCAxNzguNTAxOTg5IDE1NS43OTI1MTIgCkwgMTg3LjUyMDE3IDE0My4wNDcyMzYgCkwgMTk2LjUzODM1MiAxMjkuMzY0MDI4IApMIDIwNS41NTY1MzQgMTE1LjUwOTU3MiAKTCAyMTQuNTc0NzE2IDEwMi4zOTA4NDcgCkwgMjIzLjU5Mjg5OCA5MC45NTQxMDcgCkwgMjMyLjYxMTA4IDgyLjA2ODMzIApMIDI0MS42MjkyNjEgNzYuNDEzNzMgCkwgMjUwLjY0NzQ0MyA3NC4zOTU1MjkgCkwgMjU5LjY2NTYyNSA3Ni4wOTgwNTYgCkwgMjY4LjY4MzgwNyA4MS4yODU4MiAKTCAyNzcuNzAxOTg5IDg5LjQ0ODczOSAKTCAyODYuNzIwMTcgOTkuODgwNjM0IApMIDI5NS43MzgzNTIgMTExLjc3NTA0MyAKTCAzMDQuNzU2NTM0IDEyNC4zMjEzODYgCkwgMzEzLjc3NDcxNiAxMzYuNzg2OTM2IApMIDMyMi43OTI4OTggMTQ4LjU3NDk4OCAKTCAzMzEuODExMDggMTU5LjI1NTQzOSAKTCAzNDAuODI5MjYxIDE2OC41NjkzMTIgCkwgMzQ5Ljg0NzQ0MyAxNzYuNDEyNTkzIApMIDM1OC44NjU2MjUgMTgyLjgwNjY4NiAKTCAzNjcuODgzODA3IDE4Ny44NjI5MzQgCkwgMzc2LjkwMTk4OSAxOTEuNzQ3NDU4IApMIDM4NS45MjAxNyAxOTQuNjUwNjkgCkwgMzk0LjkzODM1MiAxOTYuNzYzOTE4IApMIDQwMy45NTY1MzQgMTk4LjI2MzQzNiAKTCA0MTIuOTc0NzE2IDE5OS4zMDE1OTcgCkwgNDIxLjk5Mjg5OCAyMDAuMDAzMzk0IApMIDQzMS4wMTEwOCAyMDAuNDY2OTMxIApMIDQ0MC4wMjkyNjEgMjAwLjc2NjI1OCAKTCA0NDkuMDQ3NDQzIDIwMC45NTUzMzYgCkwgNDU4LjA2NTYyNSAyMDEuMDcyMjI5IAoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgICA8ZGVmcz4KICAgICA8cGF0aCBpZD0ibTM0MzU4MzkxYmYiIGQ9Ik0gMCAxLjUgCkMgMC4zOTc4MDUgMS41IDAuNzc5MzcgMS4zNDE5NTEgMS4wNjA2NiAxLjA2MDY2IApDIDEuMzQxOTUxIDAuNzc5MzcgMS41IDAuMzk3ODA1IDEuNSAwIApDIDEuNSAtMC4zOTc4MDUgMS4zNDE5NTEgLTAuNzc5MzcgMS4wNjA2NiAtMS4wNjA2NiAKQyAwLjc3OTM3IC0xLjM0MTk1MSAwLjM5NzgwNSAtMS41IDAgLTEuNSAKQyAtMC4zOTc4MDUgLTEuNSAtMC43NzkzNyAtMS4zNDE5NTEgLTEuMDYwNjYgLTEuMDYwNjYgCkMgLTEuMzQxOTUxIC0wLjc3OTM3IC0xLjUgLTAuMzk3ODA1IC0xLjUgMCAKQyAtMS41IDAuMzk3ODA1IC0xLjM0MTk1MSAwLjc3OTM3IC0xLjA2MDY2IDEuMDYwNjYgCkMgLTAuNzc5MzcgMS4zNDE5NTEgLTAuMzk3ODA1IDEuNSAwIDEuNSAKegoiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgIDwvZGVmcz4KICAgIDxnIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20zNDM1ODM5MWJmIiB4PSI2MS4yNjU2MjUiIHk9IjIwMS4yMDU2OTQiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iNzAuMjgzODA3IiB5PSIyMDEuMTU4MTkxIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTM0MzU4MzkxYmYiIHg9Ijc5LjMwMTk4OSIgeT0iMjAxLjA1Njc2MyIgc3R5bGU9InN0cm9rZTogIzAwMDAwMCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20zNDM1ODM5MWJmIiB4PSI4OC4zMjAxNyIgeT0iMjAwLjg1MzE4NSIgc3R5bGU9InN0cm9rZTogIzAwMDAwMCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20zNDM1ODM5MWJmIiB4PSI5Ny4zMzgzNTIiIHk9IjIwMC40NjgwMDkiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iMTA2LjM1NjUzNCIgeT0iMTk5Ljc3OTM2MyIgc3R5bGU9InN0cm9rZTogIzAwMDAwMCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20zNDM1ODM5MWJmIiB4PSIxMTUuMzc0NzE2IiB5PSIxOTguNjEzNDg5IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTM0MzU4MzkxYmYiIHg9IjEyNC4zOTI4OTgiIHk9IjE5Ni43NDEwOTEiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iMTMzLjQxMTA4IiB5PSIxOTMuODg0MzI4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTM0MzU4MzkxYmYiIHg9IjE0Mi40MjkyNjEiIHk9IjE4OS43Mzg3NjIiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iMTUxLjQ0NzQ0MyIgeT0iMTg0LjAxMjMyNiIgc3R5bGU9InN0cm9rZTogIzAwMDAwMCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20zNDM1ODM5MWJmIiB4PSIxNjAuNDY1NjI1IiB5PSIxNzYuNDc5MzUyIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTM0MzU4MzkxYmYiIHg9IjE2OS40ODM4MDciIHk9IjE2Ny4wNDI3MTEiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iMTc4LjUwMTk4OSIgeT0iMTU1Ljc5MjUxMiIgc3R5bGU9InN0cm9rZTogIzAwMDAwMCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20zNDM1ODM5MWJmIiB4PSIxODcuNTIwMTciIHk9IjE0My4wNDcyMzYiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iMTk2LjUzODM1MiIgeT0iMTI5LjM2NDAyOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20zNDM1ODM5MWJmIiB4PSIyMDUuNTU2NTM0IiB5PSIxMTUuNTA5NTcyIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTM0MzU4MzkxYmYiIHg9IjIxNC41NzQ3MTYiIHk9IjEwMi4zOTA4NDciIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iMjIzLjU5Mjg5OCIgeT0iOTAuOTU0MTA3IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTM0MzU4MzkxYmYiIHg9IjIzMi42MTEwOCIgeT0iODIuMDY4MzMiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iMjQxLjYyOTI2MSIgeT0iNzYuNDEzNzMiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iMjUwLjY0NzQ0MyIgeT0iNzQuMzk1NTI5IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTM0MzU4MzkxYmYiIHg9IjI1OS42NjU2MjUiIHk9Ijc2LjA5ODA1NiIgc3R5bGU9InN0cm9rZTogIzAwMDAwMCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20zNDM1ODM5MWJmIiB4PSIyNjguNjgzODA3IiB5PSI4MS4yODU4MiIgc3R5bGU9InN0cm9rZTogIzAwMDAwMCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20zNDM1ODM5MWJmIiB4PSIyNzcuNzAxOTg5IiB5PSI4OS40NDg3MzkiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iMjg2LjcyMDE3IiB5PSI5OS44ODA2MzQiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iMjk1LjczODM1MiIgeT0iMTExLjc3NTA0MyIgc3R5bGU9InN0cm9rZTogIzAwMDAwMCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20zNDM1ODM5MWJmIiB4PSIzMDQuNzU2NTM0IiB5PSIxMjQuMzIxMzg2IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTM0MzU4MzkxYmYiIHg9IjMxMy43NzQ3MTYiIHk9IjEzNi43ODY5MzYiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iMzIyLjc5Mjg5OCIgeT0iMTQ4LjU3NDk4OCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20zNDM1ODM5MWJmIiB4PSIzMzEuODExMDgiIHk9IjE1OS4yNTU0MzkiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iMzQwLjgyOTI2MSIgeT0iMTY4LjU2OTMxMiIgc3R5bGU9InN0cm9rZTogIzAwMDAwMCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20zNDM1ODM5MWJmIiB4PSIzNDkuODQ3NDQzIiB5PSIxNzYuNDEyNTkzIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTM0MzU4MzkxYmYiIHg9IjM1OC44NjU2MjUiIHk9IjE4Mi44MDY2ODYiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iMzY3Ljg4MzgwNyIgeT0iMTg3Ljg2MjkzNCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20zNDM1ODM5MWJmIiB4PSIzNzYuOTAxOTg5IiB5PSIxOTEuNzQ3NDU4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTM0MzU4MzkxYmYiIHg9IjM4NS45MjAxNyIgeT0iMTk0LjY1MDY5IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTM0MzU4MzkxYmYiIHg9IjM5NC45MzgzNTIiIHk9IjE5Ni43NjM5MTgiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iNDAzLjk1NjUzNCIgeT0iMTk4LjI2MzQzNiIgc3R5bGU9InN0cm9rZTogIzAwMDAwMCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20zNDM1ODM5MWJmIiB4PSI0MTIuOTc0NzE2IiB5PSIxOTkuMzAxNTk3IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTM0MzU4MzkxYmYiIHg9IjQyMS45OTI4OTgiIHk9IjIwMC4wMDMzOTQiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iNDMxLjAxMTA4IiB5PSIyMDAuNDY2OTMxIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTM0MzU4MzkxYmYiIHg9IjQ0MC4wMjkyNjEiIHk9IjIwMC43NjYyNTgiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iNDQ5LjA0NzQ0MyIgeT0iMjAwLjk1NTMzNiIgc3R5bGU9InN0cm9rZTogIzAwMDAwMCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20zNDM1ODM5MWJmIiB4PSI0NTguMDY1NjI1IiB5PSIyMDEuMDcyMjI5IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwIi8+CiAgICA8L2c+CiAgIDwvZz4KICAgPGcgaWQ9ImxpbmUyZF8xMyI+CiAgICA8cGF0aCBkPSJNIDE5Mi4wMjkyNjEgMjAxLjI0IApMIDE5Mi4wMjkyNjEgNy4yIAoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2UtZGFzaGFycmF5OiA1LjU1LDIuNDsgc3Ryb2tlLWRhc2hvZmZzZXQ6IDA7IHN0cm9rZTogI2Q2MjcyODsgc3Ryb2tlLXdpZHRoOiAxLjUiLz4KICAgPC9nPgogICA8ZyBpZD0ibGluZTJkXzE0Ij4KICAgIDxwYXRoIGQ9Ik0gMzM2LjMyMDE3IDIwMS4yNCAKTCAzMzYuMzIwMTcgNy4yIAoiIGNsaXAtcGF0aD0idXJsKCNwNDQ4NWZmYjJjMykiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2UtZGFzaGFycmF5OiA1LjU1LDIuNDsgc3Ryb2tlLWRhc2hvZmZzZXQ6IDA7IHN0cm9rZTogI2ZmN2YwZTsgc3Ryb2tlLXdpZHRoOiAxLjUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfNDgiPgogICAgPHBhdGggZD0iTSAzNi40NjU2MjUgMjAxLjI0IApMIDM2LjQ2NTYyNSA3LjIgCiIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjg7IHN0cm9rZS1saW5lam9pbjogbWl0ZXI7IHN0cm9rZS1saW5lY2FwOiBzcXVhcmUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfNDkiPgogICAgPHBhdGggZD0iTSAzNi40NjU2MjUgMjAxLjI0IApMIDQ4Mi44NjU2MjUgMjAxLjI0IAoiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44OyBzdHJva2UtbGluZWpvaW46IG1pdGVyOyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgIDwvZz4KICAgPGcgaWQ9ImxlZ2VuZF8xIj4KICAgIDxnIGlkPSJwYXRjaF81MCI+CiAgICAgPHBhdGggZD0iTSAzNDYuNjU2MjUgNDYuMDAxNTYzIApMIDQ3NS44NjU2MjUgNDYuMDAxNTYzIApRIDQ3Ny44NjU2MjUgNDYuMDAxNTYzIDQ3Ny44NjU2MjUgNDQuMDAxNTYzIApMIDQ3Ny44NjU2MjUgMTQuMiAKUSA0NzcuODY1NjI1IDEyLjIgNDc1Ljg2NTYyNSAxMi4yIApMIDM0Ni42NTYyNSAxMi4yIApRIDM0NC42NTYyNSAxMi4yIDM0NC42NTYyNSAxNC4yIApMIDM0NC42NTYyNSA0NC4wMDE1NjMgClEgMzQ0LjY1NjI1IDQ2LjAwMTU2MyAzNDYuNjU2MjUgNDYuMDAxNTYzIAp6CiIgc3R5bGU9ImZpbGw6ICNmZmZmZmY7IG9wYWNpdHk6IDAuODsgc3Ryb2tlOiAjY2NjY2NjOyBzdHJva2UtbGluZWpvaW46IG1pdGVyIi8+CiAgICA8L2c+CiAgICA8ZyBpZD0icGF0Y2hfNTEiPgogICAgIDxwYXRoIGQ9Ik0gMzQ4LjY1NjI1IDI0LjE5ODQzOCAKTCAzNjguNjU2MjUgMjQuMTk4NDM4IApMIDM2OC42NTYyNSAxNy4xOTg0MzggCkwgMzQ4LjY1NjI1IDE3LjE5ODQzOCAKegoiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBvcGFjaXR5OiAwLjUiLz4KICAgIDwvZz4KICAgIDxnIGlkPSJ0ZXh0XzEzIj4KICAgICA8IS0tIDMwIGTDrWFzIG9ic2VydmFkb3MgLS0+CiAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzc2LjY1NjI1IDI0LjE5ODQzOCkgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgPGRlZnM+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy01MiIgZD0iTSAxOTU5IDMwOTcgClEgMTQ5NyAzMDk3IDEyMjggMjczNiAKUSA5NTkgMjM3NSA5NTkgMTc0NyAKUSA5NTkgMTExOSAxMjI2IDc1OCAKUSAxNDk0IDM5NyAxOTU5IDM5NyAKUSAyNDE5IDM5NyAyNjg3IDc1OSAKUSAyOTU2IDExMjIgMjk1NiAxNzQ3IApRIDI5NTYgMjM2OSAyNjg3IDI3MzMgClEgMjQxOSAzMDk3IDE5NTkgMzA5NyAKegpNIDE5NTkgMzU4NCAKUSAyNzA5IDM1ODQgMzEzNyAzMDk2IApRIDM1NjYgMjYwOSAzNTY2IDE3NDcgClEgMzU2NiA4ODggMzEzNyAzOTggClEgMjcwOSAtOTEgMTk1OSAtOTEgClEgMTIwNiAtOTEgNzc5IDM5OCAKUSAzNTMgODg4IDM1MyAxNzQ3IApRIDM1MyAyNjA5IDc3OSAzMDk2IApRIDEyMDYgMzU4NCAxOTU5IDM1ODQgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtNDUiIGQ9Ik0gMzExNiAxNzQ3IApRIDMxMTYgMjM4MSAyODU1IDI3NDIgClEgMjU5NCAzMTAzIDIxMzggMzEwMyAKUSAxNjgxIDMxMDMgMTQyMCAyNzQyIApRIDExNTkgMjM4MSAxMTU5IDE3NDcgClEgMTE1OSAxMTEzIDE0MjAgNzUyIApRIDE2ODEgMzkxIDIxMzggMzkxIApRIDI1OTQgMzkxIDI4NTUgNzUyIApRIDMxMTYgMTExMyAzMTE2IDE3NDcgCnoKTSAxMTU5IDI5NjkgClEgMTM0MSAzMjgxIDE2MTcgMzQzMiAKUSAxODk0IDM1ODQgMjI3OCAzNTg0IApRIDI5MTYgMzU4NCAzMzE0IDMwNzggClEgMzcxMyAyNTcyIDM3MTMgMTc0NyAKUSAzNzEzIDkyMiAzMzE0IDQxNSAKUSAyOTE2IC05MSAyMjc4IC05MSAKUSAxODk0IC05MSAxNjE3IDYxIApRIDEzNDEgMjEzIDExNTkgNTI1IApMIDExNTkgMCAKTCA1ODEgMCAKTCA1ODEgNDg2MyAKTCAxMTU5IDQ4NjMgCkwgMTE1OSAyOTY5IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTU1IiBkPSJNIDI2MzEgMjk2MyAKUSAyNTM0IDMwMTkgMjQyMCAzMDQ1IApRIDIzMDYgMzA3MiAyMTY5IDMwNzIgClEgMTY4MSAzMDcyIDE0MjAgMjc1NSAKUSAxMTU5IDI0MzggMTE1OSAxODQ0IApMIDExNTkgMCAKTCA1ODEgMCAKTCA1ODEgMzUwMCAKTCAxMTU5IDM1MDAgCkwgMTE1OSAyOTU2IApRIDEzNDEgMzI3NSAxNjMxIDM0MjkgClEgMTkyMiAzNTg0IDIzMzggMzU4NCAKUSAyMzk3IDM1ODQgMjQ2OSAzNTc2IApRIDI1NDEgMzU2OSAyNjI4IDM1NTMgCkwgMjYzMSAyOTYzIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgPC9kZWZzPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE2Ii8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzLjYyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyNy4yNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ3IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy1hZiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjIyLjUxNTYyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ0IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNTAuMjk2ODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMxMS41NzgxMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzNjMuNjcxODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM5NS40NTMxMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00NSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDU2LjY0MDYyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU2IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MjAuMTI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDU3Mi4yMTg3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2MzMuNzUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01OSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjc0Ljg1OTM3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ0IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3MzQuMDQ2ODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDc5NS4zMjgxMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01MiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoODU4LjgxMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01NiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTIwIDApIi8+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9ImxpbmUyZF8xNSI+CiAgICAgPHBhdGggZD0iTSAzNDguNjU2MjUgMzYuMDk5MjE5IApMIDM1OC42NTYyNSAzNi4wOTkyMTkgCkwgMzY4LjY1NjI1IDM2LjA5OTIxOSAKIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICAgIDxnPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMzQzNTgzOTFiZiIgeD0iMzU4LjY1NjI1IiB5PSIzNi4wOTkyMTkiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDAiLz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0idGV4dF8xNCI+CiAgICAgPCEtLSBCaW5vbWlhbCg1MDAsIHDMgikgLS0+CiAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzc2LjY1NjI1IDM5LjU5OTIxOSkgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgPGRlZnM+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy0yNSIgZD0iTSAxMjU5IDIyMjggCkwgMTI1OSA1MTkgCkwgMjI3MiA1MTkgClEgMjc4MSA1MTkgMzAyNiA3MzAgClEgMzI3MiA5NDEgMzI3MiAxMzc1IApRIDMyNzIgMTgxMyAzMDI2IDIwMjAgClEgMjc4MSAyMjI4IDIyNzIgMjIyOCAKTCAxMjU5IDIyMjggCnoKTSAxMjU5IDQxNDcgCkwgMTI1OSAyNzQxIApMIDIxOTQgMjc0MSAKUSAyNjU2IDI3NDEgMjg4MiAyOTE0IApRIDMxMDkgMzA4OCAzMTA5IDM0NDQgClEgMzEwOSAzNzk3IDI4ODIgMzk3MiAKUSAyNjU2IDQxNDcgMjE5NCA0MTQ3IApMIDEyNTkgNDE0NyAKegpNIDYyOCA0NjY2IApMIDIyNDEgNDY2NiAKUSAyOTYzIDQ2NjYgMzM1MyA0MzY2IApRIDM3NDQgNDA2NiAzNzQ0IDM1MTMgClEgMzc0NCAzMDg0IDM1NDQgMjgzMSAKUSAzMzQ0IDI1NzggMjk1NiAyNTE2IApRIDM0MjIgMjQxNiAzNjgwIDIwOTggClEgMzkzOCAxNzgxIDM5MzggMTMwNiAKUSAzOTM4IDY4MSAzNTEzIDM0MCAKUSAzMDg4IDAgMjMwMyAwIApMIDYyOCAwIApMIDYyOCA0NjY2IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTRjIiBkPSJNIDYwMyAzNTAwIApMIDExNzggMzUwMCAKTCAxMTc4IDAgCkwgNjAzIDAgCkwgNjAzIDM1MDAgCnoKTSA2MDMgNDg2MyAKTCAxMTc4IDQ4NjMgCkwgMTE3OCA0MTM0IApMIDYwMyA0MTM0IApMIDYwMyA0ODYzIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTUwIiBkPSJNIDMzMjggMjgyOCAKUSAzNTQ0IDMyMTYgMzg0NCAzNDAwIApRIDQxNDQgMzU4NCA0NTUwIDM1ODQgClEgNTA5NyAzNTg0IDUzOTQgMzIwMSAKUSA1NjkxIDI4MTkgNTY5MSAyMTEzIApMIDU2OTEgMCAKTCA1MTEzIDAgCkwgNTExMyAyMDk0IApRIDUxMTMgMjU5NyA0OTM0IDI4NDAgClEgNDc1NiAzMDg0IDQzOTEgMzA4NCAKUSAzOTQ0IDMwODQgMzY4NCAyNzg3IApRIDM0MjUgMjQ5MSAzNDI1IDE5NzggCkwgMzQyNSAwIApMIDI4NDcgMCAKTCAyODQ3IDIwOTQgClEgMjg0NyAyNjAwIDI2NjkgMjg0MiAKUSAyNDkxIDMwODQgMjExOSAzMDg0IApRIDE2NzggMzA4NCAxNDE4IDI3ODYgClEgMTE1OSAyNDg4IDExNTkgMTk3OCAKTCAxMTU5IDAgCkwgNTgxIDAgCkwgNTgxIDM1MDAgCkwgMTE1OSAzNTAwIApMIDExNTkgMjk1NiAKUSAxMzU2IDMyNzggMTYzMSAzNDMxIApRIDE5MDYgMzU4NCAyMjg0IDM1ODQgClEgMjY2NiAzNTg0IDI5MzMgMzM5MCAKUSAzMjAwIDMxOTcgMzMyOCAyODI4IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTRmIiBkPSJNIDYwMyA0ODYzIApMIDExNzggNDg2MyAKTCAxMTc4IDAgCkwgNjAzIDAgCkwgNjAzIDQ4NjMgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtYiIgZD0iTSAxOTg0IDQ4NTYgClEgMTU2NiA0MTM4IDEzNjIgMzQzNCAKUSAxMTU5IDI3MzEgMTE1OSAyMDA5IApRIDExNTkgMTI4OCAxMzY0IDU4MCAKUSAxNTY5IC0xMjggMTk4NCAtODQ0IApMIDE0ODQgLTg0NCAKUSAxMDE2IC0xMDkgNzgzIDYwMCAKUSA1NTAgMTMwOSA1NTAgMjAwOSAKUSA1NTAgMjcwNiA3ODEgMzQxMiAKUSAxMDEzIDQxMTkgMTQ4NCA0ODU2IApMIDE5ODQgNDg1NiAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy1mIiBkPSJNIDc1MCA3OTQgCkwgMTQwOSA3OTQgCkwgMTQwOSAyNTYgCkwgODk3IC03NDQgCkwgNDk0IC03NDQgCkwgNzUwIDI1NiAKTCA3NTAgNzk0IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTUzIiBkPSJNIDExNTkgNTI1IApMIDExNTkgLTEzMzEgCkwgNTgxIC0xMzMxIApMIDU4MSAzNTAwIApMIDExNTkgMzUwMCAKTCAxMTU5IDI5NjkgClEgMTM0MSAzMjgxIDE2MTcgMzQzMiAKUSAxODk0IDM1ODQgMjI3OCAzNTg0IApRIDI5MTYgMzU4NCAzMzE0IDMwNzggClEgMzcxMyAyNTcyIDM3MTMgMTc0NyAKUSAzNzEzIDkyMiAzMzE0IDQxNSAKUSAyOTE2IC05MSAyMjc4IC05MSAKUSAxODk0IC05MSAxNjE3IDYxIApRIDEzNDEgMjEzIDExNTkgNTI1IAp6Ck0gMzExNiAxNzQ3IApRIDMxMTYgMjM4MSAyODU1IDI3NDIgClEgMjU5NCAzMTAzIDIxMzggMzEwMyAKUSAxNjgxIDMxMDMgMTQyMCAyNzQyIApRIDExNTkgMjM4MSAxMTU5IDE3NDcgClEgMTE1OSAxMTEzIDE0MjAgNzUyIApRIDE2ODEgMzkxIDIxMzggMzkxIApRIDI1OTQgMzkxIDI4NTUgNzUyIApRIDMxMTYgMTExMyAzMTE2IDE3NDcgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtMmIzIiBkPSJNIC0xODMxIDUxMTkgCkwgLTEzNjkgNTExOSAKTCAtNjAzIDM5NDQgCkwgLTEwMzggMzk0NCAKTCAtMTYwMCA0NzA5IApMIC0yMTYzIDM5NDQgCkwgLTI1OTcgMzk0NCAKTCAtMTgzMSA1MTE5IAp6Ck0gLTE2MDAgMzU4NCAKTCAtMTYwMCAzNTg0IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLWMiIGQ9Ik0gNTEzIDQ4NTYgCkwgMTAxMyA0ODU2IApRIDE0ODEgNDExOSAxNzE0IDM0MTIgClEgMTk0NyAyNzA2IDE5NDcgMjAwOSAKUSAxOTQ3IDEzMDkgMTcxNCA2MDAgClEgMTQ4MSAtMTA5IDEwMTMgLTg0NCAKTCA1MTMgLTg0NCAKUSA5MjggLTEyOCAxMTMzIDU4MCAKUSAxMzM4IDEyODggMTMzOCAyMDA5IApRIDEzMzggMjczMSAxMTMzIDM0MzQgClEgOTI4IDQxMzggNTEzIDQ4NTYgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICA8L2RlZnM+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMjUiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00YyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjguNjA5Mzc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk2LjM5MDYyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTUyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuNzY1NjI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIyMC45NTMxMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00YyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzE4LjM1OTM3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ0IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzNDYuMTQwNjI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNGYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQwNy40MjE4NzUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy1iIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MzUuMjAzMTI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQ3NC4yMTg3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MzcuODQzNzUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjAxLjQ2ODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtZiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjY1LjA5Mzc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjk2Ljg3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTUzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3MjguNjU2MjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0yYjMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDc4Ni43NjU2MjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy1jIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3OTIuMTQwNjI1IDApIi8+CiAgICAgPC9nPgogICAgPC9nPgogICA8L2c+CiAgPC9nPgogPC9nPgogPGRlZnM+CiAgPGNsaXBQYXRoIGlkPSJwNDQ4NWZmYjJjMyI+CiAgIDxyZWN0IHg9IjM2LjQ2NTYyNSIgeT0iNy4yIiB3aWR0aD0iNDQ2LjQiIGhlaWdodD0iMTk0LjA0Ii8+CiAgPC9jbGlwUGF0aD4KIDwvZGVmcz4KPC9zdmc+Cg=="></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">"modelo"</span><span class="p">:</span> <span class="p">[</span><span class="n">p_perdidas</span><span class="p">,</span> <span class="n">p_normal</span><span class="p">,</span> <span class="n">p_saturacion</span><span class="p">],</span>
+        <span class="s2">"observado (30 días)"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">(</span><span class="n">ventas</span> <span class="o">&lt;</span> <span class="n">equilibrio</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+            <span class="n">ventas</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="n">equilibrio</span><span class="p">,</span> <span class="n">capacidad</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+            <span class="p">(</span><span class="n">ventas</span> <span class="o">&gt;</span> <span class="n">capacidad</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">"pérdidas (&lt; 30)"</span><span class="p">,</span> <span class="s2">"normal (30-45)"</span><span class="p">,</span> <span class="s2">"saturación (&gt; 45)"</span><span class="p">],</span>
+<span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>                   modelo  observado (30 días)
+pérdidas (&lt; 30)     0.113                0.133
+normal (30-45)      0.823                0.767
+saturación (&gt; 45)   0.064                0.100
+</code></pre></div>
+</div>
+<p>Las columnas no coinciden exactamente, y no deben: la columna observada se basa en solo 30 días y es muy irregular. El modelo aprovecha mucho mejor la información, porque usa los 15 000 emails para estimar <span class="arithmatex">\(p\)</span> y deduce de ahí la distribución completa. Lo importante es que no haya discrepancias sistemáticas. Otra comprobación rápida es la dispersión: la varianza de las ventas diarias observadas es 30.7, y la del modelo, <span class="arithmatex">\(500\,\hat{p}(1 - \hat{p}) \approx 33.8\)</span>. Son compatibles. Si los datos variaran mucho más que el modelo, sería una señal de que <span class="arithmatex">\(p\)</span> cambia de un día a otro. Es justo lo que pasa en el paso 6 de la <a href="../practica/#paso-6-revisar-las-suposiciones">práctica guiada</a>.</p>
+<div class="admonition danger">
+<p class="admonition-title">Errores frecuentes</p>
+<ul>
+<li><strong>Confundir la estimación con el parámetro.</strong> <span class="arithmatex">\(\hat{p} = 0.0729\)</span> es una estimación de <span class="arithmatex">\(p\)</span>, no <span class="arithmatex">\(p\)</span>. Con otros 30 días saldría otro número.</li>
+<li><strong>Mezclar <span class="arithmatex">\(n\)</span> y <span class="arithmatex">\(n - 1\)</span></strong> entre herramientas sin darse cuenta.</li>
+<li><strong>Estimar sin comprobar el modelo.</strong> El estimador siempre da un número, aunque la distribución supuesta no encaje. Compara el modelo con los datos: el histograma frente a la PMF, la varianza observada frente a la del modelo.</li>
+<li><strong>Olvidar los extremos en una discreta:</strong> "menos de 30" es <code>cdf(29)</code>, no <code>cdf(30)</code>.</li>
+</ul>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lo esencial</p>
+<ul>
+<li>Los parámetros de la <strong>población</strong> (<span class="arithmatex">\(\mu\)</span>, <span class="arithmatex">\(\sigma\)</span>, <span class="arithmatex">\(p\)</span>) son desconocidos. Con una <strong>muestra</strong> calculamos estimaciones (<span class="arithmatex">\(\bar{x}\)</span>, <span class="arithmatex">\(s\)</span>, <span class="arithmatex">\(\hat{p}\)</span>) que los imitan.</li>
+<li>Antes de estimar hay que elegir un <strong>modelo</strong> y escribir sus <strong>suposiciones</strong>.</li>
+<li>El <strong>estimador de máxima verosimilitud</strong> es el valor del parámetro que hace más probables los datos observados. Para Bernoulli, binomial, Poisson y normal es la media muestral (dividida entre <span class="arithmatex">\(n\)</span> en la binomial); para la uniforme, el mínimo y el máximo.</li>
+<li>Con el modelo estimado se responden preguntas de negocio sobre rangos con la función de distribución.</li>
+<li>Una estimación tiene <strong>incertidumbre</strong>: con otra muestra saldría otra. Medirla es el objetivo de la <a href="../variabilidad/">siguiente página</a>.</li>
+</ul>
+</div>
+<h2 id="ejercicios">Ejercicios<a class="headerlink" href="#ejercicios" title="Permanent link">&para;</a></h2>
+<p><strong>1.</strong> Con la muestra 4, 8, 6, 2, calcula la desviación típica dividiendo entre <span class="arithmatex">\(n\)</span> y entre <span class="arithmatex">\(n - 1\)</span>. ¿Qué daría <code>np.std</code> y qué daría <code>pd.Series.std</code>?</p>
+<details class="success">
+<summary>Solución</summary>
+<p><span class="arithmatex">\(\bar{x} = 5\)</span>. Las desviaciones son <span class="arithmatex">\(-1, 3, 1, -3\)</span>, y sus cuadrados suman <span class="arithmatex">\(1 + 9 + 1 + 9 = 20\)</span>. Dividiendo entre <span class="arithmatex">\(n = 4\)</span> sale una varianza de 5 y una desviación típica de <span class="arithmatex">\(\sqrt{5} \approx\)</span> <strong>2.24</strong>, que es lo que da <code>np.std(x)</code>. Dividiendo entre <span class="arithmatex">\(n - 1 = 3\)</span> sale <span class="arithmatex">\(\sqrt{6.67} \approx\)</span> <strong>2.58</strong>, que es lo que da <code>pd.Series(x).std()</code>. Con solo 4 datos la diferencia es notable.</p>
+</details>
+<p><strong>2.</strong> De 5 clientes, compra 1. Calcula la verosimilitud <span class="arithmatex">\(p(1 - p)^4\)</span> para <span class="arithmatex">\(p = 0.1\)</span>, <span class="arithmatex">\(0.2\)</span> y <span class="arithmatex">\(0.5\)</span>. ¿Cuál es la más alta? ¿Coincide con lo que dice la tabla de estimadores?</p>
+<details class="success">
+<summary>Solución</summary>
+<p><span class="arithmatex">\(L(0.1) = 0.1 \cdot 0.9^4 \approx 0.0656\)</span>, <span class="arithmatex">\(L(0.2) = 0.2 \cdot 0.8^4 \approx 0.0819\)</span> y <span class="arithmatex">\(L(0.5) = 0.5 \cdot 0.5^4 \approx 0.0312\)</span>. La más alta es la de <span class="arithmatex">\(p = 0.2\)</span>, y coincide con el estimador de la tabla: la proporción observada, <span class="arithmatex">\(\hat{p} = 1/5 = 0.2\)</span>.</p>
+</details>
+<p><strong>3.</strong> Ocho entregas tardaron 46, 51, 49, 55, 44, 50, 47 y 53 horas. Suponiendo un modelo normal, estima <span class="arithmatex">\(\mu\)</span> y <span class="arithmatex">\(\sigma\)</span> (con <span class="arithmatex">\(n\)</span> y con <span class="arithmatex">\(n - 1\)</span>) y la probabilidad de que una entrega supere las 56 horas.</p>
+<details class="success">
+<summary>Solución</summary>
+<p><span class="arithmatex">\(\hat{\mu} = \bar{x} = 395/8 = 49.375\)</span> h. El estimador de máxima verosimilitud de <span class="arithmatex">\(\sigma\)</span>, que divide entre <span class="arithmatex">\(n\)</span>, da <span class="arithmatex">\(\hat{\sigma} \approx 3.43\)</span> h, y <span class="arithmatex">\(s\)</span>, que divide entre <span class="arithmatex">\(n - 1\)</span>, da 3.66 h.</p>
+<p>Con <span class="arithmatex">\(s\)</span>: $P(X &gt; 56) = $ <code>stats.norm(49.375, 3.66).sf(56)</code> <span class="arithmatex">\(\approx 0.035\)</span>. Con <span class="arithmatex">\(\hat{\sigma}\)</span> sale 0.027. Con solo 8 datos, la elección entre <span class="arithmatex">\(n\)</span> y <span class="arithmatex">\(n - 1\)</span> cambia apreciablemente la probabilidad de la cola. Las dos estimaciones son además bastante inseguras: la <a href="../variabilidad/">siguiente página</a> explica cuánto.</p>
+</details>
+<p><strong>4.</strong> Una tienda envía 200 emails al día. Durante 5 días vendió 12, 9, 15, 10 y 14 unidades. Con un modelo binomial, estima <span class="arithmatex">\(p\)</span> y la probabilidad de un día con 15 ventas o más.</p>
+<details class="success">
+<summary>Solución</summary>
+<p>Éxitos totales entre intentos totales: <span class="arithmatex">\(\hat{p} = 60/1000 = 0.06\)</span>, que es la media diaria, 12, dividida entre <span class="arithmatex">\(n = 200\)</span>.</p>
+<p>"15 o más" es lo contrario de "14 o menos": $P(X \ge 15) = $ <code>stats.binom(200, 0.06).sf(14)</code> <span class="arithmatex">\(\approx 0.222\)</span>. Más o menos un día de cada cinco.</p>
+</details>
+<p><strong>5.</strong> <em>(Más difícil)</em> Durante seis días, un proveedor llegó a las 9:40, 11:15, 10:05, 12:30, 9:10 y 11:50. Modela la hora de llegada como una uniforme continua. (a) Estima <span class="arithmatex">\(a\)</span> y <span class="arithmatex">\(b\)</span>. (b) Con el modelo estimado, ¿qué probabilidad hay de que llegue antes de las 10:00? (c) ¿Crees que el estimador tiende a quedarse corto o a pasarse con la anchura del intervalo? ¿Por qué?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>(a) $\hat{a} = \min = $ 9:10 y $\hat{b} = \max = $ 12:30: un intervalo de 200 minutos.</p>
+<p>(b) De 9:10 a 10:00 hay 50 minutos de los 200: <span class="arithmatex">\(50/200 = 0.25\)</span>.</p>
+<p>(c) <strong>Se queda corto.</strong> El intervalo real contiene todas las llegadas posibles, y las seis observadas están dentro de él, así que el mínimo observado nunca es menor que <span class="arithmatex">\(a\)</span> ni el máximo mayor que <span class="arithmatex">\(b\)</span>. Con pocos datos, lo más probable es que el proveedor pueda llegar algo antes de las 9:10 o algo después de las 12:30.</p>
+</details>
+<p><a class="md-button" href="../"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> Volver al tema</a> <a class="md-button md-button--primary" href="../variabilidad/">Siguiente: Cuánto se equivoca una estimación <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg></span></a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Estimación e inferencia">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Estimación e inferencia
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../variabilidad/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: 2. Cuánto se equivoca una estimación">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                2. Cuánto se equivoca una estimación
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/katex.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
