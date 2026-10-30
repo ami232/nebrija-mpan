@@ -58,7 +58,7 @@ La PMF también responde a "¿cuántos artículos tiene un pedido en promedio?".
 
 $$\mathbb{E}[X] = 1 \cdot 0.40 + 2 \cdot 0.30 + 3 \cdot 0.18 + 4 \cdot 0.08 + 5 \cdot 0.04 = 2.06 \text{ artículos}.$$
 
-A este número se le llama **valor esperado** o **esperanza** de $X$. Observa que 2.06 no es un valor que un pedido concreto pueda tomar: es el centro de gravedad de la distribución, lo que esperas por pedido cuando promedias sobre muchos. Si mañana llegan 1000 pedidos, deberías preparar material para unos 2060 artículos. Estudiaremos la esperanza y la varianza con detalle en [3. Estadísticos](estadisticos.md).
+A este número se le llama **valor esperado** o **esperanza** de $X$. Observa que 2.06 no es un valor que un pedido concreto pueda tomar: es el centro de gravedad de la distribución, lo que esperas por pedido cuando promedias sobre muchos. Si mañana llegan 1000 pedidos, deberías preparar material para unos 2060 artículos. Volveremos a la esperanza, junto con la varianza, en [Media y varianza de una distribución](#media-y-varianza-de-una-distribución).
 
 ## Variables continuas: la función de densidad
 
@@ -68,8 +68,20 @@ Para entender cómo se describe una variable continua, imagina el histograma de 
 
 > 📘 **Definición: función de densidad de probabilidad (PDF)**
 >
-> Una variable continua $X$ se describe con una función de densidad $f(x) \ge 0$ tal que la probabilidad de cualquier intervalo es el **área bajo la curva** en ese intervalo:
-> $$P(a < X \le b) = \int_a^b f(x)\, dx, \qquad \text{con} \qquad \int_{-\infty}^{\infty} f(x)\, dx = 1.$$
+> Una variable continua $X$ se describe con una función de densidad $f(x) \ge 0$ tal que la probabilidad de cualquier intervalo $P(a < X \le b)$ es el **área bajo la curva** entre $a$ y $b$. El área total bajo la curva vale 1.
+
+No hace falta saber calcular esas áreas: en los ejemplos sencillos son rectángulos, y en el resto las calcula Python.
+
+<details>
+<summary>ℹ️ <b>Para saber más: el área es una integral</b></summary>
+
+Si has estudiado cálculo, el área bajo la curva es una integral:
+
+$$P(a < X \le b) = \int_a^b f(x)\, dx, \qquad \text{con} \qquad \int_{-\infty}^{\infty} f(x)\, dx = 1.$$
+
+Es la versión continua de sumar la PMF: la integral "suma" la densidad sobre infinitos valores, cada uno con un peso infinitesimal $dx$.
+
+</details>
 
 Como la probabilidad es un área, $f(x)$ en sí misma **no es una probabilidad**: es una densidad, "probabilidad por unidad de $x$". Sus unidades lo delatan: si $x$ se mide en días, $f(x)$ se mide en "probabilidad por día". Por eso una densidad puede valer más que 1 sin ningún problema, siempre que el área total sea 1. Y por eso, en una variable continua, da igual escribir $<$ o $\le$: el área sobre un único punto es cero.
 
@@ -88,7 +100,16 @@ Hasta ahora tenemos dos herramientas distintas: sumar la PMF en el caso discreto
 > 📘 **Definición: función de distribución (CDF)**
 >
 > La función de distribución o función de distribución acumulada de $X$ da, para cada valor $x$, la probabilidad de observar un valor **menor o igual**:
-> $$F(x) = P(X \le x) = \begin{cases} \displaystyle\sum_{k \le x} f(k) & \text{si } X \text{ es discreta} \\[2ex] \displaystyle\int_{-\infty}^{x} f(t)\, dt & \text{si } X \text{ es continua} \end{cases}$$
+> $$F(x) = P(X \le x)$$
+>
+> En una variable discreta se obtiene sumando la PMF hasta $x$, $F(x) = \sum_{k \le x} f(k)$. En una continua es el área bajo la densidad a la izquierda de $x$.
+
+<details>
+<summary>ℹ️ <b>Para saber más: la CDF continua como integral</b></summary>
+
+En una variable continua, el área a la izquierda de $x$ es la integral $F(x) = \int_{-\infty}^{x} f(t)\, dt$. Recíprocamente, la densidad es la derivada de la función de distribución, $f(x) = F'(x)$: la densidad mide lo rápido que se acumula la probabilidad en cada punto.
+
+</details>
 
 Su gran ventaja es que, conocida $F$, cualquier probabilidad de un intervalo sale con una resta:
 
@@ -104,7 +125,54 @@ Toda función de distribución empieza en 0 (muy a la izquierda no hay probabili
 
 ### Leer la CDF al revés: los cuantiles
 
-La CDF responde a "¿qué probabilidad hay de quedar por debajo de $x$?". Muchas preguntas de negocio van en sentido contrario: "¿qué tiempo de espera no se supera el 90 % de las veces?". Eso es leer la CDF al revés: buscar el $x$ en el que $F(x)$ alcanza 0.9. En el metro, $x/10 = 0.9$ da $x = 9$ minutos. Ese valor se llama **cuantil** o **percentil 90**, y el que deja la mitad de la probabilidad a cada lado es la **mediana** (5 minutos en el metro; 2 artículos en los pedidos, el primer valor donde $F$ alcanza 0.5). Volveremos a los cuantiles en [3. Estadísticos](estadisticos.md).
+La CDF responde a "¿qué probabilidad hay de quedar por debajo de $x$?". Muchas preguntas de negocio van en sentido contrario: "¿qué tiempo de espera no se supera el 90 % de las veces?". Eso es leer la CDF al revés: buscar el $x$ en el que $F(x)$ alcanza 0.9. En el metro, $x/10 = 0.9$ da $x = 9$ minutos. Ese valor se llama **cuantil** o **percentil 90**, y el que deja la mitad de la probabilidad a cada lado es la **mediana** (5 minutos en el metro; 2 artículos en los pedidos, el primer valor donde $F$ alcanza 0.5). En `scipy.stats`, leer la CDF al revés es el método `.ppf(q)`.
+
+La mediana es otra forma de decir dónde está el **centro** de una distribución, distinta del valor esperado. En una distribución simétrica coinciden, pero en una asimétrica, que es lo habitual con importes, salarios o tiempos de espera, la media se desplaza hacia la cola larga. Si nueve empleados cobran entre 25 000 y 35 000 € al año y el décimo es el CEO, con 400 000 €, la media es 67 000 €, una cifra que no describe a nadie de la empresa, mientras que la mediana es 30 500 €. La mediana es **robusta**: un valor extremo cuenta solo como "un dato más por encima". Por eso conviene para describir al **individuo típico**, y la media para **totales y presupuestos**, porque total = media × número de casos.
+
+Los **cuartiles** son los percentiles 25 y 75 ($Q_1$ y $Q_3$), y entre ellos queda el 50 % central de la distribución. Su distancia, el **rango intercuartílico** $\text{IQR} = Q_3 - Q_1$, mide la dispersión de forma tan robusta como la mediana mide el centro. Es también la base de la regla con que los diagramas de caja marcan los **valores atípicos**: los que quedan por debajo de $Q_1 - 1.5\,\text{IQR}$ o por encima de $Q_3 + 1.5\,\text{IQR}$. En los salarios, $Q_1 = 28\,250$ €, $Q_3 = 32\,750$ € e $\text{IQR} = 4\,500$ €, así que todo salario por encima de 39 500 € se marca: solo el del CEO. Un atípico no es automáticamente un error. Es un valor que hay que revisar antes de decidir qué hacer con él.
+
+## Media y varianza de una distribución
+
+Dos proveedores tardan **de media 5 días** en entregar. Con el proveedor A, la entrega llega en 4, 5 o 6 días, con la misma probabilidad. Con el proveedor B, en 1, 5 o 9 días, también con la misma probabilidad. Si solo miras la media, son iguales. Si tienes que planificar un almacén, B es mucho peor: a veces te deja una semana sin material. Para resumir una distribución hacen falta al menos dos números: dónde está su **centro** y cuánto se **dispersa** alrededor de él.
+
+> 📘 **Definición: esperanza, varianza y desviación típica**
+>
+> La **esperanza** o **media** de $X$, $\mu = \mathbb{E}[X]$, es la suma de los valores posibles ponderados por su probabilidad:
+>
+> $$\mathbb{E}[X] = \sum_x x\, f(x)$$
+>
+> En una variable continua la idea es la misma, con la densidad en lugar de la PMF: la media es el centro de gravedad del área bajo la curva.
+>
+> La **varianza** $\sigma^2 = \mathbb{V}[X]$ es la esperanza de la distancia al cuadrado a la media, y la **desviación típica** $\sigma$ es su raíz cuadrada:
+>
+> $$\mathbb{V}[X] = \mathbb{E}\big[(X - \mu)^2\big] = \sum_x (x - \mu)^2 f(x) \quad \text{(discreta)}, \qquad\qquad \sigma = \sqrt{\mathbb{V}[X]}$$
+>
+> Para calcular a mano suele ser más rápida la fórmula equivalente $\mathbb{V}[X] = \mathbb{E}[X^2] - \mathbb{E}[X]^2$.
+
+<details>
+<summary>ℹ️ <b>Para saber más: media y varianza de una variable continua</b></summary>
+
+En una variable continua, las sumas ponderadas se convierten en integrales:
+
+$$\mathbb{E}[X] = \int_{-\infty}^{\infty} x\, f(x)\, dx, \qquad\qquad \mathbb{V}[X] = \int_{-\infty}^{\infty} (x - \mu)^2 f(x)\, dx$$
+
+Para la espera al metro, con $f(x) = 1/10$ entre 0 y 10, $\mathbb{E}[X] = \int_0^{10} \frac{x}{10}\, dx = \frac{10^2}{20} = 5$ minutos. En la práctica, `scipy.stats` las calcula con `.mean()` y `.var()`.
+
+</details>
+
+La esperanza es el **promedio a largo plazo**, el centro de gravedad de la distribución: 2.06 artículos por pedido, o 5 minutos de espera media en el metro (el centro del rectángulo). La varianza promedia distancias **al cuadrado** porque las distancias con signo, $X - \mu$, siempre promedian cero: las positivas y las negativas se compensan. El cuadrado deja la varianza en unidades al cuadrado (días², €²), que no tienen lectura intuitiva, y por eso para comunicar la dispersión se usa la desviación típica, que está en las unidades de la variable.
+
+> ✏️ **Ejemplo resuelto: los dos proveedores**
+>
+> Con $\mu = 5$, las desviaciones de A son $-1, 0, 1$, cada una con probabilidad $1/3$, y las de B, $-4, 0, 4$:
+>
+> $$\mathbb{V}[A] = \tfrac{1}{3}(1 + 0 + 1) = 0.67 \text{ días}^2, \qquad \mathbb{V}[B] = \tfrac{1}{3}(16 + 0 + 16) = 10.67 \text{ días}^2$$
+>
+> Las desviaciones típicas son $\sigma_A = 0.82$ y $\sigma_B = 3.27$ días: B tiene la misma media que A y cuatro veces su dispersión. Para el almacén, eso significa más stock de seguridad.
+>
+> En los pedidos, $\mathbb{E}[X^2] = 1 \cdot 0.40 + 4 \cdot 0.30 + 9 \cdot 0.18 + 16 \cdot 0.08 + 25 \cdot 0.04 = 5.5$, así que $\mathbb{V}[X] = 5.5 - 2.06^2 \approx 1.26$ y $\sigma \approx 1.12$ artículos.
+
+Cada distribución con nombre propio de la [página siguiente](distribuciones.md) viene con su media y su varianza escritas en función de sus parámetros. En el [tema de estimación](../inferencia/index.md) veremos cómo se calculan con datos y por qué la media de muchas observaciones varía mucho menos que cada observación por separado.
 
 ## Lo que vemos en los datos: distribuciones empíricas
 
@@ -184,11 +252,42 @@ P(X >= 3) = 0.3
 ```
 
 ```python
-print("Valor esperado =", (pmf.index * pmf).sum())          # 2.06
+media = (pmf.index * pmf).sum()
+print("Valor esperado =", round(media, 2))                  # 2.06
 ```
 
 ```text
 Valor esperado = 2.06
+```
+
+```python
+varianza = (pmf.index**2 * pmf).sum() - media**2            # E[X²] − E[X]²
+print("Varianza =", round(varianza, 2), " σ =", round(varianza**0.5, 2))   # 1.26 y 1.12
+```
+
+```text
+Varianza = 1.26  σ = 1.12
+```
+
+```python
+# Media, mediana, cuartiles e IQR de unos datos
+salarios = pd.Series([25, 27, 28, 29, 30, 31, 32, 33, 35, 400])   # miles de €
+q1, q3 = salarios.quantile([0.25, 0.75])
+iqr = q3 - q1
+print(salarios.mean(), salarios.median(), q1, q3)          # 67.0, 30.5, 28.25, 32.75
+```
+
+```text
+67.0 30.5 28.25 32.75
+```
+
+```python
+print(salarios[(salarios < q1 - 1.5 * iqr) | (salarios > q3 + 1.5 * iqr)])   # atípicos
+```
+
+```text
+9    400
+dtype: int64
 ```
 
 ```python
@@ -218,7 +317,8 @@ Proporción de esperas > 7 min: 0.338
 > - Una **variable aleatoria** convierte los resultados de un experimento en números; puede ser **discreta** (conteos) o **continua** (medidas).
 > - En una discreta, la **PMF** da la probabilidad de cada valor y las probabilidades de sucesos se obtienen **sumando**.
 > - En una continua, la **PDF** es una densidad: las probabilidades son **áreas** bajo la curva y la de un valor exacto es cero.
-> - La **CDF** $F(x) = P(X \le x)$ sirve para ambos casos: $P(a < X \le b) = F(b) - F(a)$. Leída al revés da los **cuantiles**.
+> - La **CDF** $F(x) = P(X \le x)$ sirve para ambos casos: $P(a < X \le b) = F(b) - F(a)$. Leída al revés da los **cuantiles**: la mediana, los cuartiles y el IQR, que son robustos frente a valores extremos.
+> - La **esperanza** resume el centro de una distribución y la **varianza** (o la **desviación típica**, en las unidades de la variable) su dispersión.
 > - El **histograma** y la **ECDF** son las versiones empíricas; con muestras grandes se parecen a la distribución real (Glivenko–Cantelli).
 
 ## Ejercicios
@@ -275,7 +375,29 @@ El 85 % de las consultas se respondieron en 30 minutos o menos, de modo que un 1
 
 </details>
 
-**6.** Con una muestra de 20 datos, el histograma no se parece en nada a una campana. ¿Puedes concluir que los datos no siguen una distribución normal?
+**6.** Calcula la varianza y la desviación típica del número de reclamaciones diarias del ejercicio 2. ¿Qué tienda es más previsible: esta, o una con la misma media y $\sigma = 0.3$?
+
+<details>
+<summary>✅ <b>Solución</b></summary>
+
+Con el atajo: $\mathbb{E}[X^2] = 0 \cdot 0.50 + 1 \cdot 0.30 + 4 \cdot 0.15 + 9 \cdot 0.05 = 1.35$, así que $\mathbb{V}[X] = 1.35 - 0.75^2 = 0.7875$ reclamaciones² y $\sigma = \sqrt{0.7875} \approx 0.89$ reclamaciones.
+
+La otra tienda, con la misma media y $\sigma = 0.3$, es más previsible: sus días se parecen mucho más entre sí.
+
+</details>
+
+**7.** Los importes de las compras de una tienda online tienen una media de 85 € y una mediana de 42 €. ¿Qué te dice eso de la forma de la distribución? Si quieres describir la "compra típica" en un informe, ¿qué cifra usas? ¿Y para prever la facturación de 10 000 compras?
+
+<details>
+<summary>✅ <b>Solución</b></summary>
+
+La media es el doble de la mediana: la distribución es **asimétrica a la derecha**, con unas pocas compras muy grandes que tiran de la media hacia arriba. La mitad de las compras no llega a 42 €.
+
+Para la compra típica, la **mediana**: 42 €. Para la facturación, la **media**, porque el total es la media por el número de compras: unos $85 \cdot 10\,000 = 850\,000$ €. Usar la mediana daría 420 000 € y subestimaría la facturación a la mitad.
+
+</details>
+
+**8.** Con una muestra de 20 datos, el histograma no se parece en nada a una campana. ¿Puedes concluir que los datos no siguen una distribución normal?
 
 <details>
 <summary>✅ <b>Solución</b></summary>

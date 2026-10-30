@@ -1,4 +1,4 @@
-# 3. Práctica guiada: aceptación de cookies
+# 4. Práctica guiada: aceptación de cookies
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/inferencia/practica/>
 
@@ -44,7 +44,7 @@ La segunda suposición parece razonable: los usuarios no se ven entre sí. La te
 
 ## Paso 3. Estimar la tasa de aceptación
 
-El parámetro que interesa a marketing es $p$. ¿Cómo lo estimamos? En una Bernoulli, la media es $p$, así que el [método de los momentos](estimacion.md#estimar-parámetros-método-de-los-momentos) propone usar la media muestral. Para datos de ceros y unos, eso es simplemente la proporción de unos.
+El parámetro que interesa a marketing es $p$. ¿Cómo lo estimamos? Según la [tabla de estimadores de máxima verosimilitud](estimacion.md#estimar-los-parámetros-máxima-verosimilitud), en una Bernoulli el estimador de $p$ es la media muestral. Para datos de ceros y unos, eso es simplemente la proporción de unos.
 
 <details>
 <summary>✅ <b>Resultado</b></summary>
@@ -67,7 +67,7 @@ Un modelo sirve para responder preguntas que los datos por sí solos no contesta
 <summary>💡 <b>Pistas</b></summary>
 
 - $P(Y = k)$ es `stats.binom.pmf(k, n, p)` y $P(Y \le k)$ es `stats.binom.cdf(k, n, p)`.
-- La normal que aproxima a la binomial tiene $\mu = n\hat{p}$ y $\sigma = \sqrt{n\hat{p}\hat{q}}$. Repasa la [aproximación normal de la binomial](../variables-aleatorias/distribuciones.md#aproximación-normal-de-la-binomial).
+- La normal que aproxima a la binomial tiene $\mu = n\hat{p}$ y $\sigma = \sqrt{n\hat{p}\hat{q}}$. Repasa la [aproximación normal de la binomial](variabilidad.md#el-tlc-explica-la-forma-de-la-binomial).
 
 </details>
 

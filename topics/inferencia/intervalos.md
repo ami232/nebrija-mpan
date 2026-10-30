@@ -1,10 +1,10 @@
-# 2. Intervalos de confianza: de la muestra a la población
+# 3. Intervalos de confianza: de la muestra a la población
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/inferencia/intervalos/>
 
 > ℹ️ **Antes de empezar**
 >
-> Esta página usa la **distribución normal** y la tipificación $z = (x - \mu)/\sigma$ ([distribuciones](../variables-aleatorias/distribuciones.md)), y la distinción entre **población y muestra**, con la media $\bar{x}$, la desviación típica $s$ y la proporción $\hat{p}$ muestrales ([página 1](estimacion.md#de-la-distribución-a-los-datos-población-y-muestra)).
+> Esta página usa el **error estándar** y el **teorema del límite central** de la [página 2](variabilidad.md), y la tipificación $z = (x - \mu)/\sigma$ de la [distribución normal](../variables-aleatorias/distribuciones.md#normal-estándar).
 
 ## El problema
 
@@ -12,91 +12,19 @@ Una marca encuesta a 400 clientes y 92 dicen que la recomendarían: un **23 %**.
 
 ¿Cuánto puede variar? ¿El verdadero porcentaje podría ser un 30 %? ¿Y un 15 %? La **inferencia estadística** responde a estas preguntas. Con **una sola muestra**, dice qué valores de la población son plausibles y con cuánta seguridad. Es la idea que hay detrás de cualquier encuesta, test A/B o estudio de mercado, y la base de los [contrastes de hipótesis](../contraste-hipotesis/index.md) del próximo tema.
 
-## Una estimación es una variable aleatoria
+## Lo que ya sabemos de una proporción muestral
 
-La clave está en un cambio de perspectiva. La proporción muestral $\hat{p}$ no es un número fijo: **depende de qué clientes hayan caído en la muestra**. Si repitiéramos la encuesta muchas veces, cada repetición daría un $\hat{p}$ distinto. Por tanto, $\hat{p}$ es una **variable aleatoria**, y tiene su propia distribución, que se llama **distribución muestral**.
+En la [página 2](variabilidad.md) vimos que una estimación es una variable aleatoria, y conocemos su distribución. Para una proporción, el teorema del límite central dice que, con una muestra suficientemente grande,
 
-Podemos ver cómo es esa distribución con un experimento mental, o con un ordenador. Supón que en realidad el **25 %** de todos los clientes recomendaría la marca. Si simulamos 100 000 encuestas de 400 clientes cada una, los $\hat{p}$ que salen:
+$$\hat{p} \approx N\!\left(p,\ \frac{p(1 - p)}{n}\right), \qquad \text{con error estándar} \quad \text{SE} = \sqrt{\frac{p(1 - p)}{n}} \approx \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}$$
 
-- **se centran en 0.25**: su media es 0.2499. La encuesta no se equivoca sistemáticamente ni hacia arriba ni hacia abajo;
-- **se dispersan con una desviación típica de 0.0216**: el 95 % central de las encuestas cae entre **0.2075 y 0.2925**;
-- **tienen forma de campana**, aunque cada respuesta individual sea un 0 o un 1.
-
-Así que una encuesta concreta con un 23 % es perfectamente compatible con un 25 % real: el 19 % de las encuestas simuladas sale igual o más bajo. En la práctica no conocemos el 25 %, pero estas tres propiedades son generales y nos permiten razonar al revés: de la muestra a la población.
-
-## Error estándar
-
-Las tres propiedades anteriores se pueden calcular sin simular. Recuerda las [propiedades de la media y la varianza](../variables-aleatorias/estadisticos.md#combinar-variables-propiedades-de-la-media-y-la-varianza). Si $X_1, \ldots, X_n$ son observaciones independientes con media $\mu$ y varianza $\sigma^2$, la media muestral $\bar{X} = \frac{1}{n}\sum X_i$ cumple:
-
-$$\mathbb{E}[\bar{X}] = \frac{1}{n} \cdot n\mu = \mu \qquad\qquad \mathbb{V}[\bar{X}] = \frac{1}{n^2} \cdot n\sigma^2 = \frac{\sigma^2}{n}$$
-
-> 📘 **Definición: error estándar**
->
-> El **error estándar** (*standard error*, SE) de un estimador es su desviación típica. Para la media muestral:
->
-> $$\text{SE}(\bar{X}) = \frac{\sigma}{\sqrt{n}} \qquad\qquad \text{y, como no conocemos } \sigma, \text{ lo estimamos con } \frac{s}{\sqrt{n}}$$
->
-> Para una proporción, que es la media de ceros y unos con $\sigma^2 = p(1 - p)$:
->
-> $$\text{SE}(\hat{p}) = \sqrt{\frac{p(1 - p)}{n}} \;\approx\; \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}$$
-
-Con $p = 0.25$ y $n = 400$, la fórmula da $\sqrt{0.25 \cdot 0.75/400} = 0.0217$, prácticamente lo que obtuvimos simulando.
-
-Este resultado tiene dos consecuencias importantes.
-
-**La media muestral es insesgada.** $\mathbb{E}[\bar{X}] = \mu$: en promedio, la estimación acierta. Una muestra concreta se desvía, pero no hay un error sistemático, siempre que la muestra sea **aleatoria**. Si solo encuestas a los clientes que responden a un email, la fórmula sigue dando un número, pero estimará otra cosa (veremos este problema en el [tema de sesgos](../sesgos/index.md)).
-
-**La precisión crece con la raíz de $n$, no con $n$.** Para reducir el error a la mitad hay que **cuadruplicar** la muestra, y para dividirlo entre 10 hay que multiplicarla por 100. Por eso las encuestas electorales rara vez superan unos pocos miles de personas: a partir de ahí, cada punto de precisión cuesta muchísimo.
-
-> ⚠️ **Desviación típica frente a error estándar**
->
-> Son dos cosas distintas que se confunden a menudo:
->
-> - $\sigma$ (o $s$) mide cuánto varían los **individuos**: un pedido de otro.
-> - $\sigma/\sqrt{n}$ mide cuánto variaría la **estimación**: la media de una muestra de otra.
->
-> Con más datos, $s$ no disminuye (los clientes no se vuelven más parecidos), pero el error estándar sí.
-
-## El teorema del límite central
-
-Ya sabemos la media y la desviación típica de $\bar{X}$. Para calcular probabilidades nos falta su **forma**. La respuesta es uno de los resultados más importantes de la estadística.
-
-> 📘 **Teorema del límite central (TLC)**
->
-> Si $X_1, \ldots, X_n$ son **independientes**, con la **misma distribución** de media $\mu$ y varianza $\sigma^2$ **finita**, entonces, para $n$ suficientemente grande:
->
-> $$\bar{X} \approx N\!\left(\mu,\ \frac{\sigma^2}{n}\right) \qquad\Longleftrightarrow\qquad Z = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \approx N(0, 1)$$
->
-> **sea cual sea la distribución de las $X_i$.**
-
-Lo sorprendente es la última frase. Los tiempos de espera son exponenciales, muy asimétricos. Los clics son ceros y unos. Los conteos de clientes son Poisson. Y aun así, la **media** de muchos de ellos tiene forma de campana. Al promediar, los valores altos y bajos se compensan, y lo que queda son muchas pequeñas fluctuaciones sumadas: la situación en la que aparece la normal. Por eso la normal es tan omnipresente, y por eso podemos hacer inferencia sobre medias **sin saber cuál es la distribución de los datos**.
-
-Comprueba en la demo cómo la distribución de la media pasa de ser la población original ($n = 1$) a una campana al aumentar $n$:
-
-▶️ [Demo interactiva: tlc](https://alberpro.com/nebrija-mpan/topics/inferencia/demo_tlc.html) (en la web)
-
-**¿Qué es «$n$ suficientemente grande»?** Depende de lo asimétrica que sea la población. Con poblaciones aproximadamente simétricas, $n \approx 10$ ya basta. La regla práctica habitual es $n \ge 30$. Para proporciones se pide que haya bastantes éxitos y fracasos: $n\hat{p} \ge 5$ y $n(1 - \hat{p}) \ge 5$. Si la población tiene una cola muy larga, como los importes con unos pocos clientes enormes, puede hacer falta bastante más.
-
-> ⚠️ **Lo que el TLC **no** dice**
->
-> - **No dice que los datos se vuelvan normales.** Los tiempos de espera siguen siendo exponenciales tengas 30 o 30 000. Lo que se vuelve normal es la **media**.
-> - **No arregla una muestra sesgada.** Si las observaciones no son independientes o no representan a la población, el TLC no ayuda.
-
-> ✏️ **Ejemplo resuelto: el TLC en acción**
->
-> El tiempo entre autobuses es exponencial con media 6 minutos, así que $\sigma = 6$ también. Para **un** intervalo concreto, $P(X > 12) = e^{-2} \approx 0.135$: esperar el doble de la media no es raro.
->
-> ¿Y si medimos 50 intervalos? La media $\bar{X}$ es aproximadamente $N(6,\ 6^2/50)$, con error estándar $6/\sqrt{50} \approx 0.85$ min. La probabilidad de que la **media** de los 50 supere los 7 minutos es
->
-> $$P(\bar{X} > 7) = P\left(Z > \frac{7 - 6}{0.85}\right) = P(Z > 1.18) \approx 0.119$$
->
-> El cálculo exacto, que en este caso se puede hacer, da 0.122: la aproximación normal es muy buena incluso partiendo de una distribución tan asimétrica.
+Si en realidad el 25 % de los clientes recomendara la marca, las encuestas de 400 clientes darían valores de $\hat{p}$ centrados en 0.25, con un error estándar de $\sqrt{0.25 \cdot 0.75/400} \approx 0.0217$. El 95 % de ellas caería entre $0.25 \pm 1.96 \cdot 0.0217$, es decir, entre 0.207 y 0.293. Una encuesta concreta con un 23 % es perfectamente compatible con un 25 % real. En la práctica no conocemos el 25 %, pero podemos dar la vuelta al razonamiento: de la muestra a la población.
 
 ## Intervalos de confianza
 
 ### De dónde sale la fórmula
 
-Ahora podemos dar la vuelta al razonamiento. Por el TLC, la media muestral tipificada es aproximadamente normal estándar. Y sabemos que una normal estándar cae entre $-1.96$ y $1.96$ con probabilidad 0.95:
+Por el [teorema del límite central](variabilidad.md#el-teorema-del-límite-central), la media muestral tipificada es aproximadamente normal estándar. Y sabemos que una normal estándar cae entre $-1.96$ y $1.96$ con probabilidad 0.95:
 
 $$P\left(-1.96 \le \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \le 1.96\right) \approx 0.95$$
 
@@ -203,7 +131,6 @@ Allí veremos también qué hacer con **muestras pequeñas**. Si $n$ es pequeño
 > ⛔ **Errores frecuentes**
 >
 > - **Confundir $s$ con $s/\sqrt{n}$**, y dar un intervalo para la media usando la desviación típica de los datos.
-> - **Pensar que el TLC hace normales los datos.** Solo la media (o la suma) es aproximadamente normal.
 > - **Olvidar las condiciones:** muestra aleatoria e independiente, y $n$ suficiente, sobre todo para proporciones pequeñas.
 > - **Interpretar el intervalo como un rango para los individuos** o como una probabilidad sobre el parámetro.
 > - **Esperar que doblar la muestra divida el error a la mitad.** Hace falta cuadruplicarla.
@@ -268,25 +195,14 @@ print(p_hats.mean(), p_hats.std())               # ≈ 0.25 y ≈ 0.0217
 
 > ✅ **Lo esencial**
 >
-> - Toda estimación calculada con una muestra es una **variable aleatoria**: cambiaría con otra muestra. Su distribución es la **distribución muestral**.
-> - La media muestral es **insesgada** y su **error estándar** es $\sigma/\sqrt{n}$: la precisión crece con la raíz del tamaño de muestra.
-> - El **teorema del límite central** dice que la media de muchas observaciones independientes es aproximadamente normal, **sea cual sea** la distribución de los datos.
+> - Por el **teorema del límite central**, una media o una proporción muestral cae a menos de $1.96$ errores estándar del valor real en el 95 % de las muestras. Dando la vuelta a esa frase sale el intervalo de confianza.
 > - Un **intervalo de confianza** es la estimación ± $z_{\alpha/2}$ × error estándar. Más confianza da un intervalo más ancho, y más datos uno más estrecho.
 > - El "95 %" describe al **procedimiento**: el 95 % de los intervalos así construidos contiene el valor real.
 > - Despejando $n$ en el margen de error se **planifica** cuántos datos hacen falta antes de recogerlos.
 
 ## Ejercicios
 
-**1.** Los importes de los pedidos tienen una desviación típica de 40 €. ¿Cuál es el error estándar de la media con 100 pedidos? ¿Y con 400? ¿Cuántos pedidos harían falta para un error estándar de 1 €?
-
-<details>
-<summary>✅ <b>Solución</b></summary>
-
-$40/\sqrt{100} = 4$ € y $40/\sqrt{400} = 2$ €: cuadruplicar la muestra reduce el error a la mitad. Para un error estándar de 1 € hace falta $40/\sqrt{n} = 1$, es decir, $n = 1600$ pedidos.
-
-</details>
-
-**2.** En una muestra de 36 clientes, el gasto medio mensual es de 55 € con $s = 12$ €. Calcula el intervalo de confianza al 95 % para el gasto medio de todos los clientes e interprétalo.
+**1.** En una muestra de 36 clientes, el gasto medio mensual es de 55 € con $s = 12$ €. Calcula el intervalo de confianza al 95 % para el gasto medio de todos los clientes e interprétalo.
 
 <details>
 <summary>✅ <b>Solución</b></summary>
@@ -297,7 +213,7 @@ Interpretación: con un 95 % de confianza, el gasto medio de **todos** los clien
 
 </details>
 
-**3.** Una cadena de restaurantes quiere estimar el tiempo medio de espera con un margen de error de ±1 minuto al 95 %. Un estudio piloto indica que la desviación típica es de unos 12 minutos. ¿Cuántas mesas debe observar?
+**2.** Una cadena de restaurantes quiere estimar el tiempo medio de espera con un margen de error de ±1 minuto al 95 %. Un estudio piloto indica que la desviación típica es de unos 12 minutos. ¿Cuántas mesas debe observar?
 
 <details>
 <summary>✅ <b>Solución</b></summary>
@@ -306,7 +222,7 @@ $n = (1.96 \cdot 12 / 1)^2 = 553.2$, así que hacen falta **554 mesas**, redonde
 
 </details>
 
-**4.** Un partido quiere una encuesta con margen de error de ±2 puntos al **99 %** de confianza y no tiene ninguna estimación previa. ¿Cuántas personas necesita? Compáralo con el caso de ±3 puntos al 95 %.
+**3.** Un partido quiere una encuesta con margen de error de ±2 puntos al **99 %** de confianza y no tiene ninguna estimación previa. ¿Cuántas personas necesita? Compáralo con el caso de ±3 puntos al 95 %.
 
 <details>
 <summary>✅ <b>Solución</b></summary>
@@ -317,7 +233,7 @@ Con ±3 puntos al 95 % bastaban 1068. Pedir más confianza y más precisión a l
 
 </details>
 
-**5.** En un test A/B, de 250 usuarios que vieron la nueva página, 30 compraron (un 12 %). La tasa de conversión histórica es del 15 %. (a) Calcula el intervalo al 95 % para la tasa de conversión de la nueva página. (b) ¿Puedes concluir que la nueva página convierte peor que la histórica?
+**4.** En un test A/B, de 250 usuarios que vieron la nueva página, 30 compraron (un 12 %). La tasa de conversión histórica es del 15 %. (a) Calcula el intervalo al 95 % para la tasa de conversión de la nueva página. (b) ¿Puedes concluir que la nueva página convierte peor que la histórica?
 
 <details>
 <summary>✅ <b>Solución</b></summary>
@@ -328,7 +244,7 @@ Con ±3 puntos al 95 % bastaban 1068. Pedir más confianza y más precisión a l
 
 </details>
 
-**6.** *(Más difícil)* Un compañero dice: "He calculado un intervalo al 95 % y he obtenido [52, 58]. Entonces, si repito el estudio, el 95 % de las veces la media muestral caerá entre 52 y 58". ¿Es correcto? Si no, ¿qué afirmación correcta podría hacer sobre la repetición del estudio?
+**5.** *(Más difícil)* Un compañero dice: "He calculado un intervalo al 95 % y he obtenido [52, 58]. Entonces, si repito el estudio, el 95 % de las veces la media muestral caerá entre 52 y 58". ¿Es correcto? Si no, ¿qué afirmación correcta podría hacer sobre la repetición del estudio?
 
 <details>
 <summary>✅ <b>Solución</b></summary>
@@ -339,4 +255,4 @@ La afirmación correcta es sobre el procedimiento: "si repito el estudio muchas 
 
 </details>
 
-[← Muestras y estimación](estimacion.md) [Siguiente: Práctica guiada →](practica.md)
+[← Cuánto se equivoca una estimación](variabilidad.md) [Siguiente: Práctica guiada →](practica.md)

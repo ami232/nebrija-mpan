@@ -24,9 +24,10 @@ La pregunta clave es **qué estás contando o midiendo**. Esta guía cubre los c
 | Nº de éxitos en $n$ intentos independientes con la misma $p$ | Binomial$(n, p)$ | compras entre 200 visitas |
 | Nº de eventos en un intervalo, a ritmo constante | Poisson$(\lambda)$ | clientes por hora, incidencias al día |
 | $k$ resultados igual de probables | Uniforme discreta$(a, b)$ | un dado, un sorteo |
+| Una medida continua sin ningún valor preferido dentro de un intervalo | Uniforme continua$(a, b)$ | la espera al metro si llegas sin mirar el horario |
 | Una medida continua simétrica alrededor de un centro | Normal$(\mu, \sigma^2)$ | errores de medición, peso de un envase, medias de muchas observaciones |
 
-Hay muchas más (exponencial para tiempos de espera, geométrica, t de Student, beta…). Algunas aparecerán más adelante en el curso; la t de Student, por ejemplo, en [contraste de hipótesis](../contraste-hipotesis/index.md). El explorador de abajo te permite ver cómo cambia la forma de cada una al mover sus parámetros y calcular probabilidades de intervalos. Úsalo mientras lees cada sección.
+Hay muchas más (exponencial para tiempos de espera, geométrica, t de Student, beta…), pero con estas seis cubrimos los modelos que usaremos en el curso. El explorador de abajo te permite ver cómo cambia la forma de cada una al mover sus parámetros y calcular probabilidades de intervalos. Úsalo mientras lees cada sección.
 
 ▶️ [Demo interactiva: distribuciones](https://alberpro.com/nebrija-mpan/topics/variables-aleatorias/demo_distribuciones.html) (en la web)
 
@@ -42,6 +43,18 @@ Es la regla de Laplace del [tema de probabilidad](../probabilidad/index.md#asign
 
 **Cuándo no encaja.** En negocio es rara: casi nunca todos los valores son igual de probables. Las ventas por día de la semana o la hora a la que llegan los pedidos casi nunca son uniformes, y suponerlo lleva a planificar mal.
 
+## Uniforme continua: cualquier valor de un intervalo
+
+**La historia.** Es la misma idea con una variable continua: cualquier valor entre $a$ y $b$ es igual de probable. Ya la vimos con la [espera al metro](variables.md#variables-continuas-la-función-de-densidad): si pasa cada 10 minutos y llegas sin mirar el horario, la espera es Uniforme$(0, 10)$.
+
+> 📘 **Definición: uniforme continua$(a, b)$**
+>
+> $$f(x) = \frac{1}{b - a}, \quad a \le x \le b \qquad\qquad F(x) = \frac{x - a}{b - a} \qquad\qquad \mathbb{E}[X] = \frac{a + b}{2}, \qquad \mathbb{V}[X] = \frac{(b - a)^2}{12}$$
+
+La densidad es un rectángulo de base $b - a$ y altura $1/(b - a)$, para que su área sea 1, y la probabilidad de un tramo es proporcional a su longitud. En el metro, la espera media es 5 minutos y la desviación típica $\sqrt{100/12} \approx 2.89$ minutos.
+
+**Cuándo no encaja.** En cuanto hay información que hace unos valores más probables que otros: si consultas la app antes de bajar al andén, tu espera ya no es uniforme. En negocio aparece sobre todo como modelo de "solo conozco el rango", por ejemplo para simular un coste del que solo sabemos que estará entre dos cifras.
+
 ## Bernoulli: un sí o un no
 
 **La historia.** Un único experimento con dos resultados posibles, que codificamos como **éxito** ($X = 1$) con probabilidad $p$ y **fracaso** ($X = 0$) con probabilidad $1 - p$. Que un cliente renueve, que un préstamo se devuelva, que un usuario acepte las cookies. "Éxito" es solo una etiqueta: puede ser algo indeseable, como que un cliente se dé de baja.
@@ -52,7 +65,7 @@ Es la regla de Laplace del [tema de probabilidad](../probabilidad/index.md#asign
 
 La fórmula es una forma compacta de escribir $P(X = 1) = p$ y $P(X = 0) = 1 - p$: sustituye $x = 1$ y $x = 0$ y lo verás. Codificar con 0 y 1 tiene una ventaja práctica enorme: **la media de una columna de ceros y unos es la proporción de unos**. Si 589 de 1000 usuarios aceptan las cookies, la media de la columna es 0.589, que es a la vez la proporción observada y la estimación natural de $p$. Lo usaremos en la [práctica guiada](../inferencia/practica.md).
 
-La varianza $p(1 - p)$ es máxima cuando $p = 0.5$, la situación de máxima incertidumbre, y vale 0 cuando $p = 0$ o $p = 1$, porque entonces     el resultado es seguro.
+La varianza $p(1 - p)$ es máxima cuando $p = 0.5$, la situación de máxima incertidumbre, y vale 0 cuando $p = 0$ o $p = 1$, porque entonces el resultado es seguro.
 
 ## Binomial: contar éxitos
 
@@ -98,31 +111,19 @@ La media tiene una lectura inmediata: si cada intento acierta con probabilidad $
 2. a un **ritmo medio constante** $\lambda$ por intervalo;
 3. y nunca dos exactamente a la vez.
 
-### De dónde sale: muchos intentos, cada uno muy improbable
-
-Piensa en una hora como 3600 segundos. En cada segundo entra un cliente o no, con una probabilidad minúscula. Si de media entran 4 clientes por hora, esa probabilidad es $4/3600$. El número de clientes por hora sería entonces Binomial$(3600, 4/3600)$: muchísimos intentos con probabilidad diminuta, pero con un número esperado de éxitos fijo, $np = 4$. Si dividimos la hora en intervalos cada vez más finos, la binomial converge a una distribución que solo depende de $\lambda = np$: la Poisson. Numéricamente, la probabilidad de 2 clientes sale $0.14648$ con la binomial de 3600 segundos y $0.14653$ con la Poisson.
-
 > 📘 **Definición: Poisson$(\lambda)$**
 >
 > $$P(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k = 0, 1, 2, \ldots \qquad\qquad \mathbb{E}[X] = \mathbb{V}[X] = \lambda$$
 
-El parámetro $\lambda$ es el número medio de eventos **en el intervalo que estás considerando**, y se escala con su longitud: 4 clientes por hora son 2 por media hora o 32 en una jornada de 8 horas. Este mismo argumento justifica usar la Poisson como **aproximación de la binomial** cuando $n$ es grande y $p$ pequeña: con 1000 clientes, cada uno con probabilidad 0.003 de reclamar, $P(X = 5)$ vale $0.1009$ con la binomial exacta y $0.1008$ con Poisson$(3)$.
+El parámetro $\lambda$ es el número medio de eventos **en el intervalo que estás considerando**, y se escala con su longitud: 4 clientes por hora son 2 por media hora o 32 en una jornada de 8 horas. Por ejemplo, si en una tienda entran de media 4 clientes por hora, la probabilidad de una hora sin clientes es $P(X = 0) = e^{-4} \approx 0.018$: menos de una vez cada 50 horas.
 
-> ✏️ **Ejemplo resuelto: clientes por hora**
+> 💡 **La Poisson, en la entrega 1**
 >
-> En una tienda entran de media 4 clientes por hora, así que $X \sim \text{Poisson}(4)$.
->
-> 1. **Una hora sin clientes.** $P(X = 0) = e^{-4} \approx 0.018$. Ocurre menos de una vez cada 50 horas: si pasa a menudo, algo ha cambiado (la puerta cerrada, una obra en la calle…).
-> 2. **Una hora tranquila, con 2 clientes o menos.** $P(X \le 2) = e^{-4}\left(1 + 4 + \frac{4^2}{2}\right) = 13\,e^{-4} \approx 0.238$.
-> 3. **Necesidad de refuerzo.** Si con más de 8 clientes en una hora hace falta un segundo dependiente, $P(X > 8) = 1 - F(8) \approx 0.021$. Sucederá en torno al 2 % de las horas, unas 2 veces en una semana de 100 horas de apertura.
-
-### Cómo comprobar con datos si es Poisson
-
-Como en una Poisson **la media y la varianza coinciden**, la comprobación más rápida es calcular ambas en los conteos observados. Si la varianza es claramente mayor que la media (**sobredispersión**), suele indicar que el ritmo no es constante, por ejemplo porque se mezclan horas punta y horas valle, o días laborables y fines de semana. La solución habitual es separar los grupos y modelar cada uno con su propio $\lambda$.
+> Te familiarizarás con la Poisson en la [entrega 1](../inferencia/practica.md#entrega-1-conexiones-por-hora), modelando cuántos usuarios se conectan a una web cada minuto. Allí tendrás que decidir si el modelo encaja con los datos y qué hacer si no. Una pista: fíjate en qué dice la definición sobre la media y la varianza.
 
 ## Normal: la campana de Gauss
 
-**La historia.** Una magnitud continua que fluctúa simétricamente alrededor de un valor central, con valores cercanos al centro frecuentes y valores alejados cada vez más raros. Aparece cuando una medida es la **suma de muchos efectos pequeños e independientes**: el peso de un envase de 500 g resulta de pequeñas variaciones de la máquina, la temperatura, el material… Este hecho tiene una versión precisa, el [teorema del límite central](../inferencia/intervalos.md#el-teorema-del-límite-central), que explica por qué la normal es la distribución más importante de la estadística: las **medias** de muchas observaciones son aproximadamente normales, sea cual sea la distribución de partida.
+**La historia.** Una magnitud continua que fluctúa simétricamente alrededor de un valor central, con valores cercanos al centro frecuentes y valores alejados cada vez más raros. Aparece cuando una medida es la **suma de muchos efectos pequeños e independientes**: el peso de un envase de 500 g resulta de pequeñas variaciones de la máquina, la temperatura, el material… Este hecho tiene una versión precisa, el [teorema del límite central](../inferencia/variabilidad.md#el-teorema-del-límite-central), que explica por qué la normal es la distribución más importante de la estadística: las **medias** de muchas observaciones son aproximadamente normales, sea cual sea la distribución de partida.
 
 > 📘 **Definición: Normal$(\mu, \sigma^2)$**
 >
@@ -151,20 +152,6 @@ El valor $z$ de una observación dice **a cuántas desviaciones típicas de la m
 > 3. **Altura de diseño.** Para que un producto sirva al 95 % de la población, buscamos el percentil 95: $q_{0.95} = 170 + 1.645 \cdot 8 \approx 183.2$ cm.
 
 **Cuándo no encaja.** Muchos datos de negocio **no** son normales: los ingresos, los importes de compra o los tiempos de espera son asimétricos, con una cola larga a la derecha. Tampoco lo son las variables acotadas cerca de un extremo (una tasa de error cercana a 0). Antes de suponer normalidad, mira el histograma y compara la media con la mediana: si difieren mucho, la distribución es asimétrica.
-
-## Aproximación normal de la binomial
-
-Una binomial es una suma de $n$ Bernoullis independientes. Por el mismo motivo que hace normal la suma de muchos efectos pequeños, cuando $n$ es grande la binomial se parece a una normal con su misma media y varianza:
-
-$$\text{Binomial}(n, p) \approx N\big(np,\ np(1 - p)\big) \qquad \text{si } np > 5 \text{ y } n(1 - p) > 5.$$
-
-La condición pide que haya suficientes éxitos y fracasos esperados para que la campana no quede "aplastada" contra el 0 o contra $n$. La aproximación fue esencial antes de los ordenadores y sigue siendo la base de los intervalos de confianza para proporciones que veremos en el [tema de inferencia](../inferencia/intervalos.md#intervalos-de-confianza).
-
-**La corrección de continuidad.** La binomial reparte la probabilidad en barras de anchura 1 centradas en los enteros; la normal la reparte de forma continua. La barra del valor 14 ocupa el intervalo de 13.5 a 14.5, así que "14 o menos" en la binomial corresponde a "hasta 14.5" en la normal:
-
-$$P(X \le k) \approx P(Y \le k + 0.5), \qquad P(X \ge k) \approx P(Y \ge k - 0.5).$$
-
-En el ejemplo de la campaña, $Y \sim N(10, 9.5)$ y $P(X \ge 15) \approx P(Y \ge 14.5) \approx 0.072$, frente a 0.078 exacto. La aproximación no es perfecta aquí porque $np = 10$ está cerca del límite y la binomial todavía es algo asimétrica. Activa la opción *Mostrar aproximación normal* del explorador para ver cuándo encaja bien y cuándo no.
 
 ## En Python: `scipy.stats`
 
@@ -233,13 +220,21 @@ print(alturas.ppf(0.95))                      # percentil 95 ≈ 183.2
 ```
 
 ```python
-# ¿Encajan unos conteos con una Poisson? Compara media y varianza
-conteos = stats.poisson.rvs(4, size=500, random_state=1)
-print(conteos.mean(), conteos.var(ddof=1))    # parecidas: compatible con Poisson
+dado = stats.randint(1, 7)                    # uniforme discreta: ¡excluye el 7!
+print(dado.mean(), dado.var())                # 3.5 y ≈ 2.92
 ```
 
 ```text
-4.094 4.377919839679358
+3.5 2.9166666666666665
+```
+
+```python
+metro = stats.uniform(loc=0, scale=10)        # uniforme continua: loc = a, scale = b − a
+print(metro.sf(7), metro.mean(), metro.std()) # 0.3, 5.0 y ≈ 2.89
+```
+
+```text
+0.30000000000000004 5.0 2.8867513459481287
 ```
 
 > ⚠️ **Errores frecuentes**
@@ -247,6 +242,7 @@ print(conteos.mean(), conteos.var(ddof=1))    # parecidas: compatible con Poisso
 > - **Pasar la varianza en vez de la desviación típica a `stats.norm`.** `stats.norm(170, 64)` es una normal con $\sigma = 64$, no con $\sigma^2 = 64$.
 > - **Usar `sf(k)` para "$k$ o más" en una discreta.** $P(X \ge k)$ es `sf(k - 1)`.
 > - **Olvidar que `stats.randint(a, b)` excluye $b$.** Un dado es `stats.randint(1, 7)`.
+> - **Pasar $b$ en vez de $b - a$ a `stats.uniform`.** La uniforme entre 2 y 5 es `stats.uniform(2, 3)`.
 > - **No escalar $\lambda$ al intervalo.** Si hay 12 llamadas por hora, en 15 minutos $\lambda = 3$, no 12.
 > - **Suponer normalidad por costumbre** en datos claramente asimétricos, como importes o tiempos.
 > - **Leer `pdf` como una probabilidad.** `stats.norm.pdf(170, 170, 8)` $\approx 0.0499$ es una densidad, no la probabilidad de medir 170 cm.
@@ -254,10 +250,11 @@ print(conteos.mean(), conteos.var(ddof=1))    # parecidas: compatible con Poisso
 > ✅ **Lo esencial**
 >
 > - Una distribución con nombre propio resume, con uno o dos parámetros, un **mecanismo** que genera datos; usarla es una **suposición** que conviene comprobar.
+> - **Uniformes:** todos los valores igual de probables, entre $a$ y $b$; discreta (un dado) o continua (la espera al metro).
 > - **Bernoulli:** un sí/no; la media de una columna 0/1 es la proporción de unos.
 > - **Binomial:** éxitos en $n$ intentos independientes con la misma $p$; media $np$. Su fórmula cuenta secuencias por probabilidad de cada secuencia.
 > - **Poisson:** eventos en un intervalo a ritmo constante; media igual a varianza, y $\lambda$ se escala con el intervalo.
-> - **Normal:** simétrica alrededor de $\mu$; con la escala $z$ y la regla 68–95–99.7 estimas probabilidades de cabeza. Aproxima a la binomial cuando $np$ y $n(1 - p)$ superan 5.
+> - **Normal:** simétrica alrededor de $\mu$; con la escala $z$ y la regla 68–95–99.7 estimas probabilidades de cabeza.
 
 ## Ejercicios
 
@@ -308,28 +305,17 @@ $X \sim \text{Binomial}(5, 0.2)$.
 
 </details>
 
-**5.** Unos conteos diarios de devoluciones tienen media 20 y varianza 85. ¿Te parece razonable modelarlos con una Poisson? ¿Qué harías?
+**5.** Un proveedor dice que entregará el material "entre las 9:00 y las 13:00", sin más precisión. Modelando la hora de llegada como una uniforme continua, ¿qué probabilidad hay de que llegue antes de las 10:00? ¿Y de que no haya llegado a las 12:30? ¿Cuál es la hora media de llegada y su desviación típica?
 
 <details>
 <summary>✅ <b>Solución</b></summary>
 
-Poco razonable. En una Poisson la varianza es igual a la media, y aquí es más de cuatro veces mayor: hay **sobredispersión**. Suele indicar que el ritmo de devoluciones no es constante, por ejemplo porque se mezclan días normales con días posteriores a campañas, o laborables con fines de semana. Lo indicado es separar los datos por esos grupos y comprobar si, dentro de cada grupo, media y varianza se parecen.
+Medimos en horas desde las 9:00: $X \sim \text{Uniforme}(0, 4)$, con densidad $1/4$.
+
+- **Antes de las 10:00:** un tramo de 1 hora de las 4 posibles, $P(X < 1) = 1/4 = 0.25$.
+- **No ha llegado a las 12:30:** quedan 0.5 horas de las 4, $P(X > 3.5) = 0.5/4 = 0.125$. En Python, `stats.uniform(0, 4).sf(3.5)`.
+- **Media y desviación típica:** $\mathbb{E}[X] = (0 + 4)/2 = 2$, es decir, a las 11:00, y $\sigma = \sqrt{4^2/12} \approx 1.15$ horas, algo más de una hora.
 
 </details>
 
-**6.** Una landing recibe 400 visitas y cada una convierte con probabilidad 0.3. Calcula P(X ≤ 110) con la aproximación normal, con y sin corrección de continuidad, y compara con el valor exacto. ¿Se cumple la condición para aproximar?
-
-<details>
-<summary>✅ <b>Solución</b></summary>
-
-La condición se cumple con holgura: $np = 120$ y $n(1 - p) = 280$, ambos muy por encima de 5. La normal aproximada es $Y \sim N(120, 84)$, con $\sigma = \sqrt{400 \cdot 0.3 \cdot 0.7} = \sqrt{84} \approx 9.17$.
-
-- **Con corrección:** $P(Y \le 110.5) = P\left(Z \le \frac{110.5 - 120}{9.17}\right) = P(Z \le -1.04) \approx 0.150$.
-- **Sin corrección:** $P(Y \le 110) \approx 0.138$.
-- **Exacto:** `stats.binom.cdf(110, 400, 0.3)` $\approx 0.150$.
-
-Con corrección de continuidad la aproximación coincide con el valor exacto hasta la tercera cifra; sin ella, el error es de más de un punto porcentual.
-
-</details>
-
-[← Variables aleatorias](variables.md) [Siguiente: Estadísticos →](estadisticos.md)
+[← Variables aleatorias](variables.md) [Siguiente tema: Estimación e inferencia →](../inferencia/index.md)
