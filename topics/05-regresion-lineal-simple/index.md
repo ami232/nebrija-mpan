@@ -1,4 +1,4 @@
-# Regresión lineal simple
+# 5. Regresión lineal simple
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/05-regresion-lineal-simple/>
 

@@ -1,4 +1,4 @@
-# Clasificación multiclase
+# 10. Clasificación multiclase
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/10-clasificacion-multiclase/>
 

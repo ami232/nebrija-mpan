@@ -1,4 +1,4 @@
-# Contraste de hipótesis
+# 4. Contraste de hipótesis
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/04-contraste-hipotesis/>
 

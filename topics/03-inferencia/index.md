@@ -1,4 +1,4 @@
-# Estimación e inferencia
+# 3. Estimación e inferencia
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/03-inferencia/>
 

@@ -1,4 +1,4 @@
-# 1. Variables aleatorias
+# 2.1 Variables aleatorias
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/02-variables-aleatorias/variables/>
 

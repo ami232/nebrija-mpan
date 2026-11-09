@@ -1,4 +1,4 @@
-# 1. Estimación: de los datos al modelo
+# 3.1 Estimación: de los datos al modelo
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/03-inferencia/estimacion/>
 

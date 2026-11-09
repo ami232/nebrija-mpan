@@ -1,16 +1,16 @@
-# 2. Cuánto se equivoca una estimación
+# 3.2 Cuánto se equivoca una estimación
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/03-inferencia/variabilidad/>
 
 > ℹ️ **Antes de empezar**
 >
-> Esta página continúa el caso de la campaña de email de la [página 1](estimacion.md): el modelo $\text{Binomial}(500, p)$ y la estimación $\hat{p}$. Usa también la [media y la varianza](../02-variables-aleatorias/variables.md#media-y-varianza-de-una-distribución) de una distribución y la [distribución normal](../02-variables-aleatorias/distribuciones.md#normal-la-campana-de-gauss).
+> Esta página continúa el caso de la campaña de email de la [página 3.1](estimacion.md): el modelo $\text{Binomial}(500, p)$ y la estimación $\hat{p}$. Usa también la [media y la varianza](../02-variables-aleatorias/variables.md#media-y-varianza-de-una-distribución) de una distribución y la [distribución normal](../02-variables-aleatorias/distribuciones.md#normal-la-campana-de-gauss).
 
 En la página anterior estimamos la probabilidad de compra con 30 días de campaña y obtuvimos $\hat{p} \approx 0.0729$, cuando el valor real era 0.07. Pudimos medir el error porque los datos eran simulados y conocíamos $p$. En la vida real no lo conocemos, así que la pregunta es: **¿cuánto puede equivocarse una estimación, sin saber el valor real?** Esta página responde en tres pasos. Primero vemos, simulando, que una estimación cambia de una muestra a otra. Después medimos cuánto, con el **error estándar**. Por último, la **ley de los grandes números** y el **teorema del límite central** describen cómo se comporta la estimación cuando hay muchos datos.
 
 ## Otra muestra, otro resultado
 
-Si la campaña hubiera durado **otros** 30 días, los datos habrían sido distintos, y también $\hat{p}$ y todas las probabilidades calculadas con él. Para verlo, metemos el análisis de la página 1 en una función y lo repetimos 10 veces:
+Si la campaña hubiera durado **otros** 30 días, los datos habrían sido distintos, y también $\hat{p}$ y todas las probabilidades calculadas con él. Para verlo, metemos el análisis de la página 3.1 en una función y lo repetimos 10 veces:
 
 ```python
 import numpy as np
@@ -241,7 +241,7 @@ La condición pide que haya suficientes éxitos y fracasos esperados para que la
 
 $$P(X \le k) \approx P(Y \le k + 0.5), \qquad P(X \ge k) \approx P(Y \ge k - 0.5).$$
 
-Repetimos con la normal el cálculo de la página 1, la probabilidad de perder dinero con $\hat{p} = 0.0729$:
+Repetimos con la normal el cálculo de la página 3.1, la probabilidad de perder dinero con $\hat{p} = 0.0729$:
 
 ```python
 p_hat = 0.0729

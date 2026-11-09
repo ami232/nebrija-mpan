@@ -1,4 +1,4 @@
-# 4. Práctica guiada: aceptación de cookies
+# 3.4 Práctica guiada: aceptación de cookies
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/03-inferencia/practica/>
 

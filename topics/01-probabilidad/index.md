@@ -1,4 +1,4 @@
-# Probabilidad
+# 1. Probabilidad
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/01-probabilidad/>
 

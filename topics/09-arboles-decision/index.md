@@ -1,4 +1,4 @@
-# Árboles de decisión y ensembles
+# 9. Árboles de decisión y ensembles
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/09-arboles-decision/>
 

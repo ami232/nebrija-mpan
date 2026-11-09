@@ -1,4 +1,4 @@
-# Regresión logística
+# 7. Regresión logística
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/07-regresion-logistica/>
 

@@ -1,4 +1,4 @@
-# Regresión lineal múltiple
+# 6. Regresión lineal múltiple
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/06-regresion-lineal-multiple/>
 

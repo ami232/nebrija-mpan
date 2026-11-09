@@ -1,4 +1,4 @@
-# Variables aleatorias y distribuciones
+# 2. Variables aleatorias y distribuciones
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/02-variables-aleatorias/>
 

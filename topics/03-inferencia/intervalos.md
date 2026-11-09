@@ -1,10 +1,10 @@
-# 3. Intervalos de confianza: de la muestra a la población
+# 3.3 Intervalos de confianza: de la muestra a la población
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/03-inferencia/intervalos/>
 
 > ℹ️ **Antes de empezar**
 >
-> Esta página usa el **error estándar** y el **teorema del límite central** de la [página 2](variabilidad.md), y la tipificación $z = (x - \mu)/\sigma$ de la [distribución normal](../02-variables-aleatorias/distribuciones.md#normal-estándar).
+> Esta página usa el **error estándar** y el **teorema del límite central** de la [página 3.2](variabilidad.md), y la tipificación $z = (x - \mu)/\sigma$ de la [distribución normal](../02-variables-aleatorias/distribuciones.md#normal-estándar).
 
 ## El problema
 
@@ -14,7 +14,7 @@ Una marca encuesta a 400 clientes y 92 dicen que la recomendarían: un **23 %**.
 
 ## Lo que ya sabemos de una proporción muestral
 
-En la [página 2](variabilidad.md) vimos que una estimación es una variable aleatoria, y conocemos su distribución. Para una proporción, el teorema del límite central dice que, con una muestra suficientemente grande,
+En la [página 3.2](variabilidad.md) vimos que una estimación es una variable aleatoria, y conocemos su distribución. Para una proporción, el teorema del límite central dice que, con una muestra suficientemente grande,
 
 $$\hat{p} \approx N\!\left(p,\ \frac{p(1 - p)}{n}\right), \qquad \text{con error estándar} \quad \text{SE} = \sqrt{\frac{p(1 - p)}{n}} \approx \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}$$
 

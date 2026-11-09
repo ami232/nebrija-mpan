@@ -1,10 +1,10 @@
-# 2. Distribuciones con nombre propio
+# 2.2 Distribuciones con nombre propio
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/02-variables-aleatorias/distribuciones/>
 
 > ℹ️ **Lo que necesitas antes**
 >
-> Qué es una variable aleatoria, y cómo se usan la PMF, la PDF y la CDF para calcular probabilidades. Lo tienes en [1. Variables aleatorias](variables.md).
+> Qué es una variable aleatoria, y cómo se usan la PMF, la PDF y la CDF para calcular probabilidades. Lo tienes en [2.1 Variables aleatorias](variables.md).
 
 ## Por qué unas pocas distribuciones bastan para casi todo
 

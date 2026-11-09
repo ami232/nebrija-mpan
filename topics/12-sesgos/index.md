@@ -1,4 +1,4 @@
-# Sesgos en los datos
+# 12. Sesgos en los datos
 
 > Versión web, con demos interactivas: <https://alberpro.com/nebrija-mpan/topics/12-sesgos/>
 
