@@ -119,7 +119,7 @@ El parámetro $\lambda$ es el número medio de eventos **en el intervalo que est
 
 > 💡 **La Poisson, en la entrega 1**
 >
-> Te familiarizarás con la Poisson en la [entrega 1](../03-inferencia/practica.md#entrega-1-conexiones-por-hora), modelando cuántos usuarios se conectan a una web cada minuto. Allí tendrás que decidir si el modelo encaja con los datos y qué hacer si no. Una pista: fíjate en qué dice la definición sobre la media y la varianza.
+> La [entrega 1](../03-inferencia/practica.md#entrega-1-la-distribución-de-poisson-y-las-conexiones-a-una-web) explica la Poisson con más detalle (cómo estimar $\lambda$, comprobar si el modelo encaja y hacer contrastes) y la aplica a cuántos usuarios se conectan a una web cada minuto.
 
 ## Normal: la campana de Gauss
 

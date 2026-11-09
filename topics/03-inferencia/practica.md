@@ -153,22 +153,22 @@ Ninguno invalida el análisis por completo, pero la dependencia suele hacer que 
 
 </details>
 
-## Entrega 1: conexiones por hora
+## Entrega 1: la distribución de Poisson y las conexiones a una web
 
-Ahora te toca a ti hacer un análisis completo. Durante un día se registró, minuto a minuto, cuántos usuarios se conectaban a la web y cuántos de ellos aceptaban las cookies. Hay dos preguntas de negocio:
+Ahora te toca a ti hacer un análisis completo, con una distribución nueva: la **Poisson**, que modela cuántas veces ocurre algo en un intervalo de tiempo. Durante una semana se registró, minuto a minuto, cuántos usuarios se conectaban a una web y cuántos de ellos aceptaban las cookies. Hay dos preguntas de negocio:
 
-- **Marketing** quiere saber si los usuarios aceptan las cookies más a unas horas que a otras.
 - **Infraestructura** necesita saber con qué frecuencia se superarán los 40 usuarios por minuto, porque a partir de ahí hay que contratar un servidor más potente.
+- **Marketing** quiere saber si los usuarios aceptan las cookies más en unos momentos que en otros (a unas horas, o unos días de la semana).
 
-**Entrega 1: conexiones por hora y aceptación de cookies** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/03-inferencia/assignment.ipynb) &nbsp; [descargar .ipynb](assignment.ipynb)
+**Entrega 1: la distribución de Poisson y las conexiones a una web** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/03-inferencia/assignment.ipynb) &nbsp; [descargar .ipynb](assignment.ipynb)
 
-**Cómo abordarla.** Sigue la misma estructura que esta práctica:
+El notebook tiene dos partes:
 
-1. **Explora** los datos, con gráficos de las conexiones y la tasa de aceptación a lo largo del día.
-2. **Propón un modelo** para cada variable y justifícalo. ¿Qué distribución describe un *número de eventos por unidad de tiempo*? ¿Y el número de aceptaciones sabiendo cuántos usuarios se conectaron?
-3. **Enuncia tus suposiciones** y **compruébalas** con los datos. ¿Es el ritmo de conexiones igual a todas horas?
-4. **Responde a cada departamento** con números, su incertidumbre y un párrafo de conclusiones que entendería alguien que no sabe estadística.
+1. **La distribución de Poisson.** Una explicación con ejemplos ejecutables: qué cuenta, su fórmula, cómo calcular probabilidades con `scipy.stats`, cómo estimar su parámetro $\lambda$ con un intervalo de confianza, cómo comprobar si encaja con unos datos y cómo hacer contrastes sobre $\lambda$.
+2. **El ejercicio.** Explorar los datos, proponer un modelo y comprobar sus suposiciones, responder a cada departamento con números y su incertidumbre, y escribir unas conclusiones que entendería alguien que no sabe estadística.
 
-La entrega se sube en **Blackboard**: descarga tu notebook desde Colab (*Archivo → Descargar → Descargar .ipynb*) y súbelo a la tarea correspondiente.
+Usa lo que has visto en [variables aleatorias y distribuciones](../02-variables-aleatorias/distribuciones.md), en este tema y en [contraste de hipótesis](../04-contraste-hipotesis/index.md).
+
+La entrega se sube en **Blackboard**: descarga tu notebook desde Colab (*Archivo → Descargar → Descargar .ipynb*), con todas las celdas ejecutadas, y súbelo a la tarea "Entrega 1".
 
 [← Intervalos de confianza](intervalos.md) [Volver al tema ↑](index.md)
