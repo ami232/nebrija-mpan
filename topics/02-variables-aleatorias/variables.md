@@ -10,7 +10,7 @@
 
 Imagina que gestionas una tienda online y quieres planificar el embalaje: cuántas cajas de cada tamaño pedir, cuánto tiempo de preparación reservar por pedido. Cada pedido es el resultado de un experimento aleatorio: no sabes de antemano qué comprará el próximo cliente. Con lo visto en el tema anterior podrías describir sucesos como "el pedido tiene más de tres artículos" y calcular su probabilidad, pero en cuanto quieras responder preguntas como **"¿cuántos artículos tiene un pedido en promedio?"** o **"¿cuánto varía ese número?"** necesitas algo más: necesitas que el resultado del experimento sea un **número** con el que se pueda sumar, promediar y comparar.
 
-Eso es exactamente una variable aleatoria: una regla que convierte cada resultado del experimento en un número. El pedido "dos camisetas y un pantalón" se convierte en el número 3; el cliente que deja cuatro estrellas, en un 4; el usuario que acepta las cookies, en un 1.
+Eso es exactamente una variable aleatoria: una regla que convierte cada resultado del experimento en un número. El pedido "dos camisetas y un pantalón" se convierte en el número 3; el cliente que deja cuatro estrellas, en un 4; el cliente que compra tras recibir un email promocional, en un 1.
 
 > 📘 **Definición: variable aleatoria**
 >
@@ -24,7 +24,7 @@ La misma situación admite varias variables aleatorias según lo que nos interes
 
 Las variables aleatorias se dividen en dos grandes familias, y la distinción importa porque cambia la forma de calcular probabilidades:
 
-- Una variable es **discreta** si sus valores posibles se pueden enumerar uno a uno: $0, 1, 2, \ldots$ Son discretos los **conteos** (artículos, clientes, reclamaciones) y las categorías codificadas con números (acepta = 1, rechaza = 0).
+- Una variable es **discreta** si sus valores posibles se pueden enumerar uno a uno: $0, 1, 2, \ldots$ Son discretos los **conteos** (artículos, clientes, reclamaciones) y las categorías codificadas con números (compra = 1, no compra = 0).
 - Una variable es **continua** si puede tomar cualquier valor dentro de un intervalo: el tiempo de entrega, la altura, un importe. Entre 2.5 y 2.6 días caben infinitos valores posibles.
 
 Una regla práctica: si la pregunta natural es "¿cuántos?", la variable es discreta; si es "¿cuánto mide?" o "¿cuánto tarda?", continua. Los importes en euros se redondean a céntimos y técnicamente son discretos, pero hay tantos valores posibles que se modelan como continuos.

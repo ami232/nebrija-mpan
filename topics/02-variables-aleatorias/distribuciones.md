@@ -39,7 +39,7 @@ Hay muchas más (exponencial para tiempos de espera, geométrica, t de Student, 
 >
 > $$P(X = x) = \frac{1}{b - a + 1}, \quad x = a, a+1, \ldots, b \qquad\qquad \mathbb{E}[X] = \frac{a + b}{2}, \qquad \mathbb{V}[X] = \frac{(b - a + 1)^2 - 1}{12}$$
 
-Es la regla de Laplace del [tema de probabilidad](../01-probabilidad/index.md#asignar-probabilidades) convertida en distribución. Para un dado, $a = 1$ y $b = 6$, así que cada cara tiene probabilidad $1/6$, la media es $3.5$ y la varianza $35/12 \approx 2.92$. Que la media sea 3.5, un valor que el dado nunca muestra, recuerda que el valor esperado es un promedio a largo plazo, no el resultado "típico".
+Es la regla de Laplace del [tema de probabilidad](../01-probabilidad/probabilidad.md#asignar-probabilidades) convertida en distribución. Para un dado, $a = 1$ y $b = 6$, así que cada cara tiene probabilidad $1/6$, la media es $3.5$ y la varianza $35/12 \approx 2.92$. Que la media sea 3.5, un valor que el dado nunca muestra, recuerda que el valor esperado es un promedio a largo plazo, no el resultado "típico".
 
 **Cuándo no encaja.** En negocio es rara: casi nunca todos los valores son igual de probables. Las ventas por día de la semana o la hora a la que llegan los pedidos casi nunca son uniformes, y suponerlo lleva a planificar mal.
 
@@ -57,13 +57,13 @@ La densidad es un rectángulo de base $b - a$ y altura $1/(b - a)$, para que su 
 
 ## Bernoulli: un sí o un no
 
-**La historia.** Un único experimento con dos resultados posibles, que codificamos como **éxito** ($X = 1$) con probabilidad $p$ y **fracaso** ($X = 0$) con probabilidad $1 - p$. Que un cliente renueve, que un préstamo se devuelva, que un usuario acepte las cookies. "Éxito" es solo una etiqueta: puede ser algo indeseable, como que un cliente se dé de baja.
+**La historia.** Un único experimento con dos resultados posibles, que codificamos como **éxito** ($X = 1$) con probabilidad $p$ y **fracaso** ($X = 0$) con probabilidad $1 - p$. Que un cliente renueve, que un préstamo se devuelva, que un cliente compre tras recibir un email promocional. "Éxito" es solo una etiqueta: puede ser algo indeseable, como que un cliente se dé de baja.
 
 > 📘 **Definición: Bernoulli$(p)$**
 >
 > $$P(X = x) = p^x (1 - p)^{1 - x}, \quad x \in \{0, 1\} \qquad\qquad \mathbb{E}[X] = p, \qquad \mathbb{V}[X] = p(1 - p)$$
 
-La fórmula es una forma compacta de escribir $P(X = 1) = p$ y $P(X = 0) = 1 - p$: sustituye $x = 1$ y $x = 0$ y lo verás. Codificar con 0 y 1 tiene una ventaja práctica enorme: **la media de una columna de ceros y unos es la proporción de unos**. Si 589 de 1000 usuarios aceptan las cookies, la media de la columna es 0.589, que es a la vez la proporción observada y la estimación natural de $p$. Lo usaremos en la [práctica guiada](../03-inferencia/practica.md).
+La fórmula es una forma compacta de escribir $P(X = 1) = p$ y $P(X = 0) = 1 - p$: sustituye $x = 1$ y $x = 0$ y lo verás. Codificar con 0 y 1 tiene una ventaja práctica enorme: **la media de una columna de ceros y unos es la proporción de unos**. Si una tienda envía 28 000 emails y 1968 clientes compran, la media de la columna de ceros y unos es $1968/28\,000 = 0.0703$, que es a la vez la proporción observada y la estimación natural de $p$. Lo usaremos en la [práctica guiada](../03-inferencia/practica.md) del tema de estimación.
 
 La varianza $p(1 - p)$ es máxima cuando $p = 0.5$, la situación de máxima incertidumbre, y vale 0 cuando $p = 0$ o $p = 1$, porque entonces el resultado es seguro.
 
@@ -101,7 +101,7 @@ La media tiene una lectura inmediata: si cada intento acierta con probabilidad $
 > 2. **Probabilidad de exactamente 10.** $P(X = 10) = \binom{200}{10} 0.05^{10}\, 0.95^{190} \approx 0.128$. Aunque 10 es el valor más probable, solo ocurre una de cada ocho veces: con una distribución así, acertar un valor exacto es raro.
 > 3. **Probabilidad de 15 compras o más**, por ejemplo para decidir si hay stock suficiente. "15 o más" es lo contrario de "14 o menos": $P(X \ge 15) = 1 - F(14) \approx 0.078$. Un día de cada trece, aproximadamente.
 
-**Cuándo no encaja.** Si $p$ cambia entre intentos (visitas de campañas distintas, días distintos) o los intentos no son independientes (amigos que compran juntos, un fallo de máquina que afecta a varias piezas seguidas), la binomial subestima la variabilidad real. En la [práctica guiada](../03-inferencia/practica.md) veremos un caso en que $p$ cambia de un día a otro.
+**Cuándo no encaja.** Si $p$ cambia entre intentos (visitas de campañas distintas, días distintos) o los intentos no son independientes (amigos que compran juntos, un fallo de máquina que afecta a varias piezas seguidas), la binomial subestima la variabilidad real. En la [práctica guiada](../03-inferencia/practica.md) del tema de estimación veremos un caso en que $p$ cambia según el día de la semana.
 
 ## Poisson: contar eventos en el tiempo
 
