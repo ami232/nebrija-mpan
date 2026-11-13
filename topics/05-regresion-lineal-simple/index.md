@@ -49,6 +49,10 @@ El **notebook de ejercicios** es la base de la [práctica guiada](practica.md): 
 
 **Ejercicios: covarianza, correlación y regresión simple** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/05-regresion-lineal-simple/exercises.ipynb) &nbsp; [descargar .ipynb](exercises.ipynb)
 
+El **notebook de la sesión** responde a la pregunta de si la pendiente es significativa: lee el `summary()` de statsmodels, calcula a mano el p-valor y el intervalo, muestra un caso no significativo y el efecto del tamaño de la muestra, y compara las formas de ajustar la recta: `np.polyfit`, `scipy.stats.linregress`, statsmodels y scikit-learn.
+
+**Notebook de la sesión: significación de la pendiente; SciPy, statsmodels y scikit-learn** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/05-regresion-lineal-simple/notebook.ipynb) &nbsp; [descargar .ipynb](notebook.ipynb)
+
 El **lab de publicidad**, dentro de la página [El modelo y mínimos cuadrados](modelo.md#predecir-dentro-y-fuera-del-rango-de-los-datos), permite cambiar los datos y ver cómo cambian la recta y los residuos, en el navegador.
 
 La **[guía de referencia](../../reference/modelos-predictivos.md)** reúne las fórmulas de todo el curso en una página.
