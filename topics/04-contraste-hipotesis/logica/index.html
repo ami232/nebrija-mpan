@@ -1,0 +1,2461 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Material docente — estadística, machine learning y desarrollo de software">
+      
+      
+      
+        <link rel="canonical" href="https://alberpro.com/nebrija-mpan/topics/04-contraste-hipotesis/logica/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../una-muestra/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>4.1 La lógica del contraste de hipótesis - Nebrija · Modelos predictivos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#41-la-logica-del-contraste-de-hipotesis" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-header__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nebrija · Modelos predictivos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4.1 La lógica del contraste de hipótesis
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-nav__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nebrija · Modelos predictivos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelos predictivos en el análisis de negocios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../01-probabilidad/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Probabilidad
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Probabilidad
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-probabilidad/probabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1 Sucesos y reglas de la probabilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-probabilidad/condicionada/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2 Probabilidad condicionada y teorema de Bayes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../02-variables-aleatorias/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Variables aleatorias y distribuciones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Variables aleatorias y distribuciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-variables-aleatorias/variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1 Variables aleatorias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-variables-aleatorias/distribuciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2 Distribuciones con nombre propio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../03-inferencia/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Estimación e inferencia
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Estimación e inferencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/estimacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Estimación: de los datos al modelo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/variabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.2 Cuánto se equivoca una estimación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/intervalos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.3 Intervalos de confianza: de la muestra a la población
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.4 Práctica guiada: las ventas de la campaña de email
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Contraste de hipótesis
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4. Contraste de hipótesis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 La lógica del contraste de hipótesis
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 La lógica del contraste de hipótesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#el-problema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El problema
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-idea-suponer-que-la-afirmacion-es-cierta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La idea: suponer que la afirmación es cierta
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hipotesis-nula-y-alternativa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hipótesis nula y alternativa
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-estadistico-de-contraste" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El estadístico de contraste
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nivel-de-significacion-y-valor-critico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nivel de significación y valor crítico
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-p-valor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El p-valor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contrastes-bilaterales-y-unilaterales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contrastes bilaterales y unilaterales
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ocho-semanas-despues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ocho semanas después
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-leer-el-resultado-de-un-contraste" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo leer el resultado de un contraste
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-procedimiento-en-cinco-pasos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El procedimiento en cinco pasos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../una-muestra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.2 Contrastes para una muestra: proporciones y medias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dos-muestras/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.3 Comparar dos grupos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../errores-potencia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.4 Errores, potencia y buen uso de los contrastes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.5 Práctica guiada: contrastes en escenarios de negocio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../05-regresion-lineal-simple/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Regresión lineal simple
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. Regresión lineal simple
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-regresion-lineal-simple/correlacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Dependencia, covarianza y correlación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-regresion-lineal-simple/modelo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 El modelo de regresión y mínimos cuadrados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-regresion-lineal-simple/ajuste/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.3 Residuos, R² e inferencia sobre la pendiente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-regresion-lineal-simple/practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.4 Práctica guiada: regresión con distintos tipos de predictor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../06-regresion-lineal-multiple/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Regresión lineal múltiple
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Regresión lineal múltiple
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../07-regresion-logistica/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Regresión logística
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. Regresión logística
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../08-feature-engineering/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Feature engineering y transformaciones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8. Feature engineering y transformaciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../09-arboles-decision/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Árboles de decisión y ensembles
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    9. Árboles de decisión y ensembles
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../10-clasificacion-multiclase/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Clasificación multiclase
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10. Clasificación multiclase
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../11-series-temporales/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Series temporales
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    11. Series temporales
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../12-sesgos/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Sesgos en los datos
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    12. Sesgos en los datos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Referencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/modelos-predictivos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía de referencia: modelos predictivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#el-problema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El problema
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-idea-suponer-que-la-afirmacion-es-cierta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La idea: suponer que la afirmación es cierta
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hipotesis-nula-y-alternativa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hipótesis nula y alternativa
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-estadistico-de-contraste" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El estadístico de contraste
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nivel-de-significacion-y-valor-critico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nivel de significación y valor crítico
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-p-valor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El p-valor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contrastes-bilaterales-y-unilaterales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contrastes bilaterales y unilaterales
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ocho-semanas-despues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ocho semanas después
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-leer-el-resultado-de-un-contraste" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo leer el resultado de un contraste
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-procedimiento-en-cinco-pasos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El procedimiento en cinco pasos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="41-la-logica-del-contraste-de-hipotesis">4.1 La lógica del contraste de hipótesis<a class="headerlink" href="#41-la-logica-del-contraste-de-hipotesis" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Antes de empezar</p>
+<p>Esta página usa el <strong>error estándar</strong> de una proporción y el <strong>teorema del límite central</strong> de <a href="../../03-inferencia/variabilidad/">cuánto se equivoca una estimación</a>, los <a href="../../03-inferencia/intervalos/">intervalos de confianza</a> y la <a href="../../02-variables-aleatorias/distribuciones/#normal-estandar">normal estándar</a>, con sus funciones <code>cdf</code> y <code>ppf</code>.</p>
+</div>
+<h2 id="el-problema">El problema<a class="headerlink" href="#el-problema" title="Permanent link">&para;</a></h2>
+<p>Seguimos con el caso del tema anterior. Una tienda online envía cada día un email promocional a <strong>500 clientes</strong>. Cada venta deja un margen de 15 €, la campaña cuesta 450 € al día (hacen falta 30 ventas para cubrir costes) y el almacén prepara como máximo 45 pedidos al día. La agencia que diseñó el email aseguró al contratarla que <strong>el 8 % de los clientes que lo reciben compra</strong>.</p>
+<p>Al terminar la primera semana, marketing tiene los datos: <strong>253 ventas de 3500 emails</strong>, un <strong>7.23 %</strong>. Es menos de lo prometido. ¿Basta para decir que la agencia se equivocó? Hay dos explicaciones posibles:</p>
+<ol>
+<li>La agencia se equivocó: la tasa real de compra es distinta del 8 %.</li>
+<li>La agencia tiene razón, y esta semana las ventas han salido algo bajas por azar. En el tema anterior vimos que una proporción calculada con una muestra <a href="../../03-inferencia/variabilidad/">cambia de una muestra a otra</a>.</li>
+</ol>
+<p>Un <strong>contraste de hipótesis</strong> es un procedimiento para elegir entre estas dos explicaciones con los datos, controlando la probabilidad de equivocarse. Es la herramienta que hay detrás de cualquier test A/B, de la mayoría de los estudios de mercado y de los ensayos clínicos.</p>
+<h2 id="la-idea-suponer-que-la-afirmacion-es-cierta">La idea: suponer que la afirmación es cierta<a class="headerlink" href="#la-idea-suponer-que-la-afirmacion-es-cierta" title="Permanent link">&para;</a></h2>
+<p>El razonamiento empieza por <strong>suponer que la agencia tiene razón</strong> y preguntarse: si <span class="arithmatex">\(p = 0.08\)</span>, ¿sería raro ver una semana con un 7.23 %?</p>
+<p>Esta pregunta ya la sabemos responder. Por el teorema del límite central, si <span class="arithmatex">\(p = 0.08\)</span> la proporción de una semana de 3500 emails sigue aproximadamente una normal centrada en 0.08 con error estándar</p>
+<div class="arithmatex">\[\text{SE}_0 = \sqrt{\frac{0.08 \cdot 0.92}{3500}} = 0.00459\]</div>
+<p>El subíndice 0 indica que el error estándar está calculado <strong>suponiendo que la afirmación es cierta</strong>. El 95 % de las semanas caería entre <span class="arithmatex">\(0.08 \pm 1.96 \cdot 0.00459\)</span>, es decir, entre <strong>7.10 % y 8.90 %</strong>. Nuestro 7.23 % está dentro de ese rango, así que una semana como la nuestra es perfectamente posible aunque la agencia tenga razón. Con estos datos no podemos acusar a la agencia de exagerar.</p>
+<p>Hay dos conclusiones posibles de un contraste, y conviene fijarse en cómo se dicen:</p>
+<ul>
+<li>Si los datos serían <strong>muy raros</strong> suponiendo la afirmación, la <strong>rechazamos</strong>: los datos son evidencia en su contra.</li>
+<li>Si los datos <strong>no serían raros</strong>, <strong>no la rechazamos</strong>. Eso no demuestra que sea cierta: solo dice que los datos no bastan para descartarla.</li>
+</ul>
+<p>El resto de la página da nombre a cada pieza de este razonamiento y lo convierte en un procedimiento que sirve para cualquier contraste.</p>
+<h2 id="hipotesis-nula-y-alternativa">Hipótesis nula y alternativa<a class="headerlink" href="#hipotesis-nula-y-alternativa" title="Permanent link">&para;</a></h2>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: hipótesis nula y alternativa</p>
+<p>Un contraste enfrenta dos afirmaciones sobre un parámetro de la población:</p>
+<ul>
+<li>La <strong>hipótesis nula</strong> <span class="arithmatex">\(H_0\)</span> es la afirmación que se supone cierta mientras los datos no digan lo contrario. Siempre incluye una igualdad: <span class="arithmatex">\(H_0: p = 0.08\)</span>.</li>
+<li>La <strong>hipótesis alternativa</strong> <span class="arithmatex">\(H_1\)</span> es lo que queremos detectar si <span class="arithmatex">\(H_0\)</span> es falsa: <span class="arithmatex">\(H_1: p \ne 0.08\)</span>.</li>
+</ul>
+<p>El valor del parámetro en la hipótesis nula se escribe con subíndice 0: <span class="arithmatex">\(p_0 = 0.08\)</span>, <span class="arithmatex">\(\mu_0\)</span>.</p>
+</div>
+<p>¿Cuál de las dos afirmaciones va en <span class="arithmatex">\(H_0\)</span>? La regla práctica es que <span class="arithmatex">\(H_0\)</span> es la afirmación "aburrida": la que mantiene lo que ya se dice o lo que ya se hace (la cifra de la agencia, el tiempo de entrega que se anuncia, el diseño actual de la web), o la que dice que no hay diferencia ni efecto (las dos campañas convierten igual). <span class="arithmatex">\(H_1\)</span> es el cambio, la diferencia o el efecto que nos interesa detectar. El contraste solo puede dar evidencia <strong>contra</strong> <span class="arithmatex">\(H_0\)</span>, nunca a su favor, así que lo que queremos demostrar va en <span class="arithmatex">\(H_1\)</span>.</p>
+<p>Las hipótesis se plantean <strong>antes de ver los datos</strong>. Más abajo veremos por qué importa.</p>
+<h2 id="el-estadistico-de-contraste">El estadístico de contraste<a class="headerlink" href="#el-estadistico-de-contraste" title="Permanent link">&para;</a></h2>
+<p>Para decidir si los datos son raros bajo <span class="arithmatex">\(H_0\)</span> medimos a cuántos errores estándar está la estimación del valor que dice <span class="arithmatex">\(H_0\)</span>. Esa medida es el estadístico de contraste.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: estadístico de contraste</p>
+<p>Un <strong>estadístico de contraste</strong> es un número calculado con la muestra cuya distribución conocemos <strong>si <span class="arithmatex">\(H_0\)</span> es cierta</strong>. Casi todos los del curso tienen la misma forma:</p>
+<div class="arithmatex">\[\text{estadístico} = \frac{\text{estimación} - \text{valor según } H_0}{\text{error estándar}}\]</div>
+<p>Para una proporción, con <span class="arithmatex">\(\hat{p}\)</span> la proporción de la muestra, <span class="arithmatex">\(p_0\)</span> el valor de <span class="arithmatex">\(H_0\)</span> y <span class="arithmatex">\(n\)</span> el tamaño de la muestra:</p>
+<div class="arithmatex">\[z = \frac{\hat{p} - p_0}{\sqrt{p_0(1 - p_0)/n}} \qquad \text{que, si } H_0 \text{ es cierta, sigue aproximadamente una } N(0, 1)\]</div>
+</div>
+<p>En la primera semana:</p>
+<div class="arithmatex">\[z = \frac{0.0723 - 0.08}{0.00459} = -1.68\]</div>
+<p>La proporción observada está 1.68 errores estándar por debajo del 8 %. Si <span class="arithmatex">\(H_0\)</span> es cierta, <span class="arithmatex">\(z\)</span> es un valor de una normal estándar, y ya sabemos que valores como <span class="arithmatex">\(-1.68\)</span> no son raros en una normal estándar: entre <span class="arithmatex">\(-1.96\)</span> y <span class="arithmatex">\(1.96\)</span> cae el 95 % de los casos.</p>
+<h2 id="nivel-de-significacion-y-valor-critico">Nivel de significación y valor crítico<a class="headerlink" href="#nivel-de-significacion-y-valor-critico" title="Permanent link">&para;</a></h2>
+<p>Falta decidir <strong>a partir de cuándo</strong> consideramos que un resultado es "raro". Esa frontera se fija de antemano.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: nivel de significación, región crítica y valor crítico</p>
+<p>El <strong>nivel de significación</strong> <span class="arithmatex">\(\alpha\)</span> es la probabilidad de rechazar <span class="arithmatex">\(H_0\)</span> cuando en realidad es cierta, y lo elige el analista antes de ver los datos. Lo habitual es <span class="arithmatex">\(\alpha = 0.05\)</span>; también se usan 0.10 y 0.01.</p>
+<p>La <strong>región crítica</strong> (o región de rechazo) es el conjunto de valores del estadístico que llevan a rechazar <span class="arithmatex">\(H_0\)</span>. Se elige para que, si <span class="arithmatex">\(H_0\)</span> es cierta, el estadístico caiga en ella con probabilidad <span class="arithmatex">\(\alpha\)</span>. Sus extremos son los <strong>valores críticos</strong>.</p>
+</div>
+<p>Con <span class="arithmatex">\(H_1: p \ne 0.08\)</span>, tanto un valor muy bajo como uno muy alto de <span class="arithmatex">\(z\)</span> son evidencia contra <span class="arithmatex">\(H_0\)</span>, así que la región crítica tiene dos partes, una en cada cola, con probabilidad <span class="arithmatex">\(\alpha/2\)</span> cada una. Con <span class="arithmatex">\(\alpha = 0.05\)</span> el valor crítico es <span class="arithmatex">\(z_{0.025} = 1.96\)</span> (<code>stats.norm.ppf(0.975)</code>), y rechazamos <span class="arithmatex">\(H_0\)</span> si <span class="arithmatex">\(|z| &gt; 1.96\)</span>. Es el mismo 1.96 de los intervalos de confianza al 95 %, y no por casualidad: lo veremos en la <a href="../una-muestra/#contraste-e-intervalo-de-confianza">página siguiente</a>.</p>
+<p>En la primera semana, <span class="arithmatex">\(|z| = 1.68 &lt; 1.96\)</span>: <strong>no rechazamos</strong> <span class="arithmatex">\(H_0\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th><span class="arithmatex">\(\alpha\)</span></th>
+<th>Valor crítico bilateral</th>
+<th>Valor crítico unilateral</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.10</td>
+<td>1.645</td>
+<td>1.282</td>
+</tr>
+<tr>
+<td>0.05</td>
+<td>1.960</td>
+<td>1.645</td>
+</tr>
+<tr>
+<td>0.01</td>
+<td>2.576</td>
+<td>2.326</td>
+</tr>
+</tbody>
+</table>
+<h2 id="el-p-valor">El p-valor<a class="headerlink" href="#el-p-valor" title="Permanent link">&para;</a></h2>
+<p>Comparar con el valor crítico da una respuesta de sí o no. El <strong>p-valor</strong> da más información: dice <strong>cómo de raro</strong> es el resultado.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: p-valor</p>
+<p>El <strong>p-valor</strong> es la probabilidad de obtener, <strong>si <span class="arithmatex">\(H_0\)</span> es cierta</strong>, un estadístico al menos tan extremo como el observado, en la dirección que indica <span class="arithmatex">\(H_1\)</span>. Cuanto más pequeño, más evidencia hay contra <span class="arithmatex">\(H_0\)</span>. La regla de decisión es:</p>
+<ul>
+<li>si <span class="arithmatex">\(\text{p-valor} \le \alpha\)</span>, se rechaza <span class="arithmatex">\(H_0\)</span>;</li>
+<li>si <span class="arithmatex">\(\text{p-valor} &gt; \alpha\)</span>, no se rechaza <span class="arithmatex">\(H_0\)</span>.</li>
+</ul>
+</div>
+<p>En la primera semana, con <span class="arithmatex">\(H_1: p \ne 0.08\)</span>, "al menos tan extremo" significa a 1.68 errores estándar o más del 8 %, por arriba o por abajo:</p>
+<div class="arithmatex">\[\text{p-valor} = P(|Z| \ge 1.68) = 2 \cdot P(Z \le -1.68) = 2 \cdot 0.046 = 0.093\]</div>
+<p>Si la agencia tuviera razón, un 9.3 % de las semanas se alejarían del 8 % tanto como la nuestra o más. No es tan raro: no rechazamos <span class="arithmatex">\(H_0\)</span> con <span class="arithmatex">\(\alpha = 0.05\)</span>.</p>
+<p>Las dos reglas, comparar <span class="arithmatex">\(|z|\)</span> con el valor crítico y comparar el p-valor con <span class="arithmatex">\(\alpha\)</span>, llevan <strong>siempre a la misma decisión</strong>. <span class="arithmatex">\(|z|\)</span> supera el valor crítico exactamente cuando el área de las colas más allá de <span class="arithmatex">\(z\)</span> es menor que <span class="arithmatex">\(\alpha\)</span>. En la figura, el área sombreada en rojo es <span class="arithmatex">\(\alpha = 0.05\)</span> y la azul es el p-valor:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">z_obs</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.68</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">)</span>
+<span class="n">cola</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">z_obs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">where</span><span class="o">=</span><span class="n">cola</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:blue"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"p-valor = 0.093"</span><span class="p">)</span>
+<span class="n">critica</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mf">1.96</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">where</span><span class="o">=</span><span class="n">critica</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:red"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"región crítica (α = 0.05)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">z_obs</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:blue"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"z"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"densidad si H₀ es cierta"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="resultado resultado-figura"><img alt="Figura generada por el código" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIKICAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjUwNC4wNjY0MDZwdCIgaGVpZ2h0PSIyMzkuNDRwdCIgdmlld0JveD0iMCAwIDUwNC4wNjY0MDYgMjM5LjQ0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSI+CiA8bWV0YWRhdGE+CiAgPHJkZjpSREYgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIiB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICA8Y2M6V29yaz4KICAgIDxkYzp0eXBlIHJkZjpyZXNvdXJjZT0iaHR0cDovL3B1cmwub3JnL2RjL2RjbWl0eXBlL1N0aWxsSW1hZ2UiLz4KICAgIDxkYzpmb3JtYXQ+aW1hZ2Uvc3ZnK3htbDwvZGM6Zm9ybWF0PgogICAgPGRjOmNyZWF0b3I+CiAgICAgPGNjOkFnZW50PgogICAgICA8ZGM6dGl0bGU+TWF0cGxvdGxpYiB2My4xMS4yLCBodHRwczovL21hdHBsb3RsaWIub3JnLzwvZGM6dGl0bGU+CiAgICAgPC9jYzpBZ2VudD4KICAgIDwvZGM6Y3JlYXRvcj4KICAgPC9jYzpXb3JrPgogIDwvcmRmOlJERj4KIDwvbWV0YWRhdGE+CiA8ZGVmcz4KICA8c3R5bGUgdHlwZT0idGV4dC9jc3MiPip7c3Ryb2tlLWxpbmVqb2luOiByb3VuZDsgc3Ryb2tlLWxpbmVjYXA6IGJ1dHR9PC9zdHlsZT4KIDwvZGVmcz4KIDxnIGlkPSJmaWd1cmVfMSI+CiAgPGcgaWQ9InBhdGNoXzEiPgogICA8cGF0aCBkPSJNIDAgMjM5LjQ0IApMIDUwNC4wNjY0MDYgMjM5LjQ0IApMIDUwNC4wNjY0MDYgMCAKTCAwIDAgCnoKIiBzdHlsZT0iZmlsbDogI2ZmZmZmZiIvPgogIDwvZz4KICA8ZyBpZD0iYXhlc18xIj4KICAgPGcgaWQ9InBhdGNoXzIiPgogICAgPHBhdGggZD0iTSA1MC40NjY0MDYgMjAxLjI0IApMIDQ5Ni44NjY0MDYgMjAxLjI0IApMIDQ5Ni44NjY0MDYgNy4yIApMIDUwLjQ2NjQwNiA3LjIgCnoKIiBzdHlsZT0iZmlsbDogI2ZmZmZmZiIvPgogICA8L2c+CiAgIDxnIGlkPSJGaWxsQmV0d2VlblBvbHlDb2xsZWN0aW9uXzEiPgogICAgPHBhdGggZD0iTSA3MC43NTczMTUgMTkyLjQyIApMIDcwLjc1NzMxNSAxOTIuMzYwODIxIApMIDcxLjc3NDQwNCAxOTIuMzU1ODkzIApMIDcyLjc5MTQ5MiAxOTIuMzUwNTgxIApMIDczLjgwODU4IDE5Mi4zNDQ4NiAKTCA3NC44MjU2NjggMTkyLjMzODcgCkwgNzUuODQyNzU2IDE5Mi4zMzIwNyAKTCA3Ni44NTk4NDQgMTkyLjMyNDkzOCAKTCA3Ny44NzY5MzMgMTkyLjMxNzI2OSAKTCA3OC44OTQwMjEgMTkyLjMwOTAyNiAKTCA3OS45MTExMDkgMTkyLjMwMDE2OSAKTCA4MC45MjgxOTcgMTkyLjI5MDY1NyAKTCA4MS45NDUyODUgMTkyLjI4MDQ0NyAKTCA4Mi45NjIzNzMgMTkyLjI2OTQ5MSAKTCA4My45Nzk0NjIgMTkyLjI1Nzc0MSAKTCA4NC45OTY1NSAxOTIuMjQ1MTQzIApMIDg2LjAxMzYzOCAxOTIuMjMxNjQzIApMIDg3LjAzMDcyNiAxOTIuMjE3MTgyIApMIDg4LjA0NzgxNCAxOTIuMjAxNjk4IApMIDg5LjA2NDkwMiAxOTIuMTg1MTI3IApMIDkwLjA4MTk5MSAxOTIuMTY3NCAKTCA5MS4wOTkwNzkgMTkyLjE0ODQ0NCAKTCA5Mi4xMTYxNjcgMTkyLjEyODE4MyAKTCA5My4xMzMyNTUgMTkyLjEwNjUzNiAKTCA5NC4xNTAzNDMgMTkyLjA4MzQxOSAKTCA5NS4xNjc0MzIgMTkyLjA1ODc0MiAKTCA5Ni4xODQ1MiAxOTIuMDMyNDExIApMIDk3LjIwMTYwOCAxOTIuMDA0MzI5IApMIDk4LjIxODY5NiAxOTEuOTc0MzkxIApMIDk5LjIzNTc4NCAxOTEuOTQyNDg5IApMIDEwMC4yNTI4NzIgMTkxLjkwODUwOSAKTCAxMDEuMjY5OTYxIDE5MS44NzIzMzEgCkwgMTAyLjI4NzA0OSAxOTEuODMzODMgCkwgMTAzLjMwNDEzNyAxOTEuNzkyODc0IApMIDEwNC4zMjEyMjUgMTkxLjc0OTMyNiAKTCAxMDUuMzM4MzEzIDE5MS43MDMwNDMgCkwgMTA2LjM1NTQwMSAxOTEuNjUzODczIApMIDEwNy4zNzI0OSAxOTEuNjAxNjYxIApMIDEwOC4zODk1NzggMTkxLjU0NjI0MSAKTCAxMDkuNDA2NjY2IDE5MS40ODc0NDQgCkwgMTEwLjQyMzc1NCAxOTEuNDI1MDkgCkwgMTExLjQ0MDg0MiAxOTEuMzU4OTkzIApMIDExMi40NTc5MzEgMTkxLjI4ODk2IApMIDExMy40NzUwMTkgMTkxLjIxNDc4OSAKTCAxMTQuNDkyMTA3IDE5MS4xMzYyNyAKTCAxMTUuNTA5MTk1IDE5MS4wNTMxODUgCkwgMTE2LjUyNjI4MyAxOTAuOTY1MzA4IApMIDExNy41NDMzNzEgMTkwLjg3MjQwMyAKTCAxMTguNTYwNDYgMTkwLjc3NDIyNiAKTCAxMTkuNTc3NTQ4IDE5MC42NzA1MjUgCkwgMTIwLjU5NDYzNiAxOTAuNTYxMDM3IApMIDEyMS42MTE3MjQgMTkwLjQ0NTQ5IApMIDEyMi42Mjg4MTIgMTkwLjMyMzYwNSAKTCAxMjMuNjQ1OSAxOTAuMTk1MDkgCkwgMTI0LjY2Mjk4OSAxOTAuMDU5NjQ3IApMIDEyNS42ODAwNzcgMTg5LjkxNjk2NCAKTCAxMjYuNjk3MTY1IDE4OS43NjY3MjMgCkwgMTI3LjcxNDI1MyAxODkuNjA4NTk0IApMIDEyOC43MzEzNDEgMTg5LjQ0MjIzOSAKTCAxMjkuNzQ4NDI5IDE4OS4yNjczMDggCkwgMTMwLjc2NTUxOCAxODkuMDgzNDQyIApMIDEzMS43ODI2MDYgMTg4Ljg5MDI3MiAKTCAxMzIuNzk5Njk0IDE4OC42ODc0MTkgCkwgMTMzLjgxNjc4MiAxODguNDc0NDk1IApMIDEzNC44MzM4NyAxODguMjUxMTAxIApMIDEzNS44NTA5NTkgMTg4LjAxNjgyOSAKTCAxMzYuODY4MDQ3IDE4Ny43NzEyNjEgCkwgMTM3Ljg4NTEzNSAxODcuNTEzOTcgCkwgMTM4LjkwMjIyMyAxODcuMjQ0NTIgCkwgMTM5LjkxOTMxMSAxODYuOTYyNDY2IApMIDE0MC45MzYzOTkgMTg2LjY2NzM1MyAKTCAxNDEuOTUzNDg4IDE4Ni4zNTg3MiAKTCAxNDIuOTcwNTc2IDE4Ni4wMzYwOTUgCkwgMTQzLjk4NzY2NCAxODUuNjk5IApMIDE0NS4wMDQ3NTIgMTg1LjM0Njk0OSAKTCAxNDYuMDIxODQgMTg0Ljk3OTQ0OSAKTCAxNDcuMDM4OTI4IDE4NC41OTYwMDEgCkwgMTQ4LjA1NjAxNyAxODQuMTk2MDk4IApMIDE0OS4wNzMxMDUgMTgzLjc3OTIzIApMIDE1MC4wOTAxOTMgMTgzLjM0NDg4IApMIDE1MS4xMDcyODEgMTgyLjg5MjUyNyAKTCAxNTIuMTI0MzY5IDE4Mi40MjE2NDcgCkwgMTUzLjE0MTQ1OCAxODEuOTMxNzExIApMIDE1NC4xNTg1NDYgMTgxLjQyMjE5IApMIDE1NS4xNzU2MzQgMTgwLjg5MjU1MSAKTCAxNTYuMTkyNzIyIDE4MC4zNDIyNjIgCkwgMTU3LjIwOTgxIDE3OS43NzA3ODkgCkwgMTU4LjIyNjg5OCAxNzkuMTc3NjAyIApMIDE1OS4yNDM5ODcgMTc4LjU2MjE2OCAKTCAxNjAuMjYxMDc1IDE3Ny45MjM5NjIgCkwgMTYxLjI3ODE2MyAxNzcuMjYyNDU4IApMIDE2Mi4yOTUyNTEgMTc2LjU3NzEzOCAKTCAxNjMuMzEyMzM5IDE3NS44Njc0ODggCkwgMTY0LjMyOTQyNyAxNzUuMTMzMDAyIApMIDE2NS4zNDY1MTYgMTc0LjM3MzE4IApMIDE2Ni4zNjM2MDQgMTczLjU4NzUzNSAKTCAxNjcuMzgwNjkyIDE3Mi43NzU1ODUgCkwgMTY4LjM5Nzc4IDE3MS45MzY4NjYgCkwgMTY5LjQxNDg2OCAxNzEuMDcwOTIxIApMIDE3MC40MzE5NTYgMTcwLjE3NzMxMSAKTCAxNzEuNDQ5MDQ1IDE2OS4yNTU2MTEgCkwgMTcyLjQ2NjEzMyAxNjguMzA1NDE0IApMIDE3My40ODMyMjEgMTY3LjMyNjMzIApMIDE3NC41MDAzMDkgMTY2LjMxNzk4OSAKTCAxNzUuNTE3Mzk3IDE2NS4yODAwNDIgCkwgMTc2LjUzNDQ4NiAxNjQuMjEyMTY0IApMIDE3Ny41NTE1NzQgMTYzLjExNDA1MSAKTCAxNzguNTY4NjYyIDE2MS45ODU0MjYgCkwgMTc5LjU4NTc1IDE2MC44MjYwNCAKTCAxODAuNjAyODM4IDE1OS42MzU2NyAKTCAxODEuNjE5OTI2IDE1OC40MTQxMjQgCkwgMTgyLjYzNzAxNSAxNTcuMTYxMjQgCkwgMTgzLjY1NDEwMyAxNTUuODc2ODg5IApMIDE4NC42NzExOTEgMTU0LjU2MDk3NyAKTCAxODUuNjg4Mjc5IDE1My4yMTM0NDMgCkwgMTg2LjcwNTM2NyAxNTEuODM0MjY1IApMIDE4Ny43MjI0NTUgMTUwLjQyMzQ1OCAKTCAxODcuNzIyNDU1IDE5Mi40MiAKTCAxODcuNzIyNDU1IDE5Mi40MiAKTCAxODYuNzA1MzY3IDE5Mi40MiAKTCAxODUuNjg4Mjc5IDE5Mi40MiAKTCAxODQuNjcxMTkxIDE5Mi40MiAKTCAxODMuNjU0MTAzIDE5Mi40MiAKTCAxODIuNjM3MDE1IDE5Mi40MiAKTCAxODEuNjE5OTI2IDE5Mi40MiAKTCAxODAuNjAyODM4IDE5Mi40MiAKTCAxNzkuNTg1NzUgMTkyLjQyIApMIDE3OC41Njg2NjIgMTkyLjQyIApMIDE3Ny41NTE1NzQgMTkyLjQyIApMIDE3Ni41MzQ0ODYgMTkyLjQyIApMIDE3NS41MTczOTcgMTkyLjQyIApMIDE3NC41MDAzMDkgMTkyLjQyIApMIDE3My40ODMyMjEgMTkyLjQyIApMIDE3Mi40NjYxMzMgMTkyLjQyIApMIDE3MS40NDkwNDUgMTkyLjQyIApMIDE3MC40MzE5NTYgMTkyLjQyIApMIDE2OS40MTQ4NjggMTkyLjQyIApMIDE2OC4zOTc3OCAxOTIuNDIgCkwgMTY3LjM4MDY5MiAxOTIuNDIgCkwgMTY2LjM2MzYwNCAxOTIuNDIgCkwgMTY1LjM0NjUxNiAxOTIuNDIgCkwgMTY0LjMyOTQyNyAxOTIuNDIgCkwgMTYzLjMxMjMzOSAxOTIuNDIgCkwgMTYyLjI5NTI1MSAxOTIuNDIgCkwgMTYxLjI3ODE2MyAxOTIuNDIgCkwgMTYwLjI2MTA3NSAxOTIuNDIgCkwgMTU5LjI0Mzk4NyAxOTIuNDIgCkwgMTU4LjIyNjg5OCAxOTIuNDIgCkwgMTU3LjIwOTgxIDE5Mi40MiAKTCAxNTYuMTkyNzIyIDE5Mi40MiAKTCAxNTUuMTc1NjM0IDE5Mi40MiAKTCAxNTQuMTU4NTQ2IDE5Mi40MiAKTCAxNTMuMTQxNDU4IDE5Mi40MiAKTCAxNTIuMTI0MzY5IDE5Mi40MiAKTCAxNTEuMTA3MjgxIDE5Mi40MiAKTCAxNTAuMDkwMTkzIDE5Mi40MiAKTCAxNDkuMDczMTA1IDE5Mi40MiAKTCAxNDguMDU2MDE3IDE5Mi40MiAKTCAxNDcuMDM4OTI4IDE5Mi40MiAKTCAxNDYuMDIxODQgMTkyLjQyIApMIDE0NS4wMDQ3NTIgMTkyLjQyIApMIDE0My45ODc2NjQgMTkyLjQyIApMIDE0Mi45NzA1NzYgMTkyLjQyIApMIDE0MS45NTM0ODggMTkyLjQyIApMIDE0MC45MzYzOTkgMTkyLjQyIApMIDEzOS45MTkzMTEgMTkyLjQyIApMIDEzOC45MDIyMjMgMTkyLjQyIApMIDEzNy44ODUxMzUgMTkyLjQyIApMIDEzNi44NjgwNDcgMTkyLjQyIApMIDEzNS44NTA5NTkgMTkyLjQyIApMIDEzNC44MzM4NyAxOTIuNDIgCkwgMTMzLjgxNjc4MiAxOTIuNDIgCkwgMTMyLjc5OTY5NCAxOTIuNDIgCkwgMTMxLjc4MjYwNiAxOTIuNDIgCkwgMTMwLjc2NTUxOCAxOTIuNDIgCkwgMTI5Ljc0ODQyOSAxOTIuNDIgCkwgMTI4LjczMTM0MSAxOTIuNDIgCkwgMTI3LjcxNDI1MyAxOTIuNDIgCkwgMTI2LjY5NzE2NSAxOTIuNDIgCkwgMTI1LjY4MDA3NyAxOTIuNDIgCkwgMTI0LjY2Mjk4OSAxOTIuNDIgCkwgMTIzLjY0NTkgMTkyLjQyIApMIDEyMi42Mjg4MTIgMTkyLjQyIApMIDEyMS42MTE3MjQgMTkyLjQyIApMIDEyMC41OTQ2MzYgMTkyLjQyIApMIDExOS41Nzc1NDggMTkyLjQyIApMIDExOC41NjA0NiAxOTIuNDIgCkwgMTE3LjU0MzM3MSAxOTIuNDIgCkwgMTE2LjUyNjI4MyAxOTIuNDIgCkwgMTE1LjUwOTE5NSAxOTIuNDIgCkwgMTE0LjQ5MjEwNyAxOTIuNDIgCkwgMTEzLjQ3NTAxOSAxOTIuNDIgCkwgMTEyLjQ1NzkzMSAxOTIuNDIgCkwgMTExLjQ0MDg0MiAxOTIuNDIgCkwgMTEwLjQyMzc1NCAxOTIuNDIgCkwgMTA5LjQwNjY2NiAxOTIuNDIgCkwgMTA4LjM4OTU3OCAxOTIuNDIgCkwgMTA3LjM3MjQ5IDE5Mi40MiAKTCAxMDYuMzU1NDAxIDE5Mi40MiAKTCAxMDUuMzM4MzEzIDE5Mi40MiAKTCAxMDQuMzIxMjI1IDE5Mi40MiAKTCAxMDMuMzA0MTM3IDE5Mi40MiAKTCAxMDIuMjg3MDQ5IDE5Mi40MiAKTCAxMDEuMjY5OTYxIDE5Mi40MiAKTCAxMDAuMjUyODcyIDE5Mi40MiAKTCA5OS4yMzU3ODQgMTkyLjQyIApMIDk4LjIxODY5NiAxOTIuNDIgCkwgOTcuMjAxNjA4IDE5Mi40MiAKTCA5Ni4xODQ1MiAxOTIuNDIgCkwgOTUuMTY3NDMyIDE5Mi40MiAKTCA5NC4xNTAzNDMgMTkyLjQyIApMIDkzLjEzMzI1NSAxOTIuNDIgCkwgOTIuMTE2MTY3IDE5Mi40MiAKTCA5MS4wOTkwNzkgMTkyLjQyIApMIDkwLjA4MTk5MSAxOTIuNDIgCkwgODkuMDY0OTAyIDE5Mi40MiAKTCA4OC4wNDc4MTQgMTkyLjQyIApMIDg3LjAzMDcyNiAxOTIuNDIgCkwgODYuMDEzNjM4IDE5Mi40MiAKTCA4NC45OTY1NSAxOTIuNDIgCkwgODMuOTc5NDYyIDE5Mi40MiAKTCA4Mi45NjIzNzMgMTkyLjQyIApMIDgxLjk0NTI4NSAxOTIuNDIgCkwgODAuOTI4MTk3IDE5Mi40MiAKTCA3OS45MTExMDkgMTkyLjQyIApMIDc4Ljg5NDAyMSAxOTIuNDIgCkwgNzcuODc2OTMzIDE5Mi40MiAKTCA3Ni44NTk4NDQgMTkyLjQyIApMIDc1Ljg0Mjc1NiAxOTIuNDIgCkwgNzQuODI1NjY4IDE5Mi40MiAKTCA3My44MDg1OCAxOTIuNDIgCkwgNzIuNzkxNDkyIDE5Mi40MiAKTCA3MS43NzQ0MDQgMTkyLjQyIApMIDcwLjc1NzMxNSAxOTIuNDIgCnoKIiBjbGlwLXBhdGg9InVybCgjcDBmZmY3Y2MzNmYpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgZmlsbC1vcGFjaXR5OiAwLjM1OyBzdHJva2U6ICMxZjc3YjQ7IHN0cm9rZS1vcGFjaXR5OiAwLjM1Ii8+CiAgICA8cGF0aCBkPSJNIDM1OS42MTAzNTcgMTkyLjQyIApMIDM1OS42MTAzNTcgMTUwLjQyMzQ1OCAKTCAzNjAuNjI3NDQ1IDE1MS44MzQyNjUgCkwgMzYxLjY0NDUzMyAxNTMuMjEzNDQzIApMIDM2Mi42NjE2MjIgMTU0LjU2MDk3NyAKTCAzNjMuNjc4NzEgMTU1Ljg3Njg4OSAKTCAzNjQuNjk1Nzk4IDE1Ny4xNjEyNCAKTCAzNjUuNzEyODg2IDE1OC40MTQxMjQgCkwgMzY2LjcyOTk3NCAxNTkuNjM1NjcgCkwgMzY3Ljc0NzA2MiAxNjAuODI2MDQgCkwgMzY4Ljc2NDE1MSAxNjEuOTg1NDI2IApMIDM2OS43ODEyMzkgMTYzLjExNDA1MSAKTCAzNzAuNzk4MzI3IDE2NC4yMTIxNjQgCkwgMzcxLjgxNTQxNSAxNjUuMjgwMDQyIApMIDM3Mi44MzI1MDMgMTY2LjMxNzk4OSAKTCAzNzMuODQ5NTkxIDE2Ny4zMjYzMyAKTCAzNzQuODY2NjggMTY4LjMwNTQxNCAKTCAzNzUuODgzNzY4IDE2OS4yNTU2MTEgCkwgMzc2LjkwMDg1NiAxNzAuMTc3MzExIApMIDM3Ny45MTc5NDQgMTcxLjA3MDkyMSAKTCAzNzguOTM1MDMyIDE3MS45MzY4NjYgCkwgMzc5Ljk1MjEyMSAxNzIuNzc1NTg1IApMIDM4MC45NjkyMDkgMTczLjU4NzUzNSAKTCAzODEuOTg2Mjk3IDE3NC4zNzMxOCAKTCAzODMuMDAzMzg1IDE3NS4xMzMwMDIgCkwgMzg0LjAyMDQ3MyAxNzUuODY3NDg4IApMIDM4NS4wMzc1NjEgMTc2LjU3NzEzOCAKTCAzODYuMDU0NjUgMTc3LjI2MjQ1OCAKTCAzODcuMDcxNzM4IDE3Ny45MjM5NjIgCkwgMzg4LjA4ODgyNiAxNzguNTYyMTY4IApMIDM4OS4xMDU5MTQgMTc5LjE3NzYwMiAKTCAzOTAuMTIzMDAyIDE3OS43NzA3ODkgCkwgMzkxLjE0MDA5IDE4MC4zNDIyNjIgCkwgMzkyLjE1NzE3OSAxODAuODkyNTUxIApMIDM5My4xNzQyNjcgMTgxLjQyMjE5IApMIDM5NC4xOTEzNTUgMTgxLjkzMTcxMSAKTCAzOTUuMjA4NDQzIDE4Mi40MjE2NDcgCkwgMzk2LjIyNTUzMSAxODIuODkyNTI3IApMIDM5Ny4yNDI2MiAxODMuMzQ0ODggCkwgMzk4LjI1OTcwOCAxODMuNzc5MjMgCkwgMzk5LjI3Njc5NiAxODQuMTk2MDk4IApMIDQwMC4yOTM4ODQgMTg0LjU5NjAwMSAKTCA0MDEuMzEwOTcyIDE4NC45Nzk0NDkgCkwgNDAyLjMyODA2IDE4NS4zNDY5NDkgCkwgNDAzLjM0NTE0OSAxODUuNjk5IApMIDQwNC4zNjIyMzcgMTg2LjAzNjA5NSAKTCA0MDUuMzc5MzI1IDE4Ni4zNTg3MiAKTCA0MDYuMzk2NDEzIDE4Ni42NjczNTMgCkwgNDA3LjQxMzUwMSAxODYuOTYyNDY2IApMIDQwOC40MzA1ODkgMTg3LjI0NDUyIApMIDQwOS40NDc2NzggMTg3LjUxMzk3IApMIDQxMC40NjQ3NjYgMTg3Ljc3MTI2MSAKTCA0MTEuNDgxODU0IDE4OC4wMTY4MjkgCkwgNDEyLjQ5ODk0MiAxODguMjUxMTAxIApMIDQxMy41MTYwMyAxODguNDc0NDk1IApMIDQxNC41MzMxMTggMTg4LjY4NzQxOSAKTCA0MTUuNTUwMjA3IDE4OC44OTAyNzIgCkwgNDE2LjU2NzI5NSAxODkuMDgzNDQyIApMIDQxNy41ODQzODMgMTg5LjI2NzMwOCAKTCA0MTguNjAxNDcxIDE4OS40NDIyMzkgCkwgNDE5LjYxODU1OSAxODkuNjA4NTk0IApMIDQyMC42MzU2NDggMTg5Ljc2NjcyMyAKTCA0MjEuNjUyNzM2IDE4OS45MTY5NjQgCkwgNDIyLjY2OTgyNCAxOTAuMDU5NjQ3IApMIDQyMy42ODY5MTIgMTkwLjE5NTA5IApMIDQyNC43MDQgMTkwLjMyMzYwNSAKTCA0MjUuNzIxMDg4IDE5MC40NDU0OSAKTCA0MjYuNzM4MTc3IDE5MC41NjEwMzcgCkwgNDI3Ljc1NTI2NSAxOTAuNjcwNTI1IApMIDQyOC43NzIzNTMgMTkwLjc3NDIyNiAKTCA0MjkuNzg5NDQxIDE5MC44NzI0MDMgCkwgNDMwLjgwNjUyOSAxOTAuOTY1MzA4IApMIDQzMS44MjM2MTcgMTkxLjA1MzE4NSAKTCA0MzIuODQwNzA2IDE5MS4xMzYyNyAKTCA0MzMuODU3Nzk0IDE5MS4yMTQ3ODkgCkwgNDM0Ljg3NDg4MiAxOTEuMjg4OTYgCkwgNDM1Ljg5MTk3IDE5MS4zNTg5OTMgCkwgNDM2LjkwOTA1OCAxOTEuNDI1MDkgCkwgNDM3LjkyNjE0NyAxOTEuNDg3NDQ0IApMIDQzOC45NDMyMzUgMTkxLjU0NjI0MSAKTCA0MzkuOTYwMzIzIDE5MS42MDE2NjEgCkwgNDQwLjk3NzQxMSAxOTEuNjUzODczIApMIDQ0MS45OTQ0OTkgMTkxLjcwMzA0MyAKTCA0NDMuMDExNTg3IDE5MS43NDkzMjYgCkwgNDQ0LjAyODY3NiAxOTEuNzkyODc0IApMIDQ0NS4wNDU3NjQgMTkxLjgzMzgzIApMIDQ0Ni4wNjI4NTIgMTkxLjg3MjMzMSAKTCA0NDcuMDc5OTQgMTkxLjkwODUwOSAKTCA0NDguMDk3MDI4IDE5MS45NDI0ODkgCkwgNDQ5LjExNDExNiAxOTEuOTc0MzkxIApMIDQ1MC4xMzEyMDUgMTkyLjAwNDMyOSAKTCA0NTEuMTQ4MjkzIDE5Mi4wMzI0MTEgCkwgNDUyLjE2NTM4MSAxOTIuMDU4NzQyIApMIDQ1My4xODI0NjkgMTkyLjA4MzQxOSAKTCA0NTQuMTk5NTU3IDE5Mi4xMDY1MzYgCkwgNDU1LjIxNjY0NSAxOTIuMTI4MTgzIApMIDQ1Ni4yMzM3MzQgMTkyLjE0ODQ0NCAKTCA0NTcuMjUwODIyIDE5Mi4xNjc0IApMIDQ1OC4yNjc5MSAxOTIuMTg1MTI3IApMIDQ1OS4yODQ5OTggMTkyLjIwMTY5OCAKTCA0NjAuMzAyMDg2IDE5Mi4yMTcxODIgCkwgNDYxLjMxOTE3NSAxOTIuMjMxNjQzIApMIDQ2Mi4zMzYyNjMgMTkyLjI0NTE0MyAKTCA0NjMuMzUzMzUxIDE5Mi4yNTc3NDEgCkwgNDY0LjM3MDQzOSAxOTIuMjY5NDkxIApMIDQ2NS4zODc1MjcgMTkyLjI4MDQ0NyAKTCA0NjYuNDA0NjE1IDE5Mi4yOTA2NTcgCkwgNDY3LjQyMTcwNCAxOTIuMzAwMTY5IApMIDQ2OC40Mzg3OTIgMTkyLjMwOTAyNiAKTCA0NjkuNDU1ODggMTkyLjMxNzI2OSAKTCA0NzAuNDcyOTY4IDE5Mi4zMjQ5MzggCkwgNDcxLjQ5MDA1NiAxOTIuMzMyMDcgCkwgNDcyLjUwNzE0NCAxOTIuMzM4NyAKTCA0NzMuNTI0MjMzIDE5Mi4zNDQ4NiAKTCA0NzQuNTQxMzIxIDE5Mi4zNTA1ODEgCkwgNDc1LjU1ODQwOSAxOTIuMzU1ODkzIApMIDQ3Ni41NzU0OTcgMTkyLjM2MDgyMSAKTCA0NzYuNTc1NDk3IDE5Mi40MiAKTCA0NzYuNTc1NDk3IDE5Mi40MiAKTCA0NzUuNTU4NDA5IDE5Mi40MiAKTCA0NzQuNTQxMzIxIDE5Mi40MiAKTCA0NzMuNTI0MjMzIDE5Mi40MiAKTCA0NzIuNTA3MTQ0IDE5Mi40MiAKTCA0NzEuNDkwMDU2IDE5Mi40MiAKTCA0NzAuNDcyOTY4IDE5Mi40MiAKTCA0NjkuNDU1ODggMTkyLjQyIApMIDQ2OC40Mzg3OTIgMTkyLjQyIApMIDQ2Ny40MjE3MDQgMTkyLjQyIApMIDQ2Ni40MDQ2MTUgMTkyLjQyIApMIDQ2NS4zODc1MjcgMTkyLjQyIApMIDQ2NC4zNzA0MzkgMTkyLjQyIApMIDQ2My4zNTMzNTEgMTkyLjQyIApMIDQ2Mi4zMzYyNjMgMTkyLjQyIApMIDQ2MS4zMTkxNzUgMTkyLjQyIApMIDQ2MC4zMDIwODYgMTkyLjQyIApMIDQ1OS4yODQ5OTggMTkyLjQyIApMIDQ1OC4yNjc5MSAxOTIuNDIgCkwgNDU3LjI1MDgyMiAxOTIuNDIgCkwgNDU2LjIzMzczNCAxOTIuNDIgCkwgNDU1LjIxNjY0NSAxOTIuNDIgCkwgNDU0LjE5OTU1NyAxOTIuNDIgCkwgNDUzLjE4MjQ2OSAxOTIuNDIgCkwgNDUyLjE2NTM4MSAxOTIuNDIgCkwgNDUxLjE0ODI5MyAxOTIuNDIgCkwgNDUwLjEzMTIwNSAxOTIuNDIgCkwgNDQ5LjExNDExNiAxOTIuNDIgCkwgNDQ4LjA5NzAyOCAxOTIuNDIgCkwgNDQ3LjA3OTk0IDE5Mi40MiAKTCA0NDYuMDYyODUyIDE5Mi40MiAKTCA0NDUuMDQ1NzY0IDE5Mi40MiAKTCA0NDQuMDI4Njc2IDE5Mi40MiAKTCA0NDMuMDExNTg3IDE5Mi40MiAKTCA0NDEuOTk0NDk5IDE5Mi40MiAKTCA0NDAuOTc3NDExIDE5Mi40MiAKTCA0MzkuOTYwMzIzIDE5Mi40MiAKTCA0MzguOTQzMjM1IDE5Mi40MiAKTCA0MzcuOTI2MTQ3IDE5Mi40MiAKTCA0MzYuOTA5MDU4IDE5Mi40MiAKTCA0MzUuODkxOTcgMTkyLjQyIApMIDQzNC44NzQ4ODIgMTkyLjQyIApMIDQzMy44NTc3OTQgMTkyLjQyIApMIDQzMi44NDA3MDYgMTkyLjQyIApMIDQzMS44MjM2MTcgMTkyLjQyIApMIDQzMC44MDY1MjkgMTkyLjQyIApMIDQyOS43ODk0NDEgMTkyLjQyIApMIDQyOC43NzIzNTMgMTkyLjQyIApMIDQyNy43NTUyNjUgMTkyLjQyIApMIDQyNi43MzgxNzcgMTkyLjQyIApMIDQyNS43MjEwODggMTkyLjQyIApMIDQyNC43MDQgMTkyLjQyIApMIDQyMy42ODY5MTIgMTkyLjQyIApMIDQyMi42Njk4MjQgMTkyLjQyIApMIDQyMS42NTI3MzYgMTkyLjQyIApMIDQyMC42MzU2NDggMTkyLjQyIApMIDQxOS42MTg1NTkgMTkyLjQyIApMIDQxOC42MDE0NzEgMTkyLjQyIApMIDQxNy41ODQzODMgMTkyLjQyIApMIDQxNi41NjcyOTUgMTkyLjQyIApMIDQxNS41NTAyMDcgMTkyLjQyIApMIDQxNC41MzMxMTggMTkyLjQyIApMIDQxMy41MTYwMyAxOTIuNDIgCkwgNDEyLjQ5ODk0MiAxOTIuNDIgCkwgNDExLjQ4MTg1NCAxOTIuNDIgCkwgNDEwLjQ2NDc2NiAxOTIuNDIgCkwgNDA5LjQ0NzY3OCAxOTIuNDIgCkwgNDA4LjQzMDU4OSAxOTIuNDIgCkwgNDA3LjQxMzUwMSAxOTIuNDIgCkwgNDA2LjM5NjQxMyAxOTIuNDIgCkwgNDA1LjM3OTMyNSAxOTIuNDIgCkwgNDA0LjM2MjIzNyAxOTIuNDIgCkwgNDAzLjM0NTE0OSAxOTIuNDIgCkwgNDAyLjMyODA2IDE5Mi40MiAKTCA0MDEuMzEwOTcyIDE5Mi40MiAKTCA0MDAuMjkzODg0IDE5Mi40MiAKTCAzOTkuMjc2Nzk2IDE5Mi40MiAKTCAzOTguMjU5NzA4IDE5Mi40MiAKTCAzOTcuMjQyNjIgMTkyLjQyIApMIDM5Ni4yMjU1MzEgMTkyLjQyIApMIDM5NS4yMDg0NDMgMTkyLjQyIApMIDM5NC4xOTEzNTUgMTkyLjQyIApMIDM5My4xNzQyNjcgMTkyLjQyIApMIDM5Mi4xNTcxNzkgMTkyLjQyIApMIDM5MS4xNDAwOSAxOTIuNDIgCkwgMzkwLjEyMzAwMiAxOTIuNDIgCkwgMzg5LjEwNTkxNCAxOTIuNDIgCkwgMzg4LjA4ODgyNiAxOTIuNDIgCkwgMzg3LjA3MTczOCAxOTIuNDIgCkwgMzg2LjA1NDY1IDE5Mi40MiAKTCAzODUuMDM3NTYxIDE5Mi40MiAKTCAzODQuMDIwNDczIDE5Mi40MiAKTCAzODMuMDAzMzg1IDE5Mi40MiAKTCAzODEuOTg2Mjk3IDE5Mi40MiAKTCAzODAuOTY5MjA5IDE5Mi40MiAKTCAzNzkuOTUyMTIxIDE5Mi40MiAKTCAzNzguOTM1MDMyIDE5Mi40MiAKTCAzNzcuOTE3OTQ0IDE5Mi40MiAKTCAzNzYuOTAwODU2IDE5Mi40MiAKTCAzNzUuODgzNzY4IDE5Mi40MiAKTCAzNzQuODY2NjggMTkyLjQyIApMIDM3My44NDk1OTEgMTkyLjQyIApMIDM3Mi44MzI1MDMgMTkyLjQyIApMIDM3MS44MTU0MTUgMTkyLjQyIApMIDM3MC43OTgzMjcgMTkyLjQyIApMIDM2OS43ODEyMzkgMTkyLjQyIApMIDM2OC43NjQxNTEgMTkyLjQyIApMIDM2Ny43NDcwNjIgMTkyLjQyIApMIDM2Ni43Mjk5NzQgMTkyLjQyIApMIDM2NS43MTI4ODYgMTkyLjQyIApMIDM2NC42OTU3OTggMTkyLjQyIApMIDM2My42Nzg3MSAxOTIuNDIgCkwgMzYyLjY2MTYyMiAxOTIuNDIgCkwgMzYxLjY0NDUzMyAxOTIuNDIgCkwgMzYwLjYyNzQ0NSAxOTIuNDIgCkwgMzU5LjYxMDM1NyAxOTIuNDIgCnoKIiBjbGlwLXBhdGg9InVybCgjcDBmZmY3Y2MzNmYpIiBzdHlsZT0iZmlsbDogIzFmNzdiNDsgZmlsbC1vcGFjaXR5OiAwLjM1OyBzdHJva2U6ICMxZjc3YjQ7IHN0cm9rZS1vcGFjaXR5OiAwLjM1Ii8+CiAgIDwvZz4KICAgPGcgaWQ9IkZpbGxCZXR3ZWVuUG9seUNvbGxlY3Rpb25fMiI+CiAgICA8cGF0aCBkPSJNIDcwLjc1NzMxNSAxOTIuNDIgCkwgNzAuNzU3MzE1IDE5Mi4zNjA4MjEgCkwgNzEuNzc0NDA0IDE5Mi4zNTU4OTMgCkwgNzIuNzkxNDkyIDE5Mi4zNTA1ODEgCkwgNzMuODA4NTggMTkyLjM0NDg2IApMIDc0LjgyNTY2OCAxOTIuMzM4NyAKTCA3NS44NDI3NTYgMTkyLjMzMjA3IApMIDc2Ljg1OTg0NCAxOTIuMzI0OTM4IApMIDc3Ljg3NjkzMyAxOTIuMzE3MjY5IApMIDc4Ljg5NDAyMSAxOTIuMzA5MDI2IApMIDc5LjkxMTEwOSAxOTIuMzAwMTY5IApMIDgwLjkyODE5NyAxOTIuMjkwNjU3IApMIDgxLjk0NTI4NSAxOTIuMjgwNDQ3IApMIDgyLjk2MjM3MyAxOTIuMjY5NDkxIApMIDgzLjk3OTQ2MiAxOTIuMjU3NzQxIApMIDg0Ljk5NjU1IDE5Mi4yNDUxNDMgCkwgODYuMDEzNjM4IDE5Mi4yMzE2NDMgCkwgODcuMDMwNzI2IDE5Mi4yMTcxODIgCkwgODguMDQ3ODE0IDE5Mi4yMDE2OTggCkwgODkuMDY0OTAyIDE5Mi4xODUxMjcgCkwgOTAuMDgxOTkxIDE5Mi4xNjc0IApMIDkxLjA5OTA3OSAxOTIuMTQ4NDQ0IApMIDkyLjExNjE2NyAxOTIuMTI4MTgzIApMIDkzLjEzMzI1NSAxOTIuMTA2NTM2IApMIDk0LjE1MDM0MyAxOTIuMDgzNDE5IApMIDk1LjE2NzQzMiAxOTIuMDU4NzQyIApMIDk2LjE4NDUyIDE5Mi4wMzI0MTEgCkwgOTcuMjAxNjA4IDE5Mi4wMDQzMjkgCkwgOTguMjE4Njk2IDE5MS45NzQzOTEgCkwgOTkuMjM1Nzg0IDE5MS45NDI0ODkgCkwgMTAwLjI1Mjg3MiAxOTEuOTA4NTA5IApMIDEwMS4yNjk5NjEgMTkxLjg3MjMzMSAKTCAxMDIuMjg3MDQ5IDE5MS44MzM4MyAKTCAxMDMuMzA0MTM3IDE5MS43OTI4NzQgCkwgMTA0LjMyMTIyNSAxOTEuNzQ5MzI2IApMIDEwNS4zMzgzMTMgMTkxLjcwMzA0MyAKTCAxMDYuMzU1NDAxIDE5MS42NTM4NzMgCkwgMTA3LjM3MjQ5IDE5MS42MDE2NjEgCkwgMTA4LjM4OTU3OCAxOTEuNTQ2MjQxIApMIDEwOS40MDY2NjYgMTkxLjQ4NzQ0NCAKTCAxMTAuNDIzNzU0IDE5MS40MjUwOSAKTCAxMTEuNDQwODQyIDE5MS4zNTg5OTMgCkwgMTEyLjQ1NzkzMSAxOTEuMjg4OTYgCkwgMTEzLjQ3NTAxOSAxOTEuMjE0Nzg5IApMIDExNC40OTIxMDcgMTkxLjEzNjI3IApMIDExNS41MDkxOTUgMTkxLjA1MzE4NSAKTCAxMTYuNTI2MjgzIDE5MC45NjUzMDggCkwgMTE3LjU0MzM3MSAxOTAuODcyNDAzIApMIDExOC41NjA0NiAxOTAuNzc0MjI2IApMIDExOS41Nzc1NDggMTkwLjY3MDUyNSAKTCAxMjAuNTk0NjM2IDE5MC41NjEwMzcgCkwgMTIxLjYxMTcyNCAxOTAuNDQ1NDkgCkwgMTIyLjYyODgxMiAxOTAuMzIzNjA1IApMIDEyMy42NDU5IDE5MC4xOTUwOSAKTCAxMjQuNjYyOTg5IDE5MC4wNTk2NDcgCkwgMTI1LjY4MDA3NyAxODkuOTE2OTY0IApMIDEyNi42OTcxNjUgMTg5Ljc2NjcyMyAKTCAxMjcuNzE0MjUzIDE4OS42MDg1OTQgCkwgMTI4LjczMTM0MSAxODkuNDQyMjM5IApMIDEyOS43NDg0MjkgMTg5LjI2NzMwOCAKTCAxMzAuNzY1NTE4IDE4OS4wODM0NDIgCkwgMTMxLjc4MjYwNiAxODguODkwMjcyIApMIDEzMi43OTk2OTQgMTg4LjY4NzQxOSAKTCAxMzMuODE2NzgyIDE4OC40NzQ0OTUgCkwgMTM0LjgzMzg3IDE4OC4yNTExMDEgCkwgMTM1Ljg1MDk1OSAxODguMDE2ODI5IApMIDEzNi44NjgwNDcgMTg3Ljc3MTI2MSAKTCAxMzcuODg1MTM1IDE4Ny41MTM5NyAKTCAxMzguOTAyMjIzIDE4Ny4yNDQ1MiAKTCAxMzkuOTE5MzExIDE4Ni45NjI0NjYgCkwgMTQwLjkzNjM5OSAxODYuNjY3MzUzIApMIDE0MS45NTM0ODggMTg2LjM1ODcyIApMIDE0Mi45NzA1NzYgMTg2LjAzNjA5NSAKTCAxNDMuOTg3NjY0IDE4NS42OTkgCkwgMTQ1LjAwNDc1MiAxODUuMzQ2OTQ5IApMIDE0Ni4wMjE4NCAxODQuOTc5NDQ5IApMIDE0Ny4wMzg5MjggMTg0LjU5NjAwMSAKTCAxNDguMDU2MDE3IDE4NC4xOTYwOTggCkwgMTQ5LjA3MzEwNSAxODMuNzc5MjMgCkwgMTUwLjA5MDE5MyAxODMuMzQ0ODggCkwgMTUxLjEwNzI4MSAxODIuODkyNTI3IApMIDE1Mi4xMjQzNjkgMTgyLjQyMTY0NyAKTCAxNTMuMTQxNDU4IDE4MS45MzE3MTEgCkwgMTU0LjE1ODU0NiAxODEuNDIyMTkgCkwgMTU1LjE3NTYzNCAxODAuODkyNTUxIApMIDE1Ni4xOTI3MjIgMTgwLjM0MjI2MiAKTCAxNTcuMjA5ODEgMTc5Ljc3MDc4OSAKTCAxNTguMjI2ODk4IDE3OS4xNzc2MDIgCkwgMTU5LjI0Mzk4NyAxNzguNTYyMTY4IApMIDE2MC4yNjEwNzUgMTc3LjkyMzk2MiAKTCAxNjEuMjc4MTYzIDE3Ny4yNjI0NTggCkwgMTYyLjI5NTI1MSAxNzYuNTc3MTM4IApMIDE2My4zMTIzMzkgMTc1Ljg2NzQ4OCAKTCAxNjQuMzI5NDI3IDE3NS4xMzMwMDIgCkwgMTY1LjM0NjUxNiAxNzQuMzczMTggCkwgMTY2LjM2MzYwNCAxNzMuNTg3NTM1IApMIDE2Ny4zODA2OTIgMTcyLjc3NTU4NSAKTCAxNjguMzk3NzggMTcxLjkzNjg2NiAKTCAxNjkuNDE0ODY4IDE3MS4wNzA5MjEgCkwgMTcwLjQzMTk1NiAxNzAuMTc3MzExIApMIDE3MS40NDkwNDUgMTY5LjI1NTYxMSAKTCAxNzIuNDY2MTMzIDE2OC4zMDU0MTQgCkwgMTczLjQ4MzIyMSAxNjcuMzI2MzMgCkwgMTczLjQ4MzIyMSAxOTIuNDIgCkwgMTczLjQ4MzIyMSAxOTIuNDIgCkwgMTcyLjQ2NjEzMyAxOTIuNDIgCkwgMTcxLjQ0OTA0NSAxOTIuNDIgCkwgMTcwLjQzMTk1NiAxOTIuNDIgCkwgMTY5LjQxNDg2OCAxOTIuNDIgCkwgMTY4LjM5Nzc4IDE5Mi40MiAKTCAxNjcuMzgwNjkyIDE5Mi40MiAKTCAxNjYuMzYzNjA0IDE5Mi40MiAKTCAxNjUuMzQ2NTE2IDE5Mi40MiAKTCAxNjQuMzI5NDI3IDE5Mi40MiAKTCAxNjMuMzEyMzM5IDE5Mi40MiAKTCAxNjIuMjk1MjUxIDE5Mi40MiAKTCAxNjEuMjc4MTYzIDE5Mi40MiAKTCAxNjAuMjYxMDc1IDE5Mi40MiAKTCAxNTkuMjQzOTg3IDE5Mi40MiAKTCAxNTguMjI2ODk4IDE5Mi40MiAKTCAxNTcuMjA5ODEgMTkyLjQyIApMIDE1Ni4xOTI3MjIgMTkyLjQyIApMIDE1NS4xNzU2MzQgMTkyLjQyIApMIDE1NC4xNTg1NDYgMTkyLjQyIApMIDE1My4xNDE0NTggMTkyLjQyIApMIDE1Mi4xMjQzNjkgMTkyLjQyIApMIDE1MS4xMDcyODEgMTkyLjQyIApMIDE1MC4wOTAxOTMgMTkyLjQyIApMIDE0OS4wNzMxMDUgMTkyLjQyIApMIDE0OC4wNTYwMTcgMTkyLjQyIApMIDE0Ny4wMzg5MjggMTkyLjQyIApMIDE0Ni4wMjE4NCAxOTIuNDIgCkwgMTQ1LjAwNDc1MiAxOTIuNDIgCkwgMTQzLjk4NzY2NCAxOTIuNDIgCkwgMTQyLjk3MDU3NiAxOTIuNDIgCkwgMTQxLjk1MzQ4OCAxOTIuNDIgCkwgMTQwLjkzNjM5OSAxOTIuNDIgCkwgMTM5LjkxOTMxMSAxOTIuNDIgCkwgMTM4LjkwMjIyMyAxOTIuNDIgCkwgMTM3Ljg4NTEzNSAxOTIuNDIgCkwgMTM2Ljg2ODA0NyAxOTIuNDIgCkwgMTM1Ljg1MDk1OSAxOTIuNDIgCkwgMTM0LjgzMzg3IDE5Mi40MiAKTCAxMzMuODE2NzgyIDE5Mi40MiAKTCAxMzIuNzk5Njk0IDE5Mi40MiAKTCAxMzEuNzgyNjA2IDE5Mi40MiAKTCAxMzAuNzY1NTE4IDE5Mi40MiAKTCAxMjkuNzQ4NDI5IDE5Mi40MiAKTCAxMjguNzMxMzQxIDE5Mi40MiAKTCAxMjcuNzE0MjUzIDE5Mi40MiAKTCAxMjYuNjk3MTY1IDE5Mi40MiAKTCAxMjUuNjgwMDc3IDE5Mi40MiAKTCAxMjQuNjYyOTg5IDE5Mi40MiAKTCAxMjMuNjQ1OSAxOTIuNDIgCkwgMTIyLjYyODgxMiAxOTIuNDIgCkwgMTIxLjYxMTcyNCAxOTIuNDIgCkwgMTIwLjU5NDYzNiAxOTIuNDIgCkwgMTE5LjU3NzU0OCAxOTIuNDIgCkwgMTE4LjU2MDQ2IDE5Mi40MiAKTCAxMTcuNTQzMzcxIDE5Mi40MiAKTCAxMTYuNTI2MjgzIDE5Mi40MiAKTCAxMTUuNTA5MTk1IDE5Mi40MiAKTCAxMTQuNDkyMTA3IDE5Mi40MiAKTCAxMTMuNDc1MDE5IDE5Mi40MiAKTCAxMTIuNDU3OTMxIDE5Mi40MiAKTCAxMTEuNDQwODQyIDE5Mi40MiAKTCAxMTAuNDIzNzU0IDE5Mi40MiAKTCAxMDkuNDA2NjY2IDE5Mi40MiAKTCAxMDguMzg5NTc4IDE5Mi40MiAKTCAxMDcuMzcyNDkgMTkyLjQyIApMIDEwNi4zNTU0MDEgMTkyLjQyIApMIDEwNS4zMzgzMTMgMTkyLjQyIApMIDEwNC4zMjEyMjUgMTkyLjQyIApMIDEwMy4zMDQxMzcgMTkyLjQyIApMIDEwMi4yODcwNDkgMTkyLjQyIApMIDEwMS4yNjk5NjEgMTkyLjQyIApMIDEwMC4yNTI4NzIgMTkyLjQyIApMIDk5LjIzNTc4NCAxOTIuNDIgCkwgOTguMjE4Njk2IDE5Mi40MiAKTCA5Ny4yMDE2MDggMTkyLjQyIApMIDk2LjE4NDUyIDE5Mi40MiAKTCA5NS4xNjc0MzIgMTkyLjQyIApMIDk0LjE1MDM0MyAxOTIuNDIgCkwgOTMuMTMzMjU1IDE5Mi40MiAKTCA5Mi4xMTYxNjcgMTkyLjQyIApMIDkxLjA5OTA3OSAxOTIuNDIgCkwgOTAuMDgxOTkxIDE5Mi40MiAKTCA4OS4wNjQ5MDIgMTkyLjQyIApMIDg4LjA0NzgxNCAxOTIuNDIgCkwgODcuMDMwNzI2IDE5Mi40MiAKTCA4Ni4wMTM2MzggMTkyLjQyIApMIDg0Ljk5NjU1IDE5Mi40MiAKTCA4My45Nzk0NjIgMTkyLjQyIApMIDgyLjk2MjM3MyAxOTIuNDIgCkwgODEuOTQ1Mjg1IDE5Mi40MiAKTCA4MC45MjgxOTcgMTkyLjQyIApMIDc5LjkxMTEwOSAxOTIuNDIgCkwgNzguODk0MDIxIDE5Mi40MiAKTCA3Ny44NzY5MzMgMTkyLjQyIApMIDc2Ljg1OTg0NCAxOTIuNDIgCkwgNzUuODQyNzU2IDE5Mi40MiAKTCA3NC44MjU2NjggMTkyLjQyIApMIDczLjgwODU4IDE5Mi40MiAKTCA3Mi43OTE0OTIgMTkyLjQyIApMIDcxLjc3NDQwNCAxOTIuNDIgCkwgNzAuNzU3MzE1IDE5Mi40MiAKegoiIGNsaXAtcGF0aD0idXJsKCNwMGZmZjdjYzM2ZikiIHN0eWxlPSJmaWxsOiAjZDYyNzI4OyBmaWxsLW9wYWNpdHk6IDAuNjsgc3Ryb2tlOiAjZDYyNzI4OyBzdHJva2Utb3BhY2l0eTogMC42Ii8+CiAgICA8cGF0aCBkPSJNIDM3My44NDk1OTEgMTkyLjQyIApMIDM3My44NDk1OTEgMTY3LjMyNjMzIApMIDM3NC44NjY2OCAxNjguMzA1NDE0IApMIDM3NS44ODM3NjggMTY5LjI1NTYxMSAKTCAzNzYuOTAwODU2IDE3MC4xNzczMTEgCkwgMzc3LjkxNzk0NCAxNzEuMDcwOTIxIApMIDM3OC45MzUwMzIgMTcxLjkzNjg2NiAKTCAzNzkuOTUyMTIxIDE3Mi43NzU1ODUgCkwgMzgwLjk2OTIwOSAxNzMuNTg3NTM1IApMIDM4MS45ODYyOTcgMTc0LjM3MzE4IApMIDM4My4wMDMzODUgMTc1LjEzMzAwMiAKTCAzODQuMDIwNDczIDE3NS44Njc0ODggCkwgMzg1LjAzNzU2MSAxNzYuNTc3MTM4IApMIDM4Ni4wNTQ2NSAxNzcuMjYyNDU4IApMIDM4Ny4wNzE3MzggMTc3LjkyMzk2MiAKTCAzODguMDg4ODI2IDE3OC41NjIxNjggCkwgMzg5LjEwNTkxNCAxNzkuMTc3NjAyIApMIDM5MC4xMjMwMDIgMTc5Ljc3MDc4OSAKTCAzOTEuMTQwMDkgMTgwLjM0MjI2MiAKTCAzOTIuMTU3MTc5IDE4MC44OTI1NTEgCkwgMzkzLjE3NDI2NyAxODEuNDIyMTkgCkwgMzk0LjE5MTM1NSAxODEuOTMxNzExIApMIDM5NS4yMDg0NDMgMTgyLjQyMTY0NyAKTCAzOTYuMjI1NTMxIDE4Mi44OTI1MjcgCkwgMzk3LjI0MjYyIDE4My4zNDQ4OCAKTCAzOTguMjU5NzA4IDE4My43NzkyMyAKTCAzOTkuMjc2Nzk2IDE4NC4xOTYwOTggCkwgNDAwLjI5Mzg4NCAxODQuNTk2MDAxIApMIDQwMS4zMTA5NzIgMTg0Ljk3OTQ0OSAKTCA0MDIuMzI4MDYgMTg1LjM0Njk0OSAKTCA0MDMuMzQ1MTQ5IDE4NS42OTkgCkwgNDA0LjM2MjIzNyAxODYuMDM2MDk1IApMIDQwNS4zNzkzMjUgMTg2LjM1ODcyIApMIDQwNi4zOTY0MTMgMTg2LjY2NzM1MyAKTCA0MDcuNDEzNTAxIDE4Ni45NjI0NjYgCkwgNDA4LjQzMDU4OSAxODcuMjQ0NTIgCkwgNDA5LjQ0NzY3OCAxODcuNTEzOTcgCkwgNDEwLjQ2NDc2NiAxODcuNzcxMjYxIApMIDQxMS40ODE4NTQgMTg4LjAxNjgyOSAKTCA0MTIuNDk4OTQyIDE4OC4yNTExMDEgCkwgNDEzLjUxNjAzIDE4OC40NzQ0OTUgCkwgNDE0LjUzMzExOCAxODguNjg3NDE5IApMIDQxNS41NTAyMDcgMTg4Ljg5MDI3MiAKTCA0MTYuNTY3Mjk1IDE4OS4wODM0NDIgCkwgNDE3LjU4NDM4MyAxODkuMjY3MzA4IApMIDQxOC42MDE0NzEgMTg5LjQ0MjIzOSAKTCA0MTkuNjE4NTU5IDE4OS42MDg1OTQgCkwgNDIwLjYzNTY0OCAxODkuNzY2NzIzIApMIDQyMS42NTI3MzYgMTg5LjkxNjk2NCAKTCA0MjIuNjY5ODI0IDE5MC4wNTk2NDcgCkwgNDIzLjY4NjkxMiAxOTAuMTk1MDkgCkwgNDI0LjcwNCAxOTAuMzIzNjA1IApMIDQyNS43MjEwODggMTkwLjQ0NTQ5IApMIDQyNi43MzgxNzcgMTkwLjU2MTAzNyAKTCA0MjcuNzU1MjY1IDE5MC42NzA1MjUgCkwgNDI4Ljc3MjM1MyAxOTAuNzc0MjI2IApMIDQyOS43ODk0NDEgMTkwLjg3MjQwMyAKTCA0MzAuODA2NTI5IDE5MC45NjUzMDggCkwgNDMxLjgyMzYxNyAxOTEuMDUzMTg1IApMIDQzMi44NDA3MDYgMTkxLjEzNjI3IApMIDQzMy44NTc3OTQgMTkxLjIxNDc4OSAKTCA0MzQuODc0ODgyIDE5MS4yODg5NiAKTCA0MzUuODkxOTcgMTkxLjM1ODk5MyAKTCA0MzYuOTA5MDU4IDE5MS40MjUwOSAKTCA0MzcuOTI2MTQ3IDE5MS40ODc0NDQgCkwgNDM4Ljk0MzIzNSAxOTEuNTQ2MjQxIApMIDQzOS45NjAzMjMgMTkxLjYwMTY2MSAKTCA0NDAuOTc3NDExIDE5MS42NTM4NzMgCkwgNDQxLjk5NDQ5OSAxOTEuNzAzMDQzIApMIDQ0My4wMTE1ODcgMTkxLjc0OTMyNiAKTCA0NDQuMDI4Njc2IDE5MS43OTI4NzQgCkwgNDQ1LjA0NTc2NCAxOTEuODMzODMgCkwgNDQ2LjA2Mjg1MiAxOTEuODcyMzMxIApMIDQ0Ny4wNzk5NCAxOTEuOTA4NTA5IApMIDQ0OC4wOTcwMjggMTkxLjk0MjQ4OSAKTCA0NDkuMTE0MTE2IDE5MS45NzQzOTEgCkwgNDUwLjEzMTIwNSAxOTIuMDA0MzI5IApMIDQ1MS4xNDgyOTMgMTkyLjAzMjQxMSAKTCA0NTIuMTY1MzgxIDE5Mi4wNTg3NDIgCkwgNDUzLjE4MjQ2OSAxOTIuMDgzNDE5IApMIDQ1NC4xOTk1NTcgMTkyLjEwNjUzNiAKTCA0NTUuMjE2NjQ1IDE5Mi4xMjgxODMgCkwgNDU2LjIzMzczNCAxOTIuMTQ4NDQ0IApMIDQ1Ny4yNTA4MjIgMTkyLjE2NzQgCkwgNDU4LjI2NzkxIDE5Mi4xODUxMjcgCkwgNDU5LjI4NDk5OCAxOTIuMjAxNjk4IApMIDQ2MC4zMDIwODYgMTkyLjIxNzE4MiAKTCA0NjEuMzE5MTc1IDE5Mi4yMzE2NDMgCkwgNDYyLjMzNjI2MyAxOTIuMjQ1MTQzIApMIDQ2My4zNTMzNTEgMTkyLjI1Nzc0MSAKTCA0NjQuMzcwNDM5IDE5Mi4yNjk0OTEgCkwgNDY1LjM4NzUyNyAxOTIuMjgwNDQ3IApMIDQ2Ni40MDQ2MTUgMTkyLjI5MDY1NyAKTCA0NjcuNDIxNzA0IDE5Mi4zMDAxNjkgCkwgNDY4LjQzODc5MiAxOTIuMzA5MDI2IApMIDQ2OS40NTU4OCAxOTIuMzE3MjY5IApMIDQ3MC40NzI5NjggMTkyLjMyNDkzOCAKTCA0NzEuNDkwMDU2IDE5Mi4zMzIwNyAKTCA0NzIuNTA3MTQ0IDE5Mi4zMzg3IApMIDQ3My41MjQyMzMgMTkyLjM0NDg2IApMIDQ3NC41NDEzMjEgMTkyLjM1MDU4MSAKTCA0NzUuNTU4NDA5IDE5Mi4zNTU4OTMgCkwgNDc2LjU3NTQ5NyAxOTIuMzYwODIxIApMIDQ3Ni41NzU0OTcgMTkyLjQyIApMIDQ3Ni41NzU0OTcgMTkyLjQyIApMIDQ3NS41NTg0MDkgMTkyLjQyIApMIDQ3NC41NDEzMjEgMTkyLjQyIApMIDQ3My41MjQyMzMgMTkyLjQyIApMIDQ3Mi41MDcxNDQgMTkyLjQyIApMIDQ3MS40OTAwNTYgMTkyLjQyIApMIDQ3MC40NzI5NjggMTkyLjQyIApMIDQ2OS40NTU4OCAxOTIuNDIgCkwgNDY4LjQzODc5MiAxOTIuNDIgCkwgNDY3LjQyMTcwNCAxOTIuNDIgCkwgNDY2LjQwNDYxNSAxOTIuNDIgCkwgNDY1LjM4NzUyNyAxOTIuNDIgCkwgNDY0LjM3MDQzOSAxOTIuNDIgCkwgNDYzLjM1MzM1MSAxOTIuNDIgCkwgNDYyLjMzNjI2MyAxOTIuNDIgCkwgNDYxLjMxOTE3NSAxOTIuNDIgCkwgNDYwLjMwMjA4NiAxOTIuNDIgCkwgNDU5LjI4NDk5OCAxOTIuNDIgCkwgNDU4LjI2NzkxIDE5Mi40MiAKTCA0NTcuMjUwODIyIDE5Mi40MiAKTCA0NTYuMjMzNzM0IDE5Mi40MiAKTCA0NTUuMjE2NjQ1IDE5Mi40MiAKTCA0NTQuMTk5NTU3IDE5Mi40MiAKTCA0NTMuMTgyNDY5IDE5Mi40MiAKTCA0NTIuMTY1MzgxIDE5Mi40MiAKTCA0NTEuMTQ4MjkzIDE5Mi40MiAKTCA0NTAuMTMxMjA1IDE5Mi40MiAKTCA0NDkuMTE0MTE2IDE5Mi40MiAKTCA0NDguMDk3MDI4IDE5Mi40MiAKTCA0NDcuMDc5OTQgMTkyLjQyIApMIDQ0Ni4wNjI4NTIgMTkyLjQyIApMIDQ0NS4wNDU3NjQgMTkyLjQyIApMIDQ0NC4wMjg2NzYgMTkyLjQyIApMIDQ0My4wMTE1ODcgMTkyLjQyIApMIDQ0MS45OTQ0OTkgMTkyLjQyIApMIDQ0MC45Nzc0MTEgMTkyLjQyIApMIDQzOS45NjAzMjMgMTkyLjQyIApMIDQzOC45NDMyMzUgMTkyLjQyIApMIDQzNy45MjYxNDcgMTkyLjQyIApMIDQzNi45MDkwNTggMTkyLjQyIApMIDQzNS44OTE5NyAxOTIuNDIgCkwgNDM0Ljg3NDg4MiAxOTIuNDIgCkwgNDMzLjg1Nzc5NCAxOTIuNDIgCkwgNDMyLjg0MDcwNiAxOTIuNDIgCkwgNDMxLjgyMzYxNyAxOTIuNDIgCkwgNDMwLjgwNjUyOSAxOTIuNDIgCkwgNDI5Ljc4OTQ0MSAxOTIuNDIgCkwgNDI4Ljc3MjM1MyAxOTIuNDIgCkwgNDI3Ljc1NTI2NSAxOTIuNDIgCkwgNDI2LjczODE3NyAxOTIuNDIgCkwgNDI1LjcyMTA4OCAxOTIuNDIgCkwgNDI0LjcwNCAxOTIuNDIgCkwgNDIzLjY4NjkxMiAxOTIuNDIgCkwgNDIyLjY2OTgyNCAxOTIuNDIgCkwgNDIxLjY1MjczNiAxOTIuNDIgCkwgNDIwLjYzNTY0OCAxOTIuNDIgCkwgNDE5LjYxODU1OSAxOTIuNDIgCkwgNDE4LjYwMTQ3MSAxOTIuNDIgCkwgNDE3LjU4NDM4MyAxOTIuNDIgCkwgNDE2LjU2NzI5NSAxOTIuNDIgCkwgNDE1LjU1MDIwNyAxOTIuNDIgCkwgNDE0LjUzMzExOCAxOTIuNDIgCkwgNDEzLjUxNjAzIDE5Mi40MiAKTCA0MTIuNDk4OTQyIDE5Mi40MiAKTCA0MTEuNDgxODU0IDE5Mi40MiAKTCA0MTAuNDY0NzY2IDE5Mi40MiAKTCA0MDkuNDQ3Njc4IDE5Mi40MiAKTCA0MDguNDMwNTg5IDE5Mi40MiAKTCA0MDcuNDEzNTAxIDE5Mi40MiAKTCA0MDYuMzk2NDEzIDE5Mi40MiAKTCA0MDUuMzc5MzI1IDE5Mi40MiAKTCA0MDQuMzYyMjM3IDE5Mi40MiAKTCA0MDMuMzQ1MTQ5IDE5Mi40MiAKTCA0MDIuMzI4MDYgMTkyLjQyIApMIDQwMS4zMTA5NzIgMTkyLjQyIApMIDQwMC4yOTM4ODQgMTkyLjQyIApMIDM5OS4yNzY3OTYgMTkyLjQyIApMIDM5OC4yNTk3MDggMTkyLjQyIApMIDM5Ny4yNDI2MiAxOTIuNDIgCkwgMzk2LjIyNTUzMSAxOTIuNDIgCkwgMzk1LjIwODQ0MyAxOTIuNDIgCkwgMzk0LjE5MTM1NSAxOTIuNDIgCkwgMzkzLjE3NDI2NyAxOTIuNDIgCkwgMzkyLjE1NzE3OSAxOTIuNDIgCkwgMzkxLjE0MDA5IDE5Mi40MiAKTCAzOTAuMTIzMDAyIDE5Mi40MiAKTCAzODkuMTA1OTE0IDE5Mi40MiAKTCAzODguMDg4ODI2IDE5Mi40MiAKTCAzODcuMDcxNzM4IDE5Mi40MiAKTCAzODYuMDU0NjUgMTkyLjQyIApMIDM4NS4wMzc1NjEgMTkyLjQyIApMIDM4NC4wMjA0NzMgMTkyLjQyIApMIDM4My4wMDMzODUgMTkyLjQyIApMIDM4MS45ODYyOTcgMTkyLjQyIApMIDM4MC45NjkyMDkgMTkyLjQyIApMIDM3OS45NTIxMjEgMTkyLjQyIApMIDM3OC45MzUwMzIgMTkyLjQyIApMIDM3Ny45MTc5NDQgMTkyLjQyIApMIDM3Ni45MDA4NTYgMTkyLjQyIApMIDM3NS44ODM3NjggMTkyLjQyIApMIDM3NC44NjY2OCAxOTIuNDIgCkwgMzczLjg0OTU5MSAxOTIuNDIgCnoKIiBjbGlwLXBhdGg9InVybCgjcDBmZmY3Y2MzNmYpIiBzdHlsZT0iZmlsbDogI2Q2MjcyODsgZmlsbC1vcGFjaXR5OiAwLjY7IHN0cm9rZTogI2Q2MjcyODsgc3Ryb2tlLW9wYWNpdHk6IDAuNiIvPgogICA8L2c+CiAgIDxnIGlkPSJtYXRwbG90bGliLmF4aXNfMSI+CiAgICA8ZyBpZD0ieHRpY2tfMSI+CiAgICAgPGcgaWQ9ImxpbmUyZF8xIj4KICAgICAgPGRlZnM+CiAgICAgICA8cGF0aCBpZD0ibWJjOTQyOGQ2NjUiIGQ9Ik0gMCAwIApMIDAgMy41IAoiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZGVmcz4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYmM5NDI4ZDY2NSIgeD0iNzAuNzU3MzE1IiB5PSIyMDEuMjQiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMSI+CiAgICAgIDwhLS0g4oiSNCAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjMuMzg2MjIyIDIxNS44Mzc2NTYpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8ZGVmcz4KICAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy1jOWMiIGQ9Ik0gNjc4IDIyNzIgCkwgNDY4NCAyMjcyIApMIDQ2ODQgMTc0MSAKTCA2NzggMTc0MSAKTCA2NzggMjI3MiAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtMTciIGQ9Ik0gMjQxOSA0MTE2IApMIDgyNSAxNjI1IApMIDI0MTkgMTYyNSAKTCAyNDE5IDQxMTYgCnoKTSAyMjUzIDQ2NjYgCkwgMzA0NyA0NjY2IApMIDMwNDcgMTYyNSAKTCAzNzEzIDE2MjUgCkwgMzcxMyAxMTAwIApMIDMwNDcgMTEwMCAKTCAzMDQ3IDAgCkwgMjQxOSAwIApMIDI0MTkgMTEwMCAKTCAzMTMgMTEwMCAKTCAzMTMgMTcwOSAKTCAyMjUzIDQ2NjYgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPC9kZWZzPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy1jOWMiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDgzLjc5Njg3NSAwKSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inh0aWNrXzIiPgogICAgIDxnIGlkPSJsaW5lMmRfMiI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWJjOTQyOGQ2NjUiIHg9IjEyMS40ODQ1ODgiIHk9IjIwMS4yNCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF8yIj4KICAgICAgPCEtLSDiiJIzIC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMTQuMTEzNDk0IDIxNS44Mzc2NTYpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8ZGVmcz4KICAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy0xNiIgZD0iTSAyNTk3IDI1MTYgClEgMzA1MCAyNDE5IDMzMDQgMjExMiAKUSAzNTU5IDE4MDYgMzU1OSAxMzU2IApRIDM1NTkgNjY2IDMwODQgMjg3IApRIDI2MDkgLTkxIDE3MzQgLTkxIApRIDE0NDEgLTkxIDExMzAgLTMzIApRIDgxOSAyNSA0ODggMTQxIApMIDQ4OCA3NTAgClEgNzUwIDU5NyAxMDYyIDUxOSAKUSAxMzc1IDQ0MSAxNzE2IDQ0MSAKUSAyMzA5IDQ0MSAyNjIwIDY3NSAKUSAyOTMxIDkwOSAyOTMxIDEzNTYgClEgMjkzMSAxNzY5IDI2NDIgMjAwMSAKUSAyMzUzIDIyMzQgMTgzOCAyMjM0IApMIDEyOTQgMjIzNCAKTCAxMjk0IDI3NTMgCkwgMTg2MyAyNzUzIApRIDIzMjggMjc1MyAyNTc1IDI5MzkgClEgMjgyMiAzMTI1IDI4MjIgMzQ3NSAKUSAyODIyIDM4MzQgMjU2NyA0MDI2IApRIDIzMTMgNDIxOSAxODM4IDQyMTkgClEgMTU3OCA0MjE5IDEyODEgNDE2MiAKUSA5ODQgNDEwNiA2MjggMzk4OCAKTCA2MjggNDU1MCAKUSA5ODggNDY1MCAxMzAyIDQ3MDAgClEgMTYxNiA0NzUwIDE4OTQgNDc1MCAKUSAyNjEzIDQ3NTAgMzAzMSA0NDIzIApRIDM0NTAgNDA5NyAzNDUwIDM1NDEgClEgMzQ1MCAzMTUzIDMyMjggMjg4NiAKUSAzMDA2IDI2MTkgMjU5NyAyNTE2IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDwvZGVmcz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtYzljIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE2IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4My43OTY4NzUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja18zIj4KICAgICA8ZyBpZD0ibGluZTJkXzMiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21iYzk0MjhkNjY1IiB4PSIxNzIuMjExODYxIiB5PSIyMDEuMjQiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMyI+CiAgICAgIDwhLS0g4oiSMiAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTY0Ljg0MDc2NyAyMTUuODM3NjU2KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPGRlZnM+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtMTUiIGQ9Ik0gMTIyOCA1MzEgCkwgMzQzMSA1MzEgCkwgMzQzMSAwIApMIDQ2OSAwIApMIDQ2OSA1MzEgClEgODI4IDkwMyAxNDQ4IDE1MjkgClEgMjA2OSAyMTU2IDIyMjggMjMzOCAKUSAyNTMxIDI2NzggMjY1MSAyOTE0IApRIDI3NzIgMzE1MCAyNzcyIDMzNzggClEgMjc3MiAzNzUwIDI1MTEgMzk4NCAKUSAyMjUwIDQyMTkgMTgzMSA0MjE5IApRIDE1MzQgNDIxOSAxMjA0IDQxMTYgClEgODc1IDQwMTMgNTAwIDM4MDMgCkwgNTAwIDQ0NDEgClEgODgxIDQ1OTQgMTIxMiA0NjcyIApRIDE1NDQgNDc1MCAxODE5IDQ3NTAgClEgMjU0NCA0NzUwIDI5NzUgNDM4NyAKUSAzNDA2IDQwMjUgMzQwNiAzNDE5IApRIDM0MDYgMzEzMSAzMjk4IDI4NzMgClEgMzE5MSAyNjE2IDI5MDYgMjI2NiAKUSAyODI4IDIxNzUgMjQwOSAxNzQyIApRIDE5OTEgMTMwOSAxMjI4IDUzMSAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8L2RlZnM+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLWM5YyIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xNSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoODMuNzk2ODc1IDApIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieHRpY2tfNCI+CiAgICAgPGcgaWQ9ImxpbmUyZF80Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYmM5NDI4ZDY2NSIgeD0iMjIyLjkzOTEzNCIgeT0iMjAxLjI0IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzQiPgogICAgICA8IS0tIOKIkjEgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIxNS41NjgwNCAyMTUuODM3NjU2KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPGRlZnM+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtMTQiIGQ9Ik0gNzk0IDUzMSAKTCAxODI1IDUzMSAKTCAxODI1IDQwOTEgCkwgNzAzIDM4NjYgCkwgNzAzIDQ0NDEgCkwgMTgxOSA0NjY2IApMIDI0NTAgNDY2NiAKTCAyNDUwIDUzMSAKTCAzNDgxIDUzMSAKTCAzNDgxIDAgCkwgNzk0IDAgCkwgNzk0IDUzMSAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8L2RlZnM+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLWM5YyIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xNCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoODMuNzk2ODc1IDApIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieHRpY2tfNSI+CiAgICAgPGcgaWQ9ImxpbmUyZF81Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYmM5NDI4ZDY2NSIgeD0iMjczLjY2NjQwNiIgeT0iMjAxLjI0IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzUiPgogICAgICA8IS0tIDAgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI3MC40ODUxNTYgMjE1LjgzNzY1Nikgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDxkZWZzPgogICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTEzIiBkPSJNIDIwMzQgNDI1MCAKUSAxNTQ3IDQyNTAgMTMwMSAzNzcwIApRIDEwNTYgMzI5MSAxMDU2IDIzMjggClEgMTA1NiAxMzY5IDEzMDEgODg5IApRIDE1NDcgNDA5IDIwMzQgNDA5IApRIDI1MjUgNDA5IDI3NzAgODg5IApRIDMwMTYgMTM2OSAzMDE2IDIzMjggClEgMzAxNiAzMjkxIDI3NzAgMzc3MCAKUSAyNTI1IDQyNTAgMjAzNCA0MjUwIAp6Ck0gMjAzNCA0NzUwIApRIDI4MTkgNDc1MCAzMjMzIDQxMjkgClEgMzY0NyAzNTA5IDM2NDcgMjMyOCAKUSAzNjQ3IDExNTAgMzIzMyA1MjkgClEgMjgxOSAtOTEgMjAzNCAtOTEgClEgMTI1MCAtOTEgODM2IDUyOSAKUSA0MjIgMTE1MCA0MjIgMjMyOCAKUSA0MjIgMzUwOSA4MzYgNDEyOSAKUSAxMjUwIDQ3NTAgMjAzNCA0NzUwIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDwvZGVmcz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja182Ij4KICAgICA8ZyBpZD0ibGluZTJkXzYiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21iYzk0MjhkNjY1IiB4PSIzMjQuMzkzNjc5IiB5PSIyMDEuMjQiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfNiI+CiAgICAgIDwhLS0gMSAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzIxLjIxMjQyOSAyMTUuODM3NjU2KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xNCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inh0aWNrXzciPgogICAgIDxnIGlkPSJsaW5lMmRfNyI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWJjOTQyOGQ2NjUiIHg9IjM3NS4xMjA5NTIiIHk9IjIwMS4yNCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF83Ij4KICAgICAgPCEtLSAyIC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzNzEuOTM5NzAyIDIxNS44Mzc2NTYpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE1Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieHRpY2tfOCI+CiAgICAgPGcgaWQ9ImxpbmUyZF84Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYmM5NDI4ZDY2NSIgeD0iNDI1Ljg0ODIyNCIgeT0iMjAxLjI0IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzgiPgogICAgICA8IS0tIDMgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQyMi42NjY5NzQgMjE1LjgzNzY1Nikgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTYiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja185Ij4KICAgICA8ZyBpZD0ibGluZTJkXzkiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21iYzk0MjhkNjY1IiB4PSI0NzYuNTc1NDk3IiB5PSIyMDEuMjQiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfOSI+CiAgICAgIDwhLS0gNCAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDczLjM5NDI0NyAyMTUuODM3NjU2KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xNyIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9InRleHRfMTAiPgogICAgIDwhLS0geiAtLT4KICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNzEuMDQyMTg4IDIyOS44Mzc2NTYpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgIDxkZWZzPgogICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtNWQiIGQ9Ik0gMzUzIDM1MDAgCkwgMzA4NCAzNTAwIApMIDMwODQgMjk3NSAKTCA5MjIgNDU5IApMIDMwODQgNDU5IApMIDMwODQgMCAKTCAyNzUgMCAKTCAyNzUgNTI1IApMIDI0MzggMzA0MSAKTCAzNTMgMzA0MSAKTCAzNTMgMzUwMCAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgIDwvZGVmcz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01ZCIvPgogICAgIDwvZz4KICAgIDwvZz4KICAgPC9nPgogICA8ZyBpZD0ibWF0cGxvdGxpYi5heGlzXzIiPgogICAgPGcgaWQ9Inl0aWNrXzEiPgogICAgIDxnIGlkPSJsaW5lMmRfMTAiPgogICAgICA8ZGVmcz4KICAgICAgIDxwYXRoIGlkPSJtYzUyNTkwZjZmMyIgZD0iTSAwIDAgCkwgLTMuNSAwIAoiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZGVmcz4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iNTAuNDY2NDA2IiB5PSIxOTIuNDIiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTEiPgogICAgICA8IS0tIDAuMDAgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIxLjIwMDc4MSAxOTYuMjE4ODI4KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPGRlZnM+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtMTEiIGQ9Ik0gNjg0IDc5NCAKTCAxMzQ0IDc5NCAKTCAxMzQ0IDAgCkwgNjg0IDAgCkwgNjg0IDc5NCAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8L2RlZnM+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQwNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja18yIj4KICAgICA8ZyBpZD0ibGluZTJkXzExIj4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iNTAuNDY2NDA2IiB5PSIxNzAuMzEwNDI4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzEyIj4KICAgICAgPCEtLSAwLjA1IC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMS4yMDA3ODEgMTc0LjEwOTI1Nikgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDxkZWZzPgogICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTE4IiBkPSJNIDY5MSA0NjY2IApMIDMxNjkgNDY2NiAKTCAzMTY5IDQxMzQgCkwgMTI2OSA0MTM0IApMIDEyNjkgMjk5MSAKUSAxNDA2IDMwMzggMTU0MyAzMDYxIApRIDE2ODEgMzA4NCAxODE5IDMwODQgClEgMjYwMCAzMDg0IDMwNTYgMjY1NiAKUSAzNTEzIDIyMjggMzUxMyAxNDk3IApRIDM1MTMgNzQ0IDMwNDQgMzI2IApRIDI1NzUgLTkxIDE3MjIgLTkxIApRIDE0MjggLTkxIDExMjMgLTQxIApRIDgxOSA5IDQ5NCAxMDkgCkwgNDk0IDc0NCAKUSA3NzUgNTkxIDEwNzUgNTE2IApRIDEzNzUgNDQxIDE3MDkgNDQxIApRIDIyNTAgNDQxIDI1NjUgNzI1IApRIDI4ODEgMTAwOSAyODgxIDE0OTcgClEgMjg4MSAxOTg0IDI1NjUgMjI2OCAKUSAyMjUwIDI1NTMgMTcwOSAyNTUzIApRIDE0NTYgMjU1MyAxMjA0IDI0OTcgClEgOTUzIDI0NDEgNjkxIDIzMjIgCkwgNjkxIDQ2NjYgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPC9kZWZzPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjMuNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5NS40MDYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTU5LjAzMTI1IDApIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfMyI+CiAgICAgPGcgaWQ9ImxpbmUyZF8xMiI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWM1MjU5MGY2ZjMiIHg9IjUwLjQ2NjQwNiIgeT0iMTQ4LjIwMDg1NSIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF8xMyI+CiAgICAgIDwhLS0gMC4xMCAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjEuMjAwNzgxIDE1MS45OTk2ODMpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQwNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja180Ij4KICAgICA8ZyBpZD0ibGluZTJkXzEzIj4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iNTAuNDY2NDA2IiB5PSIxMjYuMDkxMjgzIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzE0Ij4KICAgICAgPCEtLSAwLjE1IC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMS4yMDA3ODEgMTI5Ljg5MDExMSkgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzLjYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xNCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTUuNDA2MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1OS4wMzEyNSAwKSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inl0aWNrXzUiPgogICAgIDxnIGlkPSJsaW5lMmRfMTQiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21jNTI1OTBmNmYzIiB4PSI1MC40NjY0MDYiIHk9IjEwMy45ODE3MSIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF8xNSI+CiAgICAgIDwhLS0gMC4yMCAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjEuMjAwNzgxIDEwNy43ODA1MzkpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQwNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja182Ij4KICAgICA8ZyBpZD0ibGluZTJkXzE1Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iNTAuNDY2NDA2IiB5PSI4MS44NzIxMzgiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTYiPgogICAgICA8IS0tIDAuMjUgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIxLjIwMDc4MSA4NS42NzA5NjYpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQwNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE4IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja183Ij4KICAgICA8ZyBpZD0ibGluZTJkXzE2Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iNTAuNDY2NDA2IiB5PSI1OS43NjI1NjYiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTciPgogICAgICA8IS0tIDAuMzAgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIxLjIwMDc4MSA2My41NjEzOTQpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQwNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja184Ij4KICAgICA8ZyBpZD0ibGluZTJkXzE3Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iNTAuNDY2NDA2IiB5PSIzNy42NTI5OTMiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTgiPgogICAgICA8IS0tIDAuMzUgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIxLjIwMDc4MSA0MS40NTE4MjEpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQwNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE4IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja185Ij4KICAgICA8ZyBpZD0ibGluZTJkXzE4Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iNTAuNDY2NDA2IiB5PSIxNS41NDM0MjEiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTkiPgogICAgICA8IS0tIDAuNDAgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIxLjIwMDc4MSAxOS4zNDIyNDkpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQwNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ0ZXh0XzIwIj4KICAgICA8IS0tIGRlbnNpZGFkIHNpIEjigoAgZXMgY2llcnRhIC0tPgogICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE0Ljc5ODQzOCAxNjMuMTM2NDA2KSByb3RhdGUoLTkwKSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICA8ZGVmcz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTQ3IiBkPSJNIDI5MDYgMjk2OSAKTCAyOTA2IDQ4NjMgCkwgMzQ4MSA0ODYzIApMIDM0ODEgMCAKTCAyOTA2IDAgCkwgMjkwNiA1MjUgClEgMjcyNSAyMTMgMjQ0OCA2MSAKUSAyMTcyIC05MSAxNzg0IC05MSAKUSAxMTUwIC05MSA3NTEgNDE1IApRIDM1MyA5MjIgMzUzIDE3NDcgClEgMzUzIDI1NzIgNzUxIDMwNzggClEgMTE1MCAzNTg0IDE3ODQgMzU4NCAKUSAyMTcyIDM1ODQgMjQ0OCAzNDMyIApRIDI3MjUgMzI4MSAyOTA2IDI5NjkgCnoKTSA5NDcgMTc0NyAKUSA5NDcgMTExMyAxMjA4IDc1MiAKUSAxNDY5IDM5MSAxOTI1IDM5MSAKUSAyMzgxIDM5MSAyNjQzIDc1MiAKUSAyOTA2IDExMTMgMjkwNiAxNzQ3IApRIDI5MDYgMjM4MSAyNjQzIDI3NDIgClEgMjM4MSAzMTAzIDE5MjUgMzEwMyAKUSAxNDY5IDMxMDMgMTIwOCAyNzQyIApRIDk0NyAyMzgxIDk0NyAxNzQ3IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTQ4IiBkPSJNIDM1OTcgMTg5NCAKTCAzNTk3IDE2MTMgCkwgOTUzIDE2MTMgClEgOTkxIDEwMTkgMTMxMSA3MDggClEgMTYzMSAzOTcgMjIwMyAzOTcgClEgMjUzNCAzOTcgMjg0NSA0NzggClEgMzE1NiA1NTkgMzQ2MyA3MjIgCkwgMzQ2MyAxNzggClEgMzE1MyA0NyAyODI4IC0yMiAKUSAyNTAzIC05MSAyMTY5IC05MSAKUSAxMzMxIC05MSA4NDIgMzk2IApRIDM1MyA4ODQgMzUzIDE3MTYgClEgMzUzIDI1NzUgODE3IDMwNzkgClEgMTI4MSAzNTg0IDIwNjkgMzU4NCAKUSAyNzc1IDM1ODQgMzE4NiAzMTI5IApRIDM1OTcgMjY3NSAzNTk3IDE4OTQgCnoKTSAzMDIyIDIwNjMgClEgMzAxNiAyNTM0IDI3NTggMjgxNSAKUSAyNTAwIDMwOTcgMjA3NSAzMDk3IApRIDE1OTQgMzA5NyAxMzA1IDI4MjUgClEgMTAxNiAyNTUzIDk3MiAyMDU5IApMIDMwMjIgMjA2MyAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy01MSIgZD0iTSAzNTEzIDIxMTMgCkwgMzUxMyAwIApMIDI5MzggMCAKTCAyOTM4IDIwOTQgClEgMjkzOCAyNTkxIDI3NDQgMjgzNyAKUSAyNTUwIDMwODQgMjE2MyAzMDg0IApRIDE2OTcgMzA4NCAxNDI4IDI3ODcgClEgMTE1OSAyNDkxIDExNTkgMTk3OCAKTCAxMTU5IDAgCkwgNTgxIDAgCkwgNTgxIDM1MDAgCkwgMTE1OSAzNTAwIApMIDExNTkgMjk1NiAKUSAxMzY2IDMyNzIgMTY0NSAzNDI4IApRIDE5MjUgMzU4NCAyMjkxIDM1ODQgClEgMjg5NCAzNTg0IDMyMDMgMzIxMSAKUSAzNTEzIDI4MzggMzUxMyAyMTEzIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTU2IiBkPSJNIDI4MzQgMzM5NyAKTCAyODM0IDI4NTMgClEgMjU5MSAyOTc4IDIzMjggMzA0MCAKUSAyMDY2IDMxMDMgMTc4NCAzMTAzIApRIDEzNTYgMzEwMyAxMTQyIDI5NzIgClEgOTI4IDI4NDEgOTI4IDI1NzggClEgOTI4IDIzNzggMTA4MSAyMjY0IApRIDEyMzQgMjE1MCAxNjk3IDIwNDcgCkwgMTg5NCAyMDAzIApRIDI1MDYgMTg3MiAyNzY0IDE2MzMgClEgMzAyMiAxMzk0IDMwMjIgOTY2IApRIDMwMjIgNDc4IDI2MzYgMTkzIApRIDIyNTAgLTkxIDE1NzUgLTkxIApRIDEyOTQgLTkxIDk4OSAtMzYgClEgNjg0IDE5IDM0NyAxMjggCkwgMzQ3IDcyMiAKUSA2NjYgNTU2IDk3NSA0NzMgClEgMTI4NCAzOTEgMTU4OCAzOTEgClEgMTk5NCAzOTEgMjIxMiA1MzAgClEgMjQzMSA2NjkgMjQzMSA5MjIgClEgMjQzMSAxMTU2IDIyNzMgMTI4MSAKUSAyMTE2IDE0MDYgMTU4MSAxNTIyIApMIDEzODEgMTU2OSAKUSA4NDcgMTY4MSA2MDkgMTkxNCAKUSAzNzIgMjE0NyAzNzIgMjU1MyAKUSAzNzIgMzA0NyA3MjIgMzMxNSAKUSAxMDcyIDM1ODQgMTcxNiAzNTg0IApRIDIwMzQgMzU4NCAyMzE1IDM1MzcgClEgMjU5NyAzNDkxIDI4MzQgMzM5NyAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy00YyIgZD0iTSA2MDMgMzUwMCAKTCAxMTc4IDM1MDAgCkwgMTE3OCAwIApMIDYwMyAwIApMIDYwMyAzNTAwIAp6Ck0gNjAzIDQ4NjMgCkwgMTE3OCA0ODYzIApMIDExNzggNDEzNCAKTCA2MDMgNDEzNCAKTCA2MDMgNDg2MyAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy00NCIgZD0iTSAyMTk0IDE3NTkgClEgMTQ5NyAxNzU5IDEyMjggMTYwMCAKUSA5NTkgMTQ0MSA5NTkgMTA1NiAKUSA5NTkgNzUwIDExNjEgNTcwIApRIDEzNjMgMzkxIDE3MDkgMzkxIApRIDIxODggMzkxIDI0NzcgNzMwIApRIDI3NjYgMTA2OSAyNzY2IDE2MzEgCkwgMjc2NiAxNzU5IApMIDIxOTQgMTc1OSAKegpNIDMzNDEgMTk5NyAKTCAzMzQxIDAgCkwgMjc2NiAwIApMIDI3NjYgNTMxIApRIDI1NjkgMjEzIDIyNzUgNjEgClEgMTk4MSAtOTEgMTU1NiAtOTEgClEgMTAxOSAtOTEgNzAxIDIxMSAKUSAzODQgNTEzIDM4NCAxMDE5IApRIDM4NCAxNjA5IDc3OSAxOTA5IApRIDExNzUgMjIwOSAxOTU5IDIyMDkgCkwgMjc2NiAyMjA5IApMIDI3NjYgMjI2NiAKUSAyNzY2IDI2NjMgMjUwNSAyODgwIApRIDIyNDQgMzA5NyAxNzcyIDMwOTcgClEgMTQ3MiAzMDk3IDExODcgMzAyNSAKUSA5MDMgMjk1MyA2NDEgMjgwOSAKTCA2NDEgMzM0MSAKUSA5NTYgMzQ2MyAxMjUzIDM1MjMgClEgMTU1MCAzNTg0IDE4MzEgMzU4NCAKUSAyNTkxIDM1ODQgMjk2NiAzMTkwIApRIDMzNDEgMjc5NyAzMzQxIDE5OTcgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtMyIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTJiIiBkPSJNIDYyOCA0NjY2IApMIDEyNTkgNDY2NiAKTCAxMjU5IDI3NTMgCkwgMzU1MyAyNzUzIApMIDM1NTMgNDY2NiAKTCA0MTg0IDQ2NjYgCkwgNDE4NCAwIApMIDM1NTMgMCAKTCAzNTUzIDIyMjIgCkwgMTI1OSAyMjIyIApMIDEyNTkgMCAKTCA2MjggMCAKTCA2MjggNDY2NiAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy1iNWIiIGQ9Ik0gMTc4MSAyMTE1IApRIDE2MjUgMjM4NCAxMzA5IDIzODQgClEgOTk0IDIzODQgODM4IDIxMTUgClEgNjc4IDE4NDYgNjc4IDEzMDkgClEgNjc4IDc2OCA4MzggNTAwIApRIDk5NCAyMzEgMTMwOSAyMzEgClEgMTYyNSAyMzEgMTc4MSA1MDAgClEgMTk0MSA3NjggMTk0MSAxMzA5IApRIDE5NDEgMTg0NiAxNzgxIDIxMTUgCnoKTSAxMzA5IDI2NjIgClEgMTgxMyAyNjYyIDIwNzggMjMxNSAKUSAyMzQ0IDE5NjggMjM0NCAxMzA5IApRIDIzNDQgNjQ2IDIwNzggMjk5IApRIDE4MTMgLTQ3IDEzMDkgLTQ3IApRIDgwMyAtNDcgNTM3IDI5OSAKUSAyNzIgNjQ2IDI3MiAxMzA5IApRIDI3MiAxOTY4IDUzNyAyMzE1IApRIDgwMyAyNjYyIDEzMDkgMjY2MiAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy00NiIgZD0iTSAzMTIyIDMzNjYgCkwgMzEyMiAyODI4IApRIDI4NzggMjk2MyAyNjMzIDMwMzAgClEgMjM4OCAzMDk3IDIxMzggMzA5NyAKUSAxNTc4IDMwOTcgMTI2OCAyNzQyIApRIDk1OSAyMzg4IDk1OSAxNzQ3IApRIDk1OSAxMTA2IDEyNjggNzUxIApRIDE1NzggMzk3IDIxMzggMzk3IApRIDIzODggMzk3IDI2MzMgNDY0IApRIDI4NzggNTMxIDMxMjIgNjY2IApMIDMxMjIgMTM0IApRIDI4ODEgMjIgMjYyMyAtMzQgClEgMjM2NiAtOTEgMjA3NSAtOTEgClEgMTI4NCAtOTEgODE4IDQwNiAKUSAzNTMgOTAzIDM1MyAxNzQ3IApRIDM1MyAyNjAzIDgyMyAzMDkzIApRIDEyOTQgMzU4NCAyMTEzIDM1ODQgClEgMjM3OCAzNTg0IDI2MzEgMzUyOSAKUSAyODg0IDM0NzUgMzEyMiAzMzY2IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTU1IiBkPSJNIDI2MzEgMjk2MyAKUSAyNTM0IDMwMTkgMjQyMCAzMDQ1IApRIDIzMDYgMzA3MiAyMTY5IDMwNzIgClEgMTY4MSAzMDcyIDE0MjAgMjc1NSAKUSAxMTU5IDI0MzggMTE1OSAxODQ0IApMIDExNTkgMCAKTCA1ODEgMCAKTCA1ODEgMzUwMCAKTCAxMTU5IDM1MDAgCkwgMTE1OSAyOTU2IApRIDEzNDEgMzI3NSAxNjMxIDM0MjkgClEgMTkyMiAzNTg0IDIzMzggMzU4NCAKUSAyMzk3IDM1ODQgMjQ2OSAzNTc2IApRIDI1NDEgMzU2OSAyNjI4IDM1NTMgCkwgMjYzMSAyOTYzIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTU3IiBkPSJNIDExNzIgNDQ5NCAKTCAxMTcyIDM1MDAgCkwgMjM1NiAzNTAwIApMIDIzNTYgMzA1MyAKTCAxMTcyIDMwNTMgCkwgMTE3MiAxMTUzIApRIDExNzIgNzI1IDEyODkgNjAzIApRIDE0MDYgNDgxIDE3NjYgNDgxIApMIDIzNTYgNDgxIApMIDIzNTYgMCAKTCAxNzY2IDAgClEgMTEwMCAwIDg0NyAyNDggClEgNTk0IDQ5NyA1OTQgMTE1MyAKTCA1OTQgMzA1MyAKTCAxNzIgMzA1MyAKTCAxNzIgMzUwMCAKTCA1OTQgMzUwMCAKTCA1OTQgNDQ5NCAKTCAxMTcyIDQ0OTQgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICA8L2RlZnM+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDciLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjMuNDg0Mzc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyNS4wMTU2MjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01NiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTg4LjM5MDYyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTRjIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNDAuNDg0Mzc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI2OC4yNjU2MjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00NCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzMxLjc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM5My4wMzEyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQ1Ni41MTU2MjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01NiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDg4LjI5Njg3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTRjIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1NDAuMzkwNjI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTY4LjE3MTg3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTJiIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1OTkuOTUzMTI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtYjViIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2NzUuMTU2MjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3MTUuMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzQ3LjAzMTI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDgwOC41NjI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoODYwLjY1NjI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDg5Mi40Mzc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNGMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk0Ny40MjE4NzUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTc1LjIwMzEyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDM2LjczNDM3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU3IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDc3Ljg0Mzc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDExMTcuMDQ2ODc1IDApIi8+CiAgICAgPC9nPgogICAgPC9nPgogICA8L2c+CiAgIDxnIGlkPSJsaW5lMmRfMTkiPgogICAgPHBhdGggZD0iTSA3MC43NTczMTUgMTkyLjM2MDgyMSAKTCA5MC4wODE5OTEgMTkyLjE2NzQgCkwgMTAyLjI4NzA0OSAxOTEuODMzODMgCkwgMTExLjQ0MDg0MiAxOTEuMzU4OTkzIApMIDExOC41NjA0NiAxOTAuNzc0MjI2IApMIDEyNC42NjI5ODkgMTkwLjA1OTY0NyAKTCAxMjkuNzQ4NDI5IDE4OS4yNjczMDggCkwgMTM0LjgzMzg3IDE4OC4yNTExMDEgCkwgMTM4LjkwMjIyMyAxODcuMjQ0NTIgCkwgMTQyLjk3MDU3NiAxODYuMDM2MDk1IApMIDE0Ny4wMzg5MjggMTg0LjU5NjAwMSAKTCAxNTEuMTA3MjgxIDE4Mi44OTI1MjcgCkwgMTU1LjE3NTYzNCAxODAuODkyNTUxIApMIDE1OC4yMjY4OTggMTc5LjE3NzYwMiAKTCAxNjEuMjc4MTYzIDE3Ny4yNjI0NTggCkwgMTY0LjMyOTQyNyAxNzUuMTMzMDAyIApMIDE2Ny4zODA2OTIgMTcyLjc3NTU4NSAKTCAxNzAuNDMxOTU2IDE3MC4xNzczMTEgCkwgMTczLjQ4MzIyMSAxNjcuMzI2MzMgCkwgMTc2LjUzNDQ4NiAxNjQuMjEyMTY0IApMIDE3OS41ODU3NSAxNjAuODI2MDQgCkwgMTgyLjYzNzAxNSAxNTcuMTYxMjQgCkwgMTg1LjY4ODI3OSAxNTMuMjEzNDQzIApMIDE4OC43Mzk1NDQgMTQ4Ljk4MTA3NiAKTCAxOTIuODA3ODk2IDE0Mi44OTgzMjkgCkwgMTk2Ljg3NjI0OSAxMzYuMzI1Nzg0IApMIDIwMC45NDQ2MDIgMTI5LjI4ODMwNyAKTCAyMDUuMDEyOTU0IDEyMS44MjM0NjkgCkwgMjEwLjA5ODM5NSAxMTEuOTcwMTk1IApMIDIxNi4yMDA5MjQgOTkuNTU0NjkzIApMIDIzNi41NDI2ODggNTcuNDU0Nzc4IApMIDI0MC42MTEwNDEgNDkuNzU1NzIxIApMIDI0NC42NzkzOTMgNDIuNTg0MzQxIApMIDI0Ny43MzA2NTggMzcuNjI0OTk0IApMIDI1MC43ODE5MjIgMzMuMDc5MDUxIApMIDI1My44MzMxODcgMjguOTkxOTY5IApMIDI1Ni44ODQ0NTEgMjUuNDA1NDE5IApMIDI1OC45MTg2MjggMjMuMzExMDIxIApMIDI2MC45NTI4MDQgMjEuNDY1NDggCkwgMjYyLjk4Njk4IDE5Ljg3NzQ3NSAKTCAyNjUuMDIxMTU3IDE4LjU1NDUyNCAKTCAyNjcuMDU1MzMzIDE3LjUwMjkyOCAKTCAyNjkuMDg5NTA5IDE2LjcyNzcxOCAKTCAyNzEuMTIzNjg2IDE2LjIzMjYxNCAKTCAyNzMuMTU3ODYyIDE2LjAyIApMIDI3NS4xOTIwMzkgMTYuMDkwOSAKTCAyNzcuMjI2MjE1IDE2LjQ0NDk3MiAKTCAyNzkuMjYwMzkxIDE3LjA4MDUxMSAKTCAyODEuMjk0NTY4IDE3Ljk5NDQ2MiAKTCAyODMuMzI4NzQ0IDE5LjE4MjQ0NSAKTCAyODUuMzYyOTIgMjAuNjM4Nzg3IApMIDI4Ny4zOTcwOTcgMjIuMzU2NTc0IApMIDI4OS40MzEyNzMgMjQuMzI3Njk5IApMIDI5MS40NjU0NDkgMjYuNTQyOTI3IApMIDI5NC41MTY3MTQgMzAuMzAwNjg3IApMIDI5Ny41Njc5NzggMzQuNTQ1NTU1IApMIDMwMC42MTkyNDMgMzkuMjM0NTE2IApMIDMwMy42NzA1MDcgNDQuMzIxMDE1IApMIDMwNy43Mzg4NiA1MS42MzU4NDIgCkwgMzExLjgwNzIxMyA1OS40NDc0MzIgCkwgMzE2Ljg5MjY1NCA2OS43MjAxMjMgCkwgMzI1LjAyOTM1OSA4Ni43NjMzNjQgCkwgMzM0LjE4MzE1MyAxMDUuODI4NTcyIApMIDMzOS4yNjg1OTQgMTE1Ljk3NDQ2OCAKTCAzNDQuMzU0MDM0IDEyNS42MDY0NDYgCkwgMzQ4LjQyMjM4NyAxMzIuODYzMTIgCkwgMzUyLjQ5MDc0IDEzOS42NzIwMTYgCkwgMzU2LjU1OTA5MyAxNDYuMDAyMDA4IApMIDM2MC42Mjc0NDUgMTUxLjgzNDI2NSAKTCAzNjMuNjc4NzEgMTU1Ljg3Njg4OSAKTCAzNjYuNzI5OTc0IDE1OS42MzU2NyAKTCAzNjkuNzgxMjM5IDE2My4xMTQwNTEgCkwgMzcyLjgzMjUwMyAxNjYuMzE3OTg5IApMIDM3NS44ODM3NjggMTY5LjI1NTYxMSAKTCAzNzguOTM1MDMyIDE3MS45MzY4NjYgCkwgMzgxLjk4NjI5NyAxNzQuMzczMTggCkwgMzg1LjAzNzU2MSAxNzYuNTc3MTM4IApMIDM4OC4wODg4MjYgMTc4LjU2MjE2OCAKTCAzOTEuMTQwMDkgMTgwLjM0MjI2MiAKTCAzOTUuMjA4NDQzIDE4Mi40MjE2NDcgCkwgMzk5LjI3Njc5NiAxODQuMTk2MDk4IApMIDQwMy4zNDUxNDkgMTg1LjY5OSAKTCA0MDcuNDEzNTAxIDE4Ni45NjI0NjYgCkwgNDExLjQ4MTg1NCAxODguMDE2ODI5IApMIDQxNi41NjcyOTUgMTg5LjA4MzQ0MiAKTCA0MjEuNjUyNzM2IDE4OS45MTY5NjQgCkwgNDI3Ljc1NTI2NSAxOTAuNjcwNTI1IApMIDQzNC44NzQ4ODIgMTkxLjI4ODk2IApMIDQ0My4wMTE1ODcgMTkxLjc0OTMyNiAKTCA0NTMuMTgyNDY5IDE5Mi4wODM0MTkgCkwgNDY3LjQyMTcwNCAxOTIuMzAwMTY5IApMIDQ3Ni41NzU0OTcgMTkyLjM2MDgyMSAKTCA0NzYuNTc1NDk3IDE5Mi4zNjA4MjEgCiIgY2xpcC1wYXRoPSJ1cmwoI3AwZmZmN2NjMzZmKSIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IHN0cm9rZS1saW5lY2FwOiBzcXVhcmUiLz4KICAgPC9nPgogICA8ZyBpZD0ibGluZTJkXzIwIj4KICAgIDxwYXRoIGQ9Ik0gMTg4LjQ0NDU4OCAyMDEuMjQgCkwgMTg4LjQ0NDU4OCA3LjIgCiIgY2xpcC1wYXRoPSJ1cmwoI3AwZmZmN2NjMzZmKSIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZS1kYXNoYXJyYXk6IDUuNTUsMi40OyBzdHJva2UtZGFzaG9mZnNldDogMDsgc3Ryb2tlOiAjMWY3N2I0OyBzdHJva2Utd2lkdGg6IDEuNSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8zIj4KICAgIDxwYXRoIGQ9Ik0gNTAuNDY2NDA2IDIwMS4yNCAKTCA1MC40NjY0MDYgNy4yIAoiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44OyBzdHJva2UtbGluZWpvaW46IG1pdGVyOyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzQiPgogICAgPHBhdGggZD0iTSA1MC40NjY0MDYgMjAxLjI0IApMIDQ5Ni44NjY0MDYgMjAxLjI0IAoiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44OyBzdHJva2UtbGluZWpvaW46IG1pdGVyOyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgIDwvZz4KICAgPGcgaWQ9ImxlZ2VuZF8xIj4KICAgIDxnIGlkPSJwYXRjaF81Ij4KICAgICA8cGF0aCBkPSJNIDMzNy43NzQyMTkgNDUuNjAxNTYyIApMIDQ4OS44NjY0MDYgNDUuNjAxNTYyIApRIDQ5MS44NjY0MDYgNDUuNjAxNTYyIDQ5MS44NjY0MDYgNDMuNjAxNTYyIApMIDQ5MS44NjY0MDYgMTQuMiAKUSA0OTEuODY2NDA2IDEyLjIgNDg5Ljg2NjQwNiAxMi4yIApMIDMzNy43NzQyMTkgMTIuMiAKUSAzMzUuNzc0MjE5IDEyLjIgMzM1Ljc3NDIxOSAxNC4yIApMIDMzNS43NzQyMTkgNDMuNjAxNTYyIApRIDMzNS43NzQyMTkgNDUuNjAxNTYyIDMzNy43NzQyMTkgNDUuNjAxNTYyIAp6CiIgc3R5bGU9ImZpbGw6ICNmZmZmZmY7IG9wYWNpdHk6IDAuODsgc3Ryb2tlOiAjY2NjY2NjOyBzdHJva2UtbGluZWpvaW46IG1pdGVyIi8+CiAgICA8L2c+CiAgICA8ZyBpZD0icGF0Y2hfNiI+CiAgICAgPHBhdGggZD0iTSAzMzkuNzc0MjE5IDIzLjc5ODQzOCAKTCAzNTkuNzc0MjE5IDIzLjc5ODQzOCAKTCAzNTkuNzc0MjE5IDE2Ljc5ODQzOCAKTCAzMzkuNzc0MjE5IDE2Ljc5ODQzOCAKegoiIHN0eWxlPSJmaWxsOiAjMWY3N2I0OyBmaWxsLW9wYWNpdHk6IDAuMzU7IHN0cm9rZTogIzFmNzdiNDsgc3Ryb2tlLW9wYWNpdHk6IDAuMzU7IHN0cm9rZS1saW5lam9pbjogbWl0ZXIiLz4KICAgIDwvZz4KICAgIDxnIGlkPSJ0ZXh0XzIxIj4KICAgICA8IS0tIHAtdmFsb3IgPSAwLjA5MyAtLT4KICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzNjcuNzc0MjE5IDIzLjc5ODQzOCkgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgPGRlZnM+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy01MyIgZD0iTSAxMTU5IDUyNSAKTCAxMTU5IC0xMzMxIApMIDU4MSAtMTMzMSAKTCA1ODEgMzUwMCAKTCAxMTU5IDM1MDAgCkwgMTE1OSAyOTY5IApRIDEzNDEgMzI4MSAxNjE3IDM0MzIgClEgMTg5NCAzNTg0IDIyNzggMzU4NCAKUSAyOTE2IDM1ODQgMzMxNCAzMDc4IApRIDM3MTMgMjU3MiAzNzEzIDE3NDcgClEgMzcxMyA5MjIgMzMxNCA0MTUgClEgMjkxNiAtOTEgMjI3OCAtOTEgClEgMTg5NCAtOTEgMTYxNyA2MSAKUSAxMzQxIDIxMyAxMTU5IDUyNSAKegpNIDMxMTYgMTc0NyAKUSAzMTE2IDIzODEgMjg1NSAyNzQyIApRIDI1OTQgMzEwMyAyMTM4IDMxMDMgClEgMTY4MSAzMTAzIDE0MjAgMjc0MiAKUSAxMTU5IDIzODEgMTE1OSAxNzQ3IApRIDExNTkgMTExMyAxNDIwIDc1MiAKUSAxNjgxIDM5MSAyMTM4IDM5MSAKUSAyNTk0IDM5MSAyODU1IDc1MiAKUSAzMTE2IDExMTMgMzExNiAxNzQ3IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTEwIiBkPSJNIDMxMyAyMDA5IApMIDE5OTcgMjAwOSAKTCAxOTk3IDE0OTcgCkwgMzEzIDE0OTcgCkwgMzEzIDIwMDkgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtNTkiIGQ9Ik0gMTkxIDM1MDAgCkwgODAwIDM1MDAgCkwgMTg5NCA1NjMgCkwgMjk4OCAzNTAwIApMIDM1OTcgMzUwMCAKTCAyMjg0IDAgCkwgMTUwMyAwIApMIDE5MSAzNTAwIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTRmIiBkPSJNIDYwMyA0ODYzIApMIDExNzggNDg2MyAKTCAxMTc4IDAgCkwgNjAzIDAgCkwgNjAzIDQ4NjMgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtNTIiIGQ9Ik0gMTk1OSAzMDk3IApRIDE0OTcgMzA5NyAxMjI4IDI3MzYgClEgOTU5IDIzNzUgOTU5IDE3NDcgClEgOTU5IDExMTkgMTIyNiA3NTggClEgMTQ5NCAzOTcgMTk1OSAzOTcgClEgMjQxOSAzOTcgMjY4NyA3NTkgClEgMjk1NiAxMTIyIDI5NTYgMTc0NyAKUSAyOTU2IDIzNjkgMjY4NyAyNzMzIApRIDI0MTkgMzA5NyAxOTU5IDMwOTcgCnoKTSAxOTU5IDM1ODQgClEgMjcwOSAzNTg0IDMxMzcgMzA5NiAKUSAzNTY2IDI2MDkgMzU2NiAxNzQ3IApRIDM1NjYgODg4IDMxMzcgMzk4IApRIDI3MDkgLTkxIDE5NTkgLTkxIApRIDEyMDYgLTkxIDc3OSAzOTggClEgMzUzIDg4OCAzNTMgMTc0NyAKUSAzNTMgMjYwOSA3NzkgMzA5NiAKUSAxMjA2IDM1ODQgMTk1OSAzNTg0IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTIwIiBkPSJNIDY3OCAyOTA2IApMIDQ2ODQgMjkwNiAKTCA0Njg0IDIzODEgCkwgNjc4IDIzODEgCkwgNjc4IDI5MDYgCnoKTSA2NzggMTYzMSAKTCA0Njg0IDE2MzEgCkwgNDY4NCAxMTAwIApMIDY3OCAxMTAwIApMIDY3OCAxNjMxIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTFjIiBkPSJNIDcwMyA5NyAKTCA3MDMgNjcyIApRIDk0MSA1NTkgMTE4NCA1MDAgClEgMTQyOCA0NDEgMTY2MyA0NDEgClEgMjI4OCA0NDEgMjYxNyA4NjEgClEgMjk0NyAxMjgxIDI5OTQgMjEzOCAKUSAyODEzIDE4NjkgMjUzNCAxNzI1IApRIDIyNTYgMTU4MSAxOTE5IDE1ODEgClEgMTIxOSAxNTgxIDgxMSAyMDA0IApRIDQwMyAyNDI4IDQwMyAzMTYzIApRIDQwMyAzODgxIDgyOCA0MzE1IApRIDEyNTMgNDc1MCAxOTU5IDQ3NTAgClEgMjc2OSA0NzUwIDMxOTUgNDEyOSAKUSAzNjIyIDM1MDkgMzYyMiAyMzI4IApRIDM2MjIgMTIyNSAzMDk4IDU2NyAKUSAyNTc1IC05MSAxNjkxIC05MSAKUSAxNDUzIC05MSAxMjA5IC00NCAKUSA5NjYgMyA3MDMgOTcgCnoKTSAxOTU5IDIwNzUgClEgMjM4NCAyMDc1IDI2MzIgMjM2NSAKUSAyODgxIDI2NTYgMjg4MSAzMTYzIApRIDI4ODEgMzY2NiAyNjMyIDM5NTggClEgMjM4NCA0MjUwIDE5NTkgNDI1MCAKUSAxNTM0IDQyNTAgMTI4NiAzOTU4IApRIDEwMzggMzY2NiAxMDM4IDMxNjMgClEgMTAzOCAyNjU2IDEyODYgMjM2NSAKUSAxNTM0IDIwNzUgMTk1OSAyMDc1IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgPC9kZWZzPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTUzIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzLjQ4NDM3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU5IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5Ni44NzUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00NCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTU2LjA2MjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00ZiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3LjM0Mzc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI0NS4xMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01NSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzA2LjMxMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzNDcuNDIxODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMjAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM3OS4yMDMxMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0NjMgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDk0Ljc4MTI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDU1OC40MDYyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1OTAuMTg3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTFjIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2NTMuODEyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE2IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3MTcuNDM3NSAwKSIvPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJwYXRjaF83Ij4KICAgICA8cGF0aCBkPSJNIDMzOS43NzQyMTkgMzkuMTk5MjE5IApMIDM1OS43NzQyMTkgMzkuMTk5MjE5IApMIDM1OS43NzQyMTkgMzIuMTk5MjE5IApMIDMzOS43NzQyMTkgMzIuMTk5MjE5IAp6CiIgc3R5bGU9ImZpbGw6ICNkNjI3Mjg7IGZpbGwtb3BhY2l0eTogMC42OyBzdHJva2U6ICNkNjI3Mjg7IHN0cm9rZS1vcGFjaXR5OiAwLjY7IHN0cm9rZS1saW5lam9pbjogbWl0ZXIiLz4KICAgIDwvZz4KICAgIDxnIGlkPSJ0ZXh0XzIyIj4KICAgICA8IS0tIHJlZ2nDs24gY3LDrXRpY2EgKM6xID0gMC4wNSkgLS0+CiAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzY3Ljc3NDIxOSAzOS4xOTkyMTkpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgIDxkZWZzPgogICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtNGEiIGQ9Ik0gMjkwNiAxNzkxIApRIDI5MDYgMjQxNiAyNjQ4IDI3NTkgClEgMjM5MSAzMTAzIDE5MjUgMzEwMyAKUSAxNDYzIDMxMDMgMTIwNSAyNzU5IApRIDk0NyAyNDE2IDk0NyAxNzkxIApRIDk0NyAxMTY5IDEyMDUgODI1IApRIDE0NjMgNDgxIDE5MjUgNDgxIApRIDIzOTEgNDgxIDI2NDggODI1IApRIDI5MDYgMTE2OSAyOTA2IDE3OTEgCnoKTSAzNDgxIDQzNCAKUSAzNDgxIC00NTkgMzA4NCAtODk1IApRIDI2ODggLTEzMzEgMTg2OSAtMTMzMSAKUSAxNTY2IC0xMzMxIDEyOTcgLTEyODYgClEgMTAyOCAtMTI0MSA3NzUgLTExNDcgCkwgNzc1IC01ODggClEgMTAyOCAtNzI1IDEyNzUgLTc5MCAKUSAxNTIyIC04NTYgMTc3OCAtODU2IApRIDIzNDQgLTg1NiAyNjI1IC01NjEgClEgMjkwNiAtMjY2IDI5MDYgMzMxIApMIDI5MDYgNjE2IApRIDI3MjggMzA2IDI0NTAgMTUzIApRIDIxNzIgMCAxNzg0IDAgClEgMTE0MSAwIDc0NyA0OTAgClEgMzUzIDk4MSAzNTMgMTc5MSAKUSAzNTMgMjYwMyA3NDcgMzA5MyAKUSAxMTQxIDM1ODQgMTc4NCAzNTg0IApRIDIxNzIgMzU4NCAyNDUwIDM0MzEgClEgMjcyOCAzMjc4IDI5MDYgMjk2OSAKTCAyOTA2IDM1MDAgCkwgMzQ4MSAzNTAwIApMIDM0ODEgNDM0IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLWI1IiBkPSJNIDE5NTkgMzA5NyAKUSAxNDk3IDMwOTcgMTIyOCAyNzM2IApRIDk1OSAyMzc1IDk1OSAxNzQ3IApRIDk1OSAxMTE5IDEyMjYgNzU4IApRIDE0OTQgMzk3IDE5NTkgMzk3IApRIDI0MTkgMzk3IDI2ODcgNzU5IApRIDI5NTYgMTEyMiAyOTU2IDE3NDcgClEgMjk1NiAyMzY5IDI2ODcgMjczMyAKUSAyNDE5IDMwOTcgMTk1OSAzMDk3IAp6Ck0gMTk1OSAzNTg0IApRIDI3MDkgMzU4NCAzMTM3IDMwOTYgClEgMzU2NiAyNjA5IDM1NjYgMTc0NyAKUSAzNTY2IDg4OCAzMTM3IDM5OCAKUSAyNzA5IC05MSAxOTU5IC05MSAKUSAxMjA2IC05MSA3NzkgMzk4IApRIDM1MyA4ODggMzUzIDE3NDcgClEgMzUzIDI2MDkgNzc5IDMwOTYgClEgMTIwNiAzNTg0IDE5NTkgMzU4NCAKegpNIDIzOTMgNTExOSAKTCAzMDE1IDUxMTkgCkwgMTk5NyAzOTQ0IApMIDE1MTggMzk0NCAKTCAyMzkzIDUxMTkgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtYWYiIGQ9Ik0gMTMyNSA1MTE5IApMIDE5NDcgNTExOSAKTCA5MjkgMzk0NCAKTCA0NTAgMzk0NCAKTCAxMzI1IDUxMTkgCnoKTSA2MDMgMzUwMCAKTCAxMTc4IDM1MDAgCkwgMTE3OCAwIApMIDYwMyAwIApMIDYwMyAzNTAwIAp6Ck0gODkxIDM1ODQgCkwgODkxIDM1ODQgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtYiIgZD0iTSAxOTg0IDQ4NTYgClEgMTU2NiA0MTM4IDEzNjIgMzQzNCAKUSAxMTU5IDI3MzEgMTE1OSAyMDA5IApRIDExNTkgMTI4OCAxMzY0IDU4MCAKUSAxNTY5IC0xMjggMTk4NCAtODQ0IApMIDE0ODQgLTg0NCAKUSAxMDE2IC0xMDkgNzgzIDYwMCAKUSA1NTAgMTMwOSA1NTAgMjAwOSAKUSA1NTAgMjcwNiA3ODEgMzQxMiAKUSAxMDEzIDQxMTkgMTQ4NCA0ODU2IApMIDE5ODQgNDg1NiAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy0zNDUiIGQ9Ik0gMjY0NCAxNjI4IApMIDI1MDYgMjM1MCAKUSAyMzY2IDMwOTEgMTgwOSAzMDkxIApRIDEzOTEgMzA5MSAxMjAwIDI3NDcgClEgOTU5IDIzMTYgOTU5IDE3NDcgClEgOTU5IDEwNTkgMTE5NCA3MzEgClEgMTQzMSAzOTcgMTgwOSAzOTcgClEgMjIyOCAzOTcgMjQ1MyAxMDYzIApMIDI2NDQgMTYyOCAKegpNIDI5NjYgMjU4NCAKTCAzMjc1IDM1MDAgCkwgMzc4OCAzNTAwIApMIDMxNDcgMTYwMyAKTCAzMjcyIDkxOSAKUSAzMzAwIDc2NiAzNDA5IDYzOCAKUSAzNTM4IDQ4OCAzNjM4IDQ4OCAKTCAzOTEzIDQ4OCAKTCAzOTEzIDAgCkwgMzU2OSAwIApRIDMyNzUgMCAzMDEzIDI2MyAKUSAyODg0IDM5NCAyODMxIDY2OSAKUSAyNjg4IDMyMiAyMzk0IDUwIApRIDIyNTYgLTc4IDE4MDkgLTc4IApRIDEwNzUgLTc4IDcxOSAzOTcgClEgMzUzIDg4OCAzNTMgMTc0NyAKUSAzNTMgMjY2NiA3NTAgMzA5NyAKUSAxMTkxIDM1NzggMTgwOSAzNTc4IApRIDI3ODEgMzU3OCAyOTY2IDI1ODQgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtYyIgZD0iTSA1MTMgNDg1NiAKTCAxMDEzIDQ4NTYgClEgMTQ4MSA0MTE5IDE3MTQgMzQxMiAKUSAxOTQ3IDI3MDYgMTk0NyAyMDA5IApRIDE5NDcgMTMwOSAxNzE0IDYwMCAKUSAxNDgxIC0xMDkgMTAxMyAtODQ0IApMIDUxMyAtODQ0IApRIDkyOCAtMTI4IDExMzMgNTgwIApRIDEzMzggMTI4OCAxMzM4IDIwMDkgClEgMTMzOCAyNzMxIDExMzMgMzQzNCAKUSA5MjggNDEzOCA1MTMgNDg1NiAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgIDwvZGVmcz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01NSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ4IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzOC45MDYyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTRhIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDAuNDM3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTRjIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNjMuOTIxODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtYjUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE5MS43MDMxMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjUyLjg5MDYyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMxNi4yNjU2MjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00NiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzQ4LjA0Njg3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MDMuMDMxMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy1hZiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQ0LjE0MDYyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU3IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0NzEuOTIxODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNGMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUxMS4xMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00NiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTM4LjkwNjI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDU5My44OTA2MjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2NTUuMTcxODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtYiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjg2Ljk1MzEyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTM0NSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzI1Ljk2ODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzkxLjg5MDYyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTIwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4MjMuNjcxODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTA3LjQ2ODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDkzOS4yNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDAyLjg3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDM0LjY1NjI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEwOTguMjgxMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy1jIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMTYxLjkwNjI1IDApIi8+CiAgICAgPC9nPgogICAgPC9nPgogICA8L2c+CiAgPC9nPgogPC9nPgogPGRlZnM+CiAgPGNsaXBQYXRoIGlkPSJwMGZmZjdjYzM2ZiI+CiAgIDxyZWN0IHg9IjUwLjQ2NjQwNiIgeT0iNy4yIiB3aWR0aD0iNDQ2LjQiIGhlaWdodD0iMTk0LjA0Ii8+CiAgPC9jbGlwUGF0aD4KIDwvZGVmcz4KPC9zdmc+Cg=="></div>
+
+<p>El p-valor tiene una ventaja práctica: cada lector puede aplicar su propio <span class="arithmatex">\(\alpha\)</span>. Con un p-valor de 0.093, quien use <span class="arithmatex">\(\alpha = 0.10\)</span> rechaza <span class="arithmatex">\(H_0\)</span>, y quien use 0.05 o 0.01 no. Por eso los informes dan el p-valor y no solo la decisión.</p>
+<h2 id="contrastes-bilaterales-y-unilaterales">Contrastes bilaterales y unilaterales<a class="headerlink" href="#contrastes-bilaterales-y-unilaterales" title="Permanent link">&para;</a></h2>
+<p>Hasta ahora la pregunta era "¿la tasa es <strong>distinta</strong> del 8 %?", y por eso un resultado muy alto o muy bajo contaba como evidencia. A veces la pregunta de negocio solo tiene una dirección. Si marketing quiere reclamar a la agencia porque el email convierte <strong>menos</strong> de lo prometido, lo que interesa detectar es <span class="arithmatex">\(p &lt; 0.08\)</span>. Un resultado por encima del 8 % no daría motivo para reclamar.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: contraste bilateral y unilateral</p>
+<ul>
+<li><strong>Bilateral:</strong> <span class="arithmatex">\(H_1: p \ne p_0\)</span>. La región crítica está repartida entre las dos colas, con <span class="arithmatex">\(\alpha/2\)</span> en cada una, y el p-valor suma las dos colas.</li>
+<li><strong>Unilateral por la izquierda:</strong> <span class="arithmatex">\(H_1: p &lt; p_0\)</span>. La región crítica está solo en la cola izquierda, con probabilidad <span class="arithmatex">\(\alpha\)</span>, y el p-valor es <span class="arithmatex">\(P(Z \le z)\)</span>.</li>
+<li><strong>Unilateral por la derecha:</strong> <span class="arithmatex">\(H_1: p &gt; p_0\)</span>. La región crítica está solo en la cola derecha y el p-valor es <span class="arithmatex">\(P(Z \ge z)\)</span>.</li>
+</ul>
+<p>En un contraste unilateral, <span class="arithmatex">\(H_0\)</span> se suele escribir con la desigualdad contraria (<span class="arithmatex">\(H_0: p \ge 0.08\)</span> frente a <span class="arithmatex">\(H_1: p &lt; 0.08\)</span>), pero el cálculo se hace con la igualdad, <span class="arithmatex">\(p_0 = 0.08\)</span>, que es el caso más difícil de rechazar.</p>
+</div>
+<p>Con <span class="arithmatex">\(H_1: p &lt; 0.08\)</span>, el p-valor de la primera semana es solo la cola izquierda: <span class="arithmatex">\(P(Z \le -1.68) = 0.046\)</span>. Ahora es <strong>menor que 0.05</strong>, y rechazaríamos <span class="arithmatex">\(H_0\)</span>. El mismo dato lleva a conclusiones distintas según la pregunta.</p>
+<p>Un contraste unilateral detecta mejor las diferencias en la dirección que le interesa, porque pone toda la región crítica en un lado: le basta <span class="arithmatex">\(z &lt; -1.645\)</span> en vez de <span class="arithmatex">\(z &lt; -1.96\)</span>. A cambio, no puede detectar nada en la otra dirección. Si el email convirtiera un 9 %, el contraste unilateral por la izquierda nunca lo diría.</p>
+<div class="admonition warning">
+<p class="admonition-title">La dirección se elige antes de ver los datos</p>
+<p>Mirar los datos, ver que la tasa ha salido por debajo del 8 % y entonces elegir <span class="arithmatex">\(H_1: p &lt; 0.08\)</span> porque así sale significativo es hacer trampa: en la práctica se está usando un <span class="arithmatex">\(\alpha\)</span> del 10 %, no del 5 %. La dirección de <span class="arithmatex">\(H_1\)</span> la dicta la pregunta de negocio, y se fija antes de mirar los resultados. Ante la duda, usa el bilateral.</p>
+</div>
+<h2 id="ocho-semanas-despues">Ocho semanas después<a class="headerlink" href="#ocho-semanas-despues" title="Permanent link">&para;</a></h2>
+<p>La campaña siguió ocho semanas. En total hubo <strong>1968 ventas de 28 000 emails</strong>, una tasa del <strong>7.03 %</strong>. Repetimos el contraste bilateral con <span class="arithmatex">\(H_0: p = 0.08\)</span>:</p>
+<div class="arithmatex">\[\text{SE}_0 = \sqrt{\frac{0.08 \cdot 0.92}{28\,000}} = 0.00162 \qquad z = \frac{0.0703 - 0.08}{0.00162} = -5.99 \qquad \text{p-valor} = 2 \cdot 10^{-9}\]</div>
+<p>Ahora la tasa observada está a casi 6 errores estándar del 8 %. Si la agencia tuviera razón, un resultado así ocurriría dos veces de cada mil millones. <strong>Rechazamos <span class="arithmatex">\(H_0\)</span></strong>: los datos son evidencia muy fuerte de que la tasa real es distinta del 8 %, y en concreto menor.</p>
+<p>La diferencia con la primera semana no está en la tasa observada, que es parecida (7.23 % y 7.03 %), sino en la cantidad de datos. Con 3500 emails el error estándar era 0.0046, y una diferencia de 0.8 puntos cabía dentro del azar. Con 28 000 el error estándar es 0.0016, y la misma diferencia ya no cabe. No rechazar <span class="arithmatex">\(H_0\)</span> en la primera semana no significaba que la agencia tuviera razón: significaba que una semana no bastaba para saberlo. En la <a href="../errores-potencia/">página 4.4</a> calcularemos con qué probabilidad un contraste detecta una diferencia real según el tamaño de la muestra.</p>
+<h2 id="como-leer-el-resultado-de-un-contraste">Cómo leer el resultado de un contraste<a class="headerlink" href="#como-leer-el-resultado-de-un-contraste" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Lo que significa y lo que no significa un p-valor</p>
+<table>
+<thead>
+<tr>
+<th>✅ Correcto</th>
+<th>❌ Incorrecto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Si la tasa real fuera del 8 %, solo un 9.3 % de las semanas se alejarían tanto o más."</td>
+<td>"Hay un 9.3 % de probabilidad de que la agencia tenga razón." (El p-valor se calcula <strong>suponiendo</strong> que <span class="arithmatex">\(H_0\)</span> es cierta, así que no puede ser la probabilidad de que lo sea.)</td>
+</tr>
+<tr>
+<td>"Con una semana de datos no podemos descartar el 8 %."</td>
+<td>"Los datos demuestran que la tasa es del 8 %." (No rechazar no es aceptar.)</td>
+</tr>
+<tr>
+<td>"Con ocho semanas, los datos son incompatibles con el 8 %."</td>
+<td>"Como el p-valor es minúsculo, la diferencia es muy grande." (El p-valor mide la evidencia, no el tamaño de la diferencia: depende mucho de <span class="arithmatex">\(n\)</span>.)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Un juicio sigue la misma lógica. El acusado se presume inocente (<span class="arithmatex">\(H_0\)</span>) y solo se le condena si las pruebas lo hacen muy difícil de sostener. Un veredicto de "no culpable" no declara que sea inocente: dice que no hay pruebas suficientes. Por eso se dice "no rechazamos <span class="arithmatex">\(H_0\)</span>" y no "aceptamos <span class="arithmatex">\(H_0\)</span>".</p>
+<h2 id="el-procedimiento-en-cinco-pasos">El procedimiento en cinco pasos<a class="headerlink" href="#el-procedimiento-en-cinco-pasos" title="Permanent link">&para;</a></h2>
+<p>Todos los contrastes del tema siguen los mismos pasos. Lo único que cambia de uno a otro es el estadístico del paso 3.</p>
+<ol>
+<li><strong>Plantear las hipótesis</strong> <span class="arithmatex">\(H_0\)</span> y <span class="arithmatex">\(H_1\)</span> a partir de la pregunta de negocio, y decidir si el contraste es bilateral o unilateral.</li>
+<li><strong>Fijar el nivel de significación</strong> <span class="arithmatex">\(\alpha\)</span> antes de ver los resultados.</li>
+<li><strong>Calcular el estadístico de contraste</strong> con la muestra, comprobando antes las condiciones que necesita (muestra aleatoria, tamaño suficiente).</li>
+<li><strong>Calcular el p-valor</strong>, o el valor crítico.</li>
+<li><strong>Decidir y traducir</strong> la decisión a la pregunta de negocio, con la estimación y su intervalo de confianza.</li>
+</ol>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: el contraste de la primera semana, paso a paso</p>
+<ol>
+<li><strong>Hipótesis.</strong> <span class="arithmatex">\(H_0: p = 0.08\)</span> frente a <span class="arithmatex">\(H_1: p \ne 0.08\)</span>. Bilateral, porque la pregunta es si la cifra de la agencia es correcta, en cualquier dirección.</li>
+<li><strong>Nivel de significación.</strong> <span class="arithmatex">\(\alpha = 0.05\)</span>.</li>
+<li><strong>Estadístico.</strong> Condiciones: los 3500 clientes se eligen sin relación entre ellos y <span class="arithmatex">\(n p_0 = 280\)</span> y <span class="arithmatex">\(n(1 - p_0) = 3220\)</span> son grandes, así que la aproximación normal es buena. <span class="arithmatex">\(\hat{p} = 253/3500 = 0.0723\)</span> y <span class="arithmatex">\(z = (0.0723 - 0.08)/0.00459 = -1.68\)</span>.</li>
+<li><strong>p-valor.</strong> <span class="arithmatex">\(2 \cdot P(Z \le -1.68) = 0.093\)</span>.</li>
+<li><strong>Decisión.</strong> <span class="arithmatex">\(0.093 &gt; 0.05\)</span>: no rechazamos <span class="arithmatex">\(H_0\)</span>. Con una semana de datos, la tasa observada (7.2 %) es compatible con el 8 % de la agencia. Hay que seguir midiendo antes de reclamar.</li>
+</ol>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">Errores frecuentes</p>
+<ul>
+<li><strong>Leer el p-valor como la probabilidad de que <span class="arithmatex">\(H_0\)</span> sea cierta.</strong> Es la probabilidad de unos datos así <strong>si</strong> <span class="arithmatex">\(H_0\)</span> es cierta.</li>
+<li><strong>Decir "aceptamos <span class="arithmatex">\(H_0\)</span>"</strong> cuando no se rechaza. Puede que falten datos para detectar la diferencia.</li>
+<li><strong>Elegir la dirección del contraste o el <span class="arithmatex">\(\alpha\)</span> después de ver los datos.</strong></li>
+<li><strong>Poner en <span class="arithmatex">\(H_0\)</span> lo que se quiere demostrar.</strong> El contraste solo acumula evidencia contra <span class="arithmatex">\(H_0\)</span>, así que lo que se quiere demostrar va en <span class="arithmatex">\(H_1\)</span>.</li>
+<li><strong>Calcular el error estándar con <span class="arithmatex">\(\hat{p}\)</span> en lugar de <span class="arithmatex">\(p_0\)</span>.</strong> En el contraste de una proporción, el error estándar se calcula suponiendo <span class="arithmatex">\(H_0\)</span>, con <span class="arithmatex">\(p_0\)</span>.</li>
+</ul>
+</div>
+<h2 id="en-python">En Python<a class="headerlink" href="#en-python" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">p0</span> <span class="o">=</span> <span class="mf">0.08</span>          <span class="c1"># lo que afirma la agencia (H0)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">contraste_proporcion</span><span class="p">(</span><span class="n">exitos</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">p0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Estadístico z y p-valores de H0: p = p0."""</span>
+    <span class="n">p_hat</span> <span class="o">=</span> <span class="n">exitos</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="n">se0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>          <span class="c1"># error estándar suponiendo H0</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_hat</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span> <span class="o">/</span> <span class="n">se0</span>
+    <span class="k">return</span> <span class="n">p_hat</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s2">"bilateral"</span><span class="p">:</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)),</span>
+        <span class="s2">"menor"</span><span class="p">:</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">z</span><span class="p">),</span>           <span class="c1"># H1: p &lt; p0</span>
+        <span class="s2">"mayor"</span><span class="p">:</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">z</span><span class="p">),</span>            <span class="c1"># H1: p &gt; p0</span>
+    <span class="p">}</span>
+
+<span class="k">for</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">exitos</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">"primera semana"</span><span class="p">,</span> <span class="mi">253</span><span class="p">,</span> <span class="mi">3500</span><span class="p">),</span> <span class="p">(</span><span class="s2">"ocho semanas"</span><span class="p">,</span> <span class="mi">1968</span><span class="p">,</span> <span class="mi">28_000</span><span class="p">)]:</span>
+    <span class="n">p_hat</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">p_valores</span> <span class="o">=</span> <span class="n">contraste_proporcion</span><span class="p">(</span><span class="n">exitos</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">p0</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nombre</span><span class="si">}</span><span class="s2">: p̂ = </span><span class="si">{</span><span class="n">p_hat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, z = </span><span class="si">{</span><span class="n">z</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, "</span>
+          <span class="sa">f</span><span class="s2">"p-valor bilateral = </span><span class="si">{</span><span class="n">p_valores</span><span class="p">[</span><span class="s1">'bilateral'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3g</span><span class="si">}</span><span class="s2">, "</span>
+          <span class="sa">f</span><span class="s2">"unilateral (p &lt; 0.08) = </span><span class="si">{</span><span class="n">p_valores</span><span class="p">[</span><span class="s1">'menor'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3g</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>primera semana: p̂ = 0.0723, z = -1.68, p-valor bilateral = 0.0925, unilateral (p &lt; 0.08) = 0.0463
+ocho semanas: p̂ = 0.0703, z = -5.99, p-valor bilateral = 2.08e-09, unilateral (p &lt; 0.08) = 1.04e-09
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"valor crítico bilateral:"</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>valor crítico bilateral: 1.96
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"valor crítico unilateral:"</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>valor crítico unilateral: 1.645
+</code></pre></div>
+</div>
+<p>Las tres funciones de <code>scipy.stats</code> que se usan en todos los contrastes son <code>cdf(z)</code>, el área a la izquierda de <span class="arithmatex">\(z\)</span>; <code>sf(z)</code>, el área a la derecha, igual a <code>1 - cdf(z)</code> pero más precisa cuando el resultado es muy pequeño; y <code>ppf(q)</code>, el valor que deja un área <span class="arithmatex">\(q\)</span> a su izquierda, que da los valores críticos.</p>
+<div class="admonition success">
+<p class="admonition-title">Lo esencial</p>
+<ul>
+<li>Un contraste <strong>supone que <span class="arithmatex">\(H_0\)</span> es cierta</strong> y mide lo raros que serían los datos en ese caso. Si serían muy raros, se rechaza <span class="arithmatex">\(H_0\)</span>.</li>
+<li>El <strong>estadístico de contraste</strong> mide a cuántos errores estándar está la estimación del valor de <span class="arithmatex">\(H_0\)</span>.</li>
+<li>El <strong>p-valor</strong> es la probabilidad, si <span class="arithmatex">\(H_0\)</span> es cierta, de un resultado al menos tan extremo como el observado. Se rechaza <span class="arithmatex">\(H_0\)</span> si es menor o igual que <span class="arithmatex">\(\alpha\)</span>, y es equivalente a comparar con el valor crítico.</li>
+<li>El contraste es <strong>bilateral</strong> o <strong>unilateral</strong> según la pregunta, y la dirección se fija antes de ver los datos.</li>
+<li><strong>No rechazar <span class="arithmatex">\(H_0\)</span> no demuestra que sea cierta.</strong> Con más datos, la misma diferencia puede pasar a ser significativa.</li>
+</ul>
+</div>
+<h2 id="ejercicios">Ejercicios<a class="headerlink" href="#ejercicios" title="Permanent link">&para;</a></h2>
+<p><strong>1.</strong> Escribe <span class="arithmatex">\(H_0\)</span> y <span class="arithmatex">\(H_1\)</span> e indica si el contraste es bilateral o unilateral. (a) Un fabricante dice que sus botellas contienen 500 ml de media, y control de calidad quiere comprobarlo. (b) Un banco quiere saber si un nuevo proceso reduce el tiempo medio de concesión de un préstamo, que ahora es de 12 días. (c) Una web quiere saber si la tasa de rebote ha subido por encima del 40 % tras un cambio de diseño.</p>
+<details class="success">
+<summary>Solución</summary>
+<p>(a) <span class="arithmatex">\(H_0: \mu = 500\)</span> frente a <span class="arithmatex">\(H_1: \mu \ne 500\)</span>. <strong>Bilateral</strong>: a control de calidad le importa tanto que falte líquido como que sobre.</p>
+<p>(b) <span class="arithmatex">\(H_0: \mu = 12\)</span> (o <span class="arithmatex">\(\mu \ge 12\)</span>) frente a <span class="arithmatex">\(H_1: \mu &lt; 12\)</span>. <strong>Unilateral por la izquierda</strong>: lo que se quiere demostrar es la reducción.</p>
+<p>(c) <span class="arithmatex">\(H_0: p = 0.40\)</span> (o <span class="arithmatex">\(p \le 0.40\)</span>) frente a <span class="arithmatex">\(H_1: p &gt; 0.40\)</span>. <strong>Unilateral por la derecha</strong>.</p>
+<p>En los tres casos, <span class="arithmatex">\(H_0\)</span> contiene la igualdad y <span class="arithmatex">\(H_1\)</span> lo que se quiere detectar.</p>
+</details>
+<p><strong>2.</strong> Un contraste da <span class="arithmatex">\(z = 2.1\)</span>. Calcula el p-valor si el contraste es bilateral y si es unilateral por la derecha. ¿Qué decides en cada caso con <span class="arithmatex">\(\alpha = 0.05\)</span>? ¿Y con <span class="arithmatex">\(\alpha = 0.01\)</span>?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>Unilateral por la derecha: $P(Z \ge 2.1) = $ <code>stats.norm.sf(2.1)</code> <span class="arithmatex">\(= 0.018\)</span>. Bilateral: el doble, <span class="arithmatex">\(0.036\)</span>.</p>
+<p>Con <span class="arithmatex">\(\alpha = 0.05\)</span> se rechaza <span class="arithmatex">\(H_0\)</span> en los dos casos, porque los dos p-valores son menores que 0.05. Con <span class="arithmatex">\(\alpha = 0.01\)</span> no se rechaza en ninguno. Lo mismo sale comparando con los valores críticos: <span class="arithmatex">\(2.1 &gt; 1.96\)</span> y <span class="arithmatex">\(2.1 &gt; 1.645\)</span>, pero <span class="arithmatex">\(2.1 &lt; 2.576\)</span> y <span class="arithmatex">\(2.1 &lt; 2.326\)</span>.</p>
+</details>
+<p><strong>3.</strong> En una encuesta, 92 de 400 clientes dicen que recomendarían la marca (un 23 %). El departamento de marketing siempre ha dicho que lo haría el 25 %. Haz el contraste bilateral con <span class="arithmatex">\(\alpha = 0.05\)</span>.</p>
+<details class="success">
+<summary>Solución</summary>
+<p><span class="arithmatex">\(H_0: p = 0.25\)</span> frente a <span class="arithmatex">\(H_1: p \ne 0.25\)</span>. Condiciones: <span class="arithmatex">\(n p_0 = 100\)</span> y <span class="arithmatex">\(n(1 - p_0) = 300\)</span>, suficientes.</p>
+<p><span class="arithmatex">\(\text{SE}_0 = \sqrt{0.25 \cdot 0.75/400} = 0.0217\)</span> y <span class="arithmatex">\(z = (0.23 - 0.25)/0.0217 = -0.92\)</span>. El p-valor es <span class="arithmatex">\(2 \cdot P(Z \le -0.92) = 0.356\)</span>.</p>
+<p><span class="arithmatex">\(0.356 &gt; 0.05\)</span>: <strong>no rechazamos</strong> <span class="arithmatex">\(H_0\)</span>. La encuesta es compatible con el 25 % que dice marketing. Cuadra con el intervalo de confianza al 95 % de esta encuesta, <span class="arithmatex">\([0.189,\ 0.271]\)</span>, calculado en <a href="../../03-inferencia/intervalos/">intervalos de confianza</a>, que contiene el 0.25.</p>
+</details>
+<p><strong>4.</strong> Un informe dice: "El p-valor es 0.03, así que hay un 97 % de probabilidad de que el nuevo diseño funcione mejor". Otro dice: "El p-valor es 0.40, así que el nuevo diseño funciona igual que el antiguo". ¿Qué está mal en cada frase? Reescríbelas.</p>
+<details class="success">
+<summary>Solución</summary>
+<p>La primera interpreta el p-valor como una probabilidad sobre las hipótesis. El p-valor se calcula suponiendo que <span class="arithmatex">\(H_0\)</span> es cierta: "Si el nuevo diseño funcionara igual que el antiguo, solo un 3 % de los experimentos darían una diferencia tan grande como la observada. Con <span class="arithmatex">\(\alpha = 0.05\)</span>, los datos son evidencia de que el nuevo diseño funciona mejor".</p>
+<p>La segunda trata "no rechazar" como "aceptar": "Con estos datos no hay evidencia de que el nuevo diseño funcione distinto que el antiguo". Puede que sí funcione distinto y que haga falta más muestra para detectarlo.</p>
+</details>
+<p><strong>5.</strong> <em>(Más difícil)</em> Con los datos de la primera semana (<span class="arithmatex">\(z = -1.68\)</span>), un analista plantea el contraste unilateral <span class="arithmatex">\(H_1: p &gt; 0.08\)</span>. ¿Qué p-valor obtiene? ¿Por qué es tan grande? ¿Qué le dice eso sobre la importancia de elegir bien la dirección?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>El p-valor es la cola derecha: <span class="arithmatex">\(P(Z \ge -1.68) = 1 - 0.046 = 0.954\)</span>.</p>
+<p>Es tan grande porque el resultado ha ido en la dirección <strong>contraria</strong> a la de <span class="arithmatex">\(H_1\)</span>. Si <span class="arithmatex">\(H_1\)</span> dice que la tasa es mayor del 8 %, una tasa observada del 7.2 % no es ninguna evidencia a favor, así que no hay motivo para rechazar <span class="arithmatex">\(H_0\)</span>.</p>
+<p>La dirección se elige con la pregunta de negocio, antes de ver los datos. Un contraste unilateral es ciego a las diferencias en la otra dirección: si lo que importaba era detectar cualquier desviación de la cifra de la agencia, había que usar el bilateral.</p>
+</details>
+<p><a class="md-button" href="../"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> Volver al tema</a> <a class="md-button md-button--primary" href="../una-muestra/">Siguiente: Contrastes para una muestra <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg></span></a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Anterior: 4. Contraste de hipótesis">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                4. Contraste de hipótesis
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../una-muestra/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: 4.2 Contrastes para una muestra: proporciones y medias">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                4.2 Contrastes para una muestra: proporciones y medias
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/katex.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

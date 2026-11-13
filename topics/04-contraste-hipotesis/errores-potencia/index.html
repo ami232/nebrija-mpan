@@ -1,0 +1,2406 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Material docente — estadística, machine learning y desarrollo de software">
+      
+      
+      
+        <link rel="canonical" href="https://alberpro.com/nebrija-mpan/topics/04-contraste-hipotesis/errores-potencia/">
+      
+      
+        <link rel="prev" href="../dos-muestras/">
+      
+      
+        <link rel="next" href="../practica/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>4.4 Errores, potencia y buen uso de los contrastes - Nebrija · Modelos predictivos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#44-errores-potencia-y-buen-uso-de-los-contrastes" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-header__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nebrija · Modelos predictivos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4.4 Errores, potencia y buen uso de los contrastes
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-nav__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nebrija · Modelos predictivos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelos predictivos en el análisis de negocios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../01-probabilidad/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Probabilidad
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Probabilidad
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-probabilidad/probabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1 Sucesos y reglas de la probabilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-probabilidad/condicionada/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2 Probabilidad condicionada y teorema de Bayes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../02-variables-aleatorias/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Variables aleatorias y distribuciones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Variables aleatorias y distribuciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-variables-aleatorias/variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1 Variables aleatorias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-variables-aleatorias/distribuciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2 Distribuciones con nombre propio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../03-inferencia/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Estimación e inferencia
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Estimación e inferencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/estimacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Estimación: de los datos al modelo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/variabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.2 Cuánto se equivoca una estimación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/intervalos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.3 Intervalos de confianza: de la muestra a la población
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.4 Práctica guiada: las ventas de la campaña de email
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Contraste de hipótesis
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4. Contraste de hipótesis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 La lógica del contraste de hipótesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../una-muestra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.2 Contrastes para una muestra: proporciones y medias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dos-muestras/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.3 Comparar dos grupos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.4 Errores, potencia y buen uso de los contrastes
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.4 Errores, potencia y buen uso de los contrastes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#el-problema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El problema
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dos-tipos-de-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dos tipos de error
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controla-los-falsos-positivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        α controla los falsos positivos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-potencia-la-probabilidad-de-detectar-una-diferencia-real" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La potencia: la probabilidad de detectar una diferencia real
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="La potencia: la probabilidad de detectar una diferencia real">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#de-que-depende-la-potencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De qué depende la potencia
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#planificar-el-tamano-de-muestra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Planificar el tamaño de muestra
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#significacion-estadistica-y-relevancia-practica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Significación estadística y relevancia práctica
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#muchos-contrastes-a-la-vez" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Muchos contrastes a la vez
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.5 Práctica guiada: contrastes en escenarios de negocio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../05-regresion-lineal-simple/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Regresión lineal simple
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. Regresión lineal simple
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-regresion-lineal-simple/correlacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Dependencia, covarianza y correlación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-regresion-lineal-simple/modelo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 El modelo de regresión y mínimos cuadrados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-regresion-lineal-simple/ajuste/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.3 Residuos, R² e inferencia sobre la pendiente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-regresion-lineal-simple/practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.4 Práctica guiada: regresión con distintos tipos de predictor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../06-regresion-lineal-multiple/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Regresión lineal múltiple
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Regresión lineal múltiple
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../07-regresion-logistica/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Regresión logística
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. Regresión logística
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../08-feature-engineering/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Feature engineering y transformaciones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8. Feature engineering y transformaciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../09-arboles-decision/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Árboles de decisión y ensembles
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    9. Árboles de decisión y ensembles
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../10-clasificacion-multiclase/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Clasificación multiclase
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10. Clasificación multiclase
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../11-series-temporales/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Series temporales
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    11. Series temporales
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../12-sesgos/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Sesgos en los datos
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    12. Sesgos en los datos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Referencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/modelos-predictivos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía de referencia: modelos predictivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#el-problema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El problema
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dos-tipos-de-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dos tipos de error
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controla-los-falsos-positivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        α controla los falsos positivos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-potencia-la-probabilidad-de-detectar-una-diferencia-real" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La potencia: la probabilidad de detectar una diferencia real
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="La potencia: la probabilidad de detectar una diferencia real">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#de-que-depende-la-potencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De qué depende la potencia
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#planificar-el-tamano-de-muestra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Planificar el tamaño de muestra
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#significacion-estadistica-y-relevancia-practica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Significación estadística y relevancia práctica
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#muchos-contrastes-a-la-vez" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Muchos contrastes a la vez
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="44-errores-potencia-y-buen-uso-de-los-contrastes">4.4 Errores, potencia y buen uso de los contrastes<a class="headerlink" href="#44-errores-potencia-y-buen-uso-de-los-contrastes" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Antes de empezar</p>
+<p>Esta página usa el contraste de la cifra de la agencia de la <a href="../logica/">página 4.1</a>, con el nivel de significación <span class="arithmatex">\(\alpha\)</span> y el valor crítico, y los contrastes de dos grupos de la <a href="../dos-muestras/">página 4.3</a>.</p>
+</div>
+<h2 id="el-problema">El problema<a class="headerlink" href="#el-problema" title="Permanent link">&para;</a></h2>
+<p>En la <a href="../logica/">página 4.1</a> contrastamos la afirmación de la agencia, <span class="arithmatex">\(H_0: p = 0.08\)</span>. Con la primera semana de datos no la rechazamos; con ocho semanas, sí, y con muchísima evidencia. Si la tasa real es del 7 %, el contraste de la primera semana se equivocó: dejó pasar una afirmación falsa. ¿Fue mala suerte, o era lo esperable con una semana de datos? Y al revés: cuando un contraste rechaza <span class="arithmatex">\(H_0\)</span>, ¿puede estar equivocándose?</p>
+<p>Un contraste toma una decisión con datos incompletos, así que siempre puede equivocarse. Esta página estudia los dos errores posibles, cómo se controlan y cómo se planifica un estudio para que el contraste tenga buenas probabilidades de acertar. Termina con los usos incorrectos más frecuentes de los contrastes.</p>
+<h2 id="dos-tipos-de-error">Dos tipos de error<a class="headerlink" href="#dos-tipos-de-error" title="Permanent link">&para;</a></h2>
+<p><span class="arithmatex">\(H_0\)</span> es cierta o falsa, y el contraste la rechaza o no. Hay cuatro combinaciones, dos correctas y dos erróneas:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><span class="arithmatex">\(H_0\)</span> es cierta</th>
+<th><span class="arithmatex">\(H_0\)</span> es falsa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>No se rechaza <span class="arithmatex">\(H_0\)</span></strong></td>
+<td>decisión correcta, con probabilidad <span class="arithmatex">\(1 - \alpha\)</span></td>
+<td><strong>error de tipo II</strong>, con probabilidad <span class="arithmatex">\(\beta\)</span></td>
+</tr>
+<tr>
+<td><strong>Se rechaza <span class="arithmatex">\(H_0\)</span></strong></td>
+<td><strong>error de tipo I</strong>, con probabilidad <span class="arithmatex">\(\alpha\)</span></td>
+<td>decisión correcta, con probabilidad <span class="arithmatex">\(1 - \beta\)</span> (la <strong>potencia</strong>)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: errores de tipo I y II y potencia</p>
+<ul>
+<li>El <strong>error de tipo I</strong> es rechazar <span class="arithmatex">\(H_0\)</span> cuando es cierta: un <strong>falso positivo</strong>. Su probabilidad es el nivel de significación <span class="arithmatex">\(\alpha\)</span>.</li>
+<li>El <strong>error de tipo II</strong> es no rechazar <span class="arithmatex">\(H_0\)</span> cuando es falsa: un <strong>falso negativo</strong>. Su probabilidad se escribe <span class="arithmatex">\(\beta\)</span>.</li>
+<li>La <strong>potencia</strong> de un contraste es la probabilidad de rechazar <span class="arithmatex">\(H_0\)</span> cuando es falsa: <span class="arithmatex">\(1 - \beta\)</span>. Es la probabilidad de detectar una diferencia que existe.</li>
+</ul>
+</div>
+<p>En el caso de la agencia, un error de tipo I sería reclamar a la agencia por una tasa que en realidad sí es del 8 %. Un error de tipo II sería no reclamar cuando la tasa real es menor. En un test A/B, un error de tipo I es cambiar a una versión que no es mejor, con el coste del cambio y sin ganancia; un error de tipo II es quedarse con la versión antigua cuando la nueva era mejor, y perder las ventas que habría traído.</p>
+<p>Las dos probabilidades no se tratan igual. <span class="arithmatex">\(\alpha\)</span> la elige el analista y se controla directamente. <span class="arithmatex">\(\beta\)</span> no se puede calcular sin saber cuánto vale de verdad el parámetro, porque depende de lo lejos que esté de <span class="arithmatex">\(H_0\)</span>: es fácil detectar que la tasa es del 5 % en vez del 8 %, y difícil detectar que es del 7.9 %.</p>
+<h2 id="controla-los-falsos-positivos">α controla los falsos positivos<a class="headerlink" href="#controla-los-falsos-positivos" title="Permanent link">&para;</a></h2>
+<p>¿Qué significa que <span class="arithmatex">\(\alpha = 0.05\)</span> sea la probabilidad de un error de tipo I? Lo comprobamos simulando. Suponemos que la agencia <strong>tiene razón</strong> (<span class="arithmatex">\(p = 0.08\)</span>), simulamos 10 000 semanas de 3500 emails y hacemos el contraste con cada una:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">n</span><span class="p">,</span> <span class="n">p0</span> <span class="o">=</span> <span class="mi">3500</span><span class="p">,</span> <span class="mf">0.08</span>
+<span class="n">se0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">z_critico</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">)</span>
+
+<span class="c1"># 10 000 semanas en las que H0 es cierta</span>
+<span class="n">p_hat</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10_000</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+<span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_hat</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span> <span class="o">/</span> <span class="n">se0</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"semanas en las que se rechaza H0 (falsos positivos): </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">z_critico</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>semanas en las que se rechaza H0 (falsos positivos): 0.048
+</code></pre></div>
+</div>
+<p>En un 4.8 % de las semanas el contraste rechaza <span class="arithmatex">\(H_0\)</span>, aunque es cierta: muy cerca del 5 %. El nivel de significación es la proporción de falsos positivos que aceptamos <strong>cuando <span class="arithmatex">\(H_0\)</span> es cierta</strong>. Un 5 % parece poco, pero quiere decir que, de cada 20 contrastes en los que no hay ninguna diferencia real, uno dará un resultado significativo por azar. Lo usaremos al final de la página.</p>
+<p>Si un falso positivo es muy caro, se elige un <span class="arithmatex">\(\alpha\)</span> menor, como 0.01. El precio es que el contraste se vuelve más exigente y detecta peor las diferencias reales, como veremos ahora.</p>
+<h2 id="la-potencia-la-probabilidad-de-detectar-una-diferencia-real">La potencia: la probabilidad de detectar una diferencia real<a class="headerlink" href="#la-potencia-la-probabilidad-de-detectar-una-diferencia-real" title="Permanent link">&para;</a></h2>
+<p>Ahora suponemos que la agencia <strong>se equivoca</strong> y la tasa real es del 7 %. Repetimos la simulación de 10 000 semanas con <span class="arithmatex">\(p = 0.07\)</span>, contrastando siempre <span class="arithmatex">\(H_0: p = 0.08\)</span>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">p_real</span> <span class="o">=</span> <span class="mf">0.07</span>
+<span class="n">p_hat</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p_real</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10_000</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+<span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_hat</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span> <span class="o">/</span> <span class="n">se0</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"semanas en las que se rechaza H0 (potencia): </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">z_critico</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>semanas en las que se rechaza H0 (potencia): 0.592
+</code></pre></div>
+</div>
+<p>Solo en un 59 % de las semanas el contraste detecta que la agencia se equivoca. En el 41 % restante comete un error de tipo II, como nos pasó a nosotros en la primera semana. No fue mala suerte excepcional: con una semana de datos, el contraste tenía una probabilidad cercana a la de lanzar una moneda de detectar una diferencia de un punto.</p>
+<p>La potencia también se calcula sin simular. El contraste rechaza <span class="arithmatex">\(H_0\)</span> si <span class="arithmatex">\(\hat{p}\)</span> cae fuera de <span class="arithmatex">\(0.08 \pm 1.96 \cdot \text{SE}_0\)</span>, es decir, por debajo de 0.0710 o por encima de 0.0890. Si la tasa real es 0.07, <span class="arithmatex">\(\hat{p}\)</span> sigue aproximadamente una normal de media 0.07 y error estándar <span class="arithmatex">\(\sqrt{0.07 \cdot 0.93/3500} = 0.00431\)</span>, y la probabilidad de que caiga por debajo de 0.0710 es <code>stats.norm.cdf(0.0710, 0.07, 0.00431)</code> <span class="arithmatex">\(= 0.592\)</span>. La de caer por encima de 0.0890 es de solo 0.001, y sumando las dos sale la potencia, 0.593.</p>
+<h3 id="de-que-depende-la-potencia">De qué depende la potencia<a class="headerlink" href="#de-que-depende-la-potencia" title="Permanent link">&para;</a></h3>
+<p>La potencia depende de cuatro cosas. Con el contraste de la agencia, <span class="arithmatex">\(H_0: p = 0.08\)</span>, bilateral:</p>
+<p><strong>El tamaño de la diferencia real.</strong> Cuanto más lejos esté el valor real del de <span class="arithmatex">\(H_0\)</span>, más fácil es detectarlo. Con una semana de datos y <span class="arithmatex">\(\alpha = 0.05\)</span>:</p>
+<table>
+<thead>
+<tr>
+<th>Tasa real</th>
+<th style="text-align: right;">7.5 %</th>
+<th style="text-align: right;">7.0 %</th>
+<th style="text-align: right;">6.5 %</th>
+<th style="text-align: right;">6.0 %</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Potencia</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">1.00</td>
+</tr>
+</tbody>
+</table>
+<p><strong>El tamaño de la muestra.</strong> Con más datos, el error estándar es menor y la misma diferencia se ve con más claridad. Si la tasa real es del 7 %:</p>
+<table>
+<thead>
+<tr>
+<th>Emails</th>
+<th style="text-align: right;">1000</th>
+<th style="text-align: right;">3500 (1 semana)</th>
+<th style="text-align: right;">7000 (2 semanas)</th>
+<th style="text-align: right;">14 000 (4 semanas)</th>
+<th style="text-align: right;">28 000 (8 semanas)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Potencia</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">1.00</td>
+</tr>
+</tbody>
+</table>
+<p>Con dos semanas, el contraste ya detectaría la diferencia en casi 9 de cada 10 ocasiones. Por eso no rechazar con la primera semana decía tan poco.</p>
+<p><strong>El nivel de significación.</strong> Un <span class="arithmatex">\(\alpha\)</span> menor pide más evidencia para rechazar, así que reduce los falsos positivos pero también la potencia. Con una semana de datos y una tasa real del 7 %, la potencia es 0.72 con <span class="arithmatex">\(\alpha = 0.10\)</span>, 0.59 con <span class="arithmatex">\(\alpha = 0.05\)</span> y solo 0.34 con <span class="arithmatex">\(\alpha = 0.01\)</span>. Con un tamaño de muestra fijo, no se pueden reducir a la vez los dos errores: lo que se gana en uno se pierde en el otro. La única forma de reducir los dos es <strong>aumentar la muestra</strong>.</p>
+<p><strong>La variabilidad de los datos y el diseño.</strong> Con datos menos variables, el error estándar es menor y la potencia, mayor. Un diseño pareado, como el del <a href="../dos-muestras/#muestras-pareadas">almacén</a>, aumenta mucho la potencia porque elimina la variación entre individuos. Un contraste unilateral también es más potente que uno bilateral en la dirección que contrasta.</p>
+<p>En la demo, la curva gris es la distribución de <span class="arithmatex">\(\hat{p}\)</span> si la agencia tiene razón, y la azul, si la tasa real es otra. La zona roja es <span class="arithmatex">\(\alpha\)</span> y la azul, la potencia. Mueve el tamaño de muestra, la tasa real y <span class="arithmatex">\(\alpha\)</span>, y observa cómo cambian los dos errores:</p>
+<iframe class="demo-embed" style="height:640px" src="../demo_potencia.html" title="Demo interactiva" loading="lazy"></iframe>
+
+<p><a href="../demo_potencia.html" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span> Abrir a pantalla completa</a></p>
+<h2 id="planificar-el-tamano-de-muestra">Planificar el tamaño de muestra<a class="headerlink" href="#planificar-el-tamano-de-muestra" title="Permanent link">&para;</a></h2>
+<p>La potencia sirve sobre todo <strong>antes</strong> de recoger los datos, para decidir cuántos hacen falta. Lo habitual es pedir una potencia de al menos 0.80: si la diferencia que nos importa existe, el estudio la detectará 8 de cada 10 veces.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Tamaño de muestra para comparar dos proporciones</p>
+<p>Para detectar con un contraste bilateral de nivel <span class="arithmatex">\(\alpha\)</span> y potencia <span class="arithmatex">\(1 - \beta\)</span> que la proporción pasa de <span class="arithmatex">\(p_1\)</span> a <span class="arithmatex">\(p_2\)</span>, hacen falta en <strong>cada grupo</strong></p>
+<div class="arithmatex">\[n = \frac{\left(z_{\alpha/2}\sqrt{2\,\bar{p}(1 - \bar{p})} + z_{\beta}\sqrt{p_1(1 - p_1) + p_2(1 - p_2)}\right)^2}{(p_1 - p_2)^2} \qquad \text{con } \bar{p} = \frac{p_1 + p_2}{2}\]</div>
+<p>donde <span class="arithmatex">\(z_{\beta}\)</span> es el valor que deja una probabilidad <span class="arithmatex">\(\beta\)</span> en la cola de la normal estándar: 0.842 para una potencia de 0.80 y 1.282 para 0.90.</p>
+</div>
+<p>La fórmula sale de exigir las dos cosas a la vez: que el valor crítico esté a <span class="arithmatex">\(z_{\alpha/2}\)</span> errores estándar de la diferencia cero, y que la diferencia real esté a <span class="arithmatex">\(z_\beta\)</span> errores estándar más allá. Lo importante es su forma: <span class="arithmatex">\(n\)</span> crece con el <strong>cuadrado</strong> de <span class="arithmatex">\(1/(p_1 - p_2)\)</span>. Detectar una diferencia la mitad de grande requiere cuatro veces más datos.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: planificar un test A/B del email</p>
+<p>Marketing quiere probar un nuevo asunto del email y le interesa detectar si sube la tasa de compra del 7 % al 8 %. Cada día enviará 250 emails con el asunto actual y 250 con el nuevo, asignados al azar. ¿Cuántos días debe durar la prueba, con <span class="arithmatex">\(\alpha = 0.05\)</span> bilateral y potencia 0.80?</p>
+<ol>
+<li><span class="arithmatex">\(p_1 = 0.07\)</span>, <span class="arithmatex">\(p_2 = 0.08\)</span>, <span class="arithmatex">\(\bar{p} = 0.075\)</span>, <span class="arithmatex">\(z_{0.025} = 1.960\)</span> y <span class="arithmatex">\(z_{0.20} = 0.842\)</span>.</li>
+<li>Numerador: <span class="arithmatex">\(\left(1.960 \sqrt{2 \cdot 0.075 \cdot 0.925} + 0.842\sqrt{0.07 \cdot 0.93 + 0.08 \cdot 0.92}\right)^2 = (0.730 + 0.314)^2 = 1.089\)</span>.</li>
+<li><span class="arithmatex">\(n = 1.089/0.01^2 = 10\,889.1\)</span>, así que hacen falta <strong>10 890 emails por versión</strong>, redondeando hacia arriba.</li>
+<li>Con 250 emails al día por versión, hacen falta <span class="arithmatex">\(10\,890/250 = 43.6\)</span>, es decir, <strong>44 días</strong>.</li>
+</ol>
+<p>Una prueba de una semana tendría una potencia muy baja: si el nuevo asunto fuera mejor, lo más probable sería no detectarlo, y marketing concluiría por error que "el asunto no importa". Planificar la duración antes de empezar evita ese error y evita también la tentación de parar la prueba en cuanto el resultado sale significativo.</p>
+</div>
+<h2 id="significacion-estadistica-y-relevancia-practica">Significación estadística y relevancia práctica<a class="headerlink" href="#significacion-estadistica-y-relevancia-practica" title="Permanent link">&para;</a></h2>
+<p>"Significativo" en estadística quiere decir que la diferencia es difícil de explicar por azar, no que sea grande ni importante. Con muestras muy grandes, diferencias minúsculas salen significativas.</p>
+<p>Supón que una gran cadena compara dos versiones de su email con 2 millones de envíos por versión, y obtiene una tasa del 7.00 % con una y del 7.10 % con la otra. El contraste de dos proporciones da <span class="arithmatex">\(z = 3.91\)</span> y un p-valor de 0.0001: muy significativo. Pero la diferencia es de una décima: en nuestra tienda, con 500 emails al día, serían 0.5 ventas más al día, unos 7.50 € de margen. Si cambiar de versión cuesta algo, no compensa.</p>
+<p>Por eso un contraste nunca va solo. Hay que dar el <strong>tamaño de la diferencia</strong> con su intervalo de confianza y traducirlo a la unidad del negocio (ventas, euros, minutos), y decidir con esa cifra. El p-valor dice si la diferencia es real; el intervalo dice si importa.</p>
+<p>Lo contrario también ocurre: con muestras pequeñas, diferencias grandes e importantes pueden salir no significativas, porque la potencia es baja. "No significativo" no quiere decir "sin efecto".</p>
+<h2 id="muchos-contrastes-a-la-vez">Muchos contrastes a la vez<a class="headerlink" href="#muchos-contrastes-a-la-vez" title="Permanent link">&para;</a></h2>
+<p>Al revisar los datos de la campaña, un analista contrasta cada día de la semana frente a los demás: siete contrastes, cada uno con <span class="arithmatex">\(\alpha = 0.05\)</span>. Si en realidad no hubiera ninguna diferencia entre días, cada contraste tendría un 5 % de probabilidad de dar un falso positivo, y la probabilidad de que <strong>al menos uno</strong> lo diera sería</p>
+<div class="arithmatex">\[1 - 0.95^7 = 0.30\]</div>
+<p>Con 20 contrastes, la probabilidad sube a <span class="arithmatex">\(1 - 0.95^{20} = 0.64\)</span>. Quien hace muchos contrastes y solo informa de los que salen significativos casi seguro encontrará "efectos" que no existen. Probar muchas comparaciones, muchas formas de medir o muchos subgrupos hasta que algo sale significativo se llama <strong>p-hacking</strong>, y es una de las causas principales de resultados que luego no se repiten.</p>
+<p>Hay tres defensas sencillas:</p>
+<ul>
+<li><strong>Fijar de antemano</strong> qué se va a contrastar, con qué datos y con qué <span class="arithmatex">\(\alpha\)</span>, y respetarlo.</li>
+<li><strong>Corregir <span class="arithmatex">\(\alpha\)</span></strong> cuando se hacen <span class="arithmatex">\(m\)</span> contrastes. La corrección más simple, la <strong>de Bonferroni</strong>, usa <span class="arithmatex">\(\alpha/m\)</span> en cada uno: con siete días y <span class="arithmatex">\(\alpha = 0.05\)</span>, cada contraste usa <span class="arithmatex">\(0.05/7 = 0.007\)</span>.</li>
+<li><strong>Confirmar con datos nuevos</strong> lo que se ha descubierto explorando. Un resultado encontrado mirando los datos es una hipótesis para el siguiente estudio, no una conclusión.</li>
+</ul>
+<p>En nuestro caso, la diferencia de los lunes resiste cualquier corrección: su p-valor, <span class="arithmatex">\(8 \cdot 10^{-10}\)</span>, es muchísimo menor que 0.007.</p>
+<div class="admonition danger">
+<p class="admonition-title">Errores frecuentes</p>
+<ul>
+<li><strong>Concluir que no hay efecto porque el contraste no es significativo</strong>, sin mirar la potencia ni el intervalo de confianza.</li>
+<li><strong>Confundir significativo con importante.</strong> Con muchos datos, cualquier diferencia minúscula es significativa.</li>
+<li><strong>Lanzar un estudio sin calcular el tamaño de muestra</strong> y descubrir al final que no tenía potencia para detectar nada útil.</li>
+<li><strong>Mirar los resultados cada día y parar la prueba cuando sale significativa.</strong> Cada mirada es un contraste más, y la probabilidad de un falso positivo sube muy por encima de <span class="arithmatex">\(\alpha\)</span>.</li>
+<li><strong>Hacer muchos contrastes y quedarse con los significativos</strong>, sin corregir <span class="arithmatex">\(\alpha\)</span> ni confirmarlos con datos nuevos.</li>
+</ul>
+</div>
+<h2 id="en-python">En Python<a class="headerlink" href="#en-python" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">potencia_una_proporcion</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p_real</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Potencia del contraste bilateral de H0: p = p0 si la proporción real es p_real."""</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">se0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">se1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p_real</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p_real</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">abajo</span><span class="p">,</span> <span class="n">arriba</span> <span class="o">=</span> <span class="n">p0</span> <span class="o">-</span> <span class="n">z</span> <span class="o">*</span> <span class="n">se0</span><span class="p">,</span> <span class="n">p0</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="n">se0</span>               <span class="c1"># fuera de aquí se rechaza H0</span>
+    <span class="k">return</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">abajo</span><span class="p">,</span> <span class="n">p_real</span><span class="p">,</span> <span class="n">se1</span><span class="p">)</span> <span class="o">+</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">arriba</span><span class="p">,</span> <span class="n">p_real</span><span class="p">,</span> <span class="n">se1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">3500</span><span class="p">,</span> <span class="mi">7000</span><span class="p">,</span> <span class="mi">14_000</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"n = </span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s2">&gt;6</span><span class="si">}</span><span class="s2">: potencia = </span><span class="si">{</span><span class="n">potencia_una_proporcion</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="mf">0.08</span><span class="p">,</span><span class="w"> </span><span class="mf">0.07</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>n =   3500: potencia = 0.593
+n =   7000: potencia = 0.884
+n =  14000: potencia = 0.995
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">n_dos_proporciones</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">potencia</span><span class="o">=</span><span class="mf">0.80</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Tamaño de cada grupo para detectar el paso de p1 a p2 (contraste bilateral)."""</span>
+    <span class="n">z_a</span><span class="p">,</span> <span class="n">z_b</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">potencia</span><span class="p">)</span>
+    <span class="n">p_media</span> <span class="o">=</span> <span class="p">(</span><span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="n">z_a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p_media</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p_media</span><span class="p">))</span> <span class="o">+</span> <span class="n">z_b</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p1</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p1</span><span class="p">)</span> <span class="o">+</span> <span class="n">p2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p2</span><span class="p">)))</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">num</span> <span class="o">/</span> <span class="p">(</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="n">n_dos_proporciones</span><span class="p">(</span><span class="mf">0.07</span><span class="p">,</span> <span class="mf">0.08</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"test A/B del 7 % al 8 %: </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> emails por versión, </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">250</span><span class="p">)</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> días con 250 al día"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>test A/B del 7 % al 8 %: 10890 emails por versión, 44 días con 250 al día
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Probabilidad de al menos un falso positivo con m contrastes, y corrección de Bonferroni</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">20</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">m</span><span class="si">:</span><span class="s2">&gt;2</span><span class="si">}</span><span class="s2"> contrastes: P(algún falso positivo) = </span><span class="si">{</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.95</span><span class="w"> </span><span class="o">**</span><span class="w"> </span><span class="n">m</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, alpha de Bonferroni = </span><span class="si">{</span><span class="mf">0.05</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">m</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code> 1 contrastes: P(algún falso positivo) = 0.05, alpha de Bonferroni = 0.0500
+ 7 contrastes: P(algún falso positivo) = 0.30, alpha de Bonferroni = 0.0071
+20 contrastes: P(algún falso positivo) = 0.64, alpha de Bonferroni = 0.0025
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lo esencial</p>
+<ul>
+<li>Un contraste puede cometer dos errores: el de <strong>tipo I</strong> (rechazar una <span class="arithmatex">\(H_0\)</span> cierta, con probabilidad <span class="arithmatex">\(\alpha\)</span>) y el de <strong>tipo II</strong> (no rechazar una <span class="arithmatex">\(H_0\)</span> falsa, con probabilidad <span class="arithmatex">\(\beta\)</span>).</li>
+<li>La <strong>potencia</strong>, <span class="arithmatex">\(1 - \beta\)</span>, es la probabilidad de detectar una diferencia real. Aumenta con el tamaño de la diferencia, con el tamaño de la muestra y con <span class="arithmatex">\(\alpha\)</span>, y con diseños que reducen la variabilidad, como el pareado.</li>
+<li>Con una muestra fija, reducir <span class="arithmatex">\(\alpha\)</span> reduce la potencia. Para reducir los dos errores hay que aumentar la muestra, y el tamaño necesario se calcula <strong>antes</strong> de empezar.</li>
+<li><strong>Significativo no es lo mismo que importante</strong>: hay que dar el tamaño de la diferencia con su intervalo y traducirlo a euros, ventas o minutos.</li>
+<li>Con muchos contrastes aparecen falsos positivos. Se fija el análisis de antemano, se corrige <span class="arithmatex">\(\alpha\)</span> y se confirma con datos nuevos.</li>
+</ul>
+</div>
+<h2 id="ejercicios">Ejercicios<a class="headerlink" href="#ejercicios" title="Permanent link">&para;</a></h2>
+<p><strong>1.</strong> Un banco usa un contraste para decidir si una transacción es fraudulenta, con <span class="arithmatex">\(H_0\)</span>: "la transacción es legítima". Describe en este contexto el error de tipo I y el de tipo II. ¿Cuál crees que es más caro? ¿Subirías o bajarías <span class="arithmatex">\(\alpha\)</span>?</p>
+<details class="success">
+<summary>Solución</summary>
+<p><strong>Tipo I:</strong> marcar como fraude una transacción legítima. El cliente ve bloqueada su tarjeta, se enfada y hay que atenderle. <strong>Tipo II:</strong> dejar pasar un fraude real. El banco o el cliente pierden el dinero.</p>
+<p>Normalmente el fraude no detectado es más caro, así que el banco prefiere más potencia aunque tenga más falsos positivos: usaría un <span class="arithmatex">\(\alpha\)</span> <strong>mayor</strong> que el 5 % habitual. No hay una respuesta única: depende de los costes de cada error, y es una decisión de negocio, no estadística.</p>
+</details>
+<p><strong>2.</strong> Indica si cada cambio aumenta o reduce la potencia de un contraste, manteniendo lo demás igual. (a) Duplicar el tamaño de la muestra. (b) Pasar de <span class="arithmatex">\(\alpha = 0.05\)</span> a <span class="arithmatex">\(\alpha = 0.01\)</span>. (c) Que la diferencia real sea mayor. (d) Pasar de un contraste bilateral a uno unilateral en la dirección correcta. (e) Medir a los mismos clientes antes y después en lugar de a clientes distintos.</p>
+<details class="success">
+<summary>Solución</summary>
+<p>(a) <strong>Aumenta</strong>: el error estándar baja. (b) <strong>Reduce</strong>: hace falta más evidencia para rechazar. (c) <strong>Aumenta</strong>: la diferencia es más fácil de ver. (d) <strong>Aumenta</strong>: toda la región crítica está en el lado correcto. (e) <strong>Aumenta</strong>: el diseño pareado elimina la variación entre clientes.</p>
+</details>
+<p><strong>3.</strong> Una web tiene una tasa de conversión del 10 % y quiere detectar si un nuevo diseño la sube al 12 %, con <span class="arithmatex">\(\alpha = 0.05\)</span> bilateral y potencia 0.80. ¿Cuántos visitantes necesita en cada versión? ¿Y si quisiera detectar una subida al 11 %?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>Con <span class="arithmatex">\(p_1 = 0.10\)</span>, <span class="arithmatex">\(p_2 = 0.12\)</span> y <span class="arithmatex">\(\bar{p} = 0.11\)</span>: <span class="arithmatex">\(n = \left(1.96\sqrt{2 \cdot 0.11 \cdot 0.89} + 0.842\sqrt{0.10 \cdot 0.90 + 0.12 \cdot 0.88}\right)^2 / 0.02^2 = 3841\)</span> visitantes por versión (<code>n_dos_proporciones(0.10, 0.12)</code>).</p>
+<p>Para detectar una subida al 11 %, la diferencia es la mitad, así que hacen falta unas cuatro veces más: <code>n_dos_proporciones(0.10, 0.11)</code> da 14 751 por versión.</p>
+</details>
+<p><strong>4.</strong> Un equipo de marketing prueba 20 variantes de un anuncio, cada una frente al anuncio actual, con <span class="arithmatex">\(\alpha = 0.05\)</span>. Una de ellas sale significativa, con p-valor 0.03. ¿Deberían adoptarla? ¿Qué harías?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>No sin más comprobaciones. Si ninguna variante fuera mejor, la probabilidad de que al menos una de 20 saliera significativa por azar sería <span class="arithmatex">\(1 - 0.95^{20} = 0.64\)</span>. Un resultado así es lo que cabe esperar aunque ninguna variante funcione.</p>
+<p>Con la corrección de Bonferroni, cada contraste debería usar <span class="arithmatex">\(0.05/20 = 0.0025\)</span>, y 0.03 no lo cumple. Lo razonable es tratar esa variante como candidata y hacer un nuevo test, planificado con su tamaño de muestra, solo con ella frente al anuncio actual.</p>
+</details>
+<p><strong>5.</strong> <em>(Más difícil)</em> Con una semana de datos (3500 emails) y <span class="arithmatex">\(\alpha = 0.05\)</span> bilateral, calcula la potencia del contraste de la agencia si la tasa real fuera del 7.5 %. ¿Cuántos emails harían falta para tener una potencia de 0.80 frente a esa tasa? Usa la función <code>potencia_una_proporcion</code> y prueba valores de <span class="arithmatex">\(n\)</span>.</p>
+<details class="success">
+<summary>Solución</summary>
+<p><code>potencia_una_proporcion(3500, 0.08, 0.075)</code> <span class="arithmatex">\(= 0.19\)</span>. Con una semana, el contraste solo detectaría una diferencia de medio punto una de cada cinco veces.</p>
+<p>Probando valores, la potencia llega a 0.80 hacia los 23 000 emails, unas 6.5 semanas de campaña. Comparado con una diferencia de un punto, que con dos semanas ya tenía potencia 0.88, se ve de nuevo la regla general: reducir a la mitad la diferencia que se quiere detectar multiplica por cuatro la muestra necesaria.</p>
+</details>
+<p><a class="md-button" href="../dos-muestras/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> Comparar dos grupos</a> <a class="md-button md-button--primary" href="../practica/">Siguiente: Práctica guiada <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg></span></a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../dos-muestras/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: 4.3 Comparar dos grupos">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                4.3 Comparar dos grupos
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../practica/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: 4.5 Práctica guiada: contrastes en escenarios de negocio">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                4.5 Práctica guiada: contrastes en escenarios de negocio
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/katex.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
