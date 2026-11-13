@@ -204,6 +204,6 @@ El notebook tiene dos partes:
 
 Usa lo que has visto en [variables aleatorias y distribuciones](../02-variables-aleatorias/distribuciones.md), en este tema y en [contraste de hipótesis](../04-contraste-hipotesis/index.md).
 
-La entrega se sube en **Blackboard**. El notebook tiene que ejecutarse de principio a fin sin errores, porque así es como se va a corregir. Antes de entregarlo, haz en Colab *Entorno de ejecución → Reiniciar sesión y ejecutar todo* y comprueba que ninguna celda da error, borra las salidas (*Editar → Borrar todas las salidas*), descárgalo (*Archivo → Descargar → Descargar .ipynb*) y súbelo a la tarea "Entrega 1".
+La entrega se sube en **Blackboard** como un archivo **`.ipynb`** (no PDF, HTML ni otro formato), ejecutado o sin ejecutar, como prefieras. Lo imprescindible es que el notebook se ejecute de principio a fin sin errores y **sin intervención manual**, porque así es como se va a corregir: con *Reiniciar sesión y ejecutar todo* tiene que llegar hasta la última celda sin que haya que subir ficheros, escribir nada, cambiar código ni ejecutar celdas a mano o en otro orden. Antes de entregarlo, haz en Colab *Entorno de ejecución → Reiniciar sesión y ejecutar todo*, comprueba que ninguna celda da error, descárgalo (*Archivo → Descargar → Descargar .ipynb*) y súbelo a la tarea "Entrega 1".
 
 [← Intervalos de confianza](intervalos.md) [Volver al tema ↑](index.md)
