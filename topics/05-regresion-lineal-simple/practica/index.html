@@ -1,0 +1,2434 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Material docente — estadística, machine learning y desarrollo de software">
+      
+      
+      
+        <link rel="canonical" href="https://alberpro.com/nebrija-mpan/topics/05-regresion-lineal-simple/practica/">
+      
+      
+        <link rel="prev" href="../ajuste/">
+      
+      
+        <link rel="next" href="../../06-regresion-lineal-multiple/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>5.4 Práctica guiada: regresión con distintos tipos de predictor - Nebrija · Modelos predictivos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#54-practica-guiada-regresion-con-distintos-tipos-de-predictor" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-header__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nebrija · Modelos predictivos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5.4 Práctica guiada: regresión con distintos tipos de predictor
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-nav__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nebrija · Modelos predictivos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelos predictivos en el análisis de negocios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../01-probabilidad/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Probabilidad
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Probabilidad
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-probabilidad/probabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1 Sucesos y reglas de la probabilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-probabilidad/condicionada/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2 Probabilidad condicionada y teorema de Bayes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../02-variables-aleatorias/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Variables aleatorias y distribuciones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Variables aleatorias y distribuciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-variables-aleatorias/variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1 Variables aleatorias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-variables-aleatorias/distribuciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2 Distribuciones con nombre propio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../03-inferencia/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Estimación e inferencia
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Estimación e inferencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/estimacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Estimación: de los datos al modelo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/variabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.2 Cuánto se equivoca una estimación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/intervalos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.3 Intervalos de confianza: de la muestra a la población
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.4 Práctica guiada: las ventas de la campaña de email
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../04-contraste-hipotesis/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Contraste de hipótesis
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4. Contraste de hipótesis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-contraste-hipotesis/logica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 La lógica del contraste de hipótesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-contraste-hipotesis/una-muestra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.2 Contrastes para una muestra: proporciones y medias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-contraste-hipotesis/dos-muestras/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.3 Comparar dos grupos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-contraste-hipotesis/errores-potencia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.4 Errores, potencia y buen uso de los contrastes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-contraste-hipotesis/practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.5 Práctica guiada: contrastes en escenarios de negocio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Regresión lineal simple
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. Regresión lineal simple
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../correlacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Dependencia, covarianza y correlación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modelo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 El modelo de regresión y mínimos cuadrados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ajuste/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.3 Residuos, R² e inferencia sobre la pendiente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.4 Práctica guiada: regresión con distintos tipos de predictor
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.4 Práctica guiada: regresión con distintos tipos de predictor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#caso-1-publicidad-y-ventas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caso 1. Publicidad y ventas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Caso 1. Publicidad y ventas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#paso-1-grafico-de-dispersion-covarianza-y-correlacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 1. Gráfico de dispersión, covarianza y correlación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-2-ajustar-e-interpretar-la-recta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 2. Ajustar e interpretar la recta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-3-la-recta-sobre-los-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 3. La recta sobre los datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-4-analisis-de-residuos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 4. Análisis de residuos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-5-predicciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 5. Predicciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caso-2-temperatura-y-ventas-de-helados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caso 2. Temperatura y ventas de helados
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caso-3-un-predictor-con-dos-categorias-genero-y-salario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caso 3. Un predictor con dos categorías: género y salario
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Caso 3. Un predictor con dos categorías: género y salario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#paso-1-visualizar-los-dos-grupos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 1. Visualizar los dos grupos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-2-codificar-y-ajustar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 2. Codificar y ajustar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caso-4-un-predictor-ordinal-nivel-educativo-y-salario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caso 4. Un predictor ordinal: nivel educativo y salario
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Caso 4. Un predictor ordinal: nivel educativo y salario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#paso-1-visualizar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 1. Visualizar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-2-codificar-como-0-1-2-3-y-ajustar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 2. Codificar como 0, 1, 2, 3 y ajustar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lo-que-deberias-llevarte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lo que deberías llevarte
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../06-regresion-lineal-multiple/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Regresión lineal múltiple
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Regresión lineal múltiple
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../07-regresion-logistica/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Regresión logística
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. Regresión logística
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../08-feature-engineering/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Feature engineering y transformaciones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8. Feature engineering y transformaciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../09-arboles-decision/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Árboles de decisión y ensembles
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    9. Árboles de decisión y ensembles
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../10-clasificacion-multiclase/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Clasificación multiclase
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10. Clasificación multiclase
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../11-series-temporales/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Series temporales
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    11. Series temporales
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../12-sesgos/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Sesgos en los datos
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    12. Sesgos en los datos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Referencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/modelos-predictivos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía de referencia: modelos predictivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#caso-1-publicidad-y-ventas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caso 1. Publicidad y ventas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Caso 1. Publicidad y ventas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#paso-1-grafico-de-dispersion-covarianza-y-correlacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 1. Gráfico de dispersión, covarianza y correlación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-2-ajustar-e-interpretar-la-recta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 2. Ajustar e interpretar la recta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-3-la-recta-sobre-los-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 3. La recta sobre los datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-4-analisis-de-residuos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 4. Análisis de residuos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-5-predicciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 5. Predicciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caso-2-temperatura-y-ventas-de-helados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caso 2. Temperatura y ventas de helados
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caso-3-un-predictor-con-dos-categorias-genero-y-salario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caso 3. Un predictor con dos categorías: género y salario
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Caso 3. Un predictor con dos categorías: género y salario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#paso-1-visualizar-los-dos-grupos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 1. Visualizar los dos grupos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-2-codificar-y-ajustar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 2. Codificar y ajustar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caso-4-un-predictor-ordinal-nivel-educativo-y-salario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caso 4. Un predictor ordinal: nivel educativo y salario
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Caso 4. Un predictor ordinal: nivel educativo y salario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#paso-1-visualizar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 1. Visualizar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-2-codificar-como-0-1-2-3-y-ajustar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 2. Codificar como 0, 1, 2, 3 y ajustar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lo-que-deberias-llevarte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lo que deberías llevarte
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="54-practica-guiada-regresion-con-distintos-tipos-de-predictor">5.4 Práctica guiada: regresión con distintos tipos de predictor<a class="headerlink" href="#54-practica-guiada-regresion-con-distintos-tipos-de-predictor" title="Permanent link">&para;</a></h1>
+<p>Esta práctica aplica todo el tema a cuatro casos con el mismo procedimiento: mirar los datos, medir la relación, ajustar la recta, interpretarla, comprobar el modelo y predecir. Los casos cambian el tipo de variable que hace de predictor: primero una cantidad (publicidad, temperatura), después una categoría con dos valores (género) y por último una categoría ordenada (nivel educativo).</p>
+<p><strong>Cómo trabajar.</strong> Abre el notebook y resuelve cada paso <strong>antes</strong> de desplegar el resultado. Los resultados están para que compruebes los tuyos, no para leerlos sin intentarlo.</p>
+<p><strong>Notebook de la práctica</strong> &nbsp; <a href="https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/05-regresion-lineal-simple/exercises.ipynb" target="_blank"><img alt="Abrir en Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a> &nbsp; <a download="download" href="../exercises.ipynb"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"/></svg></span> .ipynb</a></p>
+<div class="admonition tip">
+<p class="admonition-title">Antes de empezar</p>
+<ul>
+<li>En Colab, haz <em>Archivo → Guardar una copia en Drive</em> para no perder tus cambios.</li>
+<li>Los datos de los casos 2 a 4 se simulan con una semilla fija (<code>np.random.seed</code>), así que deberías obtener exactamente los mismos números que aquí.</li>
+<li>Ten a mano las secciones "En Python" de <a href="../correlacion/#en-python">correlación</a>, <a href="../modelo/#en-python">el modelo</a> y <a href="../ajuste/#en-python">residuos e inferencia</a>.</li>
+</ul>
+</div>
+<h2 id="caso-1-publicidad-y-ventas">Caso 1. Publicidad y ventas<a class="headerlink" href="#caso-1-publicidad-y-ventas" title="Permanent link">&para;</a></h2>
+<p>Es el caso que recorre todo el tema: diez semanas de inversión en publicidad y ventas, en miles de euros.</p>
+<h3 id="paso-1-grafico-de-dispersion-covarianza-y-correlacion">Paso 1. Gráfico de dispersión, covarianza y correlación<a class="headerlink" href="#paso-1-grafico-de-dispersion-covarianza-y-correlacion" title="Permanent link">&para;</a></h3>
+<p>Dibuja el gráfico de dispersión antes de calcular nada. Después calcula la covarianza y la correlación primero con las fórmulas y luego con las funciones de NumPy o pandas.</p>
+<details class="tip">
+<summary>Pista</summary>
+<p>La covarianza con divisor <span class="arithmatex">\(n\)</span> es <code>((X - X.mean()) * (Y - Y.mean())).sum() / n</code>. Para la correlación, divide entre <code>X.std(ddof=0) * Y.std(ddof=0)</code>: el mismo divisor arriba y abajo. Para comprobarlo, <code>np.cov(X, Y, ddof=0)[0, 1]</code> y <code>np.corrcoef(X, Y)[0, 1]</code>.</p>
+</details>
+<details class="success">
+<summary>Resultado</summary>
+<p>El gráfico muestra una relación creciente y casi en línea recta. La covarianza es <strong>37.2</strong> (miles de €)² con divisor <span class="arithmatex">\(n\)</span> y la correlación, <strong><span class="arithmatex">\(r = 0.994\)</span></strong>: una relación lineal positiva muy fuerte. Las desviaciones típicas con divisor <span class="arithmatex">\(n\)</span> son 3.49 (publicidad) y 10.71 (ventas).</p>
+</details>
+<h3 id="paso-2-ajustar-e-interpretar-la-recta">Paso 2. Ajustar e interpretar la recta<a class="headerlink" href="#paso-2-ajustar-e-interpretar-la-recta" title="Permanent link">&para;</a></h3>
+<p>Ajusta la regresión con <code>scipy.stats.linregress</code> e interpreta el intercepto, la pendiente y <span class="arithmatex">\(R^2\)</span>.</p>
+<details class="tip">
+<summary>Pista</summary>
+<p><code>resultado = stats.linregress(X, Y)</code> devuelve <code>slope</code>, <code>intercept</code>, <code>rvalue</code>, <code>pvalue</code> y <code>stderr</code>. El <span class="arithmatex">\(R^2\)</span> es <code>resultado.rvalue ** 2</code>. Al interpretar el intercepto, comprueba si <span class="arithmatex">\(X = 0\)</span> está dentro del rango de los datos.</p>
+</details>
+<details class="success">
+<summary>Resultado</summary>
+<p><span class="arithmatex">\(\hat{\beta}_0 = 14.26\)</span>, <span class="arithmatex">\(\hat{\beta}_1 = 3.05\)</span>, <span class="arithmatex">\(r = 0.9936\)</span>, <span class="arithmatex">\(R^2 = 0.987\)</span>, p-valor <span class="arithmatex">\(= 7.3 \times 10^{-9}\)</span> y error estándar de la pendiente 0.122.</p>
+<ul>
+<li><strong>Pendiente:</strong> cada 1000 € más de publicidad se asocian, en promedio, con unos 3050 € más de ventas.</li>
+<li><strong>Intercepto:</strong> 14 260 € serían las ventas con publicidad cero, pero los datos van de 8 a 20 mil €: es una extrapolación sin interpretación práctica.</li>
+<li><strong><span class="arithmatex">\(R^2\)</span>:</strong> el 98.7 % de la variabilidad de las ventas se asocia con la publicidad.</li>
+</ul>
+</details>
+<h3 id="paso-3-la-recta-sobre-los-datos">Paso 3. La recta sobre los datos<a class="headerlink" href="#paso-3-la-recta-sobre-los-datos" title="Permanent link">&para;</a></h3>
+<p>Dibuja los puntos y la recta ajustada en el mismo gráfico. Como extra, dibuja los residuos como segmentos verticales entre cada punto y la recta.</p>
+<details class="tip">
+<summary>Pista</summary>
+<p>Genera una rejilla con <code>np.linspace(X.min() - 1, X.max() + 1, 100)</code>, calcula la recta sobre ella y dibújala con <code>plt.plot</code>. Los segmentos se dibujan con <code>plt.plot([x_i, x_i], [y_i, y_pred_i])</code> para cada punto.</p>
+</details>
+<details class="success">
+<summary>Resultado</summary>
+<p>La recta pasa muy cerca de todos los puntos; los segmentos son cortos y aparecen por encima y por debajo de la recta sin un orden claro.</p>
+</details>
+<h3 id="paso-4-analisis-de-residuos">Paso 4. Análisis de residuos<a class="headerlink" href="#paso-4-analisis-de-residuos" title="Permanent link">&para;</a></h3>
+<p>Calcula los residuos, comprueba que suman cero y dibuja los tres gráficos de diagnóstico: residuos frente a valores predichos, histograma de residuos y gráfico Q-Q con <code>stats.probplot(residuos, dist="norm", plot=ax)</code>.</p>
+<details class="tip">
+<summary>Pista</summary>
+<p>Repasa en <a href="../ajuste/#diagnostico-mirar-los-residuos">Diagnóstico: mirar los residuos</a> qué patrones hay que buscar. Con diez puntos, el histograma dice poco; el gráfico Q-Q es más informativo.</p>
+</details>
+<details class="success">
+<summary>Resultado</summary>
+<p>La suma de los residuos es cero (salvo errores de redondeo del orden de <span class="arithmatex">\(10^{-14}\)</span>). Van de <span class="arithmatex">\(-1.91\)</span> a <span class="arithmatex">\(+1.99\)</span>, con desviación típica 1.28 (con <code>ddof=1</code>; el error típico de la regresión, que divide entre <span class="arithmatex">\(n - 2\)</span>, es 1.35). El gráfico de residuos no muestra curva ni embudo y el Q-Q sigue razonablemente la diagonal. Con diez observaciones no se puede afirmar mucho sobre la normalidad, pero no hay indicios de problemas graves.</p>
+</details>
+<h3 id="paso-5-predicciones">Paso 5. Predicciones<a class="headerlink" href="#paso-5-predicciones" title="Permanent link">&para;</a></h3>
+<p>Predice las ventas para inversiones de 5 000 €, 22 000 € y 30 000 €. ¿Qué precauciones hay que tener?</p>
+<details class="tip">
+<summary>Pista</summary>
+<p>Las inversiones van en miles de €: usa 5, 22 y 30. Antes de dar cada predicción, compara con el rango de la publicidad observada.</p>
+</details>
+<details class="success">
+<summary>Resultado</summary>
+<p>Las predicciones son <strong>29.49</strong>, <strong>81.29</strong> y <strong>105.66</strong> miles de €. Las tres están <strong>fuera del rango observado</strong> (8 a 20 mil €), así que son extrapolaciones. La de 22 mil € está cerca del borde y es la más creíble. La de 30 mil € puede sobreestimar las ventas si la publicidad tiene rendimientos decrecientes, y la de 5 mil € puede fallar si por debajo de cierta inversión la publicidad apenas tiene efecto. Al presentarlas, hay que indicar que quedan fuera de los datos.</p>
+</details>
+<h2 id="caso-2-temperatura-y-ventas-de-helados">Caso 2. Temperatura y ventas de helados<a class="headerlink" href="#caso-2-temperatura-y-ventas-de-helados" title="Permanent link">&para;</a></h2>
+<p>Una heladería registra la temperatura máxima (°C) y las ventas (€) de 20 días de verano. Ahora haces tú el análisis completo, sin pasos intermedios: estadísticos descriptivos, gráfico de dispersión, correlación, recta, interpretación, <span class="arithmatex">\(R^2\)</span> y residuos. Termina prediciendo las ventas de un día con 35 °C.</p>
+<details class="tip">
+<summary>Pista</summary>
+<p><code>datos_helados.describe()</code> da los descriptivos. Para el resto, repite el caso 1. Antes de la predicción, comprueba que 35 °C está dentro del rango de temperaturas observado.</p>
+</details>
+<details class="success">
+<summary>Resultado</summary>
+<ul>
+<li><strong>Descriptivos:</strong> temperatura media 28.24 °C (de 20.37 a 37.46 °C) y ventas medias 465.40 €.</li>
+<li><strong>Correlación:</strong> <span class="arithmatex">\(r = 0.945\)</span>.</li>
+<li><strong>Recta:</strong> <span class="arithmatex">\(\widehat{\text{Ventas}} = 66.13 + 14.14 \times \text{Temperatura}\)</span>, con <span class="arithmatex">\(R^2 = 0.893\)</span> y p-valor <span class="arithmatex">\(3.6 \times 10^{-10}\)</span>.</li>
+<li><strong>Interpretación:</strong> cada grado más de temperatura máxima se asocia con unos 14.14 € más de ventas diarias. El intercepto (66.13 € a 0 °C) no tiene sentido práctico: no hay días de verano a 0 °C. La temperatura explica el 89.3 % de la variabilidad de las ventas.</li>
+<li><strong>Residuos:</strong> sin patrón visible, y el Q-Q sigue la diagonal. El error típico de la regresión es de unos 27.8 €.</li>
+<li><strong>Predicción para 35 °C:</strong> <strong>560.99 €</strong>. Está dentro del rango observado, así que es una predicción respaldada por los datos.</li>
+</ul>
+</details>
+<h2 id="caso-3-un-predictor-con-dos-categorias-genero-y-salario">Caso 3. Un predictor con dos categorías: género y salario<a class="headerlink" href="#caso-3-un-predictor-con-dos-categorias-genero-y-salario" title="Permanent link">&para;</a></h2>
+<p>Datos simulados de los salarios de 30 empleados, con su género. Para usar el género como predictor hay que codificarlo con una variable indicadora, como en <a href="../modelo/#cuando-el-predictor-es-una-categoria">Cuando el predictor es una categoría</a>.</p>
+<h3 id="paso-1-visualizar-los-dos-grupos">Paso 1. Visualizar los dos grupos<a class="headerlink" href="#paso-1-visualizar-los-dos-grupos" title="Permanent link">&para;</a></h3>
+<p>Compara la distribución del salario en los dos grupos con un diagrama de caja (boxplot) o un diagrama de violín.</p>
+<details class="tip">
+<summary>Pista</summary>
+<p><code>datos_salario_genero.boxplot(column="Salario", by="Genero")</code> o, con seaborn, <code>sns.boxplot(data=datos_salario_genero, x="Genero", y="Salario")</code>.</p>
+</details>
+<details class="success">
+<summary>Resultado</summary>
+<p>Hay 17 mujeres y 13 hombres. Las cajas se solapan en parte, pero la mediana de los hombres está claramente por encima.</p>
+</details>
+<h3 id="paso-2-codificar-y-ajustar">Paso 2. Codificar y ajustar<a class="headerlink" href="#paso-2-codificar-y-ajustar" title="Permanent link">&para;</a></h3>
+<p>Crea la variable <code>Genero_Hombre</code>, que vale 1 para los hombres y 0 para las mujeres, y ajusta la regresión del salario sobre ella. Interpreta <span class="arithmatex">\(\hat{\beta}_0\)</span> y <span class="arithmatex">\(\hat{\beta}_1\)</span> y compáralos con las medias de cada grupo.</p>
+<details class="tip">
+<summary>Pista</summary>
+<p><code>(datos_salario_genero["Genero"] == "Hombre").astype(int)</code> crea la variable. Las medias por grupo salen con <code>groupby("Genero")["Salario"].mean()</code>.</p>
+</details>
+<details class="success">
+<summary>Resultado</summary>
+<p><span class="arithmatex">\(\hat{\beta}_0 = 30\,800\)</span> € y <span class="arithmatex">\(\hat{\beta}_1 = 5\,153\)</span> €, con <span class="arithmatex">\(R^2 = 0.50\)</span> y p-valor <span class="arithmatex">\(1.3 \times 10^{-5}\)</span>.</p>
+<ul>
+<li><span class="arithmatex">\(\hat{\beta}_0\)</span> es el salario medio del grupo de referencia (mujeres): <strong>30 800 €</strong>.</li>
+<li><span class="arithmatex">\(\hat{\beta}_1\)</span> es la diferencia de medias: los hombres de la muestra cobran de media <strong>5 153 €</strong> más, es decir, <strong>35 954 €</strong>.</li>
+</ul>
+<p>Coinciden exactamente con las medias de <code>groupby</code>. Los datos se simularon con una diferencia real de 3 000 €; la estimada es mayor por la variabilidad de una muestra de solo 30 personas. El intervalo de confianza al 95 % de la pendiente, <span class="arithmatex">\(5153 \pm 2.048 \cdot 974 = [3158,\ 7149]\)</span> €, es ancho, y en este caso no contiene el valor usado en la simulación. Es uno de los intervalos que, por azar, no aciertan: con un nivel del 95 %, ocurre en una de cada veinte muestras.</p>
+<p>Un apunte de interpretación: en datos reales, esta diferencia bruta no mide por sí sola una discriminación salarial, porque puede haber variables de confusión (puesto, antigüedad, jornada). Para separar esos efectos hace falta la regresión múltiple del <a href="../../06-regresion-lineal-multiple/">tema 6</a>.</p>
+</details>
+<h2 id="caso-4-un-predictor-ordinal-nivel-educativo-y-salario">Caso 4. Un predictor ordinal: nivel educativo y salario<a class="headerlink" href="#caso-4-un-predictor-ordinal-nivel-educativo-y-salario" title="Permanent link">&para;</a></h2>
+<p>Datos simulados de 60 salarios, 15 por cada nivel educativo: secundaria, grado, máster y doctorado.</p>
+<h3 id="paso-1-visualizar">Paso 1. Visualizar<a class="headerlink" href="#paso-1-visualizar" title="Permanent link">&para;</a></h3>
+<p>Dibuja el salario por nivel educativo, con los niveles en su orden natural, y calcula el salario medio de cada nivel.</p>
+<details class="tip">
+<summary>Pista</summary>
+<p>En seaborn, el parámetro <code>order=["Secundaria", "Grado", "Máster", "Doctorado"]</code> fija el orden. Sin él, los niveles salen en orden alfabético.</p>
+</details>
+<details class="success">
+<summary>Resultado</summary>
+<p>Salarios medios: secundaria <strong>24 791 €</strong>, grado <strong>33 436 €</strong>, máster <strong>46 637 €</strong> y doctorado <strong>54 853 €</strong>. El salario crece con el nivel, pero no a saltos iguales.</p>
+</details>
+<h3 id="paso-2-codificar-como-0-1-2-3-y-ajustar">Paso 2. Codificar como 0, 1, 2, 3 y ajustar<a class="headerlink" href="#paso-2-codificar-como-0-1-2-3-y-ajustar" title="Permanent link">&para;</a></h3>
+<p>Codifica los niveles como 0 (secundaria), 1 (grado), 2 (máster) y 3 (doctorado), ajusta la regresión e interpreta la pendiente. Compara el salario que predice el modelo para cada nivel con la media real. ¿Es razonable suponer que el efecto es lineal?</p>
+<details class="tip">
+<summary>Pista</summary>
+<p>Usa un diccionario y <code>.map()</code>. Para valorar la linealidad, calcula los saltos entre medias consecutivas y compáralos con la pendiente.</p>
+</details>
+<details class="success">
+<summary>Resultado</summary>
+<p><span class="arithmatex">\(\hat{\beta}_0 = 24\,421\)</span> € y <span class="arithmatex">\(\hat{\beta}_1 = 10\,339\)</span> €, con <span class="arithmatex">\(R^2 = 0.917\)</span>. Cada nivel educativo más se asocia, en promedio, con unos 10 339 € más de salario.</p>
+<table>
+<thead>
+<tr>
+<th>Nivel</th>
+<th>Predicción del modelo</th>
+<th>Media real</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Secundaria (0)</td>
+<td>24 421 €</td>
+<td>24 791 €</td>
+</tr>
+<tr>
+<td>Grado (1)</td>
+<td>34 760 €</td>
+<td>33 436 €</td>
+</tr>
+<tr>
+<td>Máster (2)</td>
+<td>45 099 €</td>
+<td>46 637 €</td>
+</tr>
+<tr>
+<td>Doctorado (3)</td>
+<td>55 438 €</td>
+<td>54 853 €</td>
+</tr>
+</tbody>
+</table>
+<p>Los saltos reales entre niveles son de 8 645 €, 13 201 € y 8 216 €: el paso de grado a máster es bastante mayor que los otros dos. El modelo lineal los resume en un único salto medio de 10 339 €, así que subestima el máster y sobreestima el grado. Es una buena aproximación global (<span class="arithmatex">\(R^2\)</span> alto), pero si interesa el efecto de cada nivel por separado, es mejor usar una variable indicadora por nivel (regresión múltiple, <a href="../../06-regresion-lineal-multiple/">tema 6</a>).</p>
+</details>
+<h2 id="lo-que-deberias-llevarte">Lo que deberías llevarte<a class="headerlink" href="#lo-que-deberias-llevarte" title="Permanent link">&para;</a></h2>
+<ul>
+<li>El procedimiento es siempre el mismo: <strong>dibujar, medir, ajustar, interpretar, comprobar y predecir</strong>, y cada paso se apoya en el anterior.</li>
+<li>La pendiente se interpreta en las unidades del problema y como una <strong>asociación media</strong>, no como un efecto causal.</li>
+<li>Las predicciones solo están respaldadas <strong>dentro del rango</strong> de los datos.</li>
+<li>Con un predictor binario, la regresión compara <strong>medias de dos grupos</strong>; con uno ordinal codificado como 0, 1, 2…, supone saltos iguales entre niveles, y eso hay que comprobarlo.</li>
+</ul>
+<p><a class="md-button" href="../ajuste/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> Residuos, R² e inferencia</a> <a class="md-button" href="../">Volver al tema <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg></span></a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../ajuste/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: 5.3 Residuos, R² e inferencia sobre la pendiente">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                5.3 Residuos, R² e inferencia sobre la pendiente
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../06-regresion-lineal-multiple/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: 6. Regresión lineal múltiple">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                6. Regresión lineal múltiple
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/katex.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
