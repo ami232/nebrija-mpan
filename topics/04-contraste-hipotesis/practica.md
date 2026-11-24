@@ -135,14 +135,4 @@ Un hotel encuesta a los mismos 20 clientes antes y después de un programa de me
 
 </details>
 
-## Entrega 2: lanzamiento de producto
-
-Ahora te toca a ti. Una empresa va a lanzar un producto y ha hecho un estudio de mercado con 200 personas: si tienen intención de comprarlo, cuánto pagarían y su segmento de edad. Con contrastes de hipótesis, tendrás que decidir si el producto es viable por demanda y por precio, y en qué segmento conviene centrar el marketing.
-
-**Entrega 2: lanzamiento de producto** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/04-contraste-hipotesis/assignment.ipynb) &nbsp; [descargar .ipynb](assignment.ipynb)
-
-Para cada pregunta, sigue los cinco pasos: hipótesis (¿bilateral o unilateral?), nivel de significación, contraste adecuado y por qué, p-valor y decisión traducida al negocio. Acompaña cada decisión con la estimación y su intervalo de confianza, y termina con una recomendación que entendería alguien que no sabe estadística.
-
-La entrega se sube en **Blackboard**: descarga tu notebook desde Colab (*Archivo → Descargar → Descargar .ipynb*), con todas las celdas ejecutadas, y súbelo a la tarea "Entrega 2".
-
 [← Errores y potencia](errores-potencia.md) [Volver al tema ↑](index.md)

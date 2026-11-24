@@ -9,7 +9,7 @@ En el tema de [variables aleatorias](../02-variables-aleatorias/index.md) trabaj
 1. **[Estimación](estimacion.md).** Distinguimos la **población**, que no conocemos, de la **muestra**, que sí podemos calcular. Con los **estimadores de máxima verosimilitud** estimamos los parámetros de un modelo a partir de los datos, y usamos el modelo estimado para tomar decisiones.
 2. **[Cuánto se equivoca una estimación](variabilidad.md).** Una estimación hecha con una muestra varía de una muestra a otra. El **error estándar** mide cuánto, la **ley de los grandes números** dice hacia dónde va y el **teorema del límite central**, qué forma tiene su distribución.
 3. **[Intervalos de confianza](intervalos.md).** Convertimos todo lo anterior en un rango de valores plausibles para el parámetro, y planificamos cuántos datos hacen falta.
-4. **[Práctica guiada](practica.md).** Aplicamos todo, junto con los dos temas anteriores, a un caso real paso a paso. Después viene la entrega.
+4. **[Práctica guiada](practica.md).** Aplicamos todo, junto con los dos temas anteriores, a un caso real paso a paso.
 
 Cada página tiene ejemplos resueltos, código Python, un resumen ("Lo esencial") y ejercicios con la solución desarrollada. Sigue el orden: cada página usa lo anterior.
 

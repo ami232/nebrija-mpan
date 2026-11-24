@@ -188,22 +188,4 @@ Ninguno invalida el análisis por completo, pero la dependencia suele hacer que 
 
 </details>
 
-## Entrega 1: la distribución de Poisson y las conexiones a una web
-
-Ahora te toca a ti hacer un análisis completo, con una distribución nueva: la **Poisson**, que modela cuántas veces ocurre algo en un intervalo de tiempo. Durante una semana se registró, minuto a minuto, cuántos usuarios se conectaban a una web y cuántos de ellos aceptaban las cookies. Hay dos preguntas de negocio:
-
-- **Infraestructura** necesita saber con qué frecuencia se superarán los 40 usuarios por minuto, porque a partir de ahí hay que contratar un servidor más potente.
-- **Marketing** quiere saber si los usuarios aceptan las cookies más en unos momentos que en otros (a unas horas, o unos días de la semana).
-
-**Entrega 1: la distribución de Poisson y las conexiones a una web** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/03-inferencia/assignment.ipynb) &nbsp; [descargar .ipynb](assignment.ipynb)
-
-El notebook tiene dos partes:
-
-1. **La distribución de Poisson.** Una explicación con ejemplos ejecutables: qué cuenta, su fórmula, cómo calcular probabilidades con `scipy.stats`, cómo estimar su parámetro $\lambda$ con un intervalo de confianza, cómo comprobar si encaja con unos datos y cómo hacer contrastes sobre $\lambda$.
-2. **El ejercicio.** Explorar los datos, proponer un modelo y comprobar sus suposiciones, responder a cada departamento con números y su incertidumbre, y escribir unas conclusiones que entendería alguien que no sabe estadística.
-
-Usa lo que has visto en [variables aleatorias y distribuciones](../02-variables-aleatorias/distribuciones.md), en este tema y en [contraste de hipótesis](../04-contraste-hipotesis/index.md).
-
-La entrega se sube en **Blackboard** como un archivo **`.ipynb`** (no PDF, HTML ni otro formato), ejecutado o sin ejecutar, como prefieras. Lo imprescindible es que el notebook se ejecute de principio a fin sin errores y **sin intervención manual**, porque así es como se va a corregir: con *Reiniciar sesión y ejecutar todo* tiene que llegar hasta la última celda sin que haya que subir ficheros, escribir nada, cambiar código ni ejecutar celdas a mano o en otro orden. Antes de entregarlo, haz en Colab *Entorno de ejecución → Reiniciar sesión y ejecutar todo*, comprueba que ninguna celda da error, descárgalo (*Archivo → Descargar → Descargar .ipynb*) y súbelo a la tarea "Entrega 1".
-
 [← Intervalos de confianza](intervalos.md) [Volver al tema ↑](index.md)

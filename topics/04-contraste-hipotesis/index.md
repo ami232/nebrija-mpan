@@ -12,7 +12,7 @@ Seguimos con la campaña de email del tema anterior: una tienda online envía ca
 2. **[Contrastes para una muestra](una-muestra.md).** Contrastes para una **proporción** y para una **media**, la **t de Student** para cuando la desviación típica se estima con los datos, y la relación entre contrastes e **intervalos de confianza**.
 3. **[Comparar dos grupos](dos-muestras.md).** Dos proporciones (¿compran más los lunes?), dos medias independientes (un test A/B) y muestras **pareadas** (los mismos empleados antes y después de un cambio).
 4. **[Errores y potencia](errores-potencia.md).** Los errores de tipo I y II, la **potencia** de un contraste, cómo calcular el tamaño de muestra necesario y los usos incorrectos más frecuentes: confundir significativo con importante y hacer muchos contrastes a la vez.
-5. **[Práctica guiada](practica.md).** Cuatro escenarios de negocio paso a paso, cada uno con un contraste distinto. Después viene la entrega.
+5. **[Práctica guiada](practica.md).** Cuatro escenarios de negocio paso a paso, cada uno con un contraste distinto.
 
 Cada página tiene ejemplos resueltos, código Python, un resumen ("Lo esencial") y ejercicios con la solución desarrollada. Sigue el orden: cada página usa lo anterior.
 
@@ -47,12 +47,6 @@ Necesitas el tema de [estimación e inferencia](../03-inferencia/index.md), sobr
 Los **ejercicios del tema** son la base de la [práctica guiada](practica.md): cuatro escenarios de negocio (tiempo de entrega, dos campañas de marketing, un test A/B y una encuesta de satisfacción antes y después).
 
 **Ejercicios: contraste de hipótesis en escenarios de negocio** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/04-contraste-hipotesis/exercises.ipynb) &nbsp; [descargar .ipynb](exercises.ipynb)
-
-La **entrega 2** aplica el tema a un estudio de mercado para el lanzamiento de un producto.
-
-**Entrega 2: lanzamiento de producto** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/04-contraste-hipotesis/assignment.ipynb) &nbsp; [descargar .ipynb](assignment.ipynb)
-
-La entrega se sube en Blackboard: descarga tu copia desde Colab (*Archivo → Descargar → .ipynb*).
 
 La **[guía de referencia](../../reference/modelos-predictivos.md)** reúne las fórmulas de todo el curso en una página.
 

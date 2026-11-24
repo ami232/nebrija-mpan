@@ -13,9 +13,3 @@ Variables dummy, interacciones, transformaciones logarítmicas y polinómicas y 
 ## Notebooks
 
 - **Ejercicios: transformaciones** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/08-feature-engineering/exercises.ipynb) &nbsp; [descargar .ipynb](exercises.ipynb)
-
-## Entrega
-
-- **Entrega 5: transformaciones y evaluación del modelo** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/08-feature-engineering/assignment.ipynb) &nbsp; [descargar .ipynb](assignment.ipynb)
-
-La entrega se sube en Blackboard: descarga tu copia desde Colab (*Archivo → Descargar → .ipynb*).

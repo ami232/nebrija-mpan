@@ -117,10 +117,6 @@ La media tiene una lectura inmediata: si cada intento acierta con probabilidad $
 
 El parámetro $\lambda$ es el número medio de eventos **en el intervalo que estás considerando**, y se escala con su longitud: 4 clientes por hora son 2 por media hora o 32 en una jornada de 8 horas. Por ejemplo, si en una tienda entran de media 4 clientes por hora, la probabilidad de una hora sin clientes es $P(X = 0) = e^{-4} \approx 0.018$: menos de una vez cada 50 horas.
 
-> 💡 **La Poisson, en la entrega 1**
->
-> La [entrega 1](../03-inferencia/practica.md#entrega-1-la-distribución-de-poisson-y-las-conexiones-a-una-web) explica la Poisson con más detalle (cómo estimar $\lambda$, comprobar si el modelo encaja y hacer contrastes) y la aplica a cuántos usuarios se conectan a una web cada minuto.
-
 ## Normal: la campana de Gauss
 
 **La historia.** Una magnitud continua que fluctúa simétricamente alrededor de un valor central, con valores cercanos al centro frecuentes y valores alejados cada vez más raros. Aparece cuando una medida es la **suma de muchos efectos pequeños e independientes**: el peso de un envase de 500 g resulta de pequeñas variaciones de la máquina, la temperatura, el material… Este hecho tiene una versión precisa, el [teorema del límite central](../03-inferencia/variabilidad.md#el-teorema-del-límite-central), que explica por qué la normal es la distribución más importante de la estadística: las **medias** de muchas observaciones son aproximadamente normales, sea cual sea la distribución de partida.

@@ -19,9 +19,3 @@ Se ejecutan en tu navegador (la primera carga tarda unos segundos).
 ## Notebooks
 
 - **Ejercicios: cancelaciones de reservas de hotel** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/07-regresion-logistica/exercises.ipynb) &nbsp; [descargar .ipynb](exercises.ipynb)
-
-## Entrega
-
-- **Entrega 4: churn en TelcoMax** &nbsp; [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ami232/nebrija-mpan/blob/main/topics/07-regresion-logistica/assignment.ipynb) &nbsp; [descargar .ipynb](assignment.ipynb)
-
-La entrega se sube en Blackboard: descarga tu copia desde Colab (*Archivo → Descargar → .ipynb*).
