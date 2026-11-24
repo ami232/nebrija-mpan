@@ -1,0 +1,2807 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Material docente — estadística, machine learning y desarrollo de software">
+      
+      
+      
+        <link rel="canonical" href="https://alberpro.com/nebrija-mpan/topics/06-regresion-lineal-multiple/modelo/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../multicolinealidad/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>6.1 El modelo y su interpretación - Nebrija · Modelos predictivos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#61-el-modelo-y-su-interpretacion" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-header__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nebrija · Modelos predictivos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              6.1 El modelo y su interpretación
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-nav__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nebrija · Modelos predictivos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelos predictivos en el análisis de negocios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../01-probabilidad/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Probabilidad
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Probabilidad
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-probabilidad/probabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1 Sucesos y reglas de la probabilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-probabilidad/condicionada/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2 Probabilidad condicionada y teorema de Bayes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../02-variables-aleatorias/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Variables aleatorias y distribuciones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Variables aleatorias y distribuciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-variables-aleatorias/variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1 Variables aleatorias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-variables-aleatorias/distribuciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2 Distribuciones con nombre propio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../03-inferencia/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Estimación e inferencia
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Estimación e inferencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/estimacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Estimación: de los datos al modelo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/variabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.2 Cuánto se equivoca una estimación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/intervalos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.3 Intervalos de confianza: de la muestra a la población
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.4 Práctica guiada: las ventas de la campaña de email
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../04-contraste-hipotesis/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Contraste de hipótesis
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4. Contraste de hipótesis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-contraste-hipotesis/logica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 La lógica del contraste de hipótesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-contraste-hipotesis/una-muestra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.2 Contrastes para una muestra: proporciones y medias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-contraste-hipotesis/dos-muestras/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.3 Comparar dos grupos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-contraste-hipotesis/errores-potencia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.4 Errores, potencia y buen uso de los contrastes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-contraste-hipotesis/practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.5 Práctica guiada: contrastes en escenarios de negocio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../05-regresion-lineal-simple/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Regresión lineal simple
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. Regresión lineal simple
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-regresion-lineal-simple/correlacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Dependencia, covarianza y correlación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-regresion-lineal-simple/modelo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 El modelo de regresión y mínimos cuadrados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-regresion-lineal-simple/ajuste/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.3 Residuos, R² e inferencia sobre la pendiente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-regresion-lineal-simple/practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.4 Práctica guiada: regresión con distintos tipos de predictor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Regresión lineal múltiple
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Regresión lineal múltiple
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 El modelo y su interpretación
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 El modelo y su interpretación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#los-limites-de-la-regresion-simple" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Los límites de la regresión simple
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-modelo-de-regresion-lineal-multiple" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El modelo de regresión lineal múltiple
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="El modelo de regresión lineal múltiple">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#la-forma-matricial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La forma matricial
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estimacion-por-minimos-cuadrados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estimación por mínimos cuadrados
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interpretar-los-coeficientes-manteniendo-constantes-las-demas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretar los coeficientes: "manteniendo constantes las demás"
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interpretar los coeficientes: &#34;manteniendo constantes las demás&#34;">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#por-que-cambia-un-coeficiente-al-anadir-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué cambia un coeficiente al añadir variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#predecir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Predecir
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#predictores-categoricos-variables-indicadoras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Predictores categóricos: variables indicadoras
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Predictores categóricos: variables indicadoras">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interacciones-cuando-el-efecto-depende-de-otra-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interacciones: cuando el efecto depende de otra variable
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#leer-el-summary-de-statsmodels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leer el summary de statsmodels
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multicolinealidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.2 Multicolinealidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../seleccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.3 Selección de variables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diagnostico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.4 Diagnóstico del modelo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.5 Práctica guiada: regresión múltiple de principio a fin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../07-regresion-logistica/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Regresión logística
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. Regresión logística
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../08-feature-engineering/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Feature engineering y transformaciones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8. Feature engineering y transformaciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../09-arboles-decision/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Árboles de decisión y ensembles
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    9. Árboles de decisión y ensembles
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../10-clasificacion-multiclase/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Clasificación multiclase
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10. Clasificación multiclase
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../11-series-temporales/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Series temporales
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    11. Series temporales
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../12-sesgos/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Sesgos en los datos
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    12. Sesgos en los datos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Referencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/modelos-predictivos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía de referencia: modelos predictivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#los-limites-de-la-regresion-simple" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Los límites de la regresión simple
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-modelo-de-regresion-lineal-multiple" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El modelo de regresión lineal múltiple
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="El modelo de regresión lineal múltiple">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#la-forma-matricial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La forma matricial
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estimacion-por-minimos-cuadrados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estimación por mínimos cuadrados
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interpretar-los-coeficientes-manteniendo-constantes-las-demas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretar los coeficientes: "manteniendo constantes las demás"
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interpretar los coeficientes: &#34;manteniendo constantes las demás&#34;">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#por-que-cambia-un-coeficiente-al-anadir-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué cambia un coeficiente al añadir variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#predecir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Predecir
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#predictores-categoricos-variables-indicadoras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Predictores categóricos: variables indicadoras
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Predictores categóricos: variables indicadoras">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interacciones-cuando-el-efecto-depende-de-otra-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interacciones: cuando el efecto depende de otra variable
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#leer-el-summary-de-statsmodels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leer el summary de statsmodels
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="61-el-modelo-y-su-interpretacion">6.1 El modelo y su interpretación<a class="headerlink" href="#61-el-modelo-y-su-interpretacion" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Lo que necesitas antes</p>
+<p>El <a href="../../05-regresion-lineal-simple/modelo/">modelo de regresión lineal simple</a> y la <a href="../../05-regresion-lineal-simple/modelo/#estimacion-por-minimos-cuadrados">estimación por mínimos cuadrados</a>, los <a href="../../05-regresion-lineal-simple/ajuste/">residuos y el <span class="arithmatex">\(R^2\)</span></a>, y el <a href="../../05-regresion-lineal-simple/ajuste/#el-contraste-de-la-pendiente">contraste</a> y el <a href="../../05-regresion-lineal-simple/ajuste/#el-intervalo-de-confianza-de-la-pendiente">intervalo de confianza</a> de la pendiente. Para la sección de categorías, cómo se usa <a href="../../05-regresion-lineal-simple/modelo/#cuando-el-predictor-es-una-categoria">un predictor binario</a>.</p>
+</div>
+<h2 id="los-limites-de-la-regresion-simple">Los límites de la regresión simple<a class="headerlink" href="#los-limites-de-la-regresion-simple" title="Permanent link">&para;</a></h2>
+<p>Una agencia inmobiliaria quiere un modelo para tasar pisos en una ciudad. Ha reunido los datos de 15 viviendas vendidas: su superficie (m²), su antigüedad (años), su distancia al centro (km) y el precio de venta (miles de €).</p>
+<table>
+<thead>
+<tr>
+<th>Vivienda</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Superficie (m²)</td>
+<td>75</td>
+<td>90</td>
+<td>100</td>
+<td>85</td>
+<td>95</td>
+<td>70</td>
+<td>110</td>
+<td>80</td>
+<td>88</td>
+<td>92</td>
+<td>78</td>
+<td>105</td>
+<td>82</td>
+<td>96</td>
+<td>89</td>
+</tr>
+<tr>
+<td>Antigüedad (años)</td>
+<td>19</td>
+<td>17</td>
+<td>22</td>
+<td>17</td>
+<td>8</td>
+<td>5</td>
+<td>22</td>
+<td>12</td>
+<td>15</td>
+<td>19</td>
+<td>5</td>
+<td>21</td>
+<td>11</td>
+<td>15</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Distancia (km)</td>
+<td>2.0</td>
+<td>3.0</td>
+<td>1.5</td>
+<td>2.5</td>
+<td>5.0</td>
+<td>6.0</td>
+<td>1.0</td>
+<td>4.0</td>
+<td>3.5</td>
+<td>2.2</td>
+<td>5.5</td>
+<td>1.8</td>
+<td>4.5</td>
+<td>3.2</td>
+<td>3.8</td>
+</tr>
+<tr>
+<td>Precio (miles €)</td>
+<td>211</td>
+<td>250</td>
+<td>293</td>
+<td>238</td>
+<td>229</td>
+<td>157</td>
+<td>320</td>
+<td>197</td>
+<td>234</td>
+<td>247</td>
+<td>176</td>
+<td>295</td>
+<td>194</td>
+<td>251</td>
+<td>223</td>
+</tr>
+</tbody>
+</table>
+<p>Con lo que ya sabemos, lo primero es una regresión simple del precio sobre la superficie. Sale <span class="arithmatex">\(\widehat{\text{Precio}} = -103.4 + 3.80 \times \text{Superficie}\)</span>, con <span class="arithmatex">\(R^2 = 0.885\)</span> y un error típico de 15.8 miles de €: cada metro cuadrado más se asocia con unos 3800 € más de precio. No está mal, pero tiene dos problemas.</p>
+<p>El primero es que <strong>se equivoca demasiado</strong> para tasar. Las viviendas 4 y 13 tienen casi la misma superficie (85 y 82 m²) y sus precios se separan 44 000 € (238 frente a 194). La vivienda 1, de 75 m², se vendió más cara que la 8, de 80 m². La superficie no lo explica, pero la distancia sí: las viviendas 4 y 1 están a 2.5 y 2 km del centro, y las 13 y 8, a 4.5 y 4 km. La ubicación pesa en el precio, y la regresión simple la ignora.</p>
+<p>El segundo problema es más sutil. En estos datos, las viviendas grandes tienden a estar más cerca del centro. Cuando comparamos una vivienda grande con una pequeña, también estamos comparando, en promedio, una céntrica con una periférica. La pendiente de 3.80 mezcla las dos cosas: lo que vale el metro cuadrado <strong>y</strong> parte de lo que vale estar en el centro. Si queremos saber cuánto vale un metro cuadrado más <strong>en la misma ubicación</strong>, necesitamos un modelo que tenga en cuenta las dos variables a la vez. Eso es la regresión lineal múltiple.</p>
+<h2 id="el-modelo-de-regresion-lineal-multiple">El modelo de regresión lineal múltiple<a class="headerlink" href="#el-modelo-de-regresion-lineal-multiple" title="Permanent link">&para;</a></h2>
+<p>La idea es la misma que en la regresión simple, con más de un predictor: el valor medio de <span class="arithmatex">\(Y\)</span> es una combinación lineal de varias variables, y cada observación se separa de ese valor medio por un error aleatorio.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: modelo de regresión lineal múltiple</p>
+<p>El modelo de regresión lineal múltiple con <span class="arithmatex">\(p\)</span> predictores supone que
+$<span class="arithmatex">\(Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_p X_p + \varepsilon,\)</span>$
+donde</p>
+<ul>
+<li><span class="arithmatex">\(Y\)</span> es la variable respuesta (el precio);</li>
+<li><span class="arithmatex">\(X_1, \ldots, X_p\)</span> son los <span class="arithmatex">\(p\)</span> <strong>predictores</strong> (superficie, antigüedad, distancia…);</li>
+<li><span class="arithmatex">\(\beta_0\)</span> es el <strong>intercepto</strong>: el valor esperado de <span class="arithmatex">\(Y\)</span> cuando todos los predictores valen 0;</li>
+<li><span class="arithmatex">\(\beta_j\)</span> es el <strong>coeficiente</strong> del predictor <span class="arithmatex">\(X_j\)</span>: el cambio esperado en <span class="arithmatex">\(Y\)</span> por cada unidad más de <span class="arithmatex">\(X_j\)</span>, <strong>manteniendo constantes los demás predictores</strong>;</li>
+<li><span class="arithmatex">\(\varepsilon\)</span> es el error aleatorio, con las mismas suposiciones que en la regresión simple: media cero, varianza constante <span class="arithmatex">\(\sigma^2\)</span>, distribución normal e independencia entre observaciones.</li>
+</ul>
+<p>Con una muestra se estiman <span class="arithmatex">\(\hat{\beta}_0, \hat{\beta}_1, \ldots, \hat{\beta}_p\)</span>, y la predicción es
+$<span class="arithmatex">\(\hat{Y} = \hat{\beta}_0 + \hat{\beta}_1 X_1 + \cdots + \hat{\beta}_p X_p.\)</span>$</p>
+</div>
+<p>Con un predictor, el modelo es una recta. Con dos, es un plano en el espacio de tres dimensiones (superficie, distancia, precio): cada vivienda es un punto, y el plano pasa entre ellos. Con más predictores ya no se puede dibujar, pero la idea es la misma.</p>
+<p>Las suposiciones sobre el error son las mismas de la regresión simple, y se comprueban igual, con los residuos; lo explica la página de <a href="../diagnostico/">diagnóstico</a>. Hay una condición nueva: ningún predictor puede ser una combinación lineal exacta de los demás (por ejemplo, la superficie en m² y la superficie en pies cuadrados a la vez). Si lo fuera, el modelo no podría repartir el efecto entre ellos. Cuando la relación entre predictores es fuerte pero no exacta, el modelo se puede estimar, pero con problemas; es la <a href="../multicolinealidad/">multicolinealidad</a>.</p>
+<h3 id="la-forma-matricial">La forma matricial<a class="headerlink" href="#la-forma-matricial" title="Permanent link">&para;</a></h3>
+<p>Con muchos predictores, escribir las fórmulas variable a variable se vuelve incómodo. Se escriben con matrices. Se colocan los datos en una tabla <span class="arithmatex">\(\mathbf{X}\)</span> con una fila por observación y una columna por predictor, más una primera columna de unos para el intercepto:</p>
+<div class="arithmatex">\[\mathbf{y} = \begin{pmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{pmatrix}, \qquad \mathbf{X} = \begin{pmatrix} 1 &amp; x_{11} &amp; \cdots &amp; x_{1p} \\ 1 &amp; x_{21} &amp; \cdots &amp; x_{2p} \\ \vdots &amp; \vdots &amp; &amp; \vdots \\ 1 &amp; x_{n1} &amp; \cdots &amp; x_{np} \end{pmatrix}, \qquad \boldsymbol{\beta} = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \vdots \\ \beta_p \end{pmatrix}.\]</div>
+<p>Aquí <span class="arithmatex">\(x_{ij}\)</span> es el valor del predictor <span class="arithmatex">\(j\)</span> en la observación <span class="arithmatex">\(i\)</span>. Las <span class="arithmatex">\(n\)</span> ecuaciones del modelo, una por observación, se resumen en una sola: <span class="arithmatex">\(\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}\)</span>. En el caso de las viviendas con superficie y distancia, la fila de la vivienda 1 es <span class="arithmatex">\((1,\ 75,\ 2.0)\)</span> y su ecuación dice <span class="arithmatex">\(211 = \beta_0 + 75\,\beta_1 + 2.0\,\beta_2 + \varepsilon_1\)</span>.</p>
+<h2 id="estimacion-por-minimos-cuadrados">Estimación por mínimos cuadrados<a class="headerlink" href="#estimacion-por-minimos-cuadrados" title="Permanent link">&para;</a></h2>
+<p>El criterio para elegir los coeficientes es el mismo que en la regresión simple: los que hacen más pequeña la suma de los errores al cuadrado.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: mínimos cuadrados en regresión múltiple</p>
+<p>Los estimadores de mínimos cuadrados son los valores <span class="arithmatex">\(\hat{\beta}_0, \ldots, \hat{\beta}_p\)</span> que minimizan
+$<span class="arithmatex">\(\sum_{i=1}^{n} \big(y_i - \beta_0 - \beta_1 x_{i1} - \cdots - \beta_p x_{ip}\big)^2.\)</span>$
+En forma matricial, la solución es
+$<span class="arithmatex">\(\hat{\boldsymbol{\beta}} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y},\)</span>$
+donde <span class="arithmatex">\(\mathbf{X}^\top\)</span> es la traspuesta de <span class="arithmatex">\(\mathbf{X}\)</span> y <span class="arithmatex">\((\cdot)^{-1}\)</span> la inversa de una matriz. Los residuos son <span class="arithmatex">\(e_i = y_i - \hat{y}_i\)</span>, y la varianza del error se estima con
+$<span class="arithmatex">\(s^2 = \frac{SS_\text{res}}{n - p - 1},\)</span>$
+porque se han estimado <span class="arithmatex">\(p + 1\)</span> parámetros.</p>
+</div>
+<p>No hace falta calcular esta fórmula a mano: lo hace cualquier programa. Lo importante es entender qué hace (minimizar la misma suma de cuadrados que en la regresión simple) y una consecuencia: la fórmula necesita que <span class="arithmatex">\(\mathbf{X}^\top \mathbf{X}\)</span> tenga inversa, y eso falla justo cuando un predictor es una combinación lineal exacta de otros. Los residuos siguen sumando cero, el <span class="arithmatex">\(R^2\)</span> se define igual, <span class="arithmatex">\(R^2 = 1 - SS_\text{res} / SS_\text{tot}\)</span>, y <span class="arithmatex">\(s\)</span> sigue midiendo, en unidades de <span class="arithmatex">\(Y\)</span>, cuánto se equivoca típicamente el modelo. Lo único que cambia son los grados de libertad, <span class="arithmatex">\(n - p - 1\)</span> en lugar de <span class="arithmatex">\(n - 2\)</span> (con <span class="arithmatex">\(p = 1\)</span> vuelve a ser <span class="arithmatex">\(n - 2\)</span>).</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: precio, superficie y distancia</p>
+<p>Con las 15 viviendas, el modelo con superficie y distancia estimado por mínimos cuadrados es
+$<span class="arithmatex">\(\widehat{\text{Precio}} = 38.20 + 2.671 \times \text{Superficie} - 12.59 \times \text{Distancia}.\)</span>$</p>
+<ul>
+<li><strong>Ajuste:</strong> <span class="arithmatex">\(SS_\text{res} = 417.3\)</span> y <span class="arithmatex">\(SS_\text{tot} = 28\,263\)</span>, así que <span class="arithmatex">\(R^2 = 1 - 417.3 / 28\,263 = 0.985\)</span>. Con <span class="arithmatex">\(n - p - 1 = 15 - 2 - 1 = 12\)</span> grados de libertad, <span class="arithmatex">\(s = \sqrt{417.3 / 12} = 5.90\)</span> miles de €.</li>
+<li><strong>Comparación con la regresión simple:</strong> el <span class="arithmatex">\(R^2\)</span> sube de 0.885 a 0.985 y el error típico baja de 15.8 a 5.9 miles de €. Añadir la distancia ha dividido entre casi tres el error de tasación.</li>
+<li><strong>Viviendas 4 y 13:</strong> el modelo predice <span class="arithmatex">\(38.20 + 2.671 \cdot 85 - 12.59 \cdot 2.5 = 233.7\)</span> para la 4 y <span class="arithmatex">\(38.20 + 2.671 \cdot 82 - 12.59 \cdot 4.5 = 200.5\)</span> para la 13. Los precios reales son 238 y 194: la distancia explica la mayor parte de la diferencia que la superficie no explicaba.</li>
+</ul>
+</div>
+<h2 id="interpretar-los-coeficientes-manteniendo-constantes-las-demas">Interpretar los coeficientes: "manteniendo constantes las demás"<a class="headerlink" href="#interpretar-los-coeficientes-manteniendo-constantes-las-demas" title="Permanent link">&para;</a></h2>
+<p>En el modelo anterior, el coeficiente de la superficie es 2.671: <strong>dos viviendas a la misma distancia del centro</strong> que se diferencien en un metro cuadrado se diferencian, en promedio, en 2671 € de precio. El coeficiente de la distancia es <span class="arithmatex">\(-12.59\)</span>: <strong>dos viviendas de la misma superficie</strong> que se diferencien en un kilómetro de distancia al centro se diferencian, en promedio, en 12 590 €, a favor de la más céntrica.</p>
+<p>Esa coletilla, "manteniendo constantes las demás variables" (en latín, <em>ceteris paribus</em>), es la diferencia esencial con la regresión simple. Cada coeficiente mide la relación de su variable con <span class="arithmatex">\(Y\)</span> <strong>descontando</strong> la parte que se puede atribuir a los otros predictores del modelo. Por eso decimos que el modelo <strong>controla</strong> por esas variables.</p>
+<h3 id="por-que-cambia-un-coeficiente-al-anadir-variables">Por qué cambia un coeficiente al añadir variables<a class="headerlink" href="#por-que-cambia-un-coeficiente-al-anadir-variables" title="Permanent link">&para;</a></h3>
+<p>En la regresión simple, la pendiente de la superficie era 3.80; en la múltiple, 2.671. No es un error: las dos responden a preguntas distintas. La simple responde a "¿cuánto más caras son, en promedio, las viviendas con un metro cuadrado más?", y la múltiple, a "¿cuánto más caras son, en promedio, las viviendas con un metro cuadrado más <strong>a la misma distancia del centro</strong>?".</p>
+<p>La relación exacta entre las dos se ve con una regresión auxiliar de la distancia sobre la superficie, que da una pendiente de <span class="arithmatex">\(-0.0893\)</span>: cada metro cuadrado más se asocia con 0.0893 km menos de distancia al centro. Entonces</p>
+<div class="arithmatex">\[\underbrace{3.795}_{\text{simple}} = \underbrace{2.671}_{\text{efecto de la superficie}} + \underbrace{(-12.59)}_{\text{efecto de la distancia}} \times \underbrace{(-0.0893)}_{\text{relación distancia–superficie}} = 2.671 + 1.124.\]</div>
+<p>La pendiente simple suma el efecto propio de la superficie y un efecto <strong>prestado</strong> de la distancia: las viviendas grandes son, en promedio, más céntricas, y parte de su precio se debe a eso. La regresión múltiple separa las dos partes. A la variable que falta en un modelo y distorsiona los coeficientes de las que sí están se le llama <strong>variable omitida</strong>; es la misma idea que la variable de confusión de la <a href="../../05-regresion-lineal-simple/correlacion/#correlacion-no-implica-causalidad">correlación</a>.</p>
+<p>En general, el coeficiente de <span class="arithmatex">\(X_1\)</span> en la regresión simple es igual a su coeficiente en la múltiple <strong>más</strong> el coeficiente de la variable omitida multiplicado por la relación entre las dos. El coeficiente cambia poco si la variable omitida apenas influye en <span class="arithmatex">\(Y\)</span> o apenas se relaciona con <span class="arithmatex">\(X_1\)</span>, y cambia mucho si las dos cosas son fuertes. Incluso puede <strong>cambiar de signo</strong>: si el efecto prestado es mayor que el propio y va en sentido contrario.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: ¿las viviendas antiguas valen más?</p>
+<p>Una regresión simple del precio sobre la antigüedad da una pendiente de <span class="arithmatex">\(+6.75\)</span>: cada año más de antigüedad se asocia con 6750 € <strong>más</strong> de precio. Va contra la intuición: un piso viejo suele necesitar reformas y debería valer menos.</p>
+<p>La explicación está en la distancia. En esta ciudad, las viviendas antiguas están en el centro y las nuevas en la periferia: la correlación entre antigüedad y distancia es <span class="arithmatex">\(-0.989\)</span>, casi perfecta. Una regresión de la distancia sobre la antigüedad da una pendiente de <span class="arithmatex">\(-0.261\)</span> km por año, y con el efecto de la distancia de <span class="arithmatex">\(-12.59\)</span> por km, el efecto prestado es aproximadamente <span class="arithmatex">\((-12.59) \cdot (-0.261) = +3.28\)</span> miles de € por año.</p>
+<ul>
+<li>Con superficie y antigüedad (sin distancia), el coeficiente de la antigüedad es <span class="arithmatex">\(+3.31\)</span>, casi exactamente el efecto prestado: la antigüedad está haciendo de <strong>sustituta</strong> de la distancia.</li>
+<li>Con las tres variables, el coeficiente de la antigüedad baja a <span class="arithmatex">\(+2.02\)</span>, con un intervalo de confianza al 95 % de <span class="arithmatex">\([-2.2,\ 6.2]\)</span>, que incluye valores negativos.</li>
+</ul>
+<p>La conclusión no es "la antigüedad sube el precio", sino "la antigüedad va unida a estar en el centro, y estar en el centro sube el precio". Si el efecto propio de la antigüedad, a igual distancia, fuera negativo, el coeficiente habría cambiado de signo al controlar por la distancia. Con estos datos no podemos saberlo: antigüedad y distancia se mueven tan juntas que el modelo no consigue separar sus efectos. Ese problema es la <a href="../multicolinealidad/">multicolinealidad</a>.</p>
+</div>
+<h2 id="predecir">Predecir<a class="headerlink" href="#predecir" title="Permanent link">&para;</a></h2>
+<p>Predecir con un modelo múltiple es sustituir los valores de todos los predictores. Para una vivienda de 90 m² a 3 km del centro,</p>
+<div class="arithmatex">\[\widehat{\text{Precio}} = 38.20 + 2.671 \cdot 90 - 12.59 \cdot 3 = 240.8 \text{ miles de €}.\]</div>
+<p>Como en la regresión simple, esa cifra es una estimación del precio <strong>medio</strong> de las viviendas con esas características. Los programas dan dos intervalos alrededor de ella. El <strong>intervalo de confianza para la media</strong>, aquí <span class="arithmatex">\([237.4,\ 244.2]\)</span>, dice dónde está el precio medio de todas las viviendas de 90 m² a 3 km. El <strong>intervalo de predicción</strong>, aquí <span class="arithmatex">\([227.5,\ 254.1]\)</span>, dice dónde esperamos el precio de <strong>una</strong> vivienda concreta; es más ancho porque suma la incertidumbre sobre la media y la variabilidad de cada vivienda alrededor de ella (el error <span class="arithmatex">\(\varepsilon\)</span>). Para tasar un piso, el que interesa es el intervalo de predicción.</p>
+<p>La advertencia sobre la extrapolación también cambia. En la regresión simple bastaba con mirar si <span class="arithmatex">\(x\)</span> estaba dentro del rango observado. Con varios predictores hay que mirar la <strong>combinación</strong>: una vivienda de 90 m², 5 años y 1.5 km del centro tiene cada valor dentro del rango de los datos, pero en los datos no hay ninguna vivienda nueva en el centro. Predecirla es una extrapolación escondida; la página de <a href="../multicolinealidad/">multicolinealidad</a> muestra lo que pasa en ese caso.</p>
+<h2 id="predictores-categoricos-variables-indicadoras">Predictores categóricos: variables indicadoras<a class="headerlink" href="#predictores-categoricos-variables-indicadoras" title="Permanent link">&para;</a></h2>
+<p>Las agencias suelen clasificar las viviendas por zonas. Supongamos que esta divide la ciudad en tres: <strong>centro</strong> (hasta 2.2 km), <strong>intermedia</strong> (de 2.5 a 3.8 km) y <strong>periferia</strong> (4 km o más), con cinco viviendas en cada zona. ¿Cómo se mete una variable con tres categorías en una regresión?</p>
+<p>Con dos categorías bastaba una variable indicadora (0 o 1). Con tres, se usan <strong>dos</strong> indicadoras: <span class="arithmatex">\(I_\text{intermedia} = 1\)</span> si la vivienda está en la zona intermedia y 0 si no, e <span class="arithmatex">\(I_\text{periferia} = 1\)</span> si está en la periferia y 0 si no. Una vivienda del centro tiene las dos a 0. El centro es la <strong>categoría de referencia</strong>, y los coeficientes de las indicadoras miden la diferencia de cada zona con ella.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: variables indicadoras (<em>dummies</em>)</p>
+<p>Una variable categórica con <span class="arithmatex">\(k\)</span> categorías se incluye en la regresión con <span class="arithmatex">\(k - 1\)</span> <strong>variables indicadoras</strong>, una por categoría salvo una, la <strong>categoría de referencia</strong>. La indicadora de la categoría <span class="arithmatex">\(c\)</span> vale 1 si la observación es de esa categoría y 0 si no. El coeficiente de cada indicadora es la diferencia esperada en <span class="arithmatex">\(Y\)</span> entre esa categoría y la de referencia, manteniendo constantes los demás predictores.</p>
+</div>
+<p>¿Por qué <span class="arithmatex">\(k - 1\)</span> y no <span class="arithmatex">\(k\)</span>? Porque si se incluyen las tres indicadoras, en cada vivienda suman exactamente 1, que es la columna de unos del intercepto: una combinación lineal exacta, y <span class="arithmatex">\(\mathbf{X}^\top\mathbf{X}\)</span> no tiene inversa. Es la llamada <strong>trampa de las variables indicadoras</strong>. La categoría que se deja fuera no se pierde: es la referencia, y su nivel queda recogido en el intercepto.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: precio, superficie y zona</p>
+<p>El modelo con la superficie y la zona, con el centro como referencia, es
+$<span class="arithmatex">\(\widehat{\text{Precio}} = -13.11 + 2.970 \times \text{Superficie} - 13.80 \times I_\text{intermedia} - 36.86 \times I_\text{periferia}.\)</span>$</p>
+<ul>
+<li><strong>Zona intermedia:</strong> a igual superficie, una vivienda de la zona intermedia vale, en promedio, 13 800 € menos que una del centro.</li>
+<li><strong>Periferia:</strong> a igual superficie, vale 36 860 € menos que una del centro. La diferencia entre periferia e intermedia, que no aparece directamente, es <span class="arithmatex">\(-36.86 - (-13.80) = -23.06\)</span>.</li>
+<li><strong>Predicción</strong> para 90 m²: en el centro, <span class="arithmatex">\(-13.11 + 2.970 \cdot 90 = 254.2\)</span>; en la zona intermedia, <span class="arithmatex">\(254.2 - 13.8 = 240.4\)</span>; en la periferia, <span class="arithmatex">\(254.2 - 36.9 = 217.3\)</span> miles de €.</li>
+</ul>
+<p>Compara con las medias por zona sin tener en cuenta la superficie: 273.2 en el centro, 239.2 en la zona intermedia y 190.6 en la periferia, es decir, la periferia está 82.6 mil € por debajo del centro. En el modelo, la diferencia es de 36.9 mil €. El resto se debe a que las viviendas del centro son más grandes (96.4 m² de media, frente a 81.0 en la periferia). Otra vez, controlar por una variable cambia la lectura.</p>
+</div>
+<p>Si se elige otra categoría de referencia, cambian los coeficientes, pero no las predicciones: el modelo es el mismo, contado desde otro punto de partida. Conviene elegir como referencia la categoría con la que tenga sentido comparar (la más habitual, o la situación de partida).</p>
+<h3 id="interacciones-cuando-el-efecto-depende-de-otra-variable">Interacciones: cuando el efecto depende de otra variable<a class="headerlink" href="#interacciones-cuando-el-efecto-depende-de-otra-variable" title="Permanent link">&para;</a></h3>
+<p>El modelo anterior supone que un metro cuadrado vale lo mismo en todas las zonas: las tres zonas tienen la misma pendiente y solo cambia el nivel. Pero podría ser que en el centro el metro cuadrado se pagara más caro. Para permitirlo se añade una <strong>interacción</strong>, el producto de las dos variables. Con una indicadora <span class="arithmatex">\(I_\text{centro}\)</span> (1 si la vivienda está en el centro):</p>
+<div class="arithmatex">\[Y = \beta_0 + \beta_1 \,\text{Superficie} + \beta_2 \, I_\text{centro} + \beta_3 \, (\text{Superficie} \times I_\text{centro}) + \varepsilon.\]</div>
+<p>Fuera del centro, <span class="arithmatex">\(I_\text{centro} = 0\)</span> y la pendiente de la superficie es <span class="arithmatex">\(\beta_1\)</span>. En el centro, la pendiente es <span class="arithmatex">\(\beta_1 + \beta_3\)</span>. El coeficiente de la interacción, <span class="arithmatex">\(\beta_3\)</span>, es la <strong>diferencia de pendientes</strong>. Con las 15 viviendas sale <span class="arithmatex">\(\hat{\beta}_1 = 3.63\)</span> y <span class="arithmatex">\(\hat{\beta}_3 = -0.50\)</span>: en el centro, cada metro cuadrado se asociaría con 3.13 mil €, y fuera, con 3.63. Pero el p-valor de la interacción es 0.52: con cinco viviendas en el centro, los datos no dan ninguna evidencia de que las pendientes sean distintas, y nos quedamos con el modelo sin interacción. Las interacciones son útiles cuando hay motivos para pensar que el efecto de una variable depende de otra y datos suficientes para estimarlo.</p>
+<h2 id="leer-el-summary-de-statsmodels">Leer el summary de statsmodels<a class="headerlink" href="#leer-el-summary-de-statsmodels" title="Permanent link">&para;</a></h2>
+<p>En la práctica, el modelo se estima con un programa y se lee su resumen. Este es el <code>summary()</code> de statsmodels para el modelo con las tres variables numéricas, <code>precio ~ superficie + antiguedad + distancia</code> (versión abreviada, que se obtiene con <code>summary(slim=True)</code>):</p>
+<div class="highlight"><pre><span></span><code>                            OLS Regression Results
+==============================================================================
+Dep. Variable:                 precio   R-squared:                       0.987
+Model:                            OLS   Adj. R-squared:                  0.983
+No. Observations:                  15   F-statistic:                     270.3
+Covariance Type:            nonrobust   Prob (F-statistic):           1.39e-10
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept    -16.3259     54.995     -0.297      0.772    -137.368     104.717
+superficie     2.6692      0.188     14.228      0.000       2.256       3.082
+antiguedad     2.0208      1.897      1.065      0.310      -2.155       6.197
+distancia     -5.0115      7.248     -0.691      0.504     -20.965      10.942
+==============================================================================
+
+Notes:
+[2] The condition number is large, 3.33e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.
+</code></pre></div>
+<p>Se lee por partes.</p>
+<ul>
+<li><strong>Cabecera izquierda.</strong> La variable respuesta (<code>precio</code>), el método (mínimos cuadrados ordinarios, OLS) y el número de observaciones (15).</li>
+<li><strong><code>R-squared</code>.</strong> El <span class="arithmatex">\(R^2\)</span> de siempre: el modelo explica el 98.7 % de la variabilidad del precio.</li>
+<li><strong><code>Adj. R-squared</code>.</strong> El <span class="arithmatex">\(R^2\)</span> ajustado, que penaliza el número de predictores. El <span class="arithmatex">\(R^2\)</span> nunca baja al añadir una variable, aunque no sirva para nada; el ajustado sí puede bajar. Se usa para comparar modelos con distinto número de variables, y se explica en <a href="../seleccion/">selección de variables</a>.</li>
+<li><strong><code>F-statistic</code> y <code>Prob (F-statistic)</code>.</strong> El contraste global del modelo: <span class="arithmatex">\(H_0\)</span> es que <strong>todos</strong> los coeficientes salvo el intercepto son cero (<span class="arithmatex">\(\beta_1 = \beta_2 = \beta_3 = 0\)</span>), es decir, que ninguna variable sirve para predecir el precio. Con <span class="arithmatex">\(F = 270.3\)</span> y un p-valor de <span class="arithmatex">\(1.4 \times 10^{-10}\)</span>, se rechaza con claridad.</li>
+<li><strong>Tabla de coeficientes.</strong> Una fila por parámetro. <code>coef</code> es la estimación <span class="arithmatex">\(\hat{\beta}_j\)</span>; <code>std err</code>, su error estándar; <code>t</code>, el cociente <span class="arithmatex">\(\hat{\beta}_j / SE(\hat{\beta}_j)\)</span>; <code>P&gt;|t|</code>, el p-valor del contraste <span class="arithmatex">\(H_0: \beta_j = 0\)</span> (que esa variable no aporta nada <strong>una vez que están las demás</strong>), con una <span class="arithmatex">\(t\)</span> de <span class="arithmatex">\(n - p - 1 = 11\)</span> grados de libertad; y las dos últimas columnas, el intervalo de confianza al 95 %, <span class="arithmatex">\(\hat{\beta}_j \pm t_{11,\,0.975} \cdot SE(\hat{\beta}_j)\)</span>, con <span class="arithmatex">\(t_{11,\,0.975} = 2.201\)</span>. Por ejemplo, para la superficie, <span class="arithmatex">\(2.669 \pm 2.201 \cdot 0.188 = [2.256,\ 3.082]\)</span>.</li>
+<li><strong>Notas.</strong> La nota [2] avisa de que el número de condición es grande, un posible síntoma de multicolinealidad.</li>
+</ul>
+<p>La lectura de la tabla tiene una sorpresa. La superficie es claramente significativa (<span class="arithmatex">\(t = 14.2\)</span>), pero la antigüedad y la distancia no lo son (p-valores de 0.31 y 0.50), aunque, por separado, las dos tienen una relación fortísima con el precio y el contraste F dice que el modelo en conjunto es muy significativo. Y el coeficiente de la distancia ha pasado de <span class="arithmatex">\(-12.59\)</span>, con un error estándar de 1.40, en el modelo sin antigüedad, a <span class="arithmatex">\(-5.01\)</span>, con un error estándar de 7.25. No es que la distancia haya dejado de importar: es que el modelo no sabe si atribuir el efecto a la distancia o a la antigüedad, que van casi juntas. La <a href="../multicolinealidad/">página siguiente</a> explica qué está pasando y qué hacer.</p>
+<div class="admonition warning">
+<p class="admonition-title">Errores frecuentes</p>
+<ul>
+<li><strong>Olvidar el "manteniendo constantes las demás".</strong> El coeficiente de la superficie en el modelo múltiple (2.67) no es el mismo que en el simple (3.80), y no se interpreta igual.</li>
+<li><strong>Comparar coeficientes por su tamaño.</strong> El coeficiente de la distancia (<span class="arithmatex">\(-12.6\)</span>) es mayor en valor absoluto que el de la superficie (2.7), pero uno es por kilómetro y el otro por metro cuadrado. Las magnitudes solo se comparan en las mismas unidades (por ejemplo, estandarizando las variables).</li>
+<li><strong>Leer un coeficiente como causal.</strong> El modelo controla por las variables incluidas, no por las que faltan. La antigüedad tiene coeficiente positivo porque va unida a la ubicación, no porque envejecer suba el precio.</li>
+<li><strong>Concluir que una variable no influye porque su p-valor es alto</strong> en un modelo con predictores muy relacionados entre sí: puede ser multicolinealidad.</li>
+<li><strong>Meter las <span class="arithmatex">\(k\)</span> indicadoras de una variable con <span class="arithmatex">\(k\)</span> categorías.</strong> Se incluyen <span class="arithmatex">\(k - 1\)</span>; la que falta es la referencia.</li>
+<li><strong>Codificar una variable categórica con números (1, 2, 3) y tratarla como cantidad.</strong> Impone que el salto entre categorías sea siempre el mismo; con indicadoras, cada categoría tiene su propio coeficiente.</li>
+</ul>
+</div>
+<h2 id="en-python">En Python<a class="headerlink" href="#en-python" title="Permanent link">&para;</a></h2>
+<p>El modelo con statsmodels, la fórmula matricial a mano y las predicciones con sus intervalos:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smf</span>
+
+<span class="n">viviendas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"superficie"</span><span class="p">:</span> <span class="p">[</span><span class="mi">75</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">92</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">89</span><span class="p">],</span>   <span class="c1"># m²</span>
+    <span class="s2">"antiguedad"</span><span class="p">:</span> <span class="p">[</span><span class="mi">19</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span>          <span class="c1"># años</span>
+    <span class="s2">"distancia"</span><span class="p">:</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">],</span>  <span class="c1"># km</span>
+    <span class="s2">"precio"</span><span class="p">:</span> <span class="p">[</span><span class="mi">211</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">293</span><span class="p">,</span> <span class="mi">238</span><span class="p">,</span> <span class="mi">229</span><span class="p">,</span> <span class="mi">157</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">197</span><span class="p">,</span> <span class="mi">234</span><span class="p">,</span> <span class="mi">247</span><span class="p">,</span> <span class="mi">176</span><span class="p">,</span> <span class="mi">295</span><span class="p">,</span> <span class="mi">194</span><span class="p">,</span> <span class="mi">251</span><span class="p">,</span> <span class="mi">223</span><span class="p">],</span>    <span class="c1"># miles €</span>
+<span class="p">})</span>
+
+<span class="c1"># Regresión simple y múltiple</span>
+<span class="n">simple</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">"precio ~ superficie"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">viviendas</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">multiple</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">"precio ~ superficie + distancia"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">viviendas</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Simple:  "</span><span class="p">,</span> <span class="n">simple</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="s2">"R² ="</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">simple</span><span class="o">.</span><span class="n">rsquared</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>Simple:   {'Intercept': -103.385, 'superficie': 3.795} R² = 0.885
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"Múltiple:"</span><span class="p">,</span> <span class="n">multiple</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="s2">"R² ="</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">multiple</span><span class="o">.</span><span class="n">rsquared</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>Múltiple: {'Intercept': 38.199, 'superficie': 2.671, 'distancia': -12.588} R² = 0.985
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"Error típico s:"</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">multiple</span><span class="o">.</span><span class="n">scale</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>                  <span class="c1"># 5.9</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>Error típico s: 5.9
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="c1"># La fórmula matricial: (X'X)^(-1) X'y</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">viviendas</span><span class="p">)),</span> <span class="n">viviendas</span><span class="p">[</span><span class="s2">"superficie"</span><span class="p">],</span> <span class="n">viviendas</span><span class="p">[</span><span class="s2">"distancia"</span><span class="p">]])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">viviendas</span><span class="p">[</span><span class="s2">"precio"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"A mano:  "</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>A mano:   [ 38.199   2.671 -12.588]
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Por qué cambia el coeficiente de la superficie: 3.795 = 2.671 + (-12.59)(-0.0893)</span>
+<span class="n">auxiliar</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">"distancia ~ superficie"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">viviendas</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">"superficie"</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Descomposición:"</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">multiple</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">"superficie"</span><span class="p">]</span> <span class="o">+</span> <span class="n">multiple</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">"distancia"</span><span class="p">]</span> <span class="o">*</span> <span class="n">auxiliar</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>Descomposición: 3.795
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="c1"># La antigüedad, sola y acompañada</span>
+<span class="k">for</span> <span class="n">formula</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"precio ~ antiguedad"</span><span class="p">,</span> <span class="s2">"precio ~ superficie + antiguedad"</span><span class="p">,</span>
+                <span class="s2">"precio ~ superficie + antiguedad + distancia"</span><span class="p">]:</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">viviendas</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">formula</span><span class="si">:</span><span class="s2">45s</span><span class="si">}</span><span class="s2"> coef. antigüedad = </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">'antiguedad'</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>precio ~ antiguedad                           coef. antigüedad = 6.75
+precio ~ superficie + antiguedad              coef. antigüedad = 3.31
+precio ~ superficie + antiguedad + distancia  coef. antigüedad = 2.02
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Predicción para 90 m² a 3 km, con sus dos intervalos</span>
+<span class="n">nueva</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"superficie"</span><span class="p">:</span> <span class="p">[</span><span class="mi">90</span><span class="p">],</span> <span class="s2">"distancia"</span><span class="p">:</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">]})</span>
+<span class="n">pred</span> <span class="o">=</span> <span class="n">multiple</span><span class="o">.</span><span class="n">get_prediction</span><span class="p">(</span><span class="n">nueva</span><span class="p">)</span><span class="o">.</span><span class="n">summary_frame</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pred</span><span class="p">[[</span><span class="s2">"mean"</span><span class="p">,</span> <span class="s2">"mean_ci_lower"</span><span class="p">,</span> <span class="s2">"mean_ci_upper"</span><span class="p">,</span> <span class="s2">"obs_ci_lower"</span><span class="p">,</span> <span class="s2">"obs_ci_upper"</span><span class="p">]]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>    mean  mean_ci_lower  mean_ci_upper  obs_ci_lower  obs_ci_upper
+0  240.8          237.4          244.2         227.5         254.1
+</code></pre></div>
+</div>
+<p>El resumen completo del modelo con las tres variables. Sin <code>slim=True</code>, statsmodels añade la fecha, el AIC y el BIC y unos contrastes sobre los residuos:</p>
+<div class="highlight"><pre><span></span><code><span class="n">completo</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">"precio ~ superficie + antiguedad + distancia"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">viviendas</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">completo</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                 precio   R-squared:                       0.987
+Model:                            OLS   Adj. R-squared:                  0.983
+No. Observations:                  15   F-statistic:                     270.3
+Covariance Type:            nonrobust   Prob (F-statistic):           1.39e-10
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept    -16.3259     54.995     -0.297      0.772    -137.368     104.717
+superficie     2.6692      0.188     14.228      0.000       2.256       3.082
+antiguedad     2.0208      1.897      1.065      0.310      -2.155       6.197
+distancia     -5.0115      7.248     -0.691      0.504     -20.965      10.942
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 3.33e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.
+</code></pre></div>
+</div>
+<p>Variables categóricas e interacciones. En una fórmula, <code>C(zona)</code> crea las indicadoras (la referencia es la primera categoría por orden alfabético; con <code>C(zona, Treatment("periferia"))</code> se elige otra) y <code>superficie * centro</code> incluye las dos variables y su producto:</p>
+<div class="highlight"><pre><span></span><code><span class="n">viviendas</span><span class="p">[</span><span class="s2">"zona"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"centro"</span><span class="p">,</span> <span class="s2">"intermedia"</span><span class="p">,</span> <span class="s2">"centro"</span><span class="p">,</span> <span class="s2">"intermedia"</span><span class="p">,</span> <span class="s2">"periferia"</span><span class="p">,</span>
+                     <span class="s2">"periferia"</span><span class="p">,</span> <span class="s2">"centro"</span><span class="p">,</span> <span class="s2">"periferia"</span><span class="p">,</span> <span class="s2">"intermedia"</span><span class="p">,</span> <span class="s2">"centro"</span><span class="p">,</span>
+                     <span class="s2">"periferia"</span><span class="p">,</span> <span class="s2">"centro"</span><span class="p">,</span> <span class="s2">"periferia"</span><span class="p">,</span> <span class="s2">"intermedia"</span><span class="p">,</span> <span class="s2">"intermedia"</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">viviendas</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"zona"</span><span class="p">)[[</span><span class="s2">"precio"</span><span class="p">,</span> <span class="s2">"superficie"</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>            precio  superficie
+zona                          
+centro       273.2        96.4
+intermedia   239.2        89.6
+periferia    190.6        81.0
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">con_zona</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">"precio ~ superficie + C(zona)"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">viviendas</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">con_zona</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>Intercept               -13.11
+C(zona)[T.intermedia]   -13.80
+C(zona)[T.periferia]    -36.86
+superficie                2.97
+dtype: float64
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">por_zona</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"superficie"</span><span class="p">:</span> <span class="p">[</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">],</span> <span class="s2">"zona"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"centro"</span><span class="p">,</span> <span class="s2">"intermedia"</span><span class="p">,</span> <span class="s2">"periferia"</span><span class="p">]})</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Predicciones para 90 m²:"</span><span class="p">,</span> <span class="n">con_zona</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">por_zona</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>Predicciones para 90 m²: [254.2, 240.4, 217.3]
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Interacción: ¿vale distinto el metro cuadrado en el centro?</span>
+<span class="n">viviendas</span><span class="p">[</span><span class="s2">"centro"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">viviendas</span><span class="p">[</span><span class="s2">"zona"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"centro"</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">interaccion</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">"precio ~ superficie * centro"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">viviendas</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"coef"</span><span class="p">:</span> <span class="n">interaccion</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="s2">"p-valor"</span><span class="p">:</span> <span class="n">interaccion</span><span class="o">.</span><span class="n">pvalues</span><span class="p">})</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>                     coef  p-valor
+Intercept         -94.414    0.076
+superficie          3.626    0.000
+centro             66.319    0.351
+superficie:centro  -0.501    0.518
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lo esencial</p>
+<ul>
+<li>El modelo de regresión lineal múltiple es <span class="arithmatex">\(Y = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p + \varepsilon\)</span>, con las mismas suposiciones sobre el error que el simple. Se estima por mínimos cuadrados, <span class="arithmatex">\(\hat{\boldsymbol{\beta}} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}\)</span>, y <span class="arithmatex">\(s^2 = SS_\text{res} / (n - p - 1)\)</span>.</li>
+<li>Cada coeficiente <span class="arithmatex">\(\beta_j\)</span> es el cambio medio de <span class="arithmatex">\(Y\)</span> por unidad de <span class="arithmatex">\(X_j\)</span> <strong>manteniendo constantes los demás predictores</strong>. Por eso puede ser muy distinto de la pendiente de la regresión simple, e incluso cambiar de signo, cuando <span class="arithmatex">\(X_j\)</span> está relacionado con otras variables que influyen en <span class="arithmatex">\(Y\)</span>.</li>
+<li>En las viviendas, el metro cuadrado pasa de 3.80 mil € (simple) a 2.67 mil € a igual distancia; la antigüedad tiene coeficiente positivo porque hace de sustituta de la ubicación.</li>
+<li>Una variable categórica con <span class="arithmatex">\(k\)</span> categorías entra con <span class="arithmatex">\(k - 1\)</span> indicadoras; cada coeficiente es la diferencia con la categoría de referencia. Una interacción permite que la pendiente de una variable dependa de otra.</li>
+<li>En el <code>summary()</code>, el contraste F dice si el modelo sirve en conjunto, y cada <code>P&gt;|t|</code> dice si una variable aporta algo <strong>además</strong> de las demás.</li>
+</ul>
+</div>
+<h2 id="ejercicios">Ejercicios<a class="headerlink" href="#ejercicios" title="Permanent link">&para;</a></h2>
+<p><strong>1.</strong> Una cadena de tiendas estima <span class="arithmatex">\(\widehat{\text{Ventas}} = 120 + 2.5 \times \text{Publicidad} - 8 \times \text{Precio}\)</span>, con las ventas y la publicidad en miles de € y el precio en €. Interpreta los dos coeficientes y predice las ventas de una tienda con 20 mil € de publicidad y un precio de 10 €.</p>
+<details class="success">
+<summary>Solución</summary>
+<ul>
+<li><strong>Publicidad:</strong> con el mismo precio, cada mil € más de publicidad se asocian, en promedio, con 2.5 mil € más de ventas.</li>
+<li><strong>Precio:</strong> con la misma publicidad, cada euro más de precio se asocia, en promedio, con 8 mil € menos de ventas.</li>
+<li><strong>Predicción:</strong> <span class="arithmatex">\(120 + 2.5 \cdot 20 - 8 \cdot 10 = 120 + 50 - 80 = 90\)</span> mil €.</li>
+</ul>
+<p>El intercepto (120) sería la venta con publicidad 0 y precio 0, una situación sin sentido práctico.</p>
+</details>
+<p><strong>2.</strong> En las viviendas, la regresión simple del precio sobre la distancia da una pendiente de <span class="arithmatex">\(-25.68\)</span>, y la múltiple con superficie y distancia, <span class="arithmatex">\(-12.59\)</span> para la distancia y <span class="arithmatex">\(2.671\)</span> para la superficie. La regresión auxiliar de la superficie sobre la distancia tiene pendiente <span class="arithmatex">\(-4.902\)</span>. Comprueba la descomposición del coeficiente simple y explica por qué la pendiente simple es el doble de la múltiple.</p>
+<details class="success">
+<summary>Solución</summary>
+<p>$<span class="arithmatex">\(-12.59 + 2.671 \cdot (-4.902) = -12.59 - 13.09 = -25.68.\)</span>$
+La pendiente simple suma el efecto propio de la distancia (<span class="arithmatex">\(-12.59\)</span> mil € por km a igual superficie) y un efecto prestado de la superficie: cada kilómetro más de distancia va con 4.9 m² menos de vivienda, y cada metro cuadrado vale 2.671 mil €, así que <span class="arithmatex">\(-13.09\)</span> mil € más. En la regresión simple, alejarse del centro "cuesta" el doble porque las viviendas lejanas, además de estar lejos, son más pequeñas.</p>
+</details>
+<p><strong>3.</strong> Con el modelo de la zona, <span class="arithmatex">\(\widehat{\text{Precio}} = -13.11 + 2.970 \times \text{Superficie} - 13.80 \times I_\text{intermedia} - 36.86 \times I_\text{periferia}\)</span>, ¿qué precio predice para una vivienda de 80 m² en la periferia? Si se cambia la referencia a la periferia, ¿cuáles serán los coeficientes de las indicadoras del centro y de la zona intermedia?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>Predicción: <span class="arithmatex">\(-13.11 + 2.970 \cdot 80 - 36.86 = -13.11 + 237.60 - 36.86 = 187.6\)</span> mil €.</p>
+<p>Con la periferia como referencia, cada coeficiente es la diferencia con la periferia: el centro está <span class="arithmatex">\(0 - (-36.86) = +36.86\)</span> por encima, y la zona intermedia, <span class="arithmatex">\(-13.80 - (-36.86) = +23.06\)</span>. El coeficiente de la superficie (2.970) no cambia, y el intercepto pasa a ser <span class="arithmatex">\(-13.11 - 36.86 = -49.97\)</span>. Las predicciones son exactamente las mismas.</p>
+</details>
+<p><strong>4.</strong> Un modelo de salarios (miles de €) es <span class="arithmatex">\(\widehat{\text{Salario}} = 22 + 1.2 \times \text{Experiencia} + 3 \times \text{Máster} + 0.8 \times (\text{Experiencia} \times \text{Máster})\)</span>, con la experiencia en años y <span class="arithmatex">\(\text{Máster} = 1\)</span> si la persona tiene un máster. ¿Cuánto aumenta el salario por cada año de experiencia para quien no tiene máster? ¿Y para quien lo tiene? ¿Qué diferencia salarial predice el modelo entre dos personas con 10 años de experiencia, una con máster y otra sin él?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>Sin máster (<span class="arithmatex">\(\text{Máster} = 0\)</span>), la pendiente de la experiencia es 1.2 mil € por año. Con máster, <span class="arithmatex">\(1.2 + 0.8 = 2\)</span> mil € por año: la interacción dice que la experiencia se paga más con máster.</p>
+<p>Con 10 años: sin máster, <span class="arithmatex">\(22 + 12 = 34\)</span>; con máster, <span class="arithmatex">\(22 + 12 + 3 + 8 = 45\)</span>. La diferencia es 11 mil €, que es <span class="arithmatex">\(3 + 0.8 \cdot 10\)</span>: con interacción, la diferencia entre los grupos depende de la experiencia. Con 0 años sería solo 3 mil €.</p>
+</details>
+<p><strong>5.</strong> En el <code>summary()</code> del modelo con las tres variables, el coeficiente de la antigüedad es 2.0208 con un error estándar de 1.897. Calcula el estadístico <span class="arithmatex">\(t\)</span>, di cuántos grados de libertad tiene y calcula el intervalo de confianza al 95 % (<span class="arithmatex">\(t_{11,\,0.975} = 2.201\)</span>). ¿Qué concluyes?</p>
+<details class="success">
+<summary>Solución</summary>
+<p><span class="arithmatex">\(t = 2.0208 / 1.897 = 1.065\)</span>, con <span class="arithmatex">\(n - p - 1 = 15 - 3 - 1 = 11\)</span> grados de libertad. El intervalo es <span class="arithmatex">\(2.021 \pm 2.201 \cdot 1.897 = 2.021 \pm 4.175 = [-2.15,\ 6.20]\)</span>, como en el <code>summary()</code>.</p>
+<p>El intervalo incluye el cero, y el p-valor (0.31) es mayor que 0.05: una vez que están la superficie y la distancia, los datos no permiten afirmar que la antigüedad aporte algo. El intervalo es además muy ancho, con valores negativos y positivos: no sabemos ni el signo del efecto. Eso es un síntoma de multicolinealidad, no una prueba de que la antigüedad no influya.</p>
+</details>
+<p><strong>6.</strong> Un compañero quiere incluir la zona con tres indicadoras (centro, intermedia y periferia) además del intercepto. ¿Qué pasará? ¿Y si además incluye la distancia en km?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>Con las tres indicadoras, en cada vivienda suman 1, que es exactamente la columna del intercepto: <span class="arithmatex">\(\mathbf{X}^\top\mathbf{X}\)</span> no tiene inversa y no hay una solución única (la trampa de las variables indicadoras). Algunos programas dan error y otros eliminan una columna o dan coeficientes sin sentido. Hay que quitar una indicadora (o el intercepto).</p>
+<p>Incluir además la distancia es posible, porque la zona no es una combinación lineal <strong>exacta</strong> de la distancia. Pero la zona se ha construido a partir de la distancia, así que las dos variables cuentan casi lo mismo: estarán muy relacionadas y sus coeficientes serán inestables. Es un caso de multicolinealidad, y lo razonable es usar una de las dos.</p>
+</details>
+<p><a class="md-button" href="../"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> Volver al tema</a> <a class="md-button md-button--primary" href="../multicolinealidad/">Siguiente: Multicolinealidad <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg></span></a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Anterior: 6. Regresión lineal múltiple">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                6. Regresión lineal múltiple
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../multicolinealidad/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: 6.2 Multicolinealidad">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                6.2 Multicolinealidad
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/katex.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

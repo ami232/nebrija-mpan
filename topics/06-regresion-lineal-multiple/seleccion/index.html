@@ -1,0 +1,2901 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Material docente — estadística, machine learning y desarrollo de software">
+      
+      
+      
+        <link rel="canonical" href="https://alberpro.com/nebrija-mpan/topics/06-regresion-lineal-multiple/seleccion/">
+      
+      
+        <link rel="prev" href="../multicolinealidad/">
+      
+      
+        <link rel="next" href="../diagnostico/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>6.3 Selección de variables - Nebrija · Modelos predictivos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#63-seleccion-de-variables" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-header__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nebrija · Modelos predictivos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              6.3 Selección de variables
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Nebrija · Modelos predictivos" class="md-nav__button md-logo" aria-label="Nebrija · Modelos predictivos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nebrija · Modelos predictivos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelos predictivos en el análisis de negocios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../01-probabilidad/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Probabilidad
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Probabilidad
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-probabilidad/probabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1 Sucesos y reglas de la probabilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-probabilidad/condicionada/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2 Probabilidad condicionada y teorema de Bayes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../02-variables-aleatorias/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Variables aleatorias y distribuciones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Variables aleatorias y distribuciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-variables-aleatorias/variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1 Variables aleatorias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-variables-aleatorias/distribuciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2 Distribuciones con nombre propio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../03-inferencia/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Estimación e inferencia
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Estimación e inferencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/estimacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Estimación: de los datos al modelo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/variabilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.2 Cuánto se equivoca una estimación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/intervalos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.3 Intervalos de confianza: de la muestra a la población
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-inferencia/practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.4 Práctica guiada: las ventas de la campaña de email
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../04-contraste-hipotesis/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Contraste de hipótesis
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4. Contraste de hipótesis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-contraste-hipotesis/logica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 La lógica del contraste de hipótesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-contraste-hipotesis/una-muestra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.2 Contrastes para una muestra: proporciones y medias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-contraste-hipotesis/dos-muestras/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.3 Comparar dos grupos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-contraste-hipotesis/errores-potencia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.4 Errores, potencia y buen uso de los contrastes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-contraste-hipotesis/practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.5 Práctica guiada: contrastes en escenarios de negocio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../05-regresion-lineal-simple/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Regresión lineal simple
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. Regresión lineal simple
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-regresion-lineal-simple/correlacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Dependencia, covarianza y correlación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-regresion-lineal-simple/modelo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 El modelo de regresión y mínimos cuadrados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-regresion-lineal-simple/ajuste/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.3 Residuos, R² e inferencia sobre la pendiente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-regresion-lineal-simple/practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.4 Práctica guiada: regresión con distintos tipos de predictor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Regresión lineal múltiple
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Regresión lineal múltiple
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modelo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 El modelo y su interpretación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multicolinealidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.2 Multicolinealidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.3 Selección de variables
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.3 Selección de variables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#que-variables-meter-en-el-modelo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué variables meter en el modelo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aporta-cada-variable-el-contraste-t-de-cada-coeficiente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Aporta cada variable? El contraste t de cada coeficiente
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aporta-algo-el-modelo-el-contraste-f-global" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Aporta algo el modelo? El contraste F global
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="¿Aporta algo el modelo? El contraste F global">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comparar-dos-modelos-anidados-el-contraste-f-parcial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparar dos modelos anidados: el contraste F parcial
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#por-que-r2-siempre-sube-el-r2-ajustado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué \(R^2\) siempre sube: el \(R^2\) ajustado
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aic-y-bic-ajuste-penalizado-por-complejidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AIC y BIC: ajuste penalizado por complejidad
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-conocimiento-del-negocio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El conocimiento del negocio
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-elegir-un-modelo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo elegir un modelo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cómo elegir un modelo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#el-riesgo-de-buscar-p-valores-pequenos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El riesgo de buscar p-valores pequeños
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evaluar-fuera-de-la-muestra-entrenamiento-y-prueba" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluar fuera de la muestra: entrenamiento y prueba
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diagnostico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.4 Diagnóstico del modelo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../practica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.5 Práctica guiada: regresión múltiple de principio a fin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../07-regresion-logistica/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Regresión logística
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. Regresión logística
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../08-feature-engineering/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Feature engineering y transformaciones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8. Feature engineering y transformaciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../09-arboles-decision/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Árboles de decisión y ensembles
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    9. Árboles de decisión y ensembles
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../10-clasificacion-multiclase/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Clasificación multiclase
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10. Clasificación multiclase
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../11-series-temporales/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Series temporales
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    11. Series temporales
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../12-sesgos/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Sesgos en los datos
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    12. Sesgos en los datos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Referencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/modelos-predictivos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía de referencia: modelos predictivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#que-variables-meter-en-el-modelo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué variables meter en el modelo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aporta-cada-variable-el-contraste-t-de-cada-coeficiente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Aporta cada variable? El contraste t de cada coeficiente
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aporta-algo-el-modelo-el-contraste-f-global" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Aporta algo el modelo? El contraste F global
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="¿Aporta algo el modelo? El contraste F global">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comparar-dos-modelos-anidados-el-contraste-f-parcial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparar dos modelos anidados: el contraste F parcial
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#por-que-r2-siempre-sube-el-r2-ajustado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué \(R^2\) siempre sube: el \(R^2\) ajustado
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aic-y-bic-ajuste-penalizado-por-complejidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AIC y BIC: ajuste penalizado por complejidad
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-conocimiento-del-negocio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El conocimiento del negocio
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-elegir-un-modelo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo elegir un modelo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cómo elegir un modelo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#el-riesgo-de-buscar-p-valores-pequenos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El riesgo de buscar p-valores pequeños
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evaluar-fuera-de-la-muestra-entrenamiento-y-prueba" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluar fuera de la muestra: entrenamiento y prueba
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicios
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="63-seleccion-de-variables">6.3 Selección de variables<a class="headerlink" href="#63-seleccion-de-variables" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Lo que necesitas antes</p>
+<p>El modelo de regresión múltiple y la interpretación de sus coeficientes de la página <a href="../modelo/">El modelo de regresión múltiple</a>, y qué es la multicolinealidad, de la página <a href="../multicolinealidad/">Multicolinealidad</a>. De la regresión simple, el <a href="../../05-regresion-lineal-simple/ajuste/#bondad-de-ajuste-el-coeficiente-r2">coeficiente <span class="arithmatex">\(R^2\)</span></a> y el <a href="../../05-regresion-lineal-simple/ajuste/#es-real-la-relacion-inferencia-sobre-la-pendiente">contraste t de la pendiente</a>. Del <a href="../../04-contraste-hipotesis/">contraste de hipótesis</a>, la hipótesis nula, el estadístico y el p-valor.</p>
+</div>
+<h2 id="que-variables-meter-en-el-modelo">Qué variables meter en el modelo<a class="headerlink" href="#que-variables-meter-en-el-modelo" title="Permanent link">&para;</a></h2>
+<p>Seguimos con las 15 viviendas de las páginas anteriores: para cada una conocemos su precio (en miles de €), su superficie (m²), su antigüedad (años) y su distancia al centro (km). Una agencia inmobiliaria quiere un modelo para tasar viviendas, y la primera decisión es qué variables usar. Hay varias opciones razonables:</p>
+<ul>
+<li><strong>solo la superficie</strong>, la variable más relacionada con el precio (<span class="arithmatex">\(r = 0.94\)</span>);</li>
+<li><strong>superficie y distancia</strong>, porque la ubicación es lo segundo que mira cualquier comprador;</li>
+<li><strong>el modelo completo</strong>, con las tres variables, porque "más información no puede hacer daño".</li>
+</ul>
+<p>Las tres se pueden ajustar en un segundo, y todas dan un <span class="arithmatex">\(R^2\)</span> alto. ¿Cuál elegimos? La pregunta no es trivial. Una variable de más complica la interpretación, hace los coeficientes inestables cuando está correlacionada con otra (en estas viviendas, antigüedad y distancia tienen <span class="arithmatex">\(r = -0.989\)</span>) y puede empeorar las predicciones con viviendas nuevas. Una variable de menos deja fuera un efecto real y sesga los coeficientes de las que quedan. Esta página reúne las herramientas para decidir: contrastes sobre los coeficientes y sobre el modelo, medidas que penalizan la complejidad, el conocimiento del negocio y la evaluación con datos que el modelo no ha visto.</p>
+<h2 id="aporta-cada-variable-el-contraste-t-de-cada-coeficiente">¿Aporta cada variable? El contraste t de cada coeficiente<a class="headerlink" href="#aporta-cada-variable-el-contraste-t-de-cada-coeficiente" title="Permanent link">&para;</a></h2>
+<p>En regresión simple, el contraste t de la pendiente respondía a la pregunta "¿hay relación lineal entre <span class="arithmatex">\(X\)</span> e <span class="arithmatex">\(Y\)</span>?". En regresión múltiple hay un contraste t para cada coeficiente, y la pregunta cambia de forma importante: ahora es "¿aporta esta variable algo <strong>además de las otras que ya están en el modelo</strong>?".</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: contraste t de un coeficiente</p>
+<p>En el modelo <span class="arithmatex">\(Y = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p + \varepsilon\)</span>, con <span class="arithmatex">\(p\)</span> predictores y <span class="arithmatex">\(n\)</span> observaciones, para cada coeficiente <span class="arithmatex">\(\beta_j\)</span> se contrasta</p>
+<ul>
+<li><span class="arithmatex">\(H_0: \beta_j = 0\)</span> (manteniendo fijas las demás variables, <span class="arithmatex">\(X_j\)</span> no cambia el valor esperado de <span class="arithmatex">\(Y\)</span>);</li>
+<li><span class="arithmatex">\(H_1: \beta_j \neq 0\)</span>;</li>
+</ul>
+<p>con el estadístico
+$<span class="arithmatex">\(t = \frac{\hat{\beta}_j}{SE(\hat{\beta}_j)},\)</span>$
+que, si se cumplen las suposiciones del modelo y <span class="arithmatex">\(H_0\)</span> es cierta, sigue una distribución <span class="arithmatex">\(t\)</span> de Student con <span class="arithmatex">\(n - p - 1\)</span> grados de libertad. Los <span class="arithmatex">\(p + 1\)</span> grados de libertad que se pierden son los de los <span class="arithmatex">\(p + 1\)</span> coeficientes estimados (los <span class="arithmatex">\(p\)</span> coeficientes más el intercepto).</p>
+<p>El <strong>intervalo de confianza</strong> al <span class="arithmatex">\((1 - \alpha)\)</span> de <span class="arithmatex">\(\beta_j\)</span> es
+$<span class="arithmatex">\(\hat{\beta}_j \pm t_{n-p-1,\, 1-\alpha/2} \cdot SE(\hat{\beta}_j).\)</span>$</p>
+</div>
+<p>El error estándar <span class="arithmatex">\(SE(\hat{\beta}_j)\)</span> lo calcula el programa; ya no tiene una fórmula tan sencilla como en regresión simple. Lo que sí se mantiene es la intuición: el coeficiente es más preciso cuanto menos ruido hay (residuos pequeños), cuantos más datos hay y cuanto más varía <span class="arithmatex">\(X_j\)</span>. Y aparece un factor nuevo: el coeficiente es <strong>menos</strong> preciso cuanto más correlacionada está <span class="arithmatex">\(X_j\)</span> con las otras variables del modelo, porque entonces los datos apenas tienen información sobre el efecto de <span class="arithmatex">\(X_j\)</span> por separado. Es el factor de inflación de la varianza de la página de <a href="../multicolinealidad/">multicolinealidad</a>.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: los contrastes t del modelo completo y del de superficie y distancia</p>
+<p>El modelo completo, ajustado con las 15 viviendas, da estos coeficientes (los grados de libertad son <span class="arithmatex">\(15 - 3 - 1 = 11\)</span>, y el cuantil 0.975 de la <span class="arithmatex">\(t\)</span> con 11 grados de libertad es 2.201):</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th><span class="arithmatex">\(\hat{\beta}_j\)</span></th>
+<th><span class="arithmatex">\(SE\)</span></th>
+<th><span class="arithmatex">\(t\)</span></th>
+<th>p-valor</th>
+<th>IC 95 %</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>superficie</td>
+<td>2.669</td>
+<td>0.188</td>
+<td>14.23</td>
+<td>&lt; 0.001</td>
+<td>[2.26, 3.08]</td>
+</tr>
+<tr>
+<td>antigüedad</td>
+<td>2.021</td>
+<td>1.897</td>
+<td>1.07</td>
+<td>0.310</td>
+<td>[−2.16, 6.20]</td>
+</tr>
+<tr>
+<td>distancia</td>
+<td>−5.012</td>
+<td>7.248</td>
+<td>−0.69</td>
+<td>0.504</td>
+<td>[−20.97, 10.94]</td>
+</tr>
+</tbody>
+</table>
+<p>Leído a la ligera, diría que ni la antigüedad ni la distancia influyen en el precio. Pero cada contraste pregunta si la variable aporta algo <strong>teniendo ya la otra</strong>, y como antigüedad y distancia se mueven casi a la vez (<span class="arithmatex">\(r = -0.989\)</span>), lo que aporta una lo aporta también la otra. Los errores estándar están inflados (el de la distancia es 7.2, cinco veces el que tendrá en el modelo siguiente) y los intervalos son tan anchos que incluyen efectos negativos, nulos y positivos.</p>
+<p>Si quitamos la antigüedad y ajustamos el modelo de superficie y distancia (ahora con <span class="arithmatex">\(15 - 2 - 1 = 12\)</span> grados de libertad y cuantil 2.179):</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th><span class="arithmatex">\(\hat{\beta}_j\)</span></th>
+<th><span class="arithmatex">\(SE\)</span></th>
+<th><span class="arithmatex">\(t\)</span></th>
+<th>p-valor</th>
+<th>IC 95 %</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>superficie</td>
+<td>2.671</td>
+<td>0.189</td>
+<td>14.16</td>
+<td>&lt; 0.001</td>
+<td>[2.26, 3.08]</td>
+</tr>
+<tr>
+<td>distancia</td>
+<td>−12.588</td>
+<td>1.398</td>
+<td>−9.01</td>
+<td>&lt; 0.001</td>
+<td>[−15.63, −9.54]</td>
+</tr>
+</tbody>
+</table>
+<p>El intervalo de la distancia, a mano: <span class="arithmatex">\(-12.588 \pm 2.179 \cdot 1.398 = -12.588 \pm 3.046 = [-15.63,\ -9.54]\)</span>. Para dos viviendas con la misma superficie, cada kilómetro más lejos del centro se asocia con entre 9 500 € y 15 600 € menos de precio. El coeficiente de la superficie apenas cambia entre los dos modelos (2.67 en ambos): la superficie está poco correlacionada con las otras dos variables y su efecto se estima igual de bien con o sin ellas.</p>
+</div>
+<p>La lección es que <strong>un p-valor grande en regresión múltiple no dice que la variable no tenga relación con <span class="arithmatex">\(Y\)</span></strong>. Dice que, con las otras variables en el modelo, los datos no permiten distinguir su efecto de cero. Por eso no se deben quitar varias variables a la vez porque todas tengan p-valores grandes: puede que cada una sobre si está la otra, pero no las dos.</p>
+<h2 id="aporta-algo-el-modelo-el-contraste-f-global">¿Aporta algo el modelo? El contraste F global<a class="headerlink" href="#aporta-algo-el-modelo-el-contraste-f-global" title="Permanent link">&para;</a></h2>
+<p>Los contrastes t miran las variables de una en una. Antes de eso conviene responder a una pregunta más básica: ¿el modelo en su conjunto explica algo, o es todo ruido?</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: contraste F global</p>
+<p>El contraste F global compara el modelo con <span class="arithmatex">\(p\)</span> predictores con el modelo sin ninguno (el que predice siempre la media <span class="arithmatex">\(\bar{y}\)</span>):</p>
+<ul>
+<li><span class="arithmatex">\(H_0: \beta_1 = \beta_2 = \cdots = \beta_p = 0\)</span> (ninguna variable tiene relación con <span class="arithmatex">\(Y\)</span>);</li>
+<li><span class="arithmatex">\(H_1\)</span>: al menos un <span class="arithmatex">\(\beta_j\)</span> es distinto de cero.</li>
+</ul>
+<p>El estadístico es
+$<span class="arithmatex">\(F = \frac{(SS_\text{tot} - SS_\text{res}) / p}{SS_\text{res} / (n - p - 1)} = \frac{R^2 / p}{(1 - R^2) / (n - p - 1)},\)</span>$
+donde <span class="arithmatex">\(SS_\text{tot} = \sum_i (y_i - \bar{y})^2\)</span> es la variabilidad total de <span class="arithmatex">\(Y\)</span> y <span class="arithmatex">\(SS_\text{res} = \sum_i e_i^2\)</span> la suma de los residuos al cuadrado. Bajo <span class="arithmatex">\(H_0\)</span> sigue una distribución <span class="arithmatex">\(F\)</span> con <span class="arithmatex">\(p\)</span> y <span class="arithmatex">\(n - p - 1\)</span> grados de libertad. En statsmodels aparece como <code>F-statistic</code> y su p-valor como <code>Prob (F-statistic)</code>.</p>
+</div>
+<p>El numerador es la variabilidad explicada por cada variable del modelo y el denominador, la variabilidad que queda sin explicar por cada grado de libertad: es la varianza residual <span class="arithmatex">\(s^2\)</span>. Si las variables no aportan nada, los dos son del mismo orden y <span class="arithmatex">\(F\)</span> ronda 1. Si el modelo explica mucho, <span class="arithmatex">\(F\)</span> es grande.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: el contraste F del modelo completo</p>
+<p>La variabilidad total de los precios es <span class="arithmatex">\(SS_\text{tot} = 28\,263.3\)</span> y el modelo completo deja <span class="arithmatex">\(SS_\text{res} = 378.3\)</span>. Con <span class="arithmatex">\(p = 3\)</span> y <span class="arithmatex">\(n = 15\)</span>,
+$<span class="arithmatex">\(F = \frac{(28\,263.3 - 378.3) / 3}{378.3 / 11} = \frac{9\,295.0}{34.39} = 270.3,\)</span>$
+con un p-valor de <span class="arithmatex">\(1.4 \times 10^{-10}\)</span>. El modelo explica claramente parte del precio. No es sorprendente: con la superficie sola ya se explicaba el 88.5 %.</p>
+</div>
+<p>El caso interesante es el contrario al de los contrastes t: <strong>un F global muy significativo con todos los t individuales no significativos</strong>. Es la señal típica de multicolinealidad: las variables, juntas, explican mucho, pero no se puede saber cuál de ellas lo hace. En el modelo completo de las viviendas pasa a medias: la superficie es claramente significativa, y la antigüedad y la distancia no lo son por separado.</p>
+<h3 id="comparar-dos-modelos-anidados-el-contraste-f-parcial">Comparar dos modelos anidados: el contraste F parcial<a class="headerlink" href="#comparar-dos-modelos-anidados-el-contraste-f-parcial" title="Permanent link">&para;</a></h3>
+<p>La misma idea sirve para preguntar si un <strong>grupo</strong> de variables aporta algo. Dos modelos están <strong>anidados</strong> cuando uno contiene todas las variables del otro y alguna más. El contraste F parcial compara la reducción de <span class="arithmatex">\(SS_\text{res}\)</span> al añadir las <span class="arithmatex">\(q\)</span> variables nuevas con la varianza residual del modelo grande:
+$<span class="arithmatex">\(F = \frac{(SS_\text{res, pequeño} - SS_\text{res, grande}) / q}{SS_\text{res, grande} / (n - p - 1)},\)</span>$
+donde <span class="arithmatex">\(p\)</span> es el número de predictores del modelo grande. Bajo <span class="arithmatex">\(H_0\)</span> (los <span class="arithmatex">\(q\)</span> coeficientes nuevos son cero), sigue una <span class="arithmatex">\(F\)</span> con <span class="arithmatex">\(q\)</span> y <span class="arithmatex">\(n - p - 1\)</span> grados de libertad. En statsmodels se calcula con <code>sm.stats.anova_lm(pequeño, grande)</code>.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: ¿importa la ubicación?</p>
+<p>El modelo de solo superficie deja <span class="arithmatex">\(SS_\text{res} = 3\,238.0\)</span> y el completo, <span class="arithmatex">\(378.3\)</span>. Al añadir antigüedad y distancia (<span class="arithmatex">\(q = 2\)</span>),
+$<span class="arithmatex">\(F = \frac{(3\,238.0 - 378.3) / 2}{378.3 / 11} = \frac{1\,429.9}{34.39} = 41.6,\)</span>$
+con p-valor <span class="arithmatex">\(7 \times 10^{-6}\)</span>. Juntas, la antigüedad y la distancia aportan mucho, aunque ninguna lo hacía por separado en los contrastes t del modelo completo. Los datos dicen con claridad que <strong>la ubicación importa</strong>; lo que no pueden decir es si la medida correcta de la ubicación es la distancia o la antigüedad.</p>
+<p>En cambio, añadir la antigüedad al modelo de superficie y distancia (<span class="arithmatex">\(q = 1\)</span>) da <span class="arithmatex">\(F = 1.13\)</span> y p-valor 0.31: no aporta nada que no aporte ya la distancia. Cuando se añade una sola variable, este <span class="arithmatex">\(F\)</span> es el cuadrado de su <span class="arithmatex">\(t\)</span> en el modelo grande (<span class="arithmatex">\(1.065^2 = 1.13\)</span>).</p>
+</div>
+<h2 id="por-que-r2-siempre-sube-el-r2-ajustado">Por qué <span class="arithmatex">\(R^2\)</span> siempre sube: el <span class="arithmatex">\(R^2\)</span> ajustado<a class="headerlink" href="#por-que-r2-siempre-sube-el-r2-ajustado" title="Permanent link">&para;</a></h2>
+<p>Parece natural elegir el modelo con el <span class="arithmatex">\(R^2\)</span> más alto. El problema es que, al añadir una variable, el <span class="arithmatex">\(R^2\)</span> <strong>nunca baja</strong>, sea útil o no. Mínimos cuadrados elige los coeficientes que hacen <span class="arithmatex">\(SS_\text{res}\)</span> lo más pequeño posible; con una variable más, siempre puede ponerle coeficiente cero y quedarse como estaba, así que el nuevo <span class="arithmatex">\(SS_\text{res}\)</span> es igual o menor. Y casi nunca es exactamente igual: hasta una variable de puro ruido está algo correlacionada con los residuos por azar, y mínimos cuadrados aprovecha esa correlación.</p>
+<p>Para comprobarlo, añadimos al modelo de superficie y distancia una columna de números aleatorios, sin ninguna relación con las viviendas. El <span class="arithmatex">\(R^2\)</span> sube de 0.9852 a 0.9859. Según el <span class="arithmatex">\(R^2\)</span>, el modelo "mejora" con una variable inventada.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: <span class="arithmatex">\(R^2\)</span> ajustado</p>
+<p>El <strong><span class="arithmatex">\(R^2\)</span> ajustado</strong> corrige el <span class="arithmatex">\(R^2\)</span> por el número de predictores <span class="arithmatex">\(p\)</span>:
+$<span class="arithmatex">\(R^2_\text{aj} = 1 - (1 - R^2) \, \frac{n - 1}{n - p - 1} = 1 - \frac{SS_\text{res} / (n - p - 1)}{SS_\text{tot} / (n - 1)}.\)</span>$
+Compara la varianza residual <span class="arithmatex">\(s^2\)</span> con la varianza de <span class="arithmatex">\(Y\)</span>, en vez de las sumas de cuadrados. Siempre es menor que <span class="arithmatex">\(R^2\)</span>, puede ser negativo, y solo sube al añadir una variable si esta reduce <span class="arithmatex">\(SS_\text{res}\)</span> lo suficiente para compensar el grado de libertad que consume.</p>
+</div>
+<p>El factor <span class="arithmatex">\((n - 1)/(n - p - 1)\)</span> es la penalización: cada variable nueva aumenta <span class="arithmatex">\(p\)</span>, hace el factor más grande y empuja el <span class="arithmatex">\(R^2_\text{aj}\)</span> hacia abajo. Con muchos datos y pocas variables, el factor es casi 1 y los dos <span class="arithmatex">\(R^2\)</span> casi coinciden. Con 15 viviendas, la diferencia ya se nota.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: <span class="arithmatex">\(R^2\)</span> ajustado con una variable de ruido</p>
+<p>El modelo de superficie y distancia tiene <span class="arithmatex">\(R^2 = 0.98524\)</span>, con <span class="arithmatex">\(n = 15\)</span> y <span class="arithmatex">\(p = 2\)</span>:
+$<span class="arithmatex">\(R^2_\text{aj} = 1 - (1 - 0.98524) \cdot \frac{14}{12} = 1 - 0.01476 \cdot 1.1667 = 0.9828.\)</span>$
+Al añadir la variable de ruido, <span class="arithmatex">\(R^2 = 0.98592\)</span> y <span class="arithmatex">\(p = 3\)</span>:
+$<span class="arithmatex">\(R^2_\text{aj} = 1 - (1 - 0.98592) \cdot \frac{14}{11} = 1 - 0.01408 \cdot 1.2727 = 0.9821.\)</span>$
+El <span class="arithmatex">\(R^2\)</span> sube, pero el <span class="arithmatex">\(R^2\)</span> ajustado baja: la variable de ruido no compensa lo que cuesta. El contraste t lo confirma: su p-valor es 0.48.</p>
+</div>
+<h2 id="aic-y-bic-ajuste-penalizado-por-complejidad">AIC y BIC: ajuste penalizado por complejidad<a class="headerlink" href="#aic-y-bic-ajuste-penalizado-por-complejidad" title="Permanent link">&para;</a></h2>
+<p>El <span class="arithmatex">\(R^2\)</span> ajustado es una forma de penalizar la complejidad, pero hay otras dos medidas muy usadas que aparecen en el <code>summary()</code> de statsmodels: el <strong>AIC</strong> (criterio de información de Akaike) y el <strong>BIC</strong> (criterio de información bayesiano). Las dos siguen la misma idea: un término que mide lo mal que ajusta el modelo más un término que crece con el número de coeficientes.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: AIC y BIC</p>
+<p>Para un modelo de regresión lineal con <span class="arithmatex">\(k\)</span> coeficientes estimados (los <span class="arithmatex">\(p\)</span> predictores más el intercepto, <span class="arithmatex">\(k = p + 1\)</span>), salvo una constante que es la misma para todos los modelos ajustados con los mismos datos,
+$<span class="arithmatex">\(\text{AIC} = n \ln\!\left(\frac{SS_\text{res}}{n}\right) + 2k, \qquad \text{BIC} = n \ln\!\left(\frac{SS_\text{res}}{n}\right) + k \ln n.\)</span>$
+<strong>Cuanto más bajo, mejor.</strong> Solo se comparan modelos ajustados con <strong>los mismos datos y la misma variable respuesta</strong> (no se puede comparar el AIC de un modelo del precio con el de un modelo del logaritmo del precio). Su valor absoluto no significa nada; solo importan las diferencias.</p>
+</div>
+<p>El primer término baja cuando el modelo ajusta mejor; el segundo sube con cada coeficiente. El BIC penaliza cada coeficiente con <span class="arithmatex">\(\ln n\)</span> en vez de con 2, y <span class="arithmatex">\(\ln n &gt; 2\)</span> en cuanto <span class="arithmatex">\(n \ge 8\)</span>, así que tiende a preferir modelos más pequeños que el AIC. Una regla práctica habitual: diferencias de AIC menores que 2 no permiten preferir un modelo a otro; diferencias de más de 10 son claras.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: comparar los modelos de las viviendas</p>
+<p>Esta es la tabla de los tres candidatos, más un cuarto que usa la antigüedad en lugar de la distancia:</p>
+<table>
+<thead>
+<tr>
+<th>Modelo</th>
+<th><span class="arithmatex">\(k\)</span></th>
+<th><span class="arithmatex">\(R^2\)</span></th>
+<th><span class="arithmatex">\(R^2_\text{aj}\)</span></th>
+<th><span class="arithmatex">\(s\)</span> (miles €)</th>
+<th>AIC</th>
+<th>BIC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>superficie</td>
+<td>2</td>
+<td>0.885</td>
+<td>0.877</td>
+<td>15.78</td>
+<td>127.2</td>
+<td>128.6</td>
+</tr>
+<tr>
+<td>superficie + distancia</td>
+<td>3</td>
+<td>0.985</td>
+<td>0.983</td>
+<td>5.90</td>
+<td>98.5</td>
+<td>100.6</td>
+</tr>
+<tr>
+<td>superficie + antigüedad</td>
+<td>3</td>
+<td>0.986</td>
+<td>0.984</td>
+<td>5.74</td>
+<td>97.6</td>
+<td>99.7</td>
+</tr>
+<tr>
+<td>completo</td>
+<td>4</td>
+<td>0.987</td>
+<td>0.983</td>
+<td>5.86</td>
+<td>99.0</td>
+<td>101.8</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><strong>Superficie sola</strong> queda descartada por todas las medidas. Su AIC es unos 29 puntos más alto que el de los demás, y su error típico es casi el triple: se equivoca en unos 16 000 € frente a unos 6 000 €.</li>
+<li><strong>Los otros tres están empatados.</strong> Las diferencias de AIC entre ellos son menores que 2 (98.5, 97.6 y 99.0) y los <span class="arithmatex">\(R^2\)</span> ajustados coinciden hasta la tercera decimal. El <span class="arithmatex">\(R^2\)</span> del modelo completo es el más alto, como siempre, pero ni su <span class="arithmatex">\(R^2\)</span> ajustado ni su AIC ni su BIC lo prefieren.</li>
+<li><strong>Las medidas no tienen por qué coincidir.</strong> El AIC y el BIC prefieren, por muy poco, superficie y antigüedad; el <span class="arithmatex">\(R^2\)</span> ajustado pone el modelo completo (0.9830) por delante del de superficie y distancia (0.9828). Son diferencias en la cuarta decimal, que cambiarían con una vivienda más o menos.</li>
+</ol>
+<p>Comprobación del AIC a mano: la diferencia entre superficie y distancia y superficie sola es <span class="arithmatex">\(15 \ln(417.3 / 3238.0) + 2 \cdot (3 - 2) = 15 \cdot (-2.049) + 2 = -28.7\)</span>, la misma que en la tabla (<span class="arithmatex">\(98.5 - 127.2\)</span>).</p>
+</div>
+<p>Cuando las medidas estadísticas empatan, el criterio para elegir tiene que venir de otro sitio.</p>
+<h2 id="el-conocimiento-del-negocio">El conocimiento del negocio<a class="headerlink" href="#el-conocimiento-del-negocio" title="Permanent link">&para;</a></h2>
+<p>Con los datos solos, el mejor modelo sería superficie y antigüedad. Su coeficiente de la antigüedad es <span class="arithmatex">\(+3.31\)</span>: cada año más de antigüedad se asocia con 3 300 € <strong>más</strong> de precio. Cualquiera que conozca el mercado desconfiaría: una vivienda no se revaloriza por hacerse vieja; si acaso, al contrario, porque necesita reformas. Lo que ocurre es que en esta ciudad las viviendas antiguas están en el centro y las nuevas en las afueras (<span class="arithmatex">\(r = -0.989\)</span> entre antigüedad y distancia). La antigüedad funciona como un indicador de la ubicación, y su coeficiente positivo recoge el efecto de estar cerca del centro.</p>
+<p>Para tasar viviendas de esta ciudad, mientras se siga cumpliendo que las antiguas están en el centro, los dos modelos predicen casi igual. La diferencia aparece cuando no se cumple. Una vivienda nueva en pleno centro sería, para el modelo de la antigüedad, una vivienda "de las afueras" y saldría tasada muy por debajo de su valor; el modelo de la distancia la tasaría bien, porque usa la variable que de verdad explica el precio. Por eso elegimos <strong>superficie y distancia</strong>:</p>
+<ul>
+<li>tiene un mecanismo creíble (los compradores pagan por estar cerca del centro);</li>
+<li>sus coeficientes tienen el signo esperado y se interpretan directamente;</li>
+<li>es tan bueno como los otros según todas las medidas estadísticas;</li>
+<li>es más sencillo que el completo y sus coeficientes son estables (en el completo, la distancia tenía un error estándar cinco veces mayor).</li>
+</ul>
+<p>Hay que ser honesto sobre lo que esto <strong>no</strong> demuestra. Con 15 viviendas en las que antigüedad y distancia van juntas, los datos no pueden separar sus efectos. Es posible que la antigüedad tenga un efecto propio (negativo, por ejemplo) y que el coeficiente de la distancia esté absorbiendo una parte. Para saberlo harían falta viviendas en las que las dos variables no vayan juntas: viviendas nuevas en el centro y antiguas en las afueras.</p>
+<h2 id="como-elegir-un-modelo">Cómo elegir un modelo<a class="headerlink" href="#como-elegir-un-modelo" title="Permanent link">&para;</a></h2>
+<p>Las herramientas anteriores se combinan en un procedimiento razonable:</p>
+<ol>
+<li><strong>Parte del conocimiento del problema.</strong> Antes de mirar ningún p-valor, haz una lista de las variables que, por lo que se sabe del negocio, deberían influir en <span class="arithmatex">\(Y\)</span>, y del signo que esperas en cada una. Esa lista define los modelos candidatos, que deberían ser pocos.</li>
+<li><strong>Ajusta los candidatos y compáralos</strong> con el <span class="arithmatex">\(R^2\)</span> ajustado, el AIC o el BIC, y con contrastes F parciales cuando estén anidados. No uses el <span class="arithmatex">\(R^2\)</span> para comparar modelos con distinto número de variables.</li>
+<li><strong>Revisa los coeficientes</strong> de cada candidato: ¿tienen el signo esperado?, ¿son estables o cambian mucho al quitar otra variable?, ¿hay variables muy correlacionadas entre sí (ver <a href="../multicolinealidad/">multicolinealidad</a>)?</li>
+<li><strong>Ante un empate, elige el modelo más sencillo</strong> y el que tenga una interpretación creíble.</li>
+<li><strong>Comprueba las suposiciones</strong> del modelo elegido con el <a href="../diagnostico/">diagnóstico</a> antes de fiarte de sus p-valores e intervalos.</li>
+<li><strong>Si el objetivo es predecir, evalúa el modelo con datos que no ha visto</strong>, como se explica a continuación.</li>
+</ol>
+<h3 id="el-riesgo-de-buscar-p-valores-pequenos">El riesgo de buscar p-valores pequeños<a class="headerlink" href="#el-riesgo-de-buscar-p-valores-pequenos" title="Permanent link">&para;</a></h3>
+<p>Lo que no se debe hacer es lo contrario: probar muchas combinaciones de variables y quedarse con la que da p-valores pequeños. Con un nivel de significación del 5 %, una de cada veinte variables sin ninguna relación con <span class="arithmatex">\(Y\)</span> sale significativa por azar. Si se prueban 40 variables candidatas, cabe esperar unas dos "significativas" que no significan nada. Esto se llama <strong>p-hacking</strong>, y los p-valores e intervalos del modelo final dejan de valer, porque se calcularon como si ese modelo se hubiera decidido antes de ver los datos.</p>
+<p>Los procedimientos automáticos de <strong>selección paso a paso</strong> (<em>stepwise</em>), que añaden o quitan variables una a una según su p-valor o el AIC, tienen el mismo problema, hecho por una máquina. Además, ante dos variables muy correlacionadas eligen una casi al azar: con las viviendas, una selección por AIC se quedaría con la antigüedad en vez de con la distancia, por una diferencia de 0.8 puntos que no significa nada. Pueden servir para explorar, pero el modelo final lo decide el analista, y si hay que estimar su capacidad de predecir, se hace con datos nuevos.</p>
+<h2 id="evaluar-fuera-de-la-muestra-entrenamiento-y-prueba">Evaluar fuera de la muestra: entrenamiento y prueba<a class="headerlink" href="#evaluar-fuera-de-la-muestra-entrenamiento-y-prueba" title="Permanent link">&para;</a></h2>
+<p>Todas las medidas anteriores se calculan con los mismos datos con los que se ajustó el modelo. Esos datos dan una imagen optimista: el modelo ha visto esas viviendas y se ha adaptado a ellas, incluido su ruido. Lo que interesa a la agencia es cuánto se equivocará con las viviendas que lleguen <strong>mañana</strong>. Un modelo con demasiadas variables para los datos disponibles aprende las particularidades de la muestra en lugar de la relación general: es el <strong>sobreajuste</strong> (<em>overfitting</em>). Ajusta muy bien los datos que ha visto y predice mal los nuevos.</p>
+<p>La forma directa de medirlo es reservar una parte de los datos. Se ajusta el modelo con el <strong>conjunto de entrenamiento</strong> y se mide su error con el <strong>conjunto de prueba</strong>, que el modelo no ha visto.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definición: RMSE dentro y fuera de la muestra</p>
+<p>La <strong>raíz del error cuadrático medio</strong> (RMSE, <em>root mean squared error</em>) de un modelo sobre un conjunto de <span class="arithmatex">\(m\)</span> observaciones es
+$<span class="arithmatex">\(\text{RMSE} = \sqrt{\frac{1}{m} \sum_{i=1}^{m} (y_i - \hat{y}_i)^2},\)</span>$
+en las unidades de <span class="arithmatex">\(Y\)</span>. Calculado con el conjunto de entrenamiento mide el error <strong>dentro de la muestra</strong>; calculado con el de prueba, el error <strong>fuera de la muestra</strong>, que es la estimación honesta de cuánto se equivocará el modelo con datos nuevos.</p>
+</div>
+<p>Con 15 viviendas no tiene sentido partir los datos: quedarían 10 para ajustar y 5 para evaluar, y el resultado dependería de qué 5 viviendas tocaran en la prueba. Para ver la idea usamos un conjunto <strong>simulado</strong> de 120 viviendas, generado con una semilla fija y con la misma estructura que el nuestro: el precio depende de la superficie y de la distancia, y la antigüedad está muy correlacionada con la distancia pero no influye en el precio por sí misma. Para que el sobreajuste se vea, ajustamos con solo 36 viviendas (el 30 %) y evaluamos con las 84 restantes, y añadimos un cuarto modelo con las tres variables y 20 columnas de ruido.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo resuelto: error dentro y fuera de la muestra</p>
+<p>Los resultados (el código está en la sección "En Python"):</p>
+<table>
+<thead>
+<tr>
+<th>Modelo</th>
+<th><span class="arithmatex">\(R^2\)</span></th>
+<th><span class="arithmatex">\(R^2_\text{aj}\)</span></th>
+<th>RMSE entrenamiento</th>
+<th>RMSE prueba</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>superficie</td>
+<td>0.618</td>
+<td>0.607</td>
+<td>18.94</td>
+<td>20.70</td>
+</tr>
+<tr>
+<td>superficie + distancia</td>
+<td>0.940</td>
+<td>0.937</td>
+<td>7.50</td>
+<td>8.06</td>
+</tr>
+<tr>
+<td>completo</td>
+<td>0.943</td>
+<td>0.937</td>
+<td>7.33</td>
+<td>8.18</td>
+</tr>
+<tr>
+<td>completo + 20 de ruido</td>
+<td>0.977</td>
+<td>0.931</td>
+<td>4.70</td>
+<td>10.47</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>El modelo con ruido tiene el mejor <span class="arithmatex">\(R^2\)</span> y el menor error de entrenamiento (4 700 €), pero el peor error de prueba entre los tres modelos con la distancia (10 470 €): ha memorizado el ruido de las 36 viviendas de entrenamiento. Su <span class="arithmatex">\(R^2\)</span> ajustado ya avisaba: es el más bajo de los tres.</li>
+<li>El modelo completo tiene menos error de entrenamiento que el de superficie y distancia, pero algo más de error de prueba: la antigüedad no aporta nada nuevo, solo variabilidad.</li>
+<li>Superficie sola se equivoca mucho dentro y fuera de la muestra: le falta una variable importante (<strong>infraajuste</strong>).</li>
+<li>En todos los modelos el error de prueba es mayor que el de entrenamiento. Es lo normal: el error de entrenamiento siempre es optimista.</li>
+</ul>
+</div>
+<p>Con datos reales hay que partir al azar, con una semilla fija para poder repetirlo, y no tocar el conjunto de prueba hasta el final: si se usa para elegir entre muchos modelos, se acaba sobreajustando también a él. Con pocos datos se usa la <strong>validación cruzada</strong>, que repite la partición varias veces y promedia el error.</p>
+<div class="admonition warning">
+<p class="admonition-title">Errores frecuentes</p>
+<ul>
+<li><strong>Elegir el modelo con el <span class="arithmatex">\(R^2\)</span> más alto.</strong> El <span class="arithmatex">\(R^2\)</span> siempre sube al añadir variables. Para comparar modelos con distinto número de variables, usa el <span class="arithmatex">\(R^2\)</span> ajustado, el AIC, el BIC o el error con datos de prueba.</li>
+<li><strong>Quitar una variable porque su p-valor es grande</strong> sin mirar si está correlacionada con otra del modelo. Y, peor aún, quitar varias a la vez por el mismo motivo.</li>
+<li><strong>Leer un coeficiente no significativo como "no influye".</strong> Dice que, con las demás variables en el modelo, los datos no distinguen su efecto de cero. Mira el intervalo: si es muy ancho, los datos simplemente no saben.</li>
+<li><strong>Probar combinaciones hasta encontrar p-valores pequeños</strong>, a mano o con <em>stepwise</em>, e informar de esos p-valores como si el modelo se hubiera decidido antes.</li>
+<li><strong>Comparar AIC de modelos ajustados con datos distintos</strong> (por ejemplo, después de eliminar filas con valores faltantes en una variable) o con distinta variable respuesta.</li>
+<li><strong>Elegir solo por la estadística</strong> cuando los modelos están empatados. El conocimiento del negocio decide qué variable tiene un efecto creíble.</li>
+<li><strong>Evaluar la capacidad de predecir con los mismos datos del ajuste.</strong> El error de entrenamiento siempre es optimista.</li>
+</ul>
+</div>
+<h2 id="en-python">En Python<a class="headerlink" href="#en-python" title="Permanent link">&para;</a></h2>
+<p>Ajuste de los cuatro modelos y tabla para compararlos:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smf</span>
+
+<span class="n">casas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"superficie"</span><span class="p">:</span> <span class="p">[</span><span class="mi">75</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">92</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">89</span><span class="p">],</span>   <span class="c1"># m²</span>
+    <span class="s2">"antiguedad"</span><span class="p">:</span> <span class="p">[</span><span class="mi">19</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span>        <span class="c1"># años</span>
+    <span class="s2">"distancia"</span><span class="p">:</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">],</span>  <span class="c1"># km al centro</span>
+    <span class="s2">"precio"</span><span class="p">:</span> <span class="p">[</span><span class="mi">211</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">293</span><span class="p">,</span> <span class="mi">238</span><span class="p">,</span> <span class="mi">229</span><span class="p">,</span> <span class="mi">157</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">197</span><span class="p">,</span> <span class="mi">234</span><span class="p">,</span> <span class="mi">247</span><span class="p">,</span> <span class="mi">176</span><span class="p">,</span> <span class="mi">295</span><span class="p">,</span> <span class="mi">194</span><span class="p">,</span> <span class="mi">251</span><span class="p">,</span> <span class="mi">223</span><span class="p">],</span>  <span class="c1"># miles €</span>
+<span class="p">})</span>
+
+<span class="n">formulas</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"superficie"</span><span class="p">:</span> <span class="s2">"precio ~ superficie"</span><span class="p">,</span>
+    <span class="s2">"superficie + distancia"</span><span class="p">:</span> <span class="s2">"precio ~ superficie + distancia"</span><span class="p">,</span>
+    <span class="s2">"superficie + antigüedad"</span><span class="p">:</span> <span class="s2">"precio ~ superficie + antiguedad"</span><span class="p">,</span>
+    <span class="s2">"completo"</span><span class="p">:</span> <span class="s2">"precio ~ superficie + antiguedad + distancia"</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">modelos</span> <span class="o">=</span> <span class="p">{</span><span class="n">nombre</span><span class="p">:</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">casas</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> <span class="k">for</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">formulas</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+<span class="n">comparacion</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="n">nombre</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"k"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">params</span><span class="p">),</span>
+        <span class="s2">"R²"</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">rsquared</span><span class="p">,</span>
+        <span class="s2">"R² ajustado"</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">rsquared_adj</span><span class="p">,</span>
+        <span class="s2">"s"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">mse_resid</span><span class="p">),</span>
+        <span class="s2">"AIC"</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">aic</span><span class="p">,</span>
+        <span class="s2">"BIC"</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">bic</span><span class="p">,</span>
+        <span class="s2">"F"</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">fvalue</span><span class="p">,</span>
+        <span class="s2">"p-valor F"</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">f_pvalue</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">modelos</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="p">})</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">comparacion</span><span class="p">[</span><span class="s2">"p-valor F"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">f_pvalue</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">modelos</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+<span class="n">comparacion</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>                           k      R²  R² ajustado        s       AIC       BIC         F p-valor F
+superficie               2.0  0.8854       0.8766  15.7822  127.1881  128.6042  100.4722   1.8e-07
+superficie + distancia   3.0  0.9852       0.9828   5.8969   98.4537  100.5778  400.3969   1.0e-11
+superficie + antigüedad  3.0  0.9860       0.9837   5.7352   97.6196   99.7438  423.6329   7.4e-12
+completo                 4.0  0.9866       0.9830   5.8641   98.9815  101.8137  270.2966   1.4e-10
+</code></pre></div>
+</div>
+<p>Coeficientes, contrastes t e intervalos de confianza del modelo completo y del elegido:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">modelos</span><span class="p">[</span><span class="s2">"completo"</span><span class="p">]</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept    -16.3259     54.995     -0.297      0.772    -137.368     104.717
+superficie     2.6692      0.188     14.228      0.000       2.256       3.082
+antiguedad     2.0208      1.897      1.065      0.310      -2.155       6.197
+distancia     -5.0115      7.248     -0.691      0.504     -20.965      10.942
+==============================================================================
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">modelos</span><span class="p">[</span><span class="s2">"superficie + distancia"</span><span class="p">]</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     38.1993     20.197      1.891      0.083      -5.806      82.205
+superficie     2.6705      0.189     14.157      0.000       2.259       3.082
+distancia    -12.5881      1.398     -9.007      0.000     -15.633      -9.543
+==============================================================================
+</code></pre></div>
+</div>
+<p>Contrastes F parciales entre modelos anidados: ¿aportan algo antigüedad y distancia juntas sobre la superficie?, ¿aporta la antigüedad sobre superficie y distancia?</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">anova_lm</span><span class="p">(</span><span class="n">modelos</span><span class="p">[</span><span class="s2">"superficie"</span><span class="p">],</span> <span class="n">modelos</span><span class="p">[</span><span class="s2">"completo"</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>   df_resid        ssr  df_diff    ss_diff        F      Pr(&gt;F)
+0      13.0  3238.0025      0.0        NaN      NaN         NaN
+1      11.0   378.2704      2.0  2859.7321  41.5801  7.0000e-06
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">anova_lm</span><span class="p">(</span><span class="n">modelos</span><span class="p">[</span><span class="s2">"superficie + distancia"</span><span class="p">],</span> <span class="n">modelos</span><span class="p">[</span><span class="s2">"completo"</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>   df_resid       ssr  df_diff  ss_diff       F  Pr(&gt;F)
+0      12.0  417.2768      0.0      NaN     NaN     NaN
+1      11.0  378.2704      1.0  39.0064  1.1343  0.3097
+</code></pre></div>
+</div>
+<p>Una variable de ruido sube el <span class="arithmatex">\(R^2\)</span> pero baja el <span class="arithmatex">\(R^2\)</span> ajustado y sube el AIC:</p>
+<div class="highlight"><pre><span></span><code><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">casas_ruido</span> <span class="o">=</span> <span class="n">casas</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">ruido</span><span class="o">=</span><span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">casas</span><span class="p">)))</span>
+<span class="n">con_ruido</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">"precio ~ superficie + distancia + ruido"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">casas_ruido</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">sin_ruido</span> <span class="o">=</span> <span class="n">modelos</span><span class="p">[</span><span class="s2">"superficie + distancia"</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"R²:          </span><span class="si">{</span><span class="n">sin_ruido</span><span class="o">.</span><span class="n">rsquared</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">con_ruido</span><span class="o">.</span><span class="n">rsquared</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>R²:          0.9852 -&gt; 0.9859
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"R² ajustado: </span><span class="si">{</span><span class="n">sin_ruido</span><span class="o">.</span><span class="n">rsquared_adj</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">con_ruido</span><span class="o">.</span><span class="n">rsquared_adj</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>R² ajustado: 0.9828 -&gt; 0.9821
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"AIC:         </span><span class="si">{</span><span class="n">sin_ruido</span><span class="o">.</span><span class="n">aic</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">con_ruido</span><span class="o">.</span><span class="n">aic</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>AIC:         98.45 -&gt; 99.74
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"p-valor del ruido: </span><span class="si">{</span><span class="n">con_ruido</span><span class="o">.</span><span class="n">pvalues</span><span class="p">[</span><span class="s1">'ruido'</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>p-valor del ruido: 0.48
+</code></pre></div>
+</div>
+<p>Entrenamiento y prueba con 120 viviendas simuladas (36 para ajustar, 84 para evaluar):</p>
+<div class="highlight"><pre><span></span><code><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">120</span>
+<span class="n">sup</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">()</span>
+<span class="n">dist</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ant</span> <span class="o">=</span> <span class="p">(</span><span class="mi">27</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">dist</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span><span class="o">.</span><span class="n">round</span><span class="p">()</span>      <span class="c1"># antigüedad muy correlacionada con la distancia</span>
+<span class="n">precio</span> <span class="o">=</span> <span class="mi">40</span> <span class="o">+</span> <span class="mf">2.7</span> <span class="o">*</span> <span class="n">sup</span> <span class="o">-</span> <span class="mf">12.5</span> <span class="o">*</span> <span class="n">dist</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># la antigüedad no influye</span>
+<span class="n">sim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"superficie"</span><span class="p">:</span> <span class="n">sup</span><span class="p">,</span> <span class="s2">"antiguedad"</span><span class="p">:</span> <span class="n">ant</span><span class="p">,</span> <span class="s2">"distancia"</span><span class="p">:</span> <span class="n">dist</span><span class="p">,</span> <span class="s2">"precio"</span><span class="p">:</span> <span class="n">precio</span><span class="p">})</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">21</span><span class="p">):</span>
+    <span class="n">sim</span><span class="p">[</span><span class="sa">f</span><span class="s2">"x</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">"</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>                        <span class="c1"># 20 columnas de ruido</span>
+
+<span class="n">entrenamiento</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">prueba</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">entrenamiento</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+<span class="n">ruido</span> <span class="o">=</span> <span class="s2">" + "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"x</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">21</span><span class="p">))</span>
+<span class="n">candidatos</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"superficie"</span><span class="p">:</span> <span class="s2">"precio ~ superficie"</span><span class="p">,</span>
+    <span class="s2">"superficie + distancia"</span><span class="p">:</span> <span class="s2">"precio ~ superficie + distancia"</span><span class="p">,</span>
+    <span class="s2">"completo"</span><span class="p">:</span> <span class="s2">"precio ~ superficie + antiguedad + distancia"</span><span class="p">,</span>
+    <span class="s2">"completo + 20 de ruido"</span><span class="p">:</span> <span class="s2">"precio ~ superficie + antiguedad + distancia + "</span> <span class="o">+</span> <span class="n">ruido</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">filas</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">candidatos</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">entrenamiento</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+    <span class="n">rmse_ent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">resid</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">rmse_prueba</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">prueba</span><span class="p">[</span><span class="s2">"precio"</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">prueba</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">filas</span><span class="p">[</span><span class="n">nombre</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"R²"</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">rsquared</span><span class="p">,</span> <span class="s2">"R² ajustado"</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">rsquared_adj</span><span class="p">,</span>
+                     <span class="s2">"RMSE entrenamiento"</span><span class="p">:</span> <span class="n">rmse_ent</span><span class="p">,</span> <span class="s2">"RMSE prueba"</span><span class="p">:</span> <span class="n">rmse_prueba</span><span class="p">}</span>
+<span class="n">resultados</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">filas</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resultados</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+<div class="resultado">
+<div class="highlight"><pre><span></span><code>                           R²  R² ajustado  RMSE entrenamiento  RMSE prueba
+superficie              0.618        0.607              18.942       20.704
+superficie + distancia  0.940        0.937               7.497        8.060
+completo                0.943        0.937               7.333        8.181
+completo + 20 de ruido  0.977        0.931               4.701       10.472
+</code></pre></div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">resultados</span><span class="p">[[</span><span class="s2">"RMSE entrenamiento"</span><span class="p">,</span> <span class="s2">"RMSE prueba"</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">),</span> <span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"RMSE (miles €)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Error dentro y fuera de la muestra"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="resultado resultado-figura"><img alt="Figura generada por el código" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIKICAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjU2My43NDQwNjJwdCIgaGVpZ2h0PSIyNDQuMjM2NTYycHQiIHZpZXdCb3g9IjAgMCA1NjMuNzQ0MDYyIDI0NC4yMzY1NjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIj4KIDxtZXRhZGF0YT4KICA8cmRmOlJERiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgIDxjYzpXb3JrPgogICAgPGRjOnR5cGUgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIvPgogICAgPGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+CiAgICA8ZGM6Y3JlYXRvcj4KICAgICA8Y2M6QWdlbnQ+CiAgICAgIDxkYzp0aXRsZT5NYXRwbG90bGliIHYzLjExLjIsIGh0dHBzOi8vbWF0cGxvdGxpYi5vcmcvPC9kYzp0aXRsZT4KICAgICA8L2NjOkFnZW50PgogICAgPC9kYzpjcmVhdG9yPgogICA8L2NjOldvcms+CiAgPC9yZGY6UkRGPgogPC9tZXRhZGF0YT4KIDxkZWZzPgogIDxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+KntzdHJva2UtbGluZWpvaW46IHJvdW5kOyBzdHJva2UtbGluZWNhcDogYnV0dH08L3N0eWxlPgogPC9kZWZzPgogPGcgaWQ9ImZpZ3VyZV8xIj4KICA8ZyBpZD0icGF0Y2hfMSI+CiAgIDxwYXRoIGQ9Ik0gMCAyNDQuMjM2NTYyIApMIDU2My43NDQwNjIgMjQ0LjIzNjU2MiAKTCA1NjMuNzQ0MDYyIDAgCkwgMCAwIAp6CiIgc3R5bGU9ImZpbGw6ICNmZmZmZmYiLz4KICA8L2c+CiAgPGcgaWQ9ImF4ZXNfMSI+CiAgIDxnIGlkPSJwYXRjaF8yIj4KICAgIDxwYXRoIGQ9Ik0gNTAuNDY2NDA2IDIyMC4wMzU3ODEgCkwgNTU2LjU0NDA2MiAyMjAuMDM1NzgxIApMIDU1Ni41NDQwNjIgMjIuMzE4MTI1IApMIDUwLjQ2NjQwNiAyMi4zMTgxMjUgCnoKIiBzdHlsZT0iZmlsbDogI2ZmZmZmZiIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8zIj4KICAgIDxwYXRoIGQ9Ik0gODIuMDk2MjYgMjIwLjAzNTc4MSAKTCAxMTMuNzI2MTEzIDIyMC4wMzU3ODEgCkwgMTEzLjcyNjExMyA0Ny43NTk5NiAKTCA4Mi4wOTYyNiA0Ny43NTk5NiAKegoiIGNsaXAtcGF0aD0idXJsKCNwMzMyZmYzMjhjYykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzQiPgogICAgPHBhdGggZD0iTSAyMDguNjE1Njc0IDIyMC4wMzU3ODEgCkwgMjQwLjI0NTUyNyAyMjAuMDM1NzgxIApMIDI0MC4yNDU1MjcgMTUxLjg1NDA5MiAKTCAyMDguNjE1Njc0IDE1MS44NTQwOTIgCnoKIiBjbGlwLXBhdGg9InVybCgjcDMzMmZmMzI4Y2MpIiBzdHlsZT0iZmlsbDogIzFmNzdiNCIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF81Ij4KICAgIDxwYXRoIGQ9Ik0gMzM1LjEzNTA4OCAyMjAuMDM1NzgxIApMIDM2Ni43NjQ5NDEgMjIwLjAzNTc4MSAKTCAzNjYuNzY0OTQxIDE1My4zNDAxMzkgCkwgMzM1LjEzNTA4OCAxNTMuMzQwMTM5IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3AzMzJmZjMyOGNjKSIgc3R5bGU9ImZpbGw6ICMxZjc3YjQiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfNiI+CiAgICA8cGF0aCBkPSJNIDQ2MS42NTQ1MDIgMjIwLjAzNTc4MSAKTCA0OTMuMjg0MzU1IDIyMC4wMzU3ODEgCkwgNDkzLjI4NDM1NSAxNzcuMjgwNzU3IApMIDQ2MS42NTQ1MDIgMTc3LjI4MDc1NyAKegoiIGNsaXAtcGF0aD0idXJsKCNwMzMyZmYzMjhjYykiIHN0eWxlPSJmaWxsOiAjMWY3N2I0Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzciPgogICAgPHBhdGggZD0iTSAxMTMuNzI2MTEzIDIyMC4wMzU3ODEgCkwgMTQ1LjM1NTk2NyAyMjAuMDM1NzgxIApMIDE0NS4zNTU5NjcgMzEuNzMzMjUxIApMIDExMy43MjYxMTMgMzEuNzMzMjUxIAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3AzMzJmZjMyOGNjKSIgc3R5bGU9ImZpbGw6ICNmZjdmMGUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfOCI+CiAgICA8cGF0aCBkPSJNIDI0MC4yNDU1MjcgMjIwLjAzNTc4MSAKTCAyNzEuODc1MzgxIDIyMC4wMzU3ODEgCkwgMjcxLjg3NTM4MSAxNDYuNzMyNTM4IApMIDI0MC4yNDU1MjcgMTQ2LjczMjUzOCAKegoiIGNsaXAtcGF0aD0idXJsKCNwMzMyZmYzMjhjYykiIHN0eWxlPSJmaWxsOiAjZmY3ZjBlIi8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzkiPgogICAgPHBhdGggZD0iTSAzNjYuNzY0OTQxIDIyMC4wMzU3ODEgCkwgMzk4LjM5NDc5NSAyMjAuMDM1NzgxIApMIDM5OC4zOTQ3OTUgMTQ1LjYzMTU5MiAKTCAzNjYuNzY0OTQxIDE0NS42MzE1OTIgCnoKIiBjbGlwLXBhdGg9InVybCgjcDMzMmZmMzI4Y2MpIiBzdHlsZT0iZmlsbDogI2ZmN2YwZSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8xMCI+CiAgICA8cGF0aCBkPSJNIDQ5My4yODQzNTUgMjIwLjAzNTc4MSAKTCA1MjQuOTE0MjA5IDIyMC4wMzU3ODEgCkwgNTI0LjkxNDIwOSAxMjQuNzkxOTQzIApMIDQ5My4yODQzNTUgMTI0Ljc5MTk0MyAKegoiIGNsaXAtcGF0aD0idXJsKCNwMzMyZmYzMjhjYykiIHN0eWxlPSJmaWxsOiAjZmY3ZjBlIi8+CiAgIDwvZz4KICAgPGcgaWQ9Im1hdHBsb3RsaWIuYXhpc18xIj4KICAgIDxnIGlkPSJ4dGlja18xIj4KICAgICA8ZyBpZD0ibGluZTJkXzEiPgogICAgICA8ZGVmcz4KICAgICAgIDxwYXRoIGlkPSJtYmM5NDI4ZDY2NSIgZD0iTSAwIDAgCkwgMCAzLjUgCiIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9kZWZzPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21iYzk0MjhkNjY1IiB4PSIxMTMuNzI2MTEzIiB5PSIyMjAuMDM1NzgxIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzEiPgogICAgICA8IS0tIHN1cGVyZmljaWUgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDg5LjI4MjM2MyAyMzQuNjM0MjE5KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPGRlZnM+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtNTYiIGQ9Ik0gMjgzNCAzMzk3IApMIDI4MzQgMjg1MyAKUSAyNTkxIDI5NzggMjMyOCAzMDQwIApRIDIwNjYgMzEwMyAxNzg0IDMxMDMgClEgMTM1NiAzMTAzIDExNDIgMjk3MiAKUSA5MjggMjg0MSA5MjggMjU3OCAKUSA5MjggMjM3OCAxMDgxIDIyNjQgClEgMTIzNCAyMTUwIDE2OTcgMjA0NyAKTCAxODk0IDIwMDMgClEgMjUwNiAxODcyIDI3NjQgMTYzMyAKUSAzMDIyIDEzOTQgMzAyMiA5NjYgClEgMzAyMiA0NzggMjYzNiAxOTMgClEgMjI1MCAtOTEgMTU3NSAtOTEgClEgMTI5NCAtOTEgOTg5IC0zNiAKUSA2ODQgMTkgMzQ3IDEyOCAKTCAzNDcgNzIyIApRIDY2NiA1NTYgOTc1IDQ3MyAKUSAxMjg0IDM5MSAxNTg4IDM5MSAKUSAxOTk0IDM5MSAyMjEyIDUzMCAKUSAyNDMxIDY2OSAyNDMxIDkyMiAKUSAyNDMxIDExNTYgMjI3MyAxMjgxIApRIDIxMTYgMTQwNiAxNTgxIDE1MjIgCkwgMTM4MSAxNTY5IApRIDg0NyAxNjgxIDYwOSAxOTE0IApRIDM3MiAyMTQ3IDM3MiAyNTUzIApRIDM3MiAzMDQ3IDcyMiAzMzE1IApRIDEwNzIgMzU4NCAxNzE2IDM1ODQgClEgMjAzNCAzNTg0IDIzMTUgMzUzNyAKUSAyNTk3IDM0OTEgMjgzNCAzMzk3IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy01OCIgZD0iTSA1NDQgMTM4MSAKTCA1NDQgMzUwMCAKTCAxMTE5IDM1MDAgCkwgMTExOSAxNDAzIApRIDExMTkgOTA2IDEzMTIgNjU3IApRIDE1MDYgNDA5IDE4OTQgNDA5IApRIDIzNTkgNDA5IDI2MjkgNzA2IApRIDI5MDAgMTAwMyAyOTAwIDE1MTYgCkwgMjkwMCAzNTAwIApMIDM0NzUgMzUwMCAKTCAzNDc1IDAgCkwgMjkwMCAwIApMIDI5MDAgNTM4IApRIDI2OTEgMjE5IDI0MTQgNjQgClEgMjEzOCAtOTEgMTc3MiAtOTEgClEgMTE2OSAtOTEgODU2IDI4NCAKUSA1NDQgNjU5IDU0NCAxMzgxIAp6Ck0gMTk5MSAzNTg0IApMIDE5OTEgMzU4NCAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtNTMiIGQ9Ik0gMTE1OSA1MjUgCkwgMTE1OSAtMTMzMSAKTCA1ODEgLTEzMzEgCkwgNTgxIDM1MDAgCkwgMTE1OSAzNTAwIApMIDExNTkgMjk2OSAKUSAxMzQxIDMyODEgMTYxNyAzNDMyIApRIDE4OTQgMzU4NCAyMjc4IDM1ODQgClEgMjkxNiAzNTg0IDMzMTQgMzA3OCAKUSAzNzEzIDI1NzIgMzcxMyAxNzQ3IApRIDM3MTMgOTIyIDMzMTQgNDE1IApRIDI5MTYgLTkxIDIyNzggLTkxIApRIDE4OTQgLTkxIDE2MTcgNjEgClEgMTM0MSAyMTMgMTE1OSA1MjUgCnoKTSAzMTE2IDE3NDcgClEgMzExNiAyMzgxIDI4NTUgMjc0MiAKUSAyNTk0IDMxMDMgMjEzOCAzMTAzIApRIDE2ODEgMzEwMyAxNDIwIDI3NDIgClEgMTE1OSAyMzgxIDExNTkgMTc0NyAKUSAxMTU5IDExMTMgMTQyMCA3NTIgClEgMTY4MSAzOTEgMjEzOCAzOTEgClEgMjU5NCAzOTEgMjg1NSA3NTIgClEgMzExNiAxMTEzIDMxMTYgMTc0NyAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtNDgiIGQ9Ik0gMzU5NyAxODk0IApMIDM1OTcgMTYxMyAKTCA5NTMgMTYxMyAKUSA5OTEgMTAxOSAxMzExIDcwOCAKUSAxNjMxIDM5NyAyMjAzIDM5NyAKUSAyNTM0IDM5NyAyODQ1IDQ3OCAKUSAzMTU2IDU1OSAzNDYzIDcyMiAKTCAzNDYzIDE3OCAKUSAzMTUzIDQ3IDI4MjggLTIyIApRIDI1MDMgLTkxIDIxNjkgLTkxIApRIDEzMzEgLTkxIDg0MiAzOTYgClEgMzUzIDg4NCAzNTMgMTcxNiAKUSAzNTMgMjU3NSA4MTcgMzA3OSAKUSAxMjgxIDM1ODQgMjA2OSAzNTg0IApRIDI3NzUgMzU4NCAzMTg2IDMxMjkgClEgMzU5NyAyNjc1IDM1OTcgMTg5NCAKegpNIDMwMjIgMjA2MyAKUSAzMDE2IDI1MzQgMjc1OCAyODE1IApRIDI1MDAgMzA5NyAyMDc1IDMwOTcgClEgMTU5NCAzMDk3IDEzMDUgMjgyNSAKUSAxMDE2IDI1NTMgOTcyIDIwNTkgCkwgMzAyMiAyMDYzIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy01NSIgZD0iTSAyNjMxIDI5NjMgClEgMjUzNCAzMDE5IDI0MjAgMzA0NSAKUSAyMzA2IDMwNzIgMjE2OSAzMDcyIApRIDE2ODEgMzA3MiAxNDIwIDI3NTUgClEgMTE1OSAyNDM4IDExNTkgMTg0NCAKTCAxMTU5IDAgCkwgNTgxIDAgCkwgNTgxIDM1MDAgCkwgMTE1OSAzNTAwIApMIDExNTkgMjk1NiAKUSAxMzQxIDMyNzUgMTYzMSAzNDI5IApRIDE5MjIgMzU4NCAyMzM4IDM1ODQgClEgMjM5NyAzNTg0IDI0NjkgMzU3NiAKUSAyNTQxIDM1NjkgMjYyOCAzNTUzIApMIDI2MzEgMjk2MyAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtMTNhZiIgZD0iTSAzNDMxIDM1MDAgCkwgMzQzMSAwIApMIDI4NTMgMCAKTCAyODUzIDMwNTMgCkwgMTI3NSAzMDUzIApMIDEyNzUgMCAKTCA2OTcgMCAKTCA2OTcgMzA1MyAKTCAxNDcgMzA1MyAKTCAxNDcgMzUwMCAKTCA2OTcgMzUwMCAKTCA2OTcgMzc0NCAKUSA2OTcgNDMxNiA5NjcgNDU4OSAKUSAxMjM4IDQ4NjMgMTc5NyA0ODYzIApMIDIzNzUgNDg2MyAKTCAyMzc1IDQzODQgCkwgMTgyNSA0Mzg0IApRIDE1MTYgNDM4NCAxMzk1IDQyNTkgClEgMTI3NSA0MTM0IDEyNzUgMzgwOSAKTCAxMjc1IDM1MDAgCkwgMzQzMSAzNTAwIAp6Ck0gMjg1MyA0ODU2IApMIDM0MzEgNDg1NiAKTCAzNDMxIDQxMjggCkwgMjg1MyA0MTI4IApMIDI4NTMgNDg1NiAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtNDYiIGQ9Ik0gMzEyMiAzMzY2IApMIDMxMjIgMjgyOCAKUSAyODc4IDI5NjMgMjYzMyAzMDMwIApRIDIzODggMzA5NyAyMTM4IDMwOTcgClEgMTU3OCAzMDk3IDEyNjggMjc0MiAKUSA5NTkgMjM4OCA5NTkgMTc0NyAKUSA5NTkgMTEwNiAxMjY4IDc1MSAKUSAxNTc4IDM5NyAyMTM4IDM5NyAKUSAyMzg4IDM5NyAyNjMzIDQ2NCAKUSAyODc4IDUzMSAzMTIyIDY2NiAKTCAzMTIyIDEzNCAKUSAyODgxIDIyIDI2MjMgLTM0IApRIDIzNjYgLTkxIDIwNzUgLTkxIApRIDEyODQgLTkxIDgxOCA0MDYgClEgMzUzIDkwMyAzNTMgMTc0NyAKUSAzNTMgMjYwMyA4MjMgMzA5MyAKUSAxMjk0IDM1ODQgMjExMyAzNTg0IApRIDIzNzggMzU4NCAyNjMxIDM1MjkgClEgMjg4NCAzNDc1IDMxMjIgMzM2NiAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtNGMiIGQ9Ik0gNjAzIDM1MDAgCkwgMTE3OCAzNTAwIApMIDExNzggMCAKTCA2MDMgMCAKTCA2MDMgMzUwMCAKegpNIDYwMyA0ODYzIApMIDExNzggNDg2MyAKTCAxMTc4IDQxMzQgCkwgNjAzIDQxMzQgCkwgNjAzIDQ4NjMgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPC9kZWZzPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01NiIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTIuMDkzNzUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDExNS40Njg3NSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTc4Ljk1MzEyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01NSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjQwLjQ4NDM3NSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xM2FmIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyODEuNTkzNzUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM0NC41NzgxMjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNGMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM5OS41NjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ4IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MjcuMzQzNzUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja18yIj4KICAgICA8ZyBpZD0ibGluZTJkXzIiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21iYzk0MjhkNjY1IiB4PSIyNDAuMjQ1NTI3IiB5PSIyMjAuMDM1NzgxIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzIiPgogICAgICA8IS0tIHN1cGVyZmljaWUgKyBkaXN0YW5jaWEgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE4NS44NzA1MjcgMjM0LjYzNDIxOSkgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDxkZWZzPgogICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTMiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtZSIgZD0iTSAyOTQ0IDQwMTMgCkwgMjk0NCAyMjcyIApMIDQ2ODQgMjI3MiAKTCA0Njg0IDE3NDEgCkwgMjk0NCAxNzQxIApMIDI5NDQgMCAKTCAyNDE5IDAgCkwgMjQxOSAxNzQxIApMIDY3OCAxNzQxIApMIDY3OCAyMjcyIApMIDI0MTkgMjI3MiAKTCAyNDE5IDQwMTMgCkwgMjk0NCA0MDEzIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy00NyIgZD0iTSAyOTA2IDI5NjkgCkwgMjkwNiA0ODYzIApMIDM0ODEgNDg2MyAKTCAzNDgxIDAgCkwgMjkwNiAwIApMIDI5MDYgNTI1IApRIDI3MjUgMjEzIDI0NDggNjEgClEgMjE3MiAtOTEgMTc4NCAtOTEgClEgMTE1MCAtOTEgNzUxIDQxNSAKUSAzNTMgOTIyIDM1MyAxNzQ3IApRIDM1MyAyNTcyIDc1MSAzMDc4IApRIDExNTAgMzU4NCAxNzg0IDM1ODQgClEgMjE3MiAzNTg0IDI0NDggMzQzMiAKUSAyNzI1IDMyODEgMjkwNiAyOTY5IAp6Ck0gOTQ3IDE3NDcgClEgOTQ3IDExMTMgMTIwOCA3NTIgClEgMTQ2OSAzOTEgMTkyNSAzOTEgClEgMjM4MSAzOTEgMjY0MyA3NTIgClEgMjkwNiAxMTEzIDI5MDYgMTc0NyAKUSAyOTA2IDIzODEgMjY0MyAyNzQyIApRIDIzODEgMzEwMyAxOTI1IDMxMDMgClEgMTQ2OSAzMTAzIDEyMDggMjc0MiAKUSA5NDcgMjM4MSA5NDcgMTc0NyAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtNTciIGQ9Ik0gMTE3MiA0NDk0IApMIDExNzIgMzUwMCAKTCAyMzU2IDM1MDAgCkwgMjM1NiAzMDUzIApMIDExNzIgMzA1MyAKTCAxMTcyIDExNTMgClEgMTE3MiA3MjUgMTI4OSA2MDMgClEgMTQwNiA0ODEgMTc2NiA0ODEgCkwgMjM1NiA0ODEgCkwgMjM1NiAwIApMIDE3NjYgMCAKUSAxMTAwIDAgODQ3IDI0OCAKUSA1OTQgNDk3IDU5NCAxMTUzIApMIDU5NCAzMDUzIApMIDE3MiAzMDUzIApMIDE3MiAzNTAwIApMIDU5NCAzNTAwIApMIDU5NCA0NDk0IApMIDExNzIgNDQ5NCAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtNDQiIGQ9Ik0gMjE5NCAxNzU5IApRIDE0OTcgMTc1OSAxMjI4IDE2MDAgClEgOTU5IDE0NDEgOTU5IDEwNTYgClEgOTU5IDc1MCAxMTYxIDU3MCAKUSAxMzYzIDM5MSAxNzA5IDM5MSAKUSAyMTg4IDM5MSAyNDc3IDczMCAKUSAyNzY2IDEwNjkgMjc2NiAxNjMxIApMIDI3NjYgMTc1OSAKTCAyMTk0IDE3NTkgCnoKTSAzMzQxIDE5OTcgCkwgMzM0MSAwIApMIDI3NjYgMCAKTCAyNzY2IDUzMSAKUSAyNTY5IDIxMyAyMjc1IDYxIApRIDE5ODEgLTkxIDE1NTYgLTkxIApRIDEwMTkgLTkxIDcwMSAyMTEgClEgMzg0IDUxMyAzODQgMTAxOSAKUSAzODQgMTYwOSA3NzkgMTkwOSAKUSAxMTc1IDIyMDkgMTk1OSAyMjA5IApMIDI3NjYgMjIwOSAKTCAyNzY2IDIyNjYgClEgMjc2NiAyNjYzIDI1MDUgMjg4MCAKUSAyMjQ0IDMwOTcgMTc3MiAzMDk3IApRIDE0NzIgMzA5NyAxMTg3IDMwMjUgClEgOTAzIDI5NTMgNjQxIDI4MDkgCkwgNjQxIDMzNDEgClEgOTU2IDM0NjMgMTI1MyAzNTIzIApRIDE1NTAgMzU4NCAxODMxIDM1ODQgClEgMjU5MSAzNTg0IDI5NjYgMzE5MCAKUSAzMzQxIDI3OTcgMzM0MSAxOTk3IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy01MSIgZD0iTSAzNTEzIDIxMTMgCkwgMzUxMyAwIApMIDI5MzggMCAKTCAyOTM4IDIwOTQgClEgMjkzOCAyNTkxIDI3NDQgMjgzNyAKUSAyNTUwIDMwODQgMjE2MyAzMDg0IApRIDE2OTcgMzA4NCAxNDI4IDI3ODcgClEgMTE1OSAyNDkxIDExNTkgMTk3OCAKTCAxMTU5IDAgCkwgNTgxIDAgCkwgNTgxIDM1MDAgCkwgMTE1OSAzNTAwIApMIDExNTkgMjk1NiAKUSAxMzY2IDMyNzIgMTY0NSAzNDI4IApRIDE5MjUgMzU4NCAyMjkxIDM1ODQgClEgMjg5NCAzNTg0IDMyMDMgMzIxMSAKUSAzNTEzIDI4MzggMzUxMyAyMTEzIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDwvZGVmcz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTYiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUyLjA5Mzc1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTUzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMTUuNDY4NzUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE3OC45NTMxMjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI0MC40ODQzNzUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTNhZiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjgxLjU5Mzc1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ2IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzNDQuNTc4MTI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTRjIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzOTkuNTYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDI3LjM0Mzc1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQ4OC44NzUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtZSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTIwLjY1NjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYwNC40NTMxMjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzNi4yMzQzNzUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNGMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDY5OS43MTg3NSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01NiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzI3LjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDc3OS41OTM3NSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00NCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoODE4Ljc5Njg3NSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoODgwLjA3ODEyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00NiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTQzLjQ1MzEyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00YyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTk4LjQzNzUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEwMjYuMjE4NzUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja18zIj4KICAgICA8ZyBpZD0ibGluZTJkXzMiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21iYzk0MjhkNjY1IiB4PSIzNjYuNzY0OTQxIiB5PSIyMjAuMDM1NzgxIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzMiPgogICAgICA8IS0tIGNvbXBsZXRvIC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzNDMuNDI2NjYgMjM0LjYzNDIxOSkgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDxkZWZzPgogICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTUyIiBkPSJNIDE5NTkgMzA5NyAKUSAxNDk3IDMwOTcgMTIyOCAyNzM2IApRIDk1OSAyMzc1IDk1OSAxNzQ3IApRIDk1OSAxMTE5IDEyMjYgNzU4IApRIDE0OTQgMzk3IDE5NTkgMzk3IApRIDI0MTkgMzk3IDI2ODcgNzU5IApRIDI5NTYgMTEyMiAyOTU2IDE3NDcgClEgMjk1NiAyMzY5IDI2ODcgMjczMyAKUSAyNDE5IDMwOTcgMTk1OSAzMDk3IAp6Ck0gMTk1OSAzNTg0IApRIDI3MDkgMzU4NCAzMTM3IDMwOTYgClEgMzU2NiAyNjA5IDM1NjYgMTc0NyAKUSAzNTY2IDg4OCAzMTM3IDM5OCAKUSAyNzA5IC05MSAxOTU5IC05MSAKUSAxMjA2IC05MSA3NzkgMzk4IApRIDM1MyA4ODggMzUzIDE3NDcgClEgMzUzIDI2MDkgNzc5IDMwOTYgClEgMTIwNiAzNTg0IDE5NTkgMzU4NCAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtNTAiIGQ9Ik0gMzMyOCAyODI4IApRIDM1NDQgMzIxNiAzODQ0IDM0MDAgClEgNDE0NCAzNTg0IDQ1NTAgMzU4NCAKUSA1MDk3IDM1ODQgNTM5NCAzMjAxIApRIDU2OTEgMjgxOSA1NjkxIDIxMTMgCkwgNTY5MSAwIApMIDUxMTMgMCAKTCA1MTEzIDIwOTQgClEgNTExMyAyNTk3IDQ5MzQgMjg0MCAKUSA0NzU2IDMwODQgNDM5MSAzMDg0IApRIDM5NDQgMzA4NCAzNjg0IDI3ODcgClEgMzQyNSAyNDkxIDM0MjUgMTk3OCAKTCAzNDI1IDAgCkwgMjg0NyAwIApMIDI4NDcgMjA5NCAKUSAyODQ3IDI2MDAgMjY2OSAyODQyIApRIDI0OTEgMzA4NCAyMTE5IDMwODQgClEgMTY3OCAzMDg0IDE0MTggMjc4NiAKUSAxMTU5IDI0ODggMTE1OSAxOTc4IApMIDExNTkgMCAKTCA1ODEgMCAKTCA1ODEgMzUwMCAKTCAxMTU5IDM1MDAgCkwgMTE1OSAyOTU2IApRIDEzNTYgMzI3OCAxNjMxIDM0MzEgClEgMTkwNiAzNTg0IDIyODQgMzU4NCAKUSAyNjY2IDM1ODQgMjkzMyAzMzkwIApRIDMyMDAgMzE5NyAzMzI4IDI4MjggCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTRmIiBkPSJNIDYwMyA0ODYzIApMIDExNzggNDg2MyAKTCAxMTc4IDAgCkwgNjAzIDAgCkwgNjAzIDQ4NjMgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPC9kZWZzPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00NiIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01MiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTQuOTg0Mzc1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTUwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMTYuMTcxODc1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTUzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMTMuNTc4MTI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTRmIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNzcuMDYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzA0Ljg0Mzc1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU3IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzNjYuMzc1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTUyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MDUuNTc4MTI1IDApIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieHRpY2tfNCI+CiAgICAgPGcgaWQ9ImxpbmUyZF80Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYmM5NDI4ZDY2NSIgeD0iNDkzLjI4NDM1NSIgeT0iMjIwLjAzNTc4MSIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF80Ij4KICAgICAgPCEtLSBjb21wbGV0byArIDIwIGRlIHJ1aWRvIC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MzMuOTM5ODI0IDIzNC42MzQyMTkpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8ZGVmcz4KICAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy0xNSIgZD0iTSAxMjI4IDUzMSAKTCAzNDMxIDUzMSAKTCAzNDMxIDAgCkwgNDY5IDAgCkwgNDY5IDUzMSAKUSA4MjggOTAzIDE0NDggMTUyOSAKUSAyMDY5IDIxNTYgMjIyOCAyMzM4IApRIDI1MzEgMjY3OCAyNjUxIDI5MTQgClEgMjc3MiAzMTUwIDI3NzIgMzM3OCAKUSAyNzcyIDM3NTAgMjUxMSAzOTg0IApRIDIyNTAgNDIxOSAxODMxIDQyMTkgClEgMTUzNCA0MjE5IDEyMDQgNDExNiAKUSA4NzUgNDAxMyA1MDAgMzgwMyAKTCA1MDAgNDQ0MSAKUSA4ODEgNDU5NCAxMjEyIDQ2NzIgClEgMTU0NCA0NzUwIDE4MTkgNDc1MCAKUSAyNTQ0IDQ3NTAgMjk3NSA0Mzg3IApRIDM0MDYgNDAyNSAzNDA2IDM0MTkgClEgMzQwNiAzMTMxIDMyOTggMjg3MyAKUSAzMTkxIDI2MTYgMjkwNiAyMjY2IApRIDI4MjggMjE3NSAyNDA5IDE3NDIgClEgMTk5MSAxMzA5IDEyMjggNTMxIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy0xMyIgZD0iTSAyMDM0IDQyNTAgClEgMTU0NyA0MjUwIDEzMDEgMzc3MCAKUSAxMDU2IDMyOTEgMTA1NiAyMzI4IApRIDEwNTYgMTM2OSAxMzAxIDg4OSAKUSAxNTQ3IDQwOSAyMDM0IDQwOSAKUSAyNTI1IDQwOSAyNzcwIDg4OSAKUSAzMDE2IDEzNjkgMzAxNiAyMzI4IApRIDMwMTYgMzI5MSAyNzcwIDM3NzAgClEgMjUyNSA0MjUwIDIwMzQgNDI1MCAKegpNIDIwMzQgNDc1MCAKUSAyODE5IDQ3NTAgMzIzMyA0MTI5IApRIDM2NDcgMzUwOSAzNjQ3IDIzMjggClEgMzY0NyAxMTUwIDMyMzMgNTI5IApRIDI4MTkgLTkxIDIwMzQgLTkxIApRIDEyNTAgLTkxIDgzNiA1MjkgClEgNDIyIDExNTAgNDIyIDIzMjggClEgNDIyIDM1MDkgODM2IDQxMjkgClEgMTI1MCA0NzUwIDIwMzQgNDc1MCAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8L2RlZnM+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ2Ii8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTUyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1NC45ODQzNzUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDExNi4xNzE4NzUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIxMy41NzgxMjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNGYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI3Ny4wNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ4IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMDQuODQzNzUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM2Ni4zNzUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQwNS41NzgxMjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDY2Ljc2NTYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy1lIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0OTguNTQ2ODc1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDU4Mi4zNDM3NSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xNSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjE0LjEyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjc3Ljc1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDc0MS4zNzUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDc3My4xNTYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoODM2LjY0MDYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4OTguMTcxODc1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5MjkuOTUzMTI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU4IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5NzEuMDYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00YyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTAzNC40Mzc1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ3IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDYyLjIxODc1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTUyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMTI1LjcwMzEyNSAwKSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICA8L2c+CiAgIDxnIGlkPSJtYXRwbG90bGliLmF4aXNfMiI+CiAgICA8ZyBpZD0ieXRpY2tfMSI+CiAgICAgPGcgaWQ9ImxpbmUyZF81Ij4KICAgICAgPGRlZnM+CiAgICAgICA8cGF0aCBpZD0ibWM1MjU5MGY2ZjMiIGQ9Ik0gMCAwIApMIC0zLjUgMCAKIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2RlZnM+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWM1MjU5MGY2ZjMiIHg9IjUwLjQ2NjQwNiIgeT0iMjIwLjAzNTc4MSIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF81Ij4KICAgICAgPCEtLSAwLjAgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI3LjU2MzI4MSAyMjMuODM0NjA5KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPGRlZnM+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtMTEiIGQ9Ik0gNjg0IDc5NCAKTCAxMzQ0IDc5NCAKTCAxMzQ0IDAgCkwgNjg0IDAgCkwgNjg0IDc5NCAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8L2RlZnM+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQwNjI1IDApIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfMiI+CiAgICAgPGcgaWQ9ImxpbmUyZF82Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iNTAuNDY2NDA2IiB5PSIxOTcuMjk4MzA2IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzYiPgogICAgICA8IS0tIDIuNSAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjcuNTYzMjgxIDIwMS4wOTcxMzUpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8ZGVmcz4KICAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy0xOCIgZD0iTSA2OTEgNDY2NiAKTCAzMTY5IDQ2NjYgCkwgMzE2OSA0MTM0IApMIDEyNjkgNDEzNCAKTCAxMjY5IDI5OTEgClEgMTQwNiAzMDM4IDE1NDMgMzA2MSAKUSAxNjgxIDMwODQgMTgxOSAzMDg0IApRIDI2MDAgMzA4NCAzMDU2IDI2NTYgClEgMzUxMyAyMjI4IDM1MTMgMTQ5NyAKUSAzNTEzIDc0NCAzMDQ0IDMyNiAKUSAyNTc1IC05MSAxNzIyIC05MSAKUSAxNDI4IC05MSAxMTIzIC00MSAKUSA4MTkgOSA0OTQgMTA5IApMIDQ5NCA3NDQgClEgNzc1IDU5MSAxMDc1IDUxNiAKUSAxMzc1IDQ0MSAxNzA5IDQ0MSAKUSAyMjUwIDQ0MSAyNTY1IDcyNSAKUSAyODgxIDEwMDkgMjg4MSAxNDk3IApRIDI4ODEgMTk4NCAyNTY1IDIyNjggClEgMjI1MCAyNTUzIDE3MDkgMjU1MyAKUSAxNDU2IDI1NTMgMTIwNCAyNDk3IApRIDk1MyAyNDQxIDY5MSAyMzIyIApMIDY5MSA0NjY2IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDwvZGVmcz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTUiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzLjYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTUuNDA2MjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja18zIj4KICAgICA8ZyBpZD0ibGluZTJkXzciPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21jNTI1OTBmNmYzIiB4PSI1MC40NjY0MDYiIHk9IjE3NC41NjA4MzIiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfNyI+CiAgICAgIDwhLS0gNS4wIC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNy41NjMyODEgMTc4LjM1OTY2KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xOCIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjMuNjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5NS40MDYyNSAwKSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inl0aWNrXzQiPgogICAgIDxnIGlkPSJsaW5lMmRfOCI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWM1MjU5MGY2ZjMiIHg9IjUwLjQ2NjQwNiIgeT0iMTUxLjgyMzM1NyIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF84Ij4KICAgICAgPCEtLSA3LjUgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI3LjU2MzI4MSAxNTUuNjIyMTg1KSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICAgPGRlZnM+CiAgICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtMWEiIGQ9Ik0gNTI1IDQ2NjYgCkwgMzUyNSA0NjY2IApMIDM1MjUgNDM5NyAKTCAxODMxIDAgCkwgMTE3MiAwIApMIDI3NjYgNDEzNCAKTCA1MjUgNDEzNCAKTCA1MjUgNDY2NiAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8L2RlZnM+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTFhIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQwNjI1IDApIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfNSI+CiAgICAgPGcgaWQ9ImxpbmUyZF85Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iNTAuNDY2NDA2IiB5PSIxMjkuMDg1ODgyIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzkiPgogICAgICA8IS0tIDEwLjAgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIxLjIwMDc4MSAxMzIuODg0NzEpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8ZGVmcz4KICAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy0xNCIgZD0iTSA3OTQgNTMxIApMIDE4MjUgNTMxIApMIDE4MjUgNDA5MSAKTCA3MDMgMzg2NiAKTCA3MDMgNDQ0MSAKTCAxODE5IDQ2NjYgCkwgMjQ1MCA0NjY2IApMIDI0NTAgNTMxIApMIDM0ODEgNTMxIApMIDM0ODEgMCAKTCA3OTQgMCAKTCA3OTQgNTMxIAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDwvZGVmcz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTQiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzLjYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTI3LjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja182Ij4KICAgICA8ZyBpZD0ibGluZTJkXzEwIj4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iNTAuNDY2NDA2IiB5PSIxMDYuMzQ4NDA3IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzEwIj4KICAgICAgPCEtLSAxMi41IC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMS4yMDA3ODEgMTEwLjE0NzIzNSkgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTQiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzLjYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTI3LjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE4IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja183Ij4KICAgICA8ZyBpZD0ibGluZTJkXzExIj4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iNTAuNDY2NDA2IiB5PSI4My42MTA5MzIiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTEiPgogICAgICA8IS0tIDE1LjAgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIxLjIwMDc4MSA4Ny40MDk3Nikgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTQiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzLjYyNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTI3LjI1IDApIi8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTkuMDMxMjUgMCkiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja184Ij4KICAgICA8ZyBpZD0ibGluZTJkXzEyIj4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYzUyNTkwZjZmMyIgeD0iNTAuNDY2NDA2IiB5PSI2MC44NzM0NTciIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTIiPgogICAgICA8IS0tIDE3LjUgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIxLjIwMDc4MSA2NC42NzIyODUpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE0Ii8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTFhIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyNy4yNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTU5LjAzMTI1IDApIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfOSI+CiAgICAgPGcgaWQ9ImxpbmUyZF8xMyI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWM1MjU5MGY2ZjMiIHg9IjUwLjQ2NjQwNiIgeT0iMzguMTM1OTgyIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzEzIj4KICAgICAgPCEtLSAyMC4wIC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMS4yMDA3ODEgNDEuOTM0ODEpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTE1Ii8+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjUgMCkiLz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyNy4yNSAwKSIvPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0xMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTU5LjAzMTI1IDApIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0idGV4dF8xNCI+CiAgICAgPCEtLSBSTVNFIChtaWxlcyDigqwpIC0tPgogICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE0Ljc5ODQzOCAxNTguODg5NDUzKSByb3RhdGUoLTkwKSBzY2FsZSgwLjEgLTAuMSkiPgogICAgICA8ZGVmcz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTM1IiBkPSJNIDI4NDEgMjE4OCAKUSAzMDQ0IDIxMTkgMzIzNiAxODk0IApRIDM0MjggMTY2OSAzNjIyIDEyNzUgCkwgNDI2MyAwIApMIDM1ODQgMCAKTCAyOTg4IDExOTcgClEgMjc1NiAxNjY2IDI1MzkgMTgxOSAKUSAyMzIyIDE5NzIgMTk0NyAxOTcyIApMIDEyNTkgMTk3MiAKTCAxMjU5IDAgCkwgNjI4IDAgCkwgNjI4IDQ2NjYgCkwgMjA1MyA0NjY2IApRIDI4NTMgNDY2NiAzMjQ3IDQzMzEgClEgMzY0MSAzOTk3IDM2NDEgMzMyMiAKUSAzNjQxIDI4ODEgMzQzNiAyNTkwIApRIDMyMzEgMjMwMCAyODQxIDIxODggCnoKTSAxMjU5IDQxNDcgCkwgMTI1OSAyNDkxIApMIDIwNTMgMjQ5MSAKUSAyNTA5IDI0OTEgMjc0MiAyNzAyIApRIDI5NzUgMjkxMyAyOTc1IDMzMjIgClEgMjk3NSAzNzMxIDI3NDIgMzkzOSAKUSAyNTA5IDQxNDcgMjA1MyA0MTQ3IApMIDEyNTkgNDE0NyAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy0zMCIgZD0iTSA2MjggNDY2NiAKTCAxNTY5IDQ2NjYgCkwgMjc1OSAxNDkxIApMIDM5NTYgNDY2NiAKTCA0ODk3IDQ2NjYgCkwgNDg5NyAwIApMIDQyODEgMCAKTCA0MjgxIDQwOTcgCkwgMzA3OCA4OTcgCkwgMjQ0NCA4OTcgCkwgMTI0MSA0MDk3IApMIDEyNDEgMCAKTCA2MjggMCAKTCA2MjggNDY2NiAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy0zNiIgZD0iTSAzNDI1IDQ1MTMgCkwgMzQyNSAzODk3IApRIDMwNjYgNDA2OSAyNzQ3IDQxNTMgClEgMjQyOCA0MjM4IDIxMzEgNDIzOCAKUSAxNjE2IDQyMzggMTMzNiA0MDM4IApRIDEwNTYgMzgzOCAxMDU2IDM0NjkgClEgMTA1NiAzMTU5IDEyNDIgMzAwMSAKUSAxNDI4IDI4NDQgMTk0NyAyNzQ3IApMIDIzMjggMjY2OSAKUSAzMDM0IDI1MzQgMzM3MCAyMTk1IApRIDM3MDYgMTg1NiAzNzA2IDEyODggClEgMzcwNiA2MDkgMzI1MSAyNTkgClEgMjc5NyAtOTEgMTkxOSAtOTEgClEgMTU4OCAtOTEgMTIxNCAtMTYgClEgODQxIDU5IDQ0MSAyMDYgCkwgNDQxIDg1NiAKUSA4MjUgNjQxIDExOTQgNTMxIApRIDE1NjMgNDIyIDE5MTkgNDIyIApRIDI0NTkgNDIyIDI3NTMgNjM0IApRIDMwNDcgODQ3IDMwNDcgMTI0MSAKUSAzMDQ3IDE1ODQgMjgzNiAxNzc4IApRIDI2MjUgMTk3MiAyMTQ0IDIwNjkgCkwgMTc1OSAyMTQ0IApRIDEwNTMgMjI4NCA3MzcgMjU4NCAKUSA0MjIgMjg4NCA0MjIgMzQxOSAKUSA0MjIgNDAzOCA4NTggNDM5NCAKUSAxMjk0IDQ3NTAgMjA1OSA0NzUwIApRIDIzODggNDc1MCAyNzI4IDQ2OTAgClEgMzA2OSA0NjMxIDM0MjUgNDUxMyAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy0yOCIgZD0iTSA2MjggNDY2NiAKTCAzNTc4IDQ2NjYgCkwgMzU3OCA0MTM0IApMIDEyNTkgNDEzNCAKTCAxMjU5IDI3NTMgCkwgMzQ4MSAyNzUzIApMIDM0ODEgMjIyMiAKTCAxMjU5IDIyMjIgCkwgMTI1OSA1MzEgCkwgMzYzNCA1MzEgCkwgMzYzNCAwIApMIDYyOCAwIApMIDYyOCA0NjY2IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLWIiIGQ9Ik0gMTk4NCA0ODU2IApRIDE1NjYgNDEzOCAxMzYyIDM0MzQgClEgMTE1OSAyNzMxIDExNTkgMjAwOSAKUSAxMTU5IDEyODggMTM2NCA1ODAgClEgMTU2OSAtMTI4IDE5ODQgLTg0NCAKTCAxNDg0IC04NDQgClEgMTAxNiAtMTA5IDc4MyA2MDAgClEgNTUwIDEzMDkgNTUwIDIwMDkgClEgNTUwIDI3MDYgNzgxIDM0MTIgClEgMTAxMyA0MTE5IDE0ODQgNDg1NiAKTCAxOTg0IDQ4NTYgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPHBhdGggaWQ9IkRlamFWdVNhbnMtYjgzIiBkPSJNIDM2NDcgNDMwNiAKTCAzNjQ3IDM2NDEgClEgMzM2MyAzOTY5IDMwOTggNDEwOSAKUSAyODM0IDQyNTAgMjUxNiA0MjUwIApRIDIwMjUgNDI1MCAxNzA5IDM5MzcgClEgMTM5NCAzNjI1IDEyOTQgMzA0MSAKTCAzMDk3IDMwNDEgCkwgMjkyNSAyNjU2IApMIDEyNDQgMjY1NiAKUSAxMjM4IDI1ODEgMTIzNiAyNTA5IApRIDEyMzQgMjQzOCAxMjM0IDIzMjggClEgMTIzNCAyMjI4IDEyMzYgMjE1NiAKUSAxMjM4IDIwODQgMTI0NCAyMDA5IApMIDI2MzggMjAwOSAKTCAyNDYzIDE2MjUgCkwgMTI5NCAxNjI1IApRIDEzOTQgMTA0MSAxNzA5IDcyNSAKUSAyMDI1IDQwOSAyNTE2IDQwOSAKUSAyODM0IDQwOSAzMDk4IDU1MCAKUSAzMzYzIDY5MSAzNjQ3IDEwMTkgCkwgMzY0NyAzNTkgClEgMzM2OSAxMzQgMzA4MCAyMSAKUSAyNzkxIC05MSAyNDkxIC05MSAKUSAxNzUwIC05MSAxMjY3IDM2MiAKUSA3ODQgODE2IDY1OSAxNjI1IApMIDAgMTYyNSAKTCAxNzIgMjAwOSAKTCA2MDYgMjAwOSAKUSA2MDYgMjA4MSA2MDQgMjE1NCAKUSA2MDMgMjIyOCA2MDMgMjMyOCAKUSA2MDMgMjQzOCA2MDQgMjUxMSAKUSA2MDYgMjU4NCA2MDYgMjY1NiAKTCAwIDI2NTYgCkwgMTcyIDMwNDEgCkwgNjU5IDMwNDEgClEgNzg0IDM4NDQgMTI2OCA0Mjk3IApRIDE3NTMgNDc1MCAyNDkxIDQ3NTAgClEgMjc5NyA0NzUwIDMwODYgNDYzOSAKUSAzMzc1IDQ1MjggMzY0NyA0MzA2IAp6CiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLWMiIGQ9Ik0gNTEzIDQ4NTYgCkwgMTAxMyA0ODU2IApRIDE0ODEgNDExOSAxNzE0IDM0MTIgClEgMTk0NyAyNzA2IDE5NDcgMjAwOSAKUSAxOTQ3IDEzMDkgMTcxNCA2MDAgClEgMTQ4MSAtMTA5IDEwMTMgLTg0NCAKTCA1MTMgLTg0NCAKUSA5MjggLTEyOCAxMTMzIDU4MCAKUSAxMzM4IDEyODggMTMzOCAyMDA5IApRIDEzMzggMjczMSAxMTMzIDM0MzQgClEgOTI4IDQxMzggNTEzIDQ4NTYgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICA8L2RlZnM+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMzUiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zMCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjkuNDg0Mzc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMzYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1NS43NjU2MjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0yOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE5LjI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjgyLjQzNzUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy1iIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMTQuMjE4NzUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01MCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzUzLjIzNDM3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTRjIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0NTAuNjQwNjI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNGYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQ3OC40MjE4NzUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTA2LjIwMzEyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU2IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1NjcuNzM0Mzc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjE5LjgyODEyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLWI4MyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjUxLjYwOTM3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLWMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcxNS4yMzQzNzUgMCkiLz4KICAgICA8L2c+CiAgICA8L2c+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzExIj4KICAgIDxwYXRoIGQ9Ik0gNTAuNDY2NDA2IDIyMC4wMzU3ODEgCkwgNTAuNDY2NDA2IDIyLjMxODEyNSAKIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuODsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlcjsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8xMiI+CiAgICA8cGF0aCBkPSJNIDUwLjQ2NjQwNiAyMjAuMDM1NzgxIApMIDU1Ni41NDQwNjIgMjIwLjAzNTc4MSAKIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuODsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlcjsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICA8L2c+CiAgIDxnIGlkPSJ0ZXh0XzE1Ij4KICAgIDwhLS0gRXJyb3IgZGVudHJvIHkgZnVlcmEgZGUgbGEgbXVlc3RyYSAtLT4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIwMC42NzE3OTcgMTYuMzE4MTI1KSBzY2FsZSgwLjEyIC0wLjEyKSI+CiAgICAgPGRlZnM+CiAgICAgIDxwYXRoIGlkPSJEZWphVnVTYW5zLTVjIiBkPSJNIDIwNTkgLTMyNSAKUSAxODE2IC05NTAgMTU4NCAtMTE0MCAKUSAxMzUzIC0xMzMxIDk2NiAtMTMzMSAKTCA1MDYgLTEzMzEgCkwgNTA2IC04NTAgCkwgODQ0IC04NTAgClEgMTA4MSAtODUwIDEyMTIgLTczNyAKUSAxMzQ0IC02MjUgMTUwMyAtMjA2IApMIDE2MDYgNTYgCkwgMTkxIDM1MDAgCkwgODAwIDM1MDAgCkwgMTg5NCA3NjMgCkwgMjk4OCAzNTAwIApMIDM1OTcgMzUwMCAKTCAyMDU5IC0zMjUgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy00OSIgZD0iTSAyMzc1IDQ4NjMgCkwgMjM3NSA0Mzg0IApMIDE4MjUgNDM4NCAKUSAxNTE2IDQzODQgMTM5NSA0MjU5IApRIDEyNzUgNDEzNCAxMjc1IDM4MDkgCkwgMTI3NSAzNTAwIApMIDIyMjIgMzUwMCAKTCAyMjIyIDMwNTMgCkwgMTI3NSAzMDUzIApMIDEyNzUgMCAKTCA2OTcgMCAKTCA2OTcgMzA1MyAKTCAxNDcgMzA1MyAKTCAxNDcgMzUwMCAKTCA2OTcgMzUwMCAKTCA2OTcgMzc0NCAKUSA2OTcgNDMyOCA5NjkgNDU5NSAKUSAxMjQxIDQ4NjMgMTgzMSA0ODYzIApMIDIzNzUgNDg2MyAKegoiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgPC9kZWZzPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMjgiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My4xODc1IDApIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01NSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTAyLjU0Njg3NSAwKSIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE0MS40NTMxMjUgMCkiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMDIuNjQwNjI1IDApIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNDMuNzUgMCkiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ3IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNzUuNTMxMjUgMCkiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ4IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMzkuMDE1NjI1IDApIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDAwLjU0Njg3NSAwKSIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQ2My45MjE4NzUgMCkiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MDMuMTI1IDApIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01MiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTQyLjAzMTI1IDApIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2MDMuMjE4NzUgMCkiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTVjIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2MzUgMCkiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDY5NC4xODc1IDApIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00OSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzI1Ljk2ODc1IDApIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzYxLjE3MTg3NSAwKSIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDgyNC41NDY4NzUgMCkiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4ODYuMDc4MTI1IDApIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00NCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTI3LjE4NzUgMCkiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk4OC40Njg3NSAwKSIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEwMjAuMjUgMCkiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ4IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDgzLjczNDM3NSAwKSIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTE0NS4yNjU2MjUgMCkiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTRmIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMTc3LjA0Njg3NSAwKSIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyMDQuODI4MTI1IDApIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMjY2LjEwOTM3NSAwKSIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyOTcuODkwNjI1IDApIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTM5NS4yOTY4NzUgMCkiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ4IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNDU4LjY3MTg3NSAwKSIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1MjAuMjAzMTI1IDApIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01NyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTU3Mi4yOTY4NzUgMCkiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNjExLjUgMCkiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTQ0IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNjUyLjYwOTM3NSAwKSIvPgogICAgPC9nPgogICA8L2c+CiAgIDxnIGlkPSJsZWdlbmRfMSI+CiAgICA8ZyBpZD0icGF0Y2hfMTMiPgogICAgIDxwYXRoIGQ9Ik0gNDEyLjE1MzQzNyA2MC4zMTk2ODcgCkwgNTQ5LjU0NDA2MiA2MC4zMTk2ODcgClEgNTUxLjU0NDA2MiA2MC4zMTk2ODcgNTUxLjU0NDA2MiA1OC4zMTk2ODcgCkwgNTUxLjU0NDA2MiAyOS4zMTgxMjUgClEgNTUxLjU0NDA2MiAyNy4zMTgxMjUgNTQ5LjU0NDA2MiAyNy4zMTgxMjUgCkwgNDEyLjE1MzQzNyAyNy4zMTgxMjUgClEgNDEwLjE1MzQzNyAyNy4zMTgxMjUgNDEwLjE1MzQzNyAyOS4zMTgxMjUgCkwgNDEwLjE1MzQzNyA1OC4zMTk2ODcgClEgNDEwLjE1MzQzNyA2MC4zMTk2ODcgNDEyLjE1MzQzNyA2MC4zMTk2ODcgCnoKIiBzdHlsZT0iZmlsbDogI2ZmZmZmZjsgb3BhY2l0eTogMC44OyBzdHJva2U6ICNjY2NjY2M7IHN0cm9rZS1saW5lam9pbjogbWl0ZXIiLz4KICAgIDwvZz4KICAgIDxnIGlkPSJwYXRjaF8xNCI+CiAgICAgPHBhdGggZD0iTSA0MTQuMTUzNDM3IDM4LjkxNjU2MiAKTCA0MzQuMTUzNDM3IDM4LjkxNjU2MiAKTCA0MzQuMTUzNDM3IDMxLjkxNjU2MiAKTCA0MTQuMTUzNDM3IDMxLjkxNjU2MiAKegoiIHN0eWxlPSJmaWxsOiAjMWY3N2I0Ii8+CiAgICA8L2c+CiAgICA8ZyBpZD0idGV4dF8xNiI+CiAgICAgPCEtLSBSTVNFIGVudHJlbmFtaWVudG8gLS0+CiAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQyLjE1MzQzNyAzOC45MTY1NjIpIHNjYWxlKDAuMSAtMC4xKSI+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMzUiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zMCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjkuNDg0Mzc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMzYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1NS43NjU2MjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0yOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE5LjI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjgyLjQzNzUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzE0LjIxODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM3NS43NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU3IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MzkuMTI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQ3OC4zMjgxMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTE3LjIzNDM3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTUxIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1NzguNzY1NjI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDY0Mi4xNDA2MjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01MCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzAzLjQyMTg3NSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTRjIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4MDAuODI4MTI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDgyOC42MDkzNzUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoODkwLjE0MDYyNSAwKSIvPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTU3IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5NTMuNTE1NjI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk5Mi43MTg3NSAwKSIvPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJwYXRjaF8xNSI+CiAgICAgPHBhdGggZD0iTSA0MTQuMTUzNDM3IDUzLjkxNzM0NCAKTCA0MzQuMTUzNDM3IDUzLjkxNzM0NCAKTCA0MzQuMTUzNDM3IDQ2LjkxNzM0NCAKTCA0MTQuMTUzNDM3IDQ2LjkxNzM0NCAKegoiIHN0eWxlPSJmaWxsOiAjZmY3ZjBlIi8+CiAgICA8L2c+CiAgICA8ZyBpZD0idGV4dF8xNyI+CiAgICAgPCEtLSBSTVNFIHBydWViYSAtLT4KICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0NDIuMTUzNDM3IDUzLjkxNzM0NCkgc2NhbGUoMC4xIC0wLjEpIj4KICAgICAgPGRlZnM+CiAgICAgICA8cGF0aCBpZD0iRGVqYVZ1U2Fucy00NSIgZD0iTSAzMTE2IDE3NDcgClEgMzExNiAyMzgxIDI4NTUgMjc0MiAKUSAyNTk0IDMxMDMgMjEzOCAzMTAzIApRIDE2ODEgMzEwMyAxNDIwIDI3NDIgClEgMTE1OSAyMzgxIDExNTkgMTc0NyAKUSAxMTU5IDExMTMgMTQyMCA3NTIgClEgMTY4MSAzOTEgMjEzOCAzOTEgClEgMjU5NCAzOTEgMjg1NSA3NTIgClEgMzExNiAxMTEzIDMxMTYgMTc0NyAKegpNIDExNTkgMjk2OSAKUSAxMzQxIDMyODEgMTYxNyAzNDMyIApRIDE4OTQgMzU4NCAyMjc4IDM1ODQgClEgMjkxNiAzNTg0IDMzMTQgMzA3OCAKUSAzNzEzIDI1NzIgMzcxMyAxNzQ3IApRIDM3MTMgOTIyIDMzMTQgNDE1IApRIDI5MTYgLTkxIDIyNzggLTkxIApRIDE4OTQgLTkxIDE2MTcgNjEgClEgMTM0MSAyMTMgMTE1OSA1MjUgCkwgMTE1OSAwIApMIDU4MSAwIApMIDU4MSA0ODYzIApMIDExNTkgNDg2MyAKTCAxMTU5IDI5NjkgCnoKIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICA8L2RlZnM+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMzUiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zMCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjkuNDg0Mzc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMzYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1NS43NjU2MjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0yOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE5LjI1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjgyLjQzNzUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01MyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzE0LjIxODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM3Ny43MDMxMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy01OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDE4LjgxMjUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDgyLjE4NzUgMCkiLz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy00NSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTQzLjcxODc1IDApIi8+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNDQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYwNy4yMDMxMjUgMCkiLz4KICAgICA8L2c+CiAgICA8L2c+CiAgIDwvZz4KICA8L2c+CiA8L2c+CiA8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9InAzMzJmZjMyOGNjIj4KICAgPHJlY3QgeD0iNTAuNDY2NDA2IiB5PSIyMi4zMTgxMjUiIHdpZHRoPSI1MDYuMDc3NjU2IiBoZWlnaHQ9IjE5Ny43MTc2NTYiLz4KICA8L2NsaXBQYXRoPgogPC9kZWZzPgo8L3N2Zz4K"></div>
+
+<div class="admonition success">
+<p class="admonition-title">Lo esencial</p>
+<ul>
+<li>En regresión múltiple, el <strong>contraste t</strong> de cada coeficiente pregunta si la variable aporta algo <strong>además de las demás</strong>, con <span class="arithmatex">\(n - p - 1\)</span> grados de libertad. Un p-valor grande no significa que la variable no tenga relación con <span class="arithmatex">\(Y\)</span>, sobre todo si está correlacionada con otra del modelo.</li>
+<li>El <strong>contraste F global</strong> comprueba si el modelo explica algo; el <strong>F parcial</strong> compara modelos anidados y permite contrastar un grupo de variables a la vez. En las viviendas, la ubicación (antigüedad y distancia juntas) es claramente significativa aunque ninguna lo sea por separado en el modelo completo.</li>
+<li>El <strong><span class="arithmatex">\(R^2\)</span> siempre sube</strong> al añadir variables, incluso de ruido. Para comparar modelos de distinto tamaño se usan el <strong><span class="arithmatex">\(R^2\)</span> ajustado</strong>, <span class="arithmatex">\(1 - (1 - R^2)(n - 1)/(n - p - 1)\)</span>, el <strong>AIC</strong> y el <strong>BIC</strong> (cuanto más bajos, mejor; diferencias menores que 2 no cuentan).</li>
+<li>Cuando la estadística empata, decide el <strong>conocimiento del negocio</strong>: en las viviendas, superficie y distancia, porque la distancia tiene un efecto creíble y la antigüedad solo la sustituye. Probar combinaciones hasta encontrar p-valores pequeños (<em>p-hacking</em>, <em>stepwise</em>) invalida los p-valores del modelo final.</li>
+<li>Para predecir, el error que importa es el de <strong>datos nuevos</strong>: el RMSE en un conjunto de prueba. Un modelo con demasiadas variables <strong>sobreajusta</strong>: menos error de entrenamiento y más error de prueba.</li>
+</ul>
+</div>
+<h2 id="ejercicios">Ejercicios<a class="headerlink" href="#ejercicios" title="Permanent link">&para;</a></h2>
+<p><strong>1.</strong> Con 30 observaciones, el modelo A tiene 2 predictores y <span class="arithmatex">\(R^2 = 0.60\)</span>, y el modelo B tiene 6 predictores y <span class="arithmatex">\(R^2 = 0.63\)</span>. Calcula el <span class="arithmatex">\(R^2\)</span> ajustado de cada uno. ¿Cuál prefieres?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>Modelo A: <span class="arithmatex">\(R^2_\text{aj} = 1 - 0.40 \cdot \frac{29}{30 - 2 - 1} = 1 - 0.40 \cdot \frac{29}{27} = 1 - 0.430 = 0.570\)</span>.</p>
+<p>Modelo B: <span class="arithmatex">\(R^2_\text{aj} = 1 - 0.37 \cdot \frac{29}{30 - 6 - 1} = 1 - 0.37 \cdot \frac{29}{23} = 1 - 0.467 = 0.533\)</span>.</p>
+<p>El modelo B explica un 3 % más de la variabilidad, pero lo consigue con cuatro variables más, y con 30 observaciones esa mejora no compensa. Según el <span class="arithmatex">\(R^2\)</span> ajustado, el modelo A es mejor: más sencillo y con menor varianza residual.</p>
+</details>
+<p><strong>2.</strong> Un modelo con <span class="arithmatex">\(p = 3\)</span> predictores ajustado con <span class="arithmatex">\(n = 40\)</span> observaciones tiene <span class="arithmatex">\(R^2 = 0.30\)</span>. Calcula el estadístico F global. ¿Es significativo al 5 %? (El cuantil 0.95 de la <span class="arithmatex">\(F\)</span> con 3 y 36 grados de libertad es 2.87.)</p>
+<details class="success">
+<summary>Solución</summary>
+<p>$<span class="arithmatex">\(F = \frac{R^2 / p}{(1 - R^2) / (n - p - 1)} = \frac{0.30 / 3}{0.70 / 36} = \frac{0.100}{0.0194} = 5.14.\)</span>$
+Como <span class="arithmatex">\(5.14 &gt; 2.87\)</span>, se rechaza <span class="arithmatex">\(H_0\)</span> al 5 %: al menos una de las tres variables tiene relación con <span class="arithmatex">\(Y\)</span>. El p-valor es 0.005 (en Python, <code>stats.f.sf(5.14, 3, 36)</code>). Un <span class="arithmatex">\(R^2\)</span> de 0.30 explica poco, pero con 40 datos basta para descartar que el modelo sea puro ruido.</p>
+</details>
+<p><strong>3.</strong> En el modelo completo de las viviendas, el coeficiente de la distancia es <span class="arithmatex">\(-5.0\)</span> con p-valor 0.50. Un compañero concluye: "la distancia al centro no influye en el precio, la quitamos". ¿Qué le dirías? ¿Qué contraste propondrías?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>El contraste t del modelo completo pregunta si la distancia aporta algo <strong>teniendo ya la antigüedad</strong>, y las dos variables están casi perfectamente correlacionadas (<span class="arithmatex">\(r = -0.989\)</span>). Lo que aporta la distancia ya lo aporta la antigüedad, y por eso su p-valor es grande y su intervalo, <span class="arithmatex">\([-20.97,\ 10.94]\)</span>, enorme: los datos no saben cuánto vale el coeficiente, no dicen que sea cero.</p>
+<p>De hecho, sin la antigüedad, la distancia tiene coeficiente <span class="arithmatex">\(-12.59\)</span> con p-valor menor que 0.001. Para saber si la ubicación importa hay que contrastar las dos variables juntas con un F parcial frente al modelo de solo superficie: <span class="arithmatex">\(F = 41.6\)</span>, p-valor <span class="arithmatex">\(7 \times 10^{-6}\)</span>. La ubicación importa mucho; lo que hay que decidir es con qué variable medirla, y eso lo decide el conocimiento del mercado, no el p-valor.</p>
+</details>
+<p><strong>4.</strong> Con 50 observaciones, un modelo con <span class="arithmatex">\(k = 3\)</span> coeficientes tiene <span class="arithmatex">\(SS_\text{res} = 1\,200\)</span> y otro, con <span class="arithmatex">\(k = 5\)</span> coeficientes (las mismas variables y dos más), tiene <span class="arithmatex">\(SS_\text{res} = 1\,150\)</span>. Calcula la diferencia de AIC y de BIC entre los dos. ¿Cuál prefieres?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>La constante es la misma para los dos modelos, así que basta con calcular las diferencias (grande menos pequeño):
+$<span class="arithmatex">\(\Delta\text{AIC} = 50 \ln\!\left(\frac{1\,150}{1\,200}\right) + 2 \cdot (5 - 3) = 50 \cdot (-0.0426) + 4 = -2.13 + 4 = 1.87,\)</span>$
+$<span class="arithmatex">\(\Delta\text{BIC} = -2.13 + (5 - 3) \ln 50 = -2.13 + 7.82 = 5.70.\)</span>$
+Los dos criterios son más altos en el modelo grande, así que los dos prefieren el pequeño. Las dos variables nuevas reducen <span class="arithmatex">\(SS_\text{res}\)</span> un 4 %, demasiado poco para lo que cuestan. Según el AIC la diferencia es menor que 2 y apenas cuenta; según el BIC, que penaliza más cada coeficiente, es más clara. Ante la duda, el modelo más sencillo.</p>
+</details>
+<p><strong>5.</strong> Un analista tiene datos de 60 tiendas y 30 variables candidatas para explicar las ventas. Prueba todos los modelos de hasta tres variables y presenta el que tiene los p-valores más pequeños: "el color de la fachada influye en las ventas (p = 0.01)". ¿Qué problemas tiene este análisis? ¿Cómo lo harías?</p>
+<details class="success">
+<summary>Solución</summary>
+<ul>
+<li><strong>Comparaciones múltiples.</strong> Con 30 variables sin relación con las ventas, al 5 % cabe esperar <span class="arithmatex">\(30 \cdot 0.05 = 1.5\)</span> significativas por azar. Al probar miles de combinaciones, encontrar algún p-valor de 0.01 es casi seguro aunque nada influya.</li>
+<li><strong>Los p-valores no valen.</strong> Están calculados como si el modelo se hubiera elegido antes de ver los datos. Al elegirlo precisamente por tener p-valores pequeños, son demasiado optimistas.</li>
+<li><strong>Falta un mecanismo.</strong> No hay ninguna razón de negocio para que el color de la fachada influya; sin ella, lo más probable es que sea ruido.</li>
+</ul>
+<p>Cómo hacerlo: decidir antes, con el conocimiento del negocio, unas pocas variables candidatas y el signo esperado de cada una; comparar pocos modelos con <span class="arithmatex">\(R^2\)</span> ajustado, AIC o BIC; y, si el objetivo es predecir, comprobar el modelo elegido con un conjunto de prueba que no se haya usado para elegirlo. Si el color de la fachada sigue pareciendo importante, tratarlo como una hipótesis para comprobar con datos nuevos, no como una conclusión.</p>
+</details>
+<p><strong>6.</strong> Dos modelos para predecir el precio de alquiler, ajustados con los mismos datos de entrenamiento, dan estos errores (en €/mes): el modelo A, con 4 variables, RMSE de entrenamiento 120 y de prueba 128; el modelo B, con 25 variables, RMSE de entrenamiento 85 y de prueba 160. ¿Cuál elegirías y qué le pasa al otro?</p>
+<details class="success">
+<summary>Solución</summary>
+<p>El modelo A. Lo que importa para predecir alquileres nuevos es el error de prueba, y el de A (128 €) es menor que el de B (160 €). Además, en A el error de prueba es solo algo mayor que el de entrenamiento, como es normal.</p>
+<p>El modelo B <strong>sobreajusta</strong>: con 25 variables se ha adaptado a las particularidades de los datos de entrenamiento (de ahí su error de entrenamiento de 85 €), y esas particularidades no se repiten en los datos nuevos. La diferencia entre su error de entrenamiento y el de prueba (75 €) es la señal típica. Si se mirara solo el error de entrenamiento o el <span class="arithmatex">\(R^2\)</span>, se elegiría el modelo equivocado.</p>
+</details>
+<p><a class="md-button" href="../multicolinealidad/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> Multicolinealidad</a> <a class="md-button md-button--primary" href="../diagnostico/">Siguiente: Diagnóstico del modelo <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg></span></a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../multicolinealidad/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: 6.2 Multicolinealidad">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                6.2 Multicolinealidad
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../diagnostico/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: 6.4 Diagnóstico del modelo">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                6.4 Diagnóstico del modelo
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/katex.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
