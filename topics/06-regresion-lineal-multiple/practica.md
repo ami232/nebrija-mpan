@@ -151,7 +151,7 @@ En los dos contrastes, $H_0$ es que el supuesto se cumple, así que un p-valor a
 <details>
 <summary>✅ <b>Resultado</b></summary>
 
-El gráfico de residuos frente a valores ajustados no muestra curva ni embudo, y el Q-Q sigue la diagonal.
+El gráfico de residuos frente a valores ajustados no muestra curva ni embudo, y en el Q-Q los puntos siguen la recta de referencia.
 
 - **Anderson-Darling:** estadístico 0.167, p-valor **0.938**. No hay evidencia contra la normalidad.
 - **Breusch-Pagan:** estadístico 10.62, p-valor **0.059**. Está cerca de 0.05, pero no lo supera, y el gráfico no muestra embudo.
